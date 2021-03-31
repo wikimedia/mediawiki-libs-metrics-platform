@@ -1,0 +1,9 @@
+version: v4
+variants:
+  test:
+    base: docker-registry.wikimedia.org/dev/mediawiki
+    copies: [local]
+    builder:
+      command: [composer, install]
+      requirements: [composer.json, composer.lock]
+    entrypoint: [composer, test]

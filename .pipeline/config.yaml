@@ -10,6 +10,9 @@ pipelines:
     stages:
       - name: test
   test-php:
-    stages: []
+    blubberfile: blubber/php.yaml
+    directory: php/
+    stages:
+      - name: test
   test-swift:
     stages: []
