@@ -1,0 +1,11 @@
+pipelines:
+  test:
+    stages: []
+  test-js:
+    stages: []
+  test-java:
+    stages: []
+  test-php:
+    stages: []
+  test-swift:
+    stages: []
