@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 ( function () {
 
-	var TestIntegration = require( './TestIntegration.js' ),
+	var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' ),
 		AssociationController = require( '../src/AssociationController.js' ),
 		SamplingController = require( '../src/SamplingController.js' ),
 
-		associationController = new AssociationController( new TestIntegration() ),
+		associationController = new AssociationController( new TestMetricsClientIntegration() ),
 		samplingController = new SamplingController( associationController );
 
 	QUnit.module( 'SamplingController' );

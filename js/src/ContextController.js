@@ -105,9 +105,9 @@
 					eventData.user = eventData.user || {};
 					eventData.user.edit_count_bucket = this.integration.getUserEditCountBucket();
 					break;
-				case 'user_registration_dt':
+				case 'user_registration_timestamp':
 					eventData.user = eventData.user || {};
-					eventData.user.registration_dt = this.integration.getUserRegistrationTimestamp();
+					eventData.user.registration_timestamp = this.integration.getUserRegistrationTimestamp();
 					break;
 				case 'user_language':
 					eventData.user = eventData.user || {};

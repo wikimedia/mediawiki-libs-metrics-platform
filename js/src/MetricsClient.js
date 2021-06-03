@@ -7,7 +7,8 @@
 
 	var AssociationController = require( './AssociationController.js' ),
 		ContextController = require( './ContextController.js' ),
-		SamplingController = require( './SamplingController.js' );
+		SamplingController = require( './SamplingController.js' ),
+		CurationController = require( './CurationController.js' );
 
 	/**
 	 * @param {!Object} integration client integration object (see DefaultConfiguration.js)
@@ -21,6 +22,7 @@
 		this.samplingController = new SamplingController( this.associationController );
 		this.integration = integration;
 		this.streamConfigs = streamConfigs;
+		this.curationController = new CurationController();
 	}
 
 	/**
@@ -144,6 +146,10 @@
 
 		this.addRequiredMetadata( eventData, streamName );
 		this.contextController.addRequestedValues( eventData, streamConfig );
+
+		if ( !this.curationController.shouldProduceEvent( eventData, streamConfig ) ) {
+			return;
+		}
 
 		this.integration.enqueueEvent( eventData );
 	};
