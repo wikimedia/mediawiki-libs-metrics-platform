@@ -1,0 +1,26 @@
+{
+	"name": "@wikimedia/metrics-platform",
+	"version": "1.0.0",
+	"description": "Client libraries for Wikimedia analytics instrumentation",
+	"main": "src/MetricsClient.js",
+	"scripts": {
+		"test": "npm run lint && qunit",
+		"lint": "eslint .",
+		"doc": "jsduck"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://gerrit.wikimedia.org/r/mediawiki/libs/metrics-platform"
+	},
+	"keywords": [
+		"analytics",
+		"metrics",
+		"wikimedia"
+	],
+	"license": "GPL-2.0+",
+	"devDependencies": {
+		"eslint-config-wikimedia": "0.20.0",
+		"qunit": "2.15.0",
+		"sinon": "10.0.0"
+	}
+}

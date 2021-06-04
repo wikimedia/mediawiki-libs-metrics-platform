@@ -1,11 +1,9 @@
 pipelines:
-  test:
-    blubberfile: blubber/java.yaml
-    directory: java/
+  test-js:
+    blubberfile: blubber/js.yaml
+    directory: js/
     stages:
       - name: test
-  test-js:
-    stages: []
   test-java:
     blubberfile: blubber/java.yaml
     directory: java/

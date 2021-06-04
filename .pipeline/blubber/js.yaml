@@ -1,0 +1,9 @@
+version: v4
+base: docker-registry.wikimedia.org/buster-nodejs10-slim
+variants:
+  test:
+    base: docker-registry.wikimedia.org/buster-nodejs10-devel
+    copies: [local]
+    node:
+      requirements: [package.json, package-lock.json]
+    entrypoint: [npm, test]
