@@ -6,6 +6,7 @@
 ( function () {
 
 	var AssociationController = require( './AssociationController.js' ),
+		ContextController = require( './ContextController.js' ),
 		SamplingController = require( './SamplingController.js' );
 
 	/**
@@ -16,6 +17,7 @@
 	 */
 	function MetricsClient( integration, streamConfigs ) {
 		this.associationController = new AssociationController( integration );
+		this.contextController = new ContextController( integration );
 		this.samplingController = new SamplingController( this.associationController );
 		this.integration = integration;
 		this.streamConfigs = streamConfigs;
@@ -141,6 +143,7 @@
 		}
 
 		this.addRequiredMetadata( eventData, streamName );
+		this.contextController.addRequestedValues( eventData, streamConfig );
 
 		this.integration.enqueueEvent( eventData );
 	};
