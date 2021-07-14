@@ -2,6 +2,7 @@ package org.wikimedia.metrics_platform;
 
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.wikimedia.metrics_platform.context.ContextController;
+import org.wikimedia.metrics_platform.curation.CurationController;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,6 +40,11 @@ public final class MetricsClient {
      * Enriches event data with context data requested in the stream configuration.
      */
     private final ContextController contextController;
+
+    /**
+     * Applies stream data curation rules specified in the stream configuration.
+     */
+    private final CurationController curationController;
 
     /**
      * The input buffer is used to store unvalidated events when stream configurations are not yet
@@ -86,7 +92,9 @@ public final class MetricsClient {
         } else if (shouldProcessEventsForStream(stream)) {
             StreamConfig streamConfig = streamConfigs.get(stream);
             contextController.addRequestedValues(event, streamConfig);
-            outputBuffer.add(event);
+            if (curationController.eventPassesCurationRules(event, streamConfig)) {
+                outputBuffer.add(event);
+            }
         }
     }
 
@@ -145,7 +153,9 @@ public final class MetricsClient {
             if (shouldProcessEventsForStream(stream)) {
                 StreamConfig streamConfig = streamConfigs.get(stream);
                 contextController.addRequestedValues(event, streamConfig);
-                outputBuffer.add(event);
+                if (curationController.eventPassesCurationRules(event, streamConfig)) {
+                    outputBuffer.add(event);
+                }
             }
         }
     }
@@ -231,7 +241,22 @@ public final class MetricsClient {
                 integration,
                 sessionController,
                 new SamplingController(integration, sessionController),
-                new ContextController(integration),
+                new ContextController(integration)
+        );
+    }
+
+    private MetricsClient(
+            MetricsClientIntegration integration,
+            SessionController sessionController,
+            SamplingController samplingController,
+            ContextController contextController
+    ) {
+        this(
+                integration,
+                sessionController,
+                samplingController,
+                contextController,
+                new CurationController(),
                 new CircularFifoQueue<>(128),
                 new ArrayList<>(),
                 null,
@@ -246,6 +271,7 @@ public final class MetricsClient {
      * @param sessionController session controller
      * @param samplingController sampling controller
      * @param contextController context controller
+     * @param curationController curation controller
      * @param inputBuffer buffer for unverified events prior to stream configs being fetched
      * @param outputBuffer buffer for verified events pending submission to event platform intake
      */
@@ -254,6 +280,7 @@ public final class MetricsClient {
             SessionController sessionController,
             SamplingController samplingController,
             ContextController contextController,
+            CurationController curationController,
             Queue<Event> inputBuffer,
             ArrayList<Event> outputBuffer,
             TimerTask fetchStreamConfigsTask,
@@ -263,6 +290,7 @@ public final class MetricsClient {
         this.sessionController = sessionController;
         this.samplingController = samplingController;
         this.contextController = contextController;
+        this.curationController = curationController;
         this.inputBuffer = inputBuffer;
         this.outputBuffer = outputBuffer;
 

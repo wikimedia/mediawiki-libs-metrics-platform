@@ -1,6 +1,7 @@
 package org.wikimedia.metrics_platform;
 
 import com.google.gson.annotations.SerializedName;
+import org.wikimedia.metrics_platform.curation.CurationFilter;
 
 import java.util.Collection;
 
@@ -78,10 +79,12 @@ public class StreamConfig {
         public static class MetricsPlatformClientConfig {
             @SerializedName("sampling") SamplingConfig samplingConfig;
             @SerializedName("provide_values") Collection<String> requestedValues;
+            @SerializedName("curation") CurationFilter curationFilter;
 
-            public MetricsPlatformClientConfig(SamplingConfig samplingConfig, Collection<String> requestedValues) {
+            public MetricsPlatformClientConfig(SamplingConfig samplingConfig, Collection<String> requestedValues, CurationFilter curationFilter) {
                 this.samplingConfig = samplingConfig;
                 this.requestedValues = requestedValues;
+                this.curationFilter = curationFilter;
             }
 
             public SamplingConfig getSamplingConfig() {
@@ -90,6 +93,10 @@ public class StreamConfig {
 
             public Collection<String> getRequestedValues() {
                 return requestedValues;
+            }
+
+            public CurationFilter getCurationFilter() {
+                return curationFilter;
             }
         }
     }

@@ -41,8 +41,9 @@ public class SamplingControllerTest {
         StreamConfig alwaysInSample = new StreamConfig("foo", "bar", null,
                 new StreamConfig.ProducerConfig(new StreamConfig.ProducerConfig.MetricsPlatformClientConfig(
                         new SamplingConfig(1.0, null),
-                        null)
-                ));
+                        null,
+                        null
+                )));
         assertThat(samplingController.isInSample(alwaysInSample), is(true));
     }
 
@@ -51,8 +52,9 @@ public class SamplingControllerTest {
         StreamConfig neverInSample = new StreamConfig("foo", "bar", null,
                 new StreamConfig.ProducerConfig(new StreamConfig.ProducerConfig.MetricsPlatformClientConfig(
                         new SamplingConfig(0.0, null),
-                        null)
-                ));
+                        null,
+                        null
+                )));
         assertThat(samplingController.isInSample(neverInSample), is(false));
     }
 

@@ -19,6 +19,7 @@ public class StreamConfigTest {
                 DestinationEventService.ANALYTICS,
                 new StreamConfig.ProducerConfig(new StreamConfig.ProducerConfig.MetricsPlatformClientConfig(
                         samplingConfig,
+                        null,
                         null
                 ))
         );

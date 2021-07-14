@@ -3,6 +3,7 @@ package org.wikimedia.metrics_platform;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.context.ContextController;
+import org.wikimedia.metrics_platform.curation.CurationController;
 
 import java.util.*;
 
@@ -21,6 +22,7 @@ public class MetricsClientTest {
     private final SessionController mockSessionController = mock(SessionController.class);
     private final SamplingController mockSamplingController = mock(SamplingController.class);
     private final ContextController mockContextController = mock(ContextController.class);
+    private final CurationController mockCurationController = mock(CurationController.class);
     private final Queue<Event> mockInputBuffer = mock(Queue.class);
     private final ArrayList<Event> mockOutputBuffer = mock(ArrayList.class);
 
@@ -29,6 +31,7 @@ public class MetricsClientTest {
             mockSessionController,
             mockSamplingController,
             mockContextController,
+            mockCurationController,
             mockInputBuffer,
             mockOutputBuffer,
             null,
@@ -97,6 +100,8 @@ public class MetricsClientTest {
     public void testEventSentToOutputBufferOnSubmit() {
         Map<String, StreamConfig> streamConfigs = setStreamConfigs();
         when(mockSamplingController.isInSample(streamConfigs.get("test_event"))).thenReturn(true);
+        when(mockCurationController.eventPassesCurationRules(any(Event.class), any(StreamConfig.class)))
+                .thenReturn(true);
 
         Event event = new Event("test/event/1.0.0", "test_event");
         client.submit(event, "test_event");
@@ -113,6 +118,8 @@ public class MetricsClientTest {
                 new Event("no/such/stream", "no_such_stream")
         );
         when(mockInputBuffer.isEmpty()).thenReturn(false).thenReturn(false).thenReturn(true);
+        when(mockCurationController.eventPassesCurationRules(any(Event.class), any(StreamConfig.class)))
+                .thenReturn(true);
         client.moveInputBufferEventsToOutputBuffer();
         verify(mockOutputBuffer, times(1)).add(any(Event.class));
     }
@@ -145,6 +152,7 @@ public class MetricsClientTest {
                 sessionController,
                 new SamplingController(integration, sessionController),
                 mockContextController,
+                mockCurationController,
                 mockInputBuffer,
                 new ArrayList<>(),
                 new TimerTask() { @Override public void run() { } },
@@ -152,10 +160,13 @@ public class MetricsClientTest {
         );
 
         Map<String, StreamConfig> streamConfigs = new HashMap<>();
-        streamConfigs.put("test.event", new StreamConfig("test.event", "test/event", null, null));
+        StreamConfig streamConfig = new StreamConfig("test.event", "test/event", null, null);
+        streamConfigs.put("test.event", streamConfig);
         testClient.setStreamConfigs(streamConfigs);
 
         Event event = new Event("test/event", "test.event");
+        when(mockCurationController.eventPassesCurationRules(event, streamConfig)).thenReturn(true);
+
         testClient.submit(event, "test.event");
         testClient.sendEnqueuedEvents();
         assertThat(testClient.outputBuffer.isEmpty(), is(true));
@@ -171,6 +182,7 @@ public class MetricsClientTest {
                 sessionController,
                 new SamplingController(integration, sessionController),
                 mockContextController,
+                mockCurationController,
                 mockInputBuffer,
                 new ArrayList<>(),
                 new TimerTask() { @Override public void run() { } },
@@ -178,10 +190,13 @@ public class MetricsClientTest {
         );
 
         Map<String, StreamConfig> streamConfigs = new HashMap<>();
-        streamConfigs.put("test.event", new StreamConfig("test.event", "test/event", null, null));
+        StreamConfig streamConfig = new StreamConfig("test.event", "test/event", null, null);
+        streamConfigs.put("test.event", streamConfig);
         testClient.setStreamConfigs(streamConfigs);
 
         Event event = new Event("test/event", "test.event");
+        when(mockCurationController.eventPassesCurationRules(event, streamConfig)).thenReturn(true);
+
         testClient.submit(event, "test.event");
         testClient.sendEnqueuedEvents();
         assertThat(testClient.outputBuffer.isEmpty(), is(false));

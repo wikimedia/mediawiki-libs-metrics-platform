@@ -1,5 +1,9 @@
 package org.wikimedia.metrics_platform;
 
+import org.wikimedia.metrics_platform.curation.CurationFilter;
+import org.wikimedia.metrics_platform.curation.rules.CollectionCurationRules;
+import org.wikimedia.metrics_platform.curation.rules.CurationRules;
+
 import java.util.*;
 
 public class TestMetricsClientIntegration implements MetricsClientIntegration {
@@ -41,7 +45,15 @@ public class TestMetricsClientIntegration implements MetricsClientIntegration {
                                 "platform",
                                 "platform_family",
                                 "is_production"
-                            )
+                            ), new CurationFilter.Builder()
+                                .pageTitleRules(new CurationRules.Builder<String>().setEquals("Test").build())
+                                .userGroupsRules(
+                                        new CollectionCurationRules.Builder<String>()
+                                                .doesNotContain("sysop")
+                                                .containsAny(Arrays.asList("steward", "bureaucrat"))
+                                                .build()
+                                )
+                                .build()
                         )
                 )
         ));
