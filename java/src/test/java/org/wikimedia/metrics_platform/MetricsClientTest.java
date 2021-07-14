@@ -2,6 +2,7 @@ package org.wikimedia.metrics_platform;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.wikimedia.metrics_platform.context.ContextController;
 
 import java.util.*;
 
@@ -19,6 +20,7 @@ public class MetricsClientTest {
     private final MetricsClientIntegration mockIntegration = mock(MetricsClientIntegration.class);
     private final SessionController mockSessionController = mock(SessionController.class);
     private final SamplingController mockSamplingController = mock(SamplingController.class);
+    private final ContextController mockContextController = mock(ContextController.class);
     private final Queue<Event> mockInputBuffer = mock(Queue.class);
     private final ArrayList<Event> mockOutputBuffer = mock(ArrayList.class);
 
@@ -26,6 +28,7 @@ public class MetricsClientTest {
             mockIntegration,
             mockSessionController,
             mockSamplingController,
+            mockContextController,
             mockInputBuffer,
             mockOutputBuffer,
             null,
@@ -141,6 +144,7 @@ public class MetricsClientTest {
                 integration,
                 sessionController,
                 new SamplingController(integration, sessionController),
+                mockContextController,
                 mockInputBuffer,
                 new ArrayList<>(),
                 new TimerTask() { @Override public void run() { } },
@@ -166,6 +170,7 @@ public class MetricsClientTest {
                 integration,
                 sessionController,
                 new SamplingController(integration, sessionController),
+                mockContextController,
                 mockInputBuffer,
                 new ArrayList<>(),
                 new TimerTask() { @Override public void run() { } },

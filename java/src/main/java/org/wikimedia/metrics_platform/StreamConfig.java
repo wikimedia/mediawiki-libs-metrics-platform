@@ -2,6 +2,8 @@ package org.wikimedia.metrics_platform;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Collection;
+
 public class StreamConfig {
 
     @SerializedName("stream") private String streamName;
@@ -32,6 +34,12 @@ public class StreamConfig {
         this.schemaTitle = schemaTitle;
         this.destinationEventService = destinationEventService;
         this.producerConfig = producerConfig;
+    }
+
+    public boolean hasRequestedContextValuesConfig() {
+        return producerConfig != null &&
+                producerConfig.metricsPlatformClientConfig != null &&
+                producerConfig.metricsPlatformClientConfig.requestedValues != null;
     }
 
     public boolean hasSamplingConfig() {
@@ -69,13 +77,19 @@ public class StreamConfig {
 
         public static class MetricsPlatformClientConfig {
             @SerializedName("sampling") SamplingConfig samplingConfig;
+            @SerializedName("provide_values") Collection<String> requestedValues;
 
-            public MetricsPlatformClientConfig(SamplingConfig samplingConfig) {
+            public MetricsPlatformClientConfig(SamplingConfig samplingConfig, Collection<String> requestedValues) {
                 this.samplingConfig = samplingConfig;
+                this.requestedValues = requestedValues;
             }
 
             public SamplingConfig getSamplingConfig() {
                 return samplingConfig;
+            }
+
+            public Collection<String> getRequestedValues() {
+                return requestedValues;
             }
         }
     }

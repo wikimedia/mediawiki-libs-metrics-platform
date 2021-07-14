@@ -1,6 +1,7 @@
 package org.wikimedia.metrics_platform;
 
 import org.apache.commons.collections4.queue.CircularFifoQueue;
+import org.wikimedia.metrics_platform.context.ContextController;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,6 +34,11 @@ public final class MetricsClient {
      * Evaluates whether events for a given stream are in-sample based on the stream configuration.
      */
     private final SamplingController samplingController;
+
+    /**
+     * Enriches event data with context data requested in the stream configuration.
+     */
+    private final ContextController contextController;
 
     /**
      * The input buffer is used to store unvalidated events when stream configurations are not yet
@@ -78,6 +84,8 @@ public final class MetricsClient {
         if (streamConfigs.isEmpty()) {
             inputBuffer.add(event);
         } else if (shouldProcessEventsForStream(stream)) {
+            StreamConfig streamConfig = streamConfigs.get(stream);
+            contextController.addRequestedValues(event, streamConfig);
             outputBuffer.add(event);
         }
     }
@@ -135,6 +143,8 @@ public final class MetricsClient {
             Event event = inputBuffer.remove();
             String stream = event.getStream();
             if (shouldProcessEventsForStream(stream)) {
+                StreamConfig streamConfig = streamConfigs.get(stream);
+                contextController.addRequestedValues(event, streamConfig);
                 outputBuffer.add(event);
             }
         }
@@ -221,6 +231,7 @@ public final class MetricsClient {
                 integration,
                 sessionController,
                 new SamplingController(integration, sessionController),
+                new ContextController(integration),
                 new CircularFifoQueue<>(128),
                 new ArrayList<>(),
                 null,
@@ -234,6 +245,7 @@ public final class MetricsClient {
      * @param integration integration
      * @param sessionController session controller
      * @param samplingController sampling controller
+     * @param contextController context controller
      * @param inputBuffer buffer for unverified events prior to stream configs being fetched
      * @param outputBuffer buffer for verified events pending submission to event platform intake
      */
@@ -241,6 +253,7 @@ public final class MetricsClient {
             MetricsClientIntegration integration,
             SessionController sessionController,
             SamplingController samplingController,
+            ContextController contextController,
             Queue<Event> inputBuffer,
             ArrayList<Event> outputBuffer,
             TimerTask fetchStreamConfigsTask,
@@ -249,6 +262,7 @@ public final class MetricsClient {
         this.integration = integration;
         this.sessionController = sessionController;
         this.samplingController = samplingController;
+        this.contextController = contextController;
         this.inputBuffer = inputBuffer;
         this.outputBuffer = outputBuffer;
 

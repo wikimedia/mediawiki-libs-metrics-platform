@@ -1,31 +1,193 @@
 package org.wikimedia.metrics_platform;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-class TestMetricsClientIntegration implements MetricsClientIntegration {
+public class TestMetricsClientIntegration implements MetricsClientIntegration {
 
-    static final Map<String, StreamConfig> STREAM_CONFIGS = new HashMap<String, StreamConfig>(){{
+    public static final Map<String, StreamConfig> STREAM_CONFIGS = new HashMap<String, StreamConfig>(){{
         put("test.event", new StreamConfig(
                 "test.event",
                 "test/event",
                 DestinationEventService.ANALYTICS,
                 new StreamConfig.ProducerConfig(
                         new StreamConfig.ProducerConfig.MetricsPlatformClientConfig(
-                                new SamplingConfig())
+                            null,
+                            Arrays.asList(
+                                "page_id",
+                                "page_namespace_id",
+                                "page_namespace_text",
+                                "page_title",
+                                "page_is_redirect",
+                                "page_revision_id",
+                                "page_content_language",
+                                "page_wikidata_id",
+                                "page_user_groups_allowed_to_edit",
+                                "page_user_groups_allowed_to_move",
+                                "user_id",
+                                "user_is_logged_in",
+                                "user_name",
+                                "user_groups",
+                                "user_edit_count",
+                                "user_edit_count_bucket",
+                                "user_registration_timestamp",
+                                "user_language",
+                                "user_language_variant",
+                                "user_is_bot",
+                                "user_can_probably_edit_page",
+                                "device_pixel_ratio",
+                                "device_hardware_concurrency",
+                                "device_max_touch_points",
+                                "access_method",
+                                "platform",
+                                "platform_family",
+                                "is_production"
+                            )
+                        )
                 )
         ));
     }};
 
     private final boolean shouldFail;
 
-    TestMetricsClientIntegration() {
+    public TestMetricsClientIntegration() {
         this(false);
     }
 
-    TestMetricsClientIntegration(boolean shouldFail) {
+    public TestMetricsClientIntegration(boolean shouldFail) {
         this.shouldFail = shouldFail;
+    }
+
+    // Page
+
+    @Override
+    public Integer getPageId() {
+        return 1;
+    }
+
+    @Override
+    public Integer getPageNamespaceId() {
+        return 0;
+    }
+
+    @Override
+    public String getPageNamespaceText() {
+        return "";
+    }
+
+    @Override
+    public String getPageTitle() {
+        return "Test";
+    }
+
+    @Override
+    public Boolean getPageIsRedirect() {
+        return false;
+    }
+
+    @Override
+    public Integer getPageRevisionId() {
+        return 1;
+    }
+
+    @Override
+    public String getPageWikidataItemId() {
+        return "Q1";
+    }
+
+    @Override
+    public String getPageContentLanguage() {
+        return "zh";
+    }
+
+    @Override
+    public Collection<String> getPageGroupsAllowedToEdit() {
+        return Collections.emptySet();
+    }
+
+    @Override
+    public Collection<String> getPageGroupsAllowedToMove() {
+        return Collections.emptySet();
+    }
+
+    // User
+
+    @Override
+    public Integer getUserId() {
+        return 1;
+    }
+
+    @Override
+    public Boolean getUserIsLoggedIn() {
+        return true;
+    }
+
+    @Override
+    public Boolean getUserIsBot() {
+        return false;
+    }
+
+    @Override
+    public String getUserName() {
+        return "TestUser";
+    }
+
+    @Override
+    public List<String> getUserGroups() {
+        return new ArrayList<String>(){{
+            add("*");
+        }};
+    }
+
+    @Override
+    public Boolean getUserCanProbablyEditPage() {
+        return true;
+    }
+
+    @Override
+    public Integer getUserEditCount() {
+        return 10;
+    }
+
+    @Override
+    public String getUserEditCountBucket() {
+        return "5-99 edits";
+    }
+
+    @Override
+    public Long getUserRegistrationTimestamp() {
+        return 1427224089000L;
+    }
+
+    @Override
+    public String getUserLanguage() {
+        return "zh";
+    }
+
+    @Override
+    public String getUserLanguageVariant() {
+        return "zh-tw";
+    }
+
+    // Device
+
+    @Override
+    public Float getDevicePixelRatio() {
+        return 1.0f;
+    }
+
+    @Override
+    public Integer getDeviceHardwareConcurrency() {
+        return 1;
+    }
+
+    @Override
+    public Integer getDeviceMaxTouchPoints() {
+        return 1;
+    }
+
+    @Override
+    public Boolean isProduction() {
+        return true;
     }
 
     @Override

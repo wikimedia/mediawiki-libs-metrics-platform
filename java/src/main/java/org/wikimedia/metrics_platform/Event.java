@@ -1,6 +1,9 @@
 package org.wikimedia.metrics_platform;
 
 import com.google.gson.annotations.SerializedName;
+import org.wikimedia.metrics_platform.context.DeviceData;
+import org.wikimedia.metrics_platform.context.PageData;
+import org.wikimedia.metrics_platform.context.UserData;
 
 public class Event {
 
@@ -9,6 +12,15 @@ public class Event {
     private String dt;
     @SerializedName("app_install_id") private String appInstallId;
     @SerializedName("app_session_id") private String appSessionId;
+
+    @SerializedName("page") private PageData pageData;
+    @SerializedName("user") private UserData userData;
+    @SerializedName("device") private DeviceData deviceData;
+
+    @SerializedName("access_method") private String accessMethod;
+    private String platform;
+    @SerializedName("platform_family") private String platformFamily;
+    @SerializedName("is_production") private Boolean isProduction;
 
     public Event(String schema, String stream) {
         this.schema = schema;
@@ -48,7 +60,63 @@ public class Event {
         this.dt = dt;
     }
 
-    private static final class Meta {
+    public PageData getPageData() {
+        return pageData;
+    }
+
+    public void setPageData(PageData pageData) {
+        this.pageData = pageData;
+    }
+
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserData userData) {
+        this.userData = userData;
+    }
+
+    public DeviceData getDeviceData() {
+        return deviceData;
+    }
+
+    public void setDeviceData(DeviceData deviceData) {
+        this.deviceData = deviceData;
+    }
+
+    public String getAccessMethod() {
+        return accessMethod;
+    }
+
+    public void setAccessMethod(String accessMethod) {
+        this.accessMethod = accessMethod;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public String getPlatformFamily() {
+        return platformFamily;
+    }
+
+    public void setPlatformFamily(String platformFamily) {
+        this.platformFamily = platformFamily;
+    }
+
+    public Boolean isProduction() {
+        return isProduction;
+    }
+
+    public void setIsProduction(Boolean production) {
+        this.isProduction = production;
+    }
+
+    private static class Meta {
         private final String stream;
 
         private Meta(String stream) {
