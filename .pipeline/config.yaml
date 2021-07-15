@@ -15,4 +15,7 @@ pipelines:
     stages:
       - name: test
   test-swift:
-    stages: []
+    blubberfile: blubber/swift.yaml
+    directory: swift/
+    stages:
+      - name: test
