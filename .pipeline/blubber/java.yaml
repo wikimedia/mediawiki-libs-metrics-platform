@@ -1,0 +1,8 @@
+version: v4
+variants:
+  test:
+    base: docker-registry.wikimedia.org/openjdk-8-jdk
+    copies: [local]
+    runs:
+      insecurely: true
+    entrypoint: [./gradlew, test]

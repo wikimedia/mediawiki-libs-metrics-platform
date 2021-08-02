@@ -1,10 +1,16 @@
 pipelines:
   test:
-    stages: []
+    blubberfile: blubber/java.yaml
+    directory: java/
+    stages:
+      - name: test
   test-js:
     stages: []
   test-java:
-    stages: []
+    blubberfile: blubber/java.yaml
+    directory: java/
+    stages:
+      - name: test
   test-php:
     stages: []
   test-swift:
