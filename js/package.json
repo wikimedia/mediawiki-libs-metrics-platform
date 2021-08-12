@@ -6,7 +6,8 @@
 	"scripts": {
 		"test": "npm run lint && qunit",
 		"lint": "eslint .",
-		"doc": "jsduck"
+		"doc": "jsduck",
+		"coverage": "nyc qunit"
 	},
 	"repository": {
 		"type": "git",
@@ -20,6 +21,7 @@
 	"license": "GPL-2.0+",
 	"devDependencies": {
 		"eslint-config-wikimedia": "0.20.0",
+		"nyc": "15.1.0",
 		"qunit": "2.15.0",
 		"sinon": "10.0.0"
 	}
