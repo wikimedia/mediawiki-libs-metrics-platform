@@ -5,7 +5,7 @@ namespace Wikimedia\Metrics\Test;
 use Wikimedia\Metrics\CurationController;
 use Wikimedia\TestingAccessWrapper;
 
-/** @covers \Wikimedia\Metrics\ContextController */
+/** @covers \Wikimedia\Metrics\CurationController */
 class CurationControllerTest extends \PHPUnit\Framework\TestCase {
 
 	/** @var CurationController */

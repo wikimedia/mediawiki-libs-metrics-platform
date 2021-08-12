@@ -8,6 +8,7 @@ use Wikimedia\Metrics\MetricsClient;
 use Wikimedia\TestingAccessWrapper;
 use Wikimedia\Timestamp\ConvertibleTimestamp;
 
+/** @covers \Wikimedia\Metrics\MetricsClient */
 class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 
 	/** @var MetricsClient */
@@ -20,7 +21,6 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 		$this->client = TestingAccessWrapper::newFromObject( $client );
 	}
 
-	/** @covers \Wikimedia\Metrics\MetricsClient::prepareEvent */
 	public function testPrepareModernEvent() : void {
 		$preparedEvent = $this->client->prepareEvent(
 			'test.event',
@@ -39,7 +39,6 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'B', $preparedEvent['extra_default'] );
 	}
 
-	/** @covers \Wikimedia\Metrics\MetricsClient::prepareEvent */
 	public function testPrepareModernEventSubmittedWithDt() : void {
 		$preparedEvent = $this->client->prepareEvent(
 			'test.event',
@@ -60,7 +59,6 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'B', $preparedEvent['extra_default'] );
 	}
 
-	/** @covers \Wikimedia\Metrics\MetricsClient::prepareEvent */
 	public function testPrepareMigratedLegacyEvent() : void {
 		$preparedEvent = $this->client->prepareEvent(
 			'test.event.legacy',
@@ -79,7 +77,6 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'B', $preparedEvent['extra_default'] );
 	}
 
-	/** @covers \Wikimedia\Metrics\MetricsClient::prepareEvent */
 	public function testPrepareMigratedLegacyEventSubmittedWithDt() : void {
 		$preparedEvent = $this->client->prepareEvent(
 			'test.event.legacy',
@@ -99,7 +96,6 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'B', $preparedEvent['extra_default'] );
 	}
 
-	/** @covers \Wikimedia\Metrics\MetricsClient::getEventDefaults */
 	public function testGetEventDefaults() : void {
 		$defaults = $this->client->getEventDefaults();
 		$this->assertSame( 'www.example.org', $defaults['meta']['domain'] );
