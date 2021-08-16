@@ -6,7 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class MetricsClient {
+public final class MetricsClient {
 
     public static MetricsClient getInstance(MetricsClientIntegration integration) {
         return new MetricsClient(integration);
@@ -15,7 +15,8 @@ public class MetricsClient {
     /**
      * Stream configs to be fetched on startup and stored for the duration of the app lifecycle.
      */
-    private Map<String, StreamConfig> streamConfigs;
+    private Map<String, StreamConfig> streamConfigs = Collections.emptyMap();
+    private static final int STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL = 30000; // 30 seconds
 
     /**
      * Integration layer exposing hosting application functionality to the client library.
@@ -43,15 +44,14 @@ public class MetricsClient {
      * After stream configs are fetched, the input buffer contents are validated and moved to the
      * output buffer for submission, and the input buffer is no longer used.
      */
-    private final Queue<Event> inputBuffer;
+    final Queue<Event> inputBuffer;
 
     /**
      * The output buffer holds validated events for submission every WAIT_MS ms.
      * When the event submission interval passes, all scheduled events are submitted together in a
      * single "burst" per destination event service.
-     * TODO: Reevaluate thread synchronization
      */
-    private final LinkedList<Event> outputBuffer;
+    final ArrayList<Event> outputBuffer;
     private static final int SEND_INTERVAL = 30000; // 30 seconds
 
 
@@ -75,7 +75,7 @@ public class MetricsClient {
      */
     public synchronized void submit(Event event, String stream) {
         addRequiredMetadata(event);
-        if (streamConfigs == null) {
+        if (streamConfigs.isEmpty()) {
             inputBuffer.add(event);
         } else if (shouldProcessEventsForStream(stream)) {
             outputBuffer.add(event);
@@ -108,7 +108,7 @@ public class MetricsClient {
      *
      * @param streamConfigs stream configs
      */
-    void setStreamConfigs(Map<String, StreamConfig> streamConfigs) {
+    synchronized void setStreamConfigs(Map<String, StreamConfig> streamConfigs) {
         this.streamConfigs = streamConfigs;
     }
 
@@ -130,7 +130,7 @@ public class MetricsClient {
      *
      * Visible for testing.
      */
-    void moveInputBufferEventsToOutputBuffer() {
+    synchronized void moveInputBufferEventsToOutputBuffer() {
         while (!inputBuffer.isEmpty()) {
             Event event = inputBuffer.remove();
             String stream = event.getStream();
@@ -174,11 +174,18 @@ public class MetricsClient {
     }
 
     /**
-     * Get events by stream from the output buffer and send them. If the request fails, the events
-     * are placed back into the output buffer for retry.
+     * Send all events currently in the output buffer.
+     *
+     * A shallow clone of the output buffer is created and passed to the integration layer for
+     * submission by the client. If the event submission succeeds, the events are removed from the
+     * output buffer. (Note that the shallow copy created by clone() retains pointers to the original
+     * Event objects.) If the event submission fails, a client error is produced, and the events remain
+     * in buffer to be retried on the next submission attempt.
+     *
+     * TODO: Add client error logging.
      */
-    private void sendEnqueuedEvents() {
-        LinkedList<Event> eventsToSend = (LinkedList<Event>)outputBuffer.clone(); // shallow copy
+    void sendEnqueuedEvents() {
+        List<Event> eventsToSend = (ArrayList<Event>)outputBuffer.clone(); // shallow copy
         integration.sendEvents(DestinationEventService.ANALYTICS.getBaseUri(), eventsToSend,
                 new MetricsClientIntegration.SendEventsCallback() {
                     @Override
@@ -201,7 +208,7 @@ public class MetricsClient {
      * MetricsClient Constructor.
      * @param integration integration implementation
      */
-    private MetricsClient(MetricsClientIntegration integration) {
+    MetricsClient(MetricsClientIntegration integration) {
         this(integration, new SessionController());
     }
 
@@ -209,13 +216,15 @@ public class MetricsClient {
      * @param integration integration
      * @param sessionController session controller
      */
-    private MetricsClient(MetricsClientIntegration integration, SessionController sessionController) {
+    MetricsClient(MetricsClientIntegration integration, SessionController sessionController) {
         this(
                 integration,
                 sessionController,
                 new SamplingController(integration, sessionController),
                 new CircularFifoQueue<>(128),
-                new LinkedList<>()
+                new ArrayList<>(),
+                null,
+                null
         );
     }
 
@@ -233,7 +242,9 @@ public class MetricsClient {
             SessionController sessionController,
             SamplingController samplingController,
             Queue<Event> inputBuffer,
-            LinkedList<Event> outputBuffer
+            ArrayList<Event> outputBuffer,
+            TimerTask fetchStreamConfigsTask,
+            TimerTask eventSubmissionTask
     ) {
         this.integration = integration;
         this.sessionController = sessionController;
@@ -242,23 +253,33 @@ public class MetricsClient {
         this.outputBuffer = outputBuffer;
 
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
-        TIMER.scheduleAtFixedRate(new EventSubmissionTask(), SEND_INTERVAL, SEND_INTERVAL);
-
-        fetchStreamConfigs();
+        TIMER.schedule(fetchStreamConfigsTask != null ? fetchStreamConfigsTask : new FetchStreamConfigsTask(), 0, STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL);
+        TIMER.schedule(eventSubmissionTask != null ? eventSubmissionTask : new EventSubmissionTask(), SEND_INTERVAL, SEND_INTERVAL);
     }
 
     /**
-     * Periodic task that sends enqueued events if stream configs are present. If not, it
-     * attempts to fetch them so that events can be submitted on the next run.
+     * Periodic task that sends enqueued events if stream configs are present.
      *
      * Visible for testing.
      */
     class EventSubmissionTask extends TimerTask {
         @Override
         public void run() {
-            if (streamConfigs != null) {
+            if (!streamConfigs.isEmpty()) {
                 sendEnqueuedEvents();
-            } else {
+            }
+        }
+    }
+
+    /**
+     * Periodic task that attempts to fetch stream configs if they are not already present.
+     *
+     * Visible for testing.
+     */
+    class FetchStreamConfigsTask extends TimerTask {
+        @Override
+        public void run() {
+            if (streamConfigs.isEmpty()) {
                 fetchStreamConfigs();
             }
         }

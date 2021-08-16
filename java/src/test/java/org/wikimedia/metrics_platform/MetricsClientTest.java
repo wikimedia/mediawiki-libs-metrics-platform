@@ -7,9 +7,7 @@ import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -22,20 +20,22 @@ public class MetricsClientTest {
     private final SessionController mockSessionController = mock(SessionController.class);
     private final SamplingController mockSamplingController = mock(SamplingController.class);
     private final Queue<Event> mockInputBuffer = mock(Queue.class);
-    private final LinkedList<Event> mockOutputBuffer = mock(LinkedList.class);
+    private final ArrayList<Event> mockOutputBuffer = mock(ArrayList.class);
 
     private final MetricsClient client = new MetricsClient(
             mockIntegration,
             mockSessionController,
             mockSamplingController,
             mockInputBuffer,
-            mockOutputBuffer
+            mockOutputBuffer,
+            null,
+            null
     );
 
     @BeforeEach
     public void resetClient() {
         reset(mockIntegration, mockSessionController, mockSamplingController, mockInputBuffer, mockOutputBuffer);
-        client.setStreamConfigs(null);
+        client.setStreamConfigs(Collections.emptyMap());
     }
 
     @Test
@@ -115,20 +115,71 @@ public class MetricsClientTest {
     }
 
     @Test
-    public void testEventSubmissionTaskFetchStreamConfigs() {
-        client.new EventSubmissionTask().run();
+    public void testFetchStreamConfigsTaskFetchesStreamConfigs() {
+        client.new FetchStreamConfigsTask().run();
         verify(mockIntegration, times(1)).fetchStreamConfigs(any(MetricsClientIntegration.FetchStreamConfigsCallback.class));
     }
 
     @Test
-    public void testEventSubmissionTaskSendEnqueuedEvents() {
+    public void testEventSubmissionTaskSendsEnqueuedEvents() {
         setStreamConfigs();
 
-        List<Event> events = new LinkedList<>(Collections.singletonList(new Event("foo", "bar")));
-        when(mockOutputBuffer.clone()).thenReturn(events);
+        Event event = new Event("foo", "bar");
+        when(mockOutputBuffer.clone()).thenReturn(new ArrayList<>(Collections.singletonList(event)));
+        when(mockOutputBuffer.isEmpty()).thenReturn(false, true);
 
         client.new EventSubmissionTask().run();
-        verify(mockIntegration, times(1)).sendEvents(anyString(), anyList(), any(MetricsClientIntegration.SendEventsCallback.class));
+        verify(mockIntegration, times(1)).sendEvents(anyString(), anyCollection(), any(MetricsClientIntegration.SendEventsCallback.class));
+    }
+
+    @Test
+    public void testEventsRemovedFromOutputBufferOnSuccess() {
+        MetricsClientIntegration integration = new TestMetricsClientIntegration();
+        SessionController sessionController = new SessionController();
+
+        MetricsClient testClient = new MetricsClient(
+                integration,
+                sessionController,
+                new SamplingController(integration, sessionController),
+                mockInputBuffer,
+                new ArrayList<>(),
+                new TimerTask() { @Override public void run() { } },
+                new TimerTask() { @Override public void run() { } }
+        );
+
+        Map<String, StreamConfig> streamConfigs = new HashMap<>();
+        streamConfigs.put("test.event", new StreamConfig("test.event", "test/event", null, null));
+        testClient.setStreamConfigs(streamConfigs);
+
+        Event event = new Event("test/event", "test.event");
+        testClient.submit(event, "test.event");
+        testClient.sendEnqueuedEvents();
+        assertThat(testClient.outputBuffer.isEmpty(), is(true));
+    }
+
+    @Test
+    public void testEventsRemainInOutputBufferOnFailure() {
+        MetricsClientIntegration integration = new TestMetricsClientIntegration(true);
+        SessionController sessionController = new SessionController();
+
+        MetricsClient testClient = new MetricsClient(
+                integration,
+                sessionController,
+                new SamplingController(integration, sessionController),
+                mockInputBuffer,
+                new ArrayList<>(),
+                new TimerTask() { @Override public void run() { } },
+                new TimerTask() { @Override public void run() { } }
+        );
+
+        Map<String, StreamConfig> streamConfigs = new HashMap<>();
+        streamConfigs.put("test.event", new StreamConfig("test.event", "test/event", null, null));
+        testClient.setStreamConfigs(streamConfigs);
+
+        Event event = new Event("test/event", "test.event");
+        testClient.submit(event, "test.event");
+        testClient.sendEnqueuedEvents();
+        assertThat(testClient.outputBuffer.isEmpty(), is(false));
     }
 
     /**

@@ -1,6 +1,6 @@
 package org.wikimedia.metrics_platform;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 
 public interface MetricsClientIntegration {
@@ -9,7 +9,7 @@ public interface MetricsClientIntegration {
 
     void fetchStreamConfigs(FetchStreamConfigsCallback callback);
 
-    void sendEvents(String baseUri, List<Event> events, SendEventsCallback callback);
+    void sendEvents(String baseUri, Collection<Event> events, SendEventsCallback callback);
 
     interface FetchStreamConfigsCallback {
         void onSuccess(Map<String, StreamConfig> streamConfigs);
