@@ -36,6 +36,14 @@ public class Event: Encodable {
      */
     var dt: String?
 
+    var pageData: PageData?
+    var userData: UserData?
+    var deviceData: DeviceData?
+    var accessMethod: String?
+    var platform: String?
+    var platformFamily: String?
+    var isProduction: Bool?
+
     init(stream: String, schema: String) {
         self.schema = schema
         self.meta = Meta(stream: stream)
@@ -47,6 +55,13 @@ public class Event: Encodable {
         case appInstallId = "app_install_id"
         case appSessionId = "app_session_id"
         case dt
+        case pageData = "page"
+        case userData = "user"
+        case deviceData = "device"
+        case accessMethod = "access_method"
+        case platform
+        case platformFamily = "platform_family"
+        case isProduction = "is_production"
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -57,6 +72,13 @@ public class Event: Encodable {
             try container.encode(appSessionId, forKey: .appSessionId)
             try container.encode(dt, forKey: .dt)
             try container.encode(schema, forKey: .schema)
+            try container.encodeIfPresent(pageData, forKey: .pageData)
+            try container.encodeIfPresent(userData, forKey: .userData)
+            try container.encodeIfPresent(deviceData, forKey: .deviceData)
+            try container.encodeIfPresent(accessMethod, forKey: .accessMethod)
+            try container.encodeIfPresent(platform, forKey: .platform)
+            try container.encodeIfPresent(platformFamily, forKey: .platformFamily)
+            try container.encodeIfPresent(isProduction, forKey: .isProduction)
         } catch let error {
             NSLog("EPC: Error encoding event body: \(error)")
         }

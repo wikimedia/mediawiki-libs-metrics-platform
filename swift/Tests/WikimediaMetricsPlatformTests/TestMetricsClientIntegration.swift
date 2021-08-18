@@ -20,4 +20,112 @@ class TestMetricsClientIntegration: MetricsClientIntegration {
         callback(Result() {})
     }
 
+    // Page
+
+    func getPageId() -> Int? {
+        return 1
+    }
+
+    func getPageNamespaceId() -> Int? {
+        return 0
+    }
+
+    func getPageNamespaceText() -> String? {
+        return ""
+    }
+
+    func getPageTitle() -> String? {
+        return "Test"
+    }
+
+    func getPageIsRedirect() -> Bool? {
+        return false
+    }
+
+    func getPageRevisionId() -> Int? {
+        return 1
+    }
+
+    func getPageWikidataItemId() -> String? {
+        return "Q1"
+    }
+
+    func getPageContentLanguage() -> String? {
+        return "zh"
+    }
+
+    func getGroupsAllowedToEditPage() -> [String]? {
+        return []
+    }
+
+    func getGroupsAllowedToMovePage() -> [String]? {
+        return []
+    }
+
+    // User
+
+    func getUserId() -> Int? {
+        return 1
+    }
+
+    func getUserName() -> String? {
+        return "TestUser"
+    }
+
+    func getUserGroups() -> [String]? {
+        return ["*"]
+    }
+
+    func getUserIsLoggedIn() -> Bool? {
+        return true
+    }
+
+    func getUserIsBot() -> Bool? {
+        return false
+    }
+
+    func getUserCanProbablyEditPage() -> Bool? {
+        return true
+    }
+
+    func getUserEditCount() -> Int? {
+        return 10
+    }
+
+    func getUserEditCountBucket() -> String? {
+        return "5-99 edits"
+    }
+
+    func getUserRegistrationTimestamp() -> Int? {
+        return 1427224089000
+    }
+
+    func getUserLanguage() -> String? {
+        return "zh"
+    }
+
+    func getUserLanguageVariant() -> String? {
+        return "zh-tw"
+    }
+
+    // Device
+
+    func getDevicePixelRatio() -> Float? {
+        return 1.0
+    }
+
+    func getDeviceHardwareConcurrency() -> Int? {
+        return 1
+    }
+
+    func getDeviceMaxTouchPoints() -> Int? {
+        return 1
+    }
+
+    // Other
+
+    func isProduction() -> Bool? {
+        return true
+    }
+
 }
