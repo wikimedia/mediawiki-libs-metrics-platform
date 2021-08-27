@@ -1,5 +1,6 @@
 package org.wikimedia.metrics_platform;
 
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -22,6 +23,20 @@ public class StreamConfigTest {
         assertThat(streamConfig.getStreamName(), is("test.event"));
         assertThat(streamConfig.getSchemaTitle(), is("test/event"));
         assertThat(streamConfig.getProducerConfig().getMetricsPlatformClientConfig().getSamplingConfig(), is(samplingConfig));
+        assertThat(streamConfig.getDestinationEventService(), is(DestinationEventService.ANALYTICS));
+    }
+
+    @Test
+    public void testStreamConfigDeserialization() {
+        Gson gson = new Gson();
+        String streamConfigJson = "{\"stream\":\"test.event\",\"schema_title\":\"test/event\",\"producers\":" +
+                "{\"metrics_platform_client\":{\"sampling\":{\"rate\":0.5,\"identifier\":\"session\"}}}}";
+
+        StreamConfig streamConfig = gson.fromJson(streamConfigJson, StreamConfig.class);
+        assertThat(streamConfig.getStreamName(), is("test.event"));
+        assertThat(streamConfig.getSchemaTitle(), is("test/event"));
+        assertThat(streamConfig.getProducerConfig().getMetricsPlatformClientConfig().getSamplingConfig().getRate(), is(0.5));
+        assertThat(streamConfig.getProducerConfig().getMetricsPlatformClientConfig().getSamplingConfig().getIdentifier(), is(SamplingConfig.Identifier.SESSION));
         assertThat(streamConfig.getDestinationEventService(), is(DestinationEventService.ANALYTICS));
     }
 

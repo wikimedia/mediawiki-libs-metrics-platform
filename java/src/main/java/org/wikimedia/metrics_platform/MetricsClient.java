@@ -169,7 +169,7 @@ public final class MetricsClient {
      */
     private void addRequiredMetadata(Event event) {
         event.setAppInstallId(integration.getAppInstallId());
-        event.setSessionId(sessionController.getSessionId());
+        event.setAppSessionId(sessionController.getSessionId());
         event.setTimestamp(DATE_FORMAT.format(new Date()));
     }
 
