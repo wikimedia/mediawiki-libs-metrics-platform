@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f71c2e2_9a9e7cdd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2478
+      },
+      "writtenOn": "2021-08-31T13:37:35Z",
+      "side": 1,
+      "message": "Leaving a note to say that I re-reviewed this and the stream config syntax it depends on is up to date.",
+      "revId": "52f9634cb3999f585c4330fffa8b12e44ab5f7ee",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
