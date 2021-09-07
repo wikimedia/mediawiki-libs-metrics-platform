@@ -10,6 +10,9 @@ class MetricsClient {
 	/** @var ContextController */
 	private $contextController;
 
+	/** @var CurationController */
+	private $curationController;
+
 	/**
 	 * @param Integration $integration
 	 * @return MetricsClient
@@ -26,6 +29,7 @@ class MetricsClient {
 	private function __construct( Integration $integration ) {
 		$this->integration = $integration;
 		$this->contextController = new ContextController( $integration );
+		$this->curationController = new CurationController();
 	}
 
 	/**
@@ -49,8 +53,11 @@ class MetricsClient {
 		}
 		$event = self::prepareEvent( $streamName, $event );
 		$event = $this->contextController->addRequestedValues( $event, $streamConfig );
-		$this->integration->send( $event );
-		return true;
+		if ( $this->curationController->eventPassesCurationRules( $event, $streamConfig ) ) {
+			$this->integration->send( $event );
+			return true;
+		}
+		return false;
 	}
 
 	/**
