@@ -47,23 +47,23 @@ public final class MetricsClient {
     private final CurationController curationController;
 
     /**
-     * The input buffer is used to store unvalidated events when stream configurations are not yet
-     * available. Because we cannot yet validate events, we cap the size at MAX_INPUT_BUFFER_SIZE.
+     * Queue used to store unvalidated events when stream configurations are not yet available.
+     * Because we cannot yet validate events, we cap the size at MAX_INPUT_BUFFER_SIZE. Upon
+     * reaching maximum capacity, events are dropped in the order in which they were added.
      *
-     * If the input buffer reaches its maximum capacity, events are dropped in the order in which
-     * they were added.
-     *
-     * After stream configs are fetched, the input buffer contents are validated and moved to the
-     * output buffer for submission, and the input buffer is no longer used.
+     * After stream configs are fetched, the contents of this queue are validated and moved to
+     * validatedEvents/validatedErrors to await submission, and this queue is no longer used.
      */
-    final Queue<Event> inputBuffer;
+    final Queue<Event> unvalidatedEvents;
 
     /**
-     * The output buffer holds validated events for submission every WAIT_MS ms.
-     * When the event submission interval passes, all scheduled events are submitted together in a
-     * single "burst" per destination event service.
+     * These ArrayLists hold validated events for submission every WAIT_MS ms.
+     *
+     * When SEND_INTERVAL passes, all scheduled events are submitted together in a single "burst"
+     * per destination event service.
      */
-    final ArrayList<Event> outputBuffer;
+    final EventBuffer validatedEvents;
+    final EventBuffer validatedErrors;
     private static final int SEND_INTERVAL = 30000; // 30 seconds
 
 
@@ -88,12 +88,22 @@ public final class MetricsClient {
     public synchronized void submit(Event event, String stream) {
         addRequiredMetadata(event);
         if (streamConfigs.isEmpty()) {
-            inputBuffer.add(event);
+            unvalidatedEvents.add(event);
         } else if (shouldProcessEventsForStream(stream)) {
             StreamConfig streamConfig = streamConfigs.get(stream);
             contextController.addRequestedValues(event, streamConfig);
             if (curationController.eventPassesCurationRules(event, streamConfig)) {
-                outputBuffer.add(event);
+                switch (streamConfig.getDestinationEventService()) {
+                    case ANALYTICS:
+                        validatedEvents.add(event);
+                        break;
+                    case ERROR_LOGGING:
+                        validatedErrors.add(event);
+                        break;
+                    default:
+                        // TODO: Log client error
+                        break;
+                }
             }
         }
     }
@@ -146,15 +156,25 @@ public final class MetricsClient {
      *
      * Visible for testing.
      */
-    synchronized void moveInputBufferEventsToOutputBuffer() {
-        while (!inputBuffer.isEmpty()) {
-            Event event = inputBuffer.remove();
+    synchronized void processUnvalidatedEvents() {
+        while (!unvalidatedEvents.isEmpty()) {
+            Event event = unvalidatedEvents.remove();
             String stream = event.getStream();
             if (shouldProcessEventsForStream(stream)) {
                 StreamConfig streamConfig = streamConfigs.get(stream);
                 contextController.addRequestedValues(event, streamConfig);
                 if (curationController.eventPassesCurationRules(event, streamConfig)) {
-                    outputBuffer.add(event);
+                    switch (streamConfig.getDestinationEventService()) {
+                        case ANALYTICS:
+                            validatedEvents.add(event);
+                            break;
+                        case ERROR_LOGGING:
+                            validatedErrors.add(event);
+                            break;
+                        default:
+                            // TODO: Log client error
+                            break;
+                    }
                 }
             }
         }
@@ -169,7 +189,7 @@ public final class MetricsClient {
             @Override
             public void onSuccess(Map<String, StreamConfig> fetchedStreamConfigs) {
                 setStreamConfigs(fetchedStreamConfigs);
-                moveInputBufferEventsToOutputBuffer();
+                processUnvalidatedEvents();
             }
 
             @Override
@@ -205,23 +225,26 @@ public final class MetricsClient {
      * TODO: Add client error logging.
      */
     void sendEnqueuedEvents() {
-        List<Event> eventsToSend = (ArrayList<Event>)outputBuffer.clone(); // shallow copy
-        integration.sendEvents(DestinationEventService.ANALYTICS.getBaseUri(), eventsToSend,
-                new MetricsClientIntegration.SendEventsCallback() {
-                    @Override
-                    public void onSuccess() {
-                        // Sending succeeded; remove sent events from the output buffer.
-                        for (Event event : eventsToSend) {
-                            outputBuffer.remove(event);
-                        }
-                    }
+        Arrays.asList(validatedEvents, validatedErrors).forEach((buffer) -> {
+            if (buffer.isEmpty()) {
+                return;
+            }
+            List<Event> pendingEvents = buffer.peekAll();
+            MetricsClientIntegration.SendEventsCallback callback = new MetricsClientIntegration.SendEventsCallback() {
+                @Override
+                public void onSuccess() {
+                    // Sending succeeded; remove sent events from the output buffer.
+                    buffer.removeAll(pendingEvents);
+                }
 
-                    @Override
-                    public void onFailure() {
-                        // Sending failed, events remain in output buffer :'(
-                        // TODO: Verify that this is what we want to happen, ensure all libraries are in sync
-                    }
-                });
+                @Override
+                public void onFailure() {
+                    // Sending failed, events remain in output buffer :'(
+                    // TODO: Verify that this is what we want to happen, ensure all libraries are in sync
+                }
+            };
+            integration.sendEvents(buffer.getDestinationService().getBaseUri(), pendingEvents, callback);
+        });
     }
 
     /**
@@ -258,7 +281,8 @@ public final class MetricsClient {
                 contextController,
                 new CurationController(),
                 new CircularFifoQueue<>(128),
-                new ArrayList<>(),
+                new EventBuffer(DestinationEventService.ANALYTICS),
+                new EventBuffer(DestinationEventService.ERROR_LOGGING),
                 null,
                 null
         );
@@ -272,8 +296,11 @@ public final class MetricsClient {
      * @param samplingController sampling controller
      * @param contextController context controller
      * @param curationController curation controller
-     * @param inputBuffer buffer for unverified events prior to stream configs being fetched
-     * @param outputBuffer buffer for verified events pending submission to event platform intake
+     * @param unvalidatedEvents buffer for unverified events prior to stream configs being fetched
+     * @param validatedEvents buffer for verified events pending submission to analytics event intake
+     * @param validatedErrors buffer for verified events pending submission to error logging intake
+     * @param fetchStreamConfigsTask optional custom implementation of stream configs fetch task (for testing)
+     * @param eventSubmissionTask optional custom implementation of event submission task (for testing)
      */
     MetricsClient(
             MetricsClientIntegration integration,
@@ -281,8 +308,9 @@ public final class MetricsClient {
             SamplingController samplingController,
             ContextController contextController,
             CurationController curationController,
-            Queue<Event> inputBuffer,
-            ArrayList<Event> outputBuffer,
+            Queue<Event> unvalidatedEvents,
+            EventBuffer validatedEvents,
+            EventBuffer validatedErrors,
             TimerTask fetchStreamConfigsTask,
             TimerTask eventSubmissionTask
     ) {
@@ -291,8 +319,9 @@ public final class MetricsClient {
         this.samplingController = samplingController;
         this.contextController = contextController;
         this.curationController = curationController;
-        this.inputBuffer = inputBuffer;
-        this.outputBuffer = outputBuffer;
+        this.unvalidatedEvents = unvalidatedEvents;
+        this.validatedEvents = validatedEvents;
+        this.validatedErrors = validatedErrors;
 
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
         TIMER.schedule(fetchStreamConfigsTask != null ? fetchStreamConfigsTask : new FetchStreamConfigsTask(), 0, STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL);

@@ -14,7 +14,7 @@ enum DestinationEventService {
             "https://intake-analytics.wikimedia.org"
             ),
 
-    @SerializedName("eventgate-logging-external") LOGGING (
+    @SerializedName("eventgate-logging-external") ERROR_LOGGING (
             "https://intake-logging.wikimedia.org"
             );
 

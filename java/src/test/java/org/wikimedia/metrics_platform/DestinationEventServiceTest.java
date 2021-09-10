@@ -9,7 +9,7 @@ public class DestinationEventServiceTest {
 
     @Test
     public void testDestinationEventService() {
-        DestinationEventService loggingService = DestinationEventService.LOGGING;
+        DestinationEventService loggingService = DestinationEventService.ERROR_LOGGING;
         assertThat(loggingService.getBaseUri(), is("https://intake-logging.wikimedia.org"));
     }
 

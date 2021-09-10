@@ -23,8 +23,9 @@ public class MetricsClientTest {
     private final SamplingController mockSamplingController = mock(SamplingController.class);
     private final ContextController mockContextController = mock(ContextController.class);
     private final CurationController mockCurationController = mock(CurationController.class);
-    private final Queue<Event> mockInputBuffer = mock(Queue.class);
-    private final ArrayList<Event> mockOutputBuffer = mock(ArrayList.class);
+    private final Queue<Event> mockUnvalidatedEvents = mock(Queue.class);
+    private final EventBuffer mockValidatedEvents = mock(EventBuffer.class);
+    private final EventBuffer mockValidatedErrors = mock(EventBuffer.class);
 
     private final MetricsClient client = new MetricsClient(
             mockIntegration,
@@ -32,15 +33,17 @@ public class MetricsClientTest {
             mockSamplingController,
             mockContextController,
             mockCurationController,
-            mockInputBuffer,
-            mockOutputBuffer,
+            mockUnvalidatedEvents,
+            mockValidatedEvents,
+            mockValidatedErrors,
             null,
             null
     );
 
     @BeforeEach
     public void resetClient() {
-        reset(mockIntegration, mockSessionController, mockSamplingController, mockInputBuffer, mockOutputBuffer);
+        reset(mockIntegration, mockSessionController, mockSamplingController, mockUnvalidatedEvents,
+                mockValidatedEvents, mockValidatedErrors);
         client.setStreamConfigs(Collections.emptyMap());
     }
 
@@ -89,11 +92,11 @@ public class MetricsClientTest {
     }
 
     @Test
-    public void testEventSentToInputBufferOnSubmit() {
+    public void testSubmitEventWithNoStreamConfigs() {
         Event event = new Event("test/event/1.0.0", "test_event");
         client.submit(event, "test_event");
-        verify(mockInputBuffer, times(1)).add(event);
-        verify(mockOutputBuffer, times(0)).add(any(Event.class));
+        verify(mockUnvalidatedEvents, times(1)).add(event);
+        verify(mockValidatedEvents, times(0)).add(any(Event.class));
     }
 
     @Test
@@ -105,23 +108,23 @@ public class MetricsClientTest {
 
         Event event = new Event("test/event/1.0.0", "test_event");
         client.submit(event, "test_event");
-        verify(mockInputBuffer, times(0)).add(any(Event.class));
-        verify(mockOutputBuffer, times(1)).add(event);
+        verify(mockUnvalidatedEvents, times(0)).add(any(Event.class));
+        verify(mockValidatedEvents, times(1)).add(event);
     }
 
     @Test
-    public void testMoveInputBufferEventsToOutputBuffer() {
+    public void testProcessUnvalidatedEvents() {
         Map<String, StreamConfig> streamConfigs = setStreamConfigs();
         when(mockSamplingController.isInSample(streamConfigs.get("test_event"))).thenReturn(true);
-        when(mockInputBuffer.remove()).thenReturn(
+        when(mockUnvalidatedEvents.remove()).thenReturn(
                 new Event("test/event/1.0.0", "test_event"),
                 new Event("no/such/stream", "no_such_stream")
         );
-        when(mockInputBuffer.isEmpty()).thenReturn(false).thenReturn(false).thenReturn(true);
+        when(mockUnvalidatedEvents.isEmpty()).thenReturn(false).thenReturn(false).thenReturn(true);
         when(mockCurationController.eventPassesCurationRules(any(Event.class), any(StreamConfig.class)))
                 .thenReturn(true);
-        client.moveInputBufferEventsToOutputBuffer();
-        verify(mockOutputBuffer, times(1)).add(any(Event.class));
+        client.processUnvalidatedEvents();
+        verify(mockValidatedEvents, times(1)).add(any(Event.class));
     }
 
     @Test
@@ -135,8 +138,12 @@ public class MetricsClientTest {
         setStreamConfigs();
 
         Event event = new Event("foo", "bar");
-        when(mockOutputBuffer.clone()).thenReturn(new ArrayList<>(Collections.singletonList(event)));
-        when(mockOutputBuffer.isEmpty()).thenReturn(false, true);
+        when(mockValidatedEvents.peekAll()).thenReturn(new ArrayList<>(Collections.singletonList(event)));
+        when(mockValidatedEvents.getDestinationService()).thenReturn(DestinationEventService.ANALYTICS);
+        when(mockValidatedEvents.isEmpty()).thenReturn(false, true);
+        when(mockValidatedErrors.peekAll()).thenReturn(Collections.emptyList());
+        when(mockValidatedErrors.getDestinationService()).thenReturn(DestinationEventService.ERROR_LOGGING);
+        when(mockValidatedErrors.isEmpty()).thenReturn(true);
 
         client.new EventSubmissionTask().run();
         verify(mockIntegration, times(1)).sendEvents(anyString(), anyCollection(), any(MetricsClientIntegration.SendEventsCallback.class));
@@ -153,8 +160,9 @@ public class MetricsClientTest {
                 new SamplingController(integration, sessionController),
                 mockContextController,
                 mockCurationController,
-                mockInputBuffer,
-                new ArrayList<>(),
+                mockUnvalidatedEvents,
+                new EventBuffer(DestinationEventService.ANALYTICS),
+                new EventBuffer(DestinationEventService.ERROR_LOGGING),
                 new TimerTask() { @Override public void run() { } },
                 new TimerTask() { @Override public void run() { } }
         );
@@ -169,7 +177,7 @@ public class MetricsClientTest {
 
         testClient.submit(event, "test.event");
         testClient.sendEnqueuedEvents();
-        assertThat(testClient.outputBuffer.isEmpty(), is(true));
+        assertThat(testClient.validatedEvents.isEmpty(), is(true));
     }
 
     @Test
@@ -183,8 +191,9 @@ public class MetricsClientTest {
                 new SamplingController(integration, sessionController),
                 mockContextController,
                 mockCurationController,
-                mockInputBuffer,
-                new ArrayList<>(),
+                mockUnvalidatedEvents,
+                new EventBuffer(DestinationEventService.ANALYTICS),
+                new EventBuffer(DestinationEventService.ERROR_LOGGING),
                 new TimerTask() { @Override public void run() { } },
                 new TimerTask() { @Override public void run() { } }
         );
@@ -199,7 +208,7 @@ public class MetricsClientTest {
 
         testClient.submit(event, "test.event");
         testClient.sendEnqueuedEvents();
-        assertThat(testClient.outputBuffer.isEmpty(), is(false));
+        assertThat(testClient.validatedEvents.isEmpty(), is(false));
     }
 
     /**
