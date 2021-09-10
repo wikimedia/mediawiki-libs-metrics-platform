@@ -16,10 +16,18 @@ final class SamplingControllerTests: XCTestCase {
         let samplingConfig = SamplingConfig(rate: 0.5, identifier: "session")
         let clientConfig = StreamConfig.ProducerConfig.MetricsPlatformClientConfig(samplingConfig: samplingConfig)
         let producerConfig = StreamConfig.ProducerConfig(clientConfig: clientConfig)
-        let streamConfigWithSamplingConfig = StreamConfig(stream: "test.event", schema: "test/event", producerConfig: producerConfig)
-
-        let streamConfigWithoutSamplingConfig = StreamConfig(stream: "test.event", schema: "test/event", producerConfig: nil)
-
+        let streamConfigWithSamplingConfig = StreamConfig(
+                stream: "test.event",
+                schema: "test/event",
+                destination: DestinationEventService.analytics,
+                producerConfig: producerConfig
+        )
+        let streamConfigWithoutSamplingConfig = StreamConfig(
+                stream: "test.event",
+                schema: "test/event",
+                destination: DestinationEventService.analytics,
+                producerConfig: nil
+        )
         self.streamConfigs = [
             "hasSamplingConfig": streamConfigWithSamplingConfig,
             "noSamplingConfig": streamConfigWithoutSamplingConfig

@@ -4,6 +4,7 @@ import Foundation
 struct StreamConfig: Decodable {
     var stream: String
     var schema: String
+    var destination: DestinationEventService
     var producerConfig: ProducerConfig?
 
     func getSamplingConfig() -> SamplingConfig? {
@@ -13,6 +14,7 @@ struct StreamConfig: Decodable {
     enum CodingKeys: String, CodingKey {
         case stream
         case schema = "schema_title"
+        case destination = "destination_event_service"
         case producerConfig = "producers"
     }
 
