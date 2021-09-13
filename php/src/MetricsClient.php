@@ -7,6 +7,9 @@ class MetricsClient {
 	/** @var Integration */
 	private $integration;
 
+	/** @var ContextController */
+	private $contextController;
+
 	/**
 	 * @param Integration $integration
 	 * @return MetricsClient
@@ -22,6 +25,7 @@ class MetricsClient {
 	 */
 	private function __construct( Integration $integration ) {
 		$this->integration = $integration;
+		$this->contextController = new ContextController( $integration );
 	}
 
 	/**
@@ -44,6 +48,7 @@ class MetricsClient {
 			return false;
 		}
 		$event = self::prepareEvent( $streamName, $event );
+		$event = $this->contextController->addRequestedValues( $event, $streamConfig );
 		$this->integration->send( $event );
 		return true;
 	}
