@@ -26,10 +26,12 @@ struct StreamConfig: Decodable {
         struct MetricsPlatformClientConfig: Decodable {
             var samplingConfig: SamplingConfig?
             var requestedValues: [ContextValue]?
+            var curationFilter: CurationFilter?
 
             enum CodingKeys: String, CodingKey {
                 case samplingConfig = "sampling"
                 case requestedValues = "provide_values"
+                case curationFilter = "curation"
             }
         }
     }
