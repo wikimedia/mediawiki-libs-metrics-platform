@@ -7,6 +7,7 @@ use Wikimedia\TestingAccessWrapper;
 
 require_once __DIR__ . '/TestIntegration.php';
 
+/** @covers \Wikimedia\Metrics\ContextController */
 class ContextControllerTest extends \PHPUnit\Framework\TestCase {
 
 	/** @var ContextController */
@@ -58,7 +59,6 @@ class ContextControllerTest extends \PHPUnit\Framework\TestCase {
 		];
 	}
 
-	/** @covers \Wikimedia\Metrics\ContextController::addRequestedValues */
 	public function testAddContextValues() : void {
 		$baseEvent = [
 			'$schema' => "test/event",
