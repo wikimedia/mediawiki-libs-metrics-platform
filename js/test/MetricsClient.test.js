@@ -10,7 +10,7 @@
 			'metrics.platform.test': {
 				schema_title: 'metrics/platform/test',
 				provide_values: [
-					'skin'
+					'mediawiki_skin'
 				]
 			}
 		},
