@@ -1,2 +1,4 @@
 node_modules/
 .eslintcache
+.nyc_output/
+js.iml

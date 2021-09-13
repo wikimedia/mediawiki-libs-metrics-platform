@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 ( function () {
-	var TestIntegration = require( './TestIntegration.js' );
+	var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
 	var ContextController = require( '../src/ContextController.js' );
 
-	var integration = new TestIntegration();
+	var integration = new TestMetricsClientIntegration();
 	var contextController = new ContextController( integration );
 
 	var streamConfig = {
@@ -28,7 +28,7 @@
 					'user_can_probably_edit_page',
 					'user_edit_count',
 					'user_edit_count_bucket',
-					'user_registration_dt',
+					'user_registration_timestamp',
 					'user_language',
 					'user_language_variant',
 					'mediawiki_skin',
@@ -67,7 +67,7 @@
 		assert.strictEqual( event.user.can_probably_edit_page, true );
 		assert.strictEqual( event.user.edit_count, 10 );
 		assert.strictEqual( event.user.edit_count_bucket, '5-99 edits' );
-		assert.strictEqual( typeof event.user.registration_dt, 'number' );
+		assert.strictEqual( event.user.registration_timestamp, 1427224089000 );
 		assert.strictEqual( event.user.language, 'zh' );
 		assert.strictEqual( event.user.language_variant, 'zh-tw' );
 

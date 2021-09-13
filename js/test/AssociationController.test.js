@@ -1,8 +1,8 @@
 ( function () {
-	var TestIntegration = require( './TestIntegration.js' );
+	var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
 	var AssociationController = require( '../src/AssociationController.js' );
 
-	var integration = new TestIntegration();
+	var integration = new TestMetricsClientIntegration();
 	var associationController = new AssociationController( integration );
 
 	QUnit.module( 'AssociationController' );

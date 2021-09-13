@@ -3,15 +3,19 @@
 
 	var sinon = require( 'sinon' ),
 
-		TestIntgration = require( './TestIntegration.js' ),
+		TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' ),
 		MetricsClient = require( '../src/MetricsClient.js' ),
 
 		streamConfigs = {
 			'metrics.platform.test': {
 				schema_title: 'metrics/platform/test',
-				provide_values: [
-					'mediawiki_skin'
-				]
+				producers: {
+					metrics_platform_client: {
+						provide_values: [
+							'mediawiki_skin'
+						]
+					}
+				}
 			}
 		},
 
@@ -27,7 +31,7 @@
 			dt: '2021-05-12T00:00:00.000Z'
 		},
 
-		integration = new TestIntgration(),
+		integration = new TestMetricsClientIntegration(),
 		metricsClient = new MetricsClient( integration, streamConfigs ),
 
 		stubs = [
