@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4ec2528_92028898",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6459
+      },
+      "writtenOn": "2021-09-13T19:36:42Z",
+      "side": 1,
+      "message": "Awesome lgtm as discussed",
+      "revId": "684baac60322f763b2aeec87084707a65c23b3d7",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
