@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c9a0727_d5e12ed2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6459
+      },
+      "writtenOn": "2021-09-13T19:55:06Z",
+      "side": 1,
+      "message": "Note to look at curation coverage (seems low). Otherwise lgtm",
+      "revId": "3ce9452b45abbf8e69eaa66660ba5a3ce0925c2a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
