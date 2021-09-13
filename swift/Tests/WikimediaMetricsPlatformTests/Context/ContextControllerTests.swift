@@ -39,7 +39,12 @@ final class ContextControllerTests: XCTestCase {
         ]
         let clientConfig = StreamConfig.ProducerConfig.MetricsPlatformClientConfig(requestedValues: requestedValues)
         let producerConfig = StreamConfig.ProducerConfig(clientConfig: clientConfig)
-        let streamConfig = StreamConfig(stream: "test.event", schema: "test/event", producerConfig: producerConfig)
+        let streamConfig = StreamConfig(
+                stream: "test.event",
+                schema: "test/event",
+                destination: DestinationEventService.analytics,
+                producerConfig: producerConfig
+        )
         self.streamConfigs = ["test.event": streamConfig]
     }
 

@@ -34,7 +34,6 @@
  */
 import Foundation
 import FoundationNetworking
-import DequeModule
 
 /**
  * Wikimedia Metrics Client - Swift
@@ -65,12 +64,17 @@ public class MetricsClient {
      * about how to evaluate incoming event data. Until this initialization is complete, we store any incoming
      * events in this buffer.
      */
-    private var inputBuffer: LimitedCapacityDeque<Event> = LimitedCapacityDeque(capacity: 128)
+    private var unvalidatedEvents: LimitedCapacityDeque<Event> = LimitedCapacityDeque(capacity: 128)
 
     /**
-     * Holds validated events that have been scheduled for POSTing
+     * Holds validated events that have been scheduled for POSTing to the analytics event intake service
      */
-    private var outputBuffer: Deque<Event> = Deque()
+    private var validatedEvents = EventBuffer(destination: URL(string: "https://intake-analytics.wikimedia.org/v1/events")!)
+
+    /**
+     * Holds validated error events that have been scheduled for POSTing to the error logging intake service
+     */
+    private var validatedErrors = EventBuffer(destination: URL(string: "https://intake-logging.wikimedia.org/v1/events")!)
 
     /**
      * Serial dispatch queue that enables working with properties in a thread-safe way
@@ -91,27 +95,12 @@ public class MetricsClient {
     private let dateFormatter = ISO8601DateFormatter()
 
     /**
-     * Where to send events to for intake
-     *
-     * See [wikitech:Event Platform/EventGate](https://wikitech.wikimedia.org/wiki/Event_Platform/EventGate)
-     * for more information. Specifically, the section on **eventgate-analytics-external**.  This service uses the stream
-     * configurations from Meta wiki as its source of truth.
-     */
-    private let eventIntakeURI = URL(string: "https://intake-analytics.wikimedia.org/v1/events")!
-
-    /**
      * MediaWiki API endpoint which returns stream configurations as JSON
      *
      * Streams are configured via [mediawiki-config/wmf-config/InitialiseSettings.php](https://gerrit.wikimedia.org/g/operations/mediawiki-config/+/master/wmf-config/InitialiseSettings.php)
      * and made available for external consumption via MediaWiki API via [Extension:EventStreamConfig](https://gerrit.wikimedia.org/g/mediawiki/extensions/EventStreamConfig/)
-     *
-     * In production, we use [Meta wiki](https://meta.wikimedia.org/wiki/Main_Page)
-     * [streamconfigs endpoint](https://meta.wikimedia.org/w/api.php?action=help&modules=streamconfigs)
-     * with the constraint that the `destination_event_service` is configured to
-     * be "eventgate-analytics-external" (to filter out irrelevant streams from
-     * the returned list of stream configurations).
      */
-    private let streamConfigsURI = URL(string: "https://meta.wikimedia.org/w/api.php?action=streamconfigs&format=json&constraints=destination_event_service=eventgate-analytics-external")!
+    private let streamConfigsURI = URL(string: "https://meta.wikimedia.org/w/api.php?action=streamconfigs&format=json&all_settings")!
 
     /**
      * Dictionary of stream configurations keyed by stream name.
@@ -186,7 +175,7 @@ public class MetricsClient {
 
         queue.async {
             if self.streamConfigs == nil {
-                self.inputBuffer.append(event)
+                self.unvalidatedEvents.append(event)
                 return
             }
             guard let config = self.streamConfigs?[stream] else {
@@ -197,7 +186,13 @@ public class MetricsClient {
                 NSLog("MetricsClient: Stream '\(stream)' is not in sample")
                 return
             }
-            self.outputBuffer.append(event)
+            if config.destination == DestinationEventService.analytics {
+                self.validatedEvents.append(event)
+            } else if config.destination == DestinationEventService.errorLogging {
+                self.validatedErrors.append(event)
+            } else {
+                // TODO: Unknown destination service; Log a client error
+            }
         }
     }
 
@@ -262,61 +257,69 @@ public class MetricsClient {
                 NSLog("MetricsClient: Problem processing JSON payload from response: \(error)")
             }
 
-            self.processInputBuffer()
+            self.processUnvalidatedEvents()
         }
     }
 
     /**
-     * Process input buffer upon stream configs becoming available.
+     * Process unvalidated events upon stream configs becoming available.
      */
-    private func processInputBuffer() {
+    private func processUnvalidatedEvents() {
         queue.sync {
-            while let event = self.inputBuffer.popFirst() {
+            while let event = self.unvalidatedEvents.popFirst() {
                 guard let config = streamConfigs?[event.meta.stream] else {
                     continue
                 }
                 guard samplingController.inSample(stream: event.meta.stream, config: config) else {
                     continue
                 }
-                self.outputBuffer.append(event)
+                if config.destination == DestinationEventService.analytics {
+                    self.validatedEvents.append(event)
+                } else if config.destination == DestinationEventService.errorLogging {
+                    self.validatedErrors.append(event)
+                } else {
+                    // TODO: Unknown destination service; Log a client error
+                }
             }
         }
     }
 
     private func postAllScheduled(_ completion: (() -> Void)? = nil) {
         encodeQueue.async {
-            NSLog("MetricsClient: Posting all scheduled events")
+            [self.validatedEvents, self.validatedErrors].forEach { buffer in
+                NSLog("MetricsClient: Posting all scheduled events")
 
-            var eventsToSend: [Event] = []
-            while let event = self.outputBuffer.popFirst() {
-                eventsToSend.append(event)
-            }
+                var eventsToSend: [Event] = []
+                while let event = buffer.popFirst() {
+                    eventsToSend.append(event)
+                }
 
-            var data: Data
-            do {
-                data = try self.encoder.encode(eventsToSend)
-            } catch {
-                NSLog("MetricsClient: Error encoding events pending submission")
-                return
-            }
+                var data: Data
+                do {
+                    data = try self.encoder.encode(eventsToSend)
+                } catch {
+                    NSLog("MetricsClient: Error encoding events pending submission")
+                    return
+                }
 
-            #if DEBUG
-            if let jsonString = String(data: data, encoding: .utf8) {
-                NSLog("MetricsClient: Sending event with POST body:\n\(jsonString)")
-            }
-            #endif
+                #if DEBUG
+                if let jsonString = String(data: data, encoding: .utf8) {
+                    NSLog("MetricsClient: Sending event with POST body:\n\(jsonString)")
+                }
+                #endif
 
-            self.integration.httpPost(self.eventIntakeURI, body: data) { result in
-                switch result {
-                case .success:
-                    NSLog("MetricsClient: Event submission succeeded")
-                    break
-                case .failure:
-                    // Re-enqueue event to be retried on next POST attempt
-                    for failedEvent in eventsToSend.reversed() {
-                        self.outputBuffer.prepend(failedEvent)
+                self.integration.httpPost(buffer.destination, body: data) { result in
+                    switch result {
+                    case .success:
+                        NSLog("MetricsClient: Event submission succeeded")
+                        break
+                    case .failure:
+                        // Re-enqueue event to be retried on next POST attempt
+                        for failedEvent in eventsToSend.reversed() {
+                            buffer.prepend(failedEvent)
+                        }
+                        NSLog("MetricsClient: Event submission failed; re-enqueuing to retry later")
                     }
-                    NSLog("MetricsClient: Event submission failed; re-enqueuing to retry later")
                 }
             }
         }
