@@ -1,0 +1,8 @@
+version: v4
+variants:
+  test:
+    base: docker-registry.wikimedia.org/dev/buster-swift53
+    copies: [local]
+    runs:
+      insecurely: true
+    entrypoint: [swift, test]
