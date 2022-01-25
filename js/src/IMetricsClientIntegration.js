@@ -1,10 +1,14 @@
-/* eslint-disable no-use-before-define, no-unused-vars, jsdoc/require-returns-check */
 /**
  * Default integration layer for the metrics client.
  *
  * This is intended as an interface. Client integration code should implement all stubbed methods.
  */
+/* eslint-disable no-unused-vars, jsdoc/require-returns-check */
 ( function () {
+
+	function defaultNull( val ) {
+		return val === undefined ? null : val;
+	}
 
 	/**
 	 * @constructor
@@ -287,10 +291,6 @@
 	IMetricsClientIntegration.prototype.clone = function ( obj ) {
 		throw new Error( 'Stub!' );
 	};
-
-	function defaultNull( val ) {
-		return val === undefined ? null : val;
-	}
 
 	module.exports = IMetricsClientIntegration;
 

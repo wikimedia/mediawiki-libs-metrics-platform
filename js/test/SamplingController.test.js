@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 ( function () {
 
 	var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' ),
@@ -82,25 +81,25 @@
 			}
 		};
 
-		assert.strictEqual( samplingController.streamInSample( conf.nonExistentStream ), false );
-		assert.strictEqual( samplingController.streamInSample( conf.emptyConfig ), true );
-		assert.strictEqual( samplingController.streamInSample( conf.nonemptyConfigNoSample ), true );
-		assert.strictEqual( samplingController.streamInSample( conf.zeroRateValidUnit ), false );
-
-		assert.strictEqual( samplingController.streamInSample( conf.validRateInvalidUnit ), false );
-		assert.strictEqual( samplingController.streamInSample( conf.validRateMissingUnit ), false );
-
-		assert.strictEqual( samplingController.streamInSample( conf.tooHighRateValidUnit ), false );
-		assert.strictEqual( samplingController.streamInSample( conf.tooHighRateInvalidUnit ), false );
-		assert.strictEqual( samplingController.streamInSample( conf.tooHighRateMissingUnit ), false );
-
-		assert.strictEqual( samplingController.streamInSample( conf.tooLowRateValidUnit ), false );
-		assert.strictEqual( samplingController.streamInSample( conf.tooLowRateInvalidUnit ), false );
-		assert.strictEqual( samplingController.streamInSample( conf.tooLowRateMissingUnit ), false );
-
-		assert.strictEqual( samplingController.streamInSample( conf.missingRateValidUnit ), false );
-		assert.strictEqual( samplingController.streamInSample( conf.missingRateInvalidUnit ), false );
-		assert.strictEqual( samplingController.streamInSample( conf.missingRateMissingUnit ), false );
+		[
+			[ conf.nonExistentStream, false ],
+			[ conf.emptyConfig, true ],
+			[ conf.nonemptyConfigNoSample, true ],
+			[ conf.zeroRateValidUnit, false ],
+			[ conf.validRateInvalidUnit, false ],
+			[ conf.validRateMissingUnit, false ],
+			[ conf.tooHighRateValidUnit, false ],
+			[ conf.tooHighRateInvalidUnit, false ],
+			[ conf.tooHighRateMissingUnit, false ],
+			[ conf.tooLowRateValidUnit, false ],
+			[ conf.tooLowRateInvalidUnit, false ],
+			[ conf.tooLowRateMissingUnit, false ],
+			[ conf.missingRateValidUnit, false ],
+			[ conf.missingRateInvalidUnit, false ],
+			[ conf.missingRateMissingUnit, false ]
+		].forEach( function ( value ) {
+			assert.strictEqual( samplingController.streamInSample( value[ 0 ] ), value[ 1 ] );
+		} );
 	} );
 
 	QUnit.test( 'streamInSample() - session sampling is deterministic', function ( assert ) {
@@ -141,7 +140,8 @@
 		var UINT32_MAX = 4294967295, // (2^32) - 1
 			id = associationController.generateId(),
 			probabilityInSample = parseInt( id.slice( 0, 8 ), 16 ) / UINT32_MAX;
-		assert.ok( probabilityInSample >= 0 && probabilityInSample <= 1 );
+
+		assert.strictEqual( probabilityInSample >= 0 && probabilityInSample <= 1, true );
 	} );
 
 }() );

@@ -37,7 +37,9 @@
 		stubs = [
 			sinon.stub( integration, 'enqueueEvent' ),
 			sinon.stub( integration, 'logWarning' )
-		];
+		],
+
+		hasOwnProperty = Object.hasOwnProperty;
 
 	QUnit.module( 'MetricsClient', {
 		beforeEach: function () {
@@ -66,15 +68,15 @@
 
 	QUnit.test( 'addRequiredMetadata() - modern event', function ( assert ) {
 		modernEvent = metricsClient.addRequiredMetadata( modernEvent, 'metrics.platform.test' );
-		assert.ok( modernEvent.dt, 'dt should be set' );
+		assert.strictEqual( hasOwnProperty.call( modernEvent, 'dt' ), true, 'dt should be set' );
 		assert.strictEqual( modernEvent.meta.stream, 'metrics.platform.test', 'meta.stream should match provided stream name' );
 		assert.strictEqual( modernEvent.meta.domain, 'test.example.com', 'meta.domain should match webHost field' );
 	} );
 
 	QUnit.test( 'addRequiredMetadata() - legacy event', function ( assert ) {
 		legacyEvent = metricsClient.addRequiredMetadata( legacyEvent, 'metrics.platform.test' );
-		assert.ok( legacyEvent.client_dt, 'client_dt should be set' );
-		assert.notOk( legacyEvent.dt, 'dt should not be set' );
+		assert.strictEqual( hasOwnProperty.call( legacyEvent, 'client_dt' ), true, 'client_dt should be set' );
+		assert.strictEqual( hasOwnProperty.call( legacyEvent, 'dt' ), false, 'dt should not be set' );
 		assert.strictEqual( legacyEvent.meta.stream, 'metrics.platform.test', 'meta.stream should match provided stream name' );
 		assert.strictEqual( legacyEvent.meta.domain, 'test.example.com', 'meta.domain should match webHost field' );
 	} );

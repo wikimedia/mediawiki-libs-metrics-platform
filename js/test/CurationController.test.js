@@ -6,49 +6,67 @@
 	QUnit.module( 'curationController' );
 
 	QUnit.test( 'equals', function ( assert ) {
-		assert.ok( curationController.applyRules( 1, { equals: 1 } ) );
-		assert.ok( curationController.applyRules( 'a', { equals: 'a' } ) );
-		assert.notOk( curationController.applyRules( 1, { equals: 0 } ) );
-		assert.notOk( curationController.applyRules( '1', { equals: 1 } ) );
-		assert.notOk( curationController.applyRules( '0', { equals: 0 } ) );
-		assert.notOk( curationController.applyRules( 0, { equals: undefined } ) );
+		assert.strictEqual( curationController.applyRules( 1, { equals: 1 } ), true );
+		assert.strictEqual( curationController.applyRules( 'a', { equals: 'a' } ), true );
+		assert.strictEqual( curationController.applyRules( 1, { equals: 0 } ), false );
+		assert.strictEqual( curationController.applyRules( '1', { equals: 1 } ), false );
+		assert.strictEqual( curationController.applyRules( '0', { equals: 0 } ), false );
+		assert.strictEqual( curationController.applyRules( 0, { equals: undefined } ), false );
 	} );
 
 	QUnit.test( 'greaterThan', function ( assert ) {
-		assert.ok( curationController.applyRules( 1, { greater_than: 0 } ) );
-		assert.ok( curationController.applyRules( 1.2, { greater_than: 1.1 } ) );
-		assert.notOk( curationController.applyRules( 1.1, { greater_than: 1.1 } ) );
-		assert.notOk( curationController.applyRules( 0, { greater_than: 1 } ) );
-		assert.notOk( curationController.applyRules( 0, { greater_than: 0 } ) );
+		assert.strictEqual( curationController.applyRules( 1, { greater_than: 0 } ), true );
+		assert.strictEqual( curationController.applyRules( 1.2, { greater_than: 1.1 } ), true );
+		assert.strictEqual( curationController.applyRules( 1.1, { greater_than: 1.1 } ), false );
+		assert.strictEqual( curationController.applyRules( 0, { greater_than: 1 } ), false );
+		assert.strictEqual( curationController.applyRules( 0, { greater_than: 0 } ), false );
 	} );
 
 	QUnit.test( 'lessThan', function ( assert ) {
-		assert.ok( curationController.applyRules( 0, { less_than: 1 } ) );
-		assert.ok( curationController.applyRules( 1.1, { less_than: 1.2 } ) );
-		assert.notOk( curationController.applyRules( 1.1, { less_than: 1.1 } ) );
-		assert.notOk( curationController.applyRules( 1, { less_than: 0 } ) );
-		assert.notOk( curationController.applyRules( 0, { less_than: 0 } ) );
+		assert.strictEqual( curationController.applyRules( 0, { less_than: 1 } ), true );
+		assert.strictEqual( curationController.applyRules( 1.1, { less_than: 1.2 } ), true );
+		assert.strictEqual( curationController.applyRules( 1.1, { less_than: 1.1 } ), false );
+		assert.strictEqual( curationController.applyRules( 1, { less_than: 0 } ), false );
+		assert.strictEqual( curationController.applyRules( 0, { less_than: 0 } ), false );
 	} );
 
 	QUnit.test( 'in', function ( assert ) {
-		assert.ok( curationController.applyRules( 1, { in: [ 1 ] } ) );
-		assert.notOk( curationController.applyRules( 1, { in: [ 0 ] } ) );
+		assert.strictEqual( curationController.applyRules( 1, { in: [ 1 ] } ), true );
+		assert.strictEqual( curationController.applyRules( 1, { in: [ 0 ] } ), false );
 	} );
 
 	QUnit.test( 'contains', function ( assert ) {
-		assert.ok( curationController.applyRules( [ 1 ], { contains: 1 } ) );
-		assert.notOk( curationController.applyRules( [ 1 ], { contains: 0 } ) );
+		assert.strictEqual( curationController.applyRules( [ 1 ], { contains: 1 } ), true );
+		assert.strictEqual( curationController.applyRules( [ 1 ], { contains: 0 } ), false );
 	} );
 
 	QUnit.test( 'containsAll', function ( assert ) {
-		assert.ok( curationController.applyRules( [ 0, 1 ], { contains_all: [ 0, 1 ] } ) );
-		assert.ok( curationController.applyRules( [ 0, 1 ], { contains_all: [ 1, 0 ] } ) );
-		assert.notOk( curationController.applyRules( [], { contains_all: [ 1 ] } ) );
+		assert.strictEqual(
+			curationController.applyRules( [ 0, 1 ], { contains_all: [ 0, 1 ] } ),
+			true
+		);
+		assert.strictEqual(
+			curationController.applyRules( [ 0, 1 ], { contains_all: [ 1, 0 ] } ),
+			true
+		);
+		assert.strictEqual( curationController.applyRules( [], { contains_all: [ 1 ] } ), false );
 	} );
 
 	QUnit.test( 'containsAny', function ( assert ) {
-		assert.ok( curationController.applyRules( [ 0, 1 ], { contains_any: [ 0, 1 ] } ) );
-		assert.ok( curationController.applyRules( [ 0, 1 ], { contains_any: [ 1, 2 ] } ) );
+		assert.strictEqual(
+			curationController.applyRules(
+				[ 0, 1 ],
+				{ contains_any: [ 0, 1 ] }
+			),
+			true
+		);
+		assert.strictEqual(
+			curationController.applyRules(
+				[ 0, 1 ],
+				{ contains_any: [ 1, 2 ] }
+			),
+			true
+		);
 	} );
 
 	QUnit.test( 'shouldProduceEvent()', function ( assert ) {
@@ -103,39 +121,74 @@
 			};
 		}
 
-		assert.ok( curationController.shouldProduceEvent( baseEvent(), streamConfig ) );
+		assert.strictEqual(
+			curationController.shouldProduceEvent( baseEvent(), streamConfig ),
+			true
+		);
 
 		event = baseEvent();
 		event.page.id = 42;
-		assert.notOk( curationController.shouldProduceEvent( event, streamConfig ), 'wrong page id' );
+		assert.strictEqual(
+			curationController.shouldProduceEvent( event, streamConfig ),
+			false,
+			'wrong page id'
+		);
 
 		event = baseEvent();
 		event.page.namespace_text = 'User';
-		assert.notOk( curationController.shouldProduceEvent( event, streamConfig ), 'wrong page namespace text' );
+		assert.strictEqual(
+			curationController.shouldProduceEvent( event, streamConfig ),
+			false,
+			'wrong page namespace text'
+		);
 
 		event = baseEvent();
 		event.user.groups = [ 'user', 'autoconfirmed', 'sysop' ];
-		assert.notOk( curationController.shouldProduceEvent( event, streamConfig ), 'wrong user groups' );
+		assert.strictEqual(
+			curationController.shouldProduceEvent( event, streamConfig ),
+			false,
+			'wrong user groups'
+		);
 
 		event = baseEvent();
 		event.user.groups = [];
-		assert.notOk( curationController.shouldProduceEvent( event, streamConfig ), 'no user groups' );
+		assert.strictEqual(
+			curationController.shouldProduceEvent( event, streamConfig ),
+			false,
+			'no user groups'
+		);
 
 		event = baseEvent();
 		event.user.is_logged_in = false;
-		assert.notOk( curationController.shouldProduceEvent( event, streamConfig ), 'user not logged in' );
+		assert.strictEqual(
+			curationController.shouldProduceEvent( event, streamConfig ),
+			false,
+			'user not logged in'
+		);
 
 		event = baseEvent();
 		event.user.edit_count_bucket = '5-99 edits';
-		assert.notOk( curationController.shouldProduceEvent( event, streamConfig ), 'wrong user edit count bucket' );
+		assert.strictEqual(
+			curationController.shouldProduceEvent( event, streamConfig ),
+			false,
+			'wrong user edit count bucket'
+		);
 
 		event = baseEvent();
 		event.device.pixel_ratio = 1.0;
-		assert.notOk( curationController.shouldProduceEvent( event, streamConfig ), 'device pixel ratio too low' );
+		assert.strictEqual(
+			curationController.shouldProduceEvent( event, streamConfig ),
+			false,
+			'device pixel ratio too low'
+		);
 
 		event = baseEvent();
 		event.device.pixel_ratio = 3.0;
-		assert.notOk( curationController.shouldProduceEvent( event, streamConfig ), 'device pixel ratio too high' );
+		assert.strictEqual(
+			curationController.shouldProduceEvent( event, streamConfig ),
+			false,
+			'device pixel ratio too high'
+		);
 	} );
 
 }() );

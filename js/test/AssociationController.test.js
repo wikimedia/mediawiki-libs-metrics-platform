@@ -11,13 +11,13 @@
 		var before = associationController.getSessionId();
 		associationController.resetSessionId();
 		var after = associationController.getSessionId();
-		assert.notEqual( before, after );
+		assert.notStrictEqual( before, after );
 	} );
 
 	QUnit.test( 'resetPageviewId()', function ( assert ) {
 		var before = associationController.getPageviewId();
 		associationController.resetPageviewId();
 		var after = associationController.getPageviewId();
-		assert.notEqual( before, after );
+		assert.notStrictEqual( before, after );
 	} );
 }() );
