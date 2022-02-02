@@ -1,9 +1,8 @@
 var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' ),
-	AssociationController = require( '../src/AssociationController.js' ),
 	SamplingController = require( '../src/SamplingController.js' ),
 
-	associationController = new AssociationController( new TestMetricsClientIntegration() ),
-	samplingController = new SamplingController( associationController );
+	integration = new TestMetricsClientIntegration(),
+	samplingController = new SamplingController( integration );
 
 QUnit.module( 'SamplingController' );
 
@@ -136,7 +135,7 @@ QUnit.test( 'streamInSample() - pageview sampling is deterministic', function ( 
 
 QUnit.test( 'probability in sample is a number in [0,1]', function ( assert ) {
 	var UINT32_MAX = 4294967295, // (2^32) - 1
-		id = associationController.generateId(),
+		id = integration.generateRandomId(),
 		probabilityInSample = parseInt( id.slice( 0, 8 ), 16 ) / UINT32_MAX;
 
 	assert.strictEqual( probabilityInSample >= 0 && probabilityInSample <= 1, true );

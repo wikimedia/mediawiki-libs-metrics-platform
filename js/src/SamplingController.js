@@ -3,11 +3,11 @@ var UINT32_MAX = 4294967295; // (2^32) - 1
 /**
  * Evaluates events for presence in sample based on the stream configuration.
  *
- * @param {!AssociationController} associationController association controller
+ * @param {IMetricsClientIntegration} integration
  * @constructor
  */
-function SamplingController( associationController ) {
-	this.associationController = associationController;
+function SamplingController( integration ) {
+	this.integration = integration;
 }
 
 /**
@@ -40,10 +40,10 @@ SamplingController.prototype.streamInSample = function ( streamConfig ) {
 
 	switch ( streamConfig.sample.unit ) {
 		case 'pageview':
-			id = this.associationController.getPageviewId();
+			id = this.integration.getPageviewId();
 			break;
 		case 'session':
-			id = this.associationController.getSessionId();
+			id = this.integration.getSessionId();
 			break;
 		default:
 			return false;
