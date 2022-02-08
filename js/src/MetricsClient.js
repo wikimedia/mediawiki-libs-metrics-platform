@@ -83,7 +83,6 @@ MetricsClient.prototype.addRequiredMetadata = function ( eventData, streamName )
 
 /**
  * Submit an event according to the given stream's configuration.
- * If DNT is enabled, this method does nothing.
  *
  * @param {!string} streamName name of the stream to send eventData to
  * @param {!Object} eventData data to send to streamName
