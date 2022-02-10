@@ -15,6 +15,28 @@ var sinon = require( 'sinon' ),
 					]
 				}
 			}
+		},
+		'metrics.platform.test2': {
+			schema_title: 'metrics/platform/test2',
+			producers: {
+				metrics_platform_client: {
+					events: [
+						'widgetClick',
+						'otherWidgetClick'
+					]
+				}
+			}
+		},
+		'metrics.platform.test3': {
+			schema_title: 'metrics/platform/test3',
+			producers: {
+				metrics_platform_client: {
+					events: [ 'widgetClick' ]
+				}
+			}
+		},
+		'metrics.platform.test4': {
+			schema_title: 'metrics/platform/test4'
 		}
 	},
 
@@ -95,4 +117,130 @@ QUnit.test( 'addRequiredMetadata() - legacy event', function ( assert ) {
 		stream: 'metrics.platform.test',
 		domain: 'test.example.com'
 	} );
+} );
+
+QUnit.test( 'getStreamConfigsForEvent()', function ( assert ) {
+	/** @type {[string, string[], string][]} */
+	var tests = [
+		[
+			'widgetClick', // eventName
+			[ 'metrics.platform.test2', 'metrics.platform.test3' ], // expected
+			'Many streams can be interested in an event' // message
+		],
+
+		// Exercise the memoization logic.
+		[
+			'widgetClick',
+			[ 'metrics.platform.test2', 'metrics.platform.test3' ],
+			'Memoization should not affect the result'
+		],
+		[
+			'otherWidgetClick',
+			[ 'metrics.platform.test2' ],
+			'One stream can be interested in multiple events'
+		],
+		[
+			'unknownEventName',
+			[],
+			'Zero streams can be interested in an event'
+		]
+	];
+
+	tests.forEach( function ( test ) {
+		assert.deepEqual(
+			metricsClient.getStreamNamesForEvent( test[ 0 ] ),
+			test[ 1 ],
+			test[ 2 ]
+		);
+	} );
+} );
+
+QUnit.test( 'getStreamNamesForEvent() - streamConfigs is falsy', function ( assert ) {
+	// eslint-disable-next-line no-shadow
+	var metricsClient = new MetricsClient( integration, false );
+
+	assert.deepEqual( metricsClient.getStreamNamesForEvent( 'foo' ), [] );
+	assert.strictEqual(
+		metricsClient.eventNameToStreamNamesMap,
+		null,
+		'No memoized map of event name to stream names is generated'
+	);
+} );
+
+QUnit.test( 'dispatch() - produce events correctly', function ( assert ) {
+	metricsClient.dispatch( 'widgetClick' );
+
+	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
+	assert.strictEqual( enqueueEventStub.callCount, 2, 'enqueueEvent() should be called' );
+
+	var event1 = enqueueEventStub.args[ 0 ][ 0 ];
+	var event2 = enqueueEventStub.args[ 1 ][ 0 ];
+
+	// Test that the first event was constructed and produced correctly
+	assert.strictEqual( event1.$schema, '/analytics/mediawiki/client/metrics_event/1.0.0' );
+	assert.deepEqual( event1.meta, {
+		stream: 'metrics.platform.test2',
+		domain: integration.getHostname()
+	} );
+
+	assert.strictEqual( event1.name, 'widgetClick' );
+
+	// Test that the second event was constructed and produced correctly
+	assert.strictEqual( event2.$schema, '/analytics/mediawiki/client/metrics_event/1.0.0' );
+	assert.deepEqual( event2.meta, {
+		stream: 'metrics.platform.test3',
+		domain: integration.getHostname()
+	} );
+	assert.strictEqual( event2.name, 'widgetClick' );
+
+	assert.strictEqual(
+		event1.dt,
+		event2.dt,
+		'All events should appear to be produced at the same time'
+	);
+} );
+
+QUnit.test( 'dispatch() - constructs the bespoke_data property', function ( assert ) {
+	metricsClient.dispatch( 'otherWidgetClick', {
+		widget_id: 1234,
+		widget_color: 'blue',
+		widget_enabled: true,
+		widget_extra_attribute: null
+	} );
+
+	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
+	assert.strictEqual( enqueueEventStub.callCount, 1, 'enqueueEvent() should be called' );
+
+	var customData = enqueueEventStub.args[ 0 ][ 0 ].custom_data;
+
+	assert.deepEqual(
+		customData,
+		{
+			widget_id: {
+				data_type: 'number',
+				value: '1234'
+			},
+			widget_color: {
+				data_type: 'string',
+				value: 'blue'
+			},
+			widget_enabled: {
+				data_type: 'boolean',
+				value: 'true'
+			},
+			widget_extra_attribute: {
+				data_type: 'null',
+				value: 'null'
+			}
+		}
+	);
+} );
+
+QUnit.test( 'dispatch() - warn/do not produce event when bespokeData properties are not snake_case', function ( assert ) {
+	metricsClient.dispatch( 'otherWidgetClick', {
+		widgetId: 1234
+	} );
+
+	assert.strictEqual( logWarningStub.callCount, 1, 'logWarning() should be called' );
+	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
 } );
