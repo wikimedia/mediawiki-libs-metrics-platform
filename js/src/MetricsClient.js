@@ -1,5 +1,4 @@
-var AssociationController = require( './AssociationController.js' ),
-	ContextController = require( './ContextController.js' ),
+var ContextController = require( './ContextController.js' ),
 	SamplingController = require( './SamplingController.js' ),
 	CurationController = require( './CurationController.js' );
 
@@ -14,9 +13,8 @@ var AssociationController = require( './AssociationController.js' ),
  * @constructor
  */
 function MetricsClient( integration, streamConfigs ) {
-	this.associationController = new AssociationController( integration );
 	this.contextController = new ContextController( integration );
-	this.samplingController = new SamplingController( this.associationController );
+	this.samplingController = new SamplingController( integration );
 	this.integration = integration;
 	this.streamConfigs = streamConfigs;
 	this.curationController = new CurationController();

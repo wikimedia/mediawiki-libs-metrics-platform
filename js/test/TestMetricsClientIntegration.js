@@ -5,7 +5,11 @@ var IMetricsClientIntegration = require( '../src/IMetricsClientIntegration.js' )
  * @constructor
  * @implements IMetricsClientIntegration
  */
-var TestMetricsClientIntegration = function () {};
+var TestMetricsClientIntegration = function () {
+	this.pageviewId = this.generateRandomId();
+	this.sessionId = this.generateRandomId();
+};
+
 TestMetricsClientIntegration.prototype = IMetricsClientIntegration.prototype;
 
 TestMetricsClientIntegration.prototype.enqueueEvent = function ( eventData ) {
@@ -162,6 +166,14 @@ TestMetricsClientIntegration.prototype.isDebugMode = function () {
 
 TestMetricsClientIntegration.prototype.clone = function ( obj ) {
 	return JSON.parse( JSON.stringify( obj ) );
+};
+
+TestMetricsClientIntegration.prototype.getPageviewId = function () {
+	return this.pageviewId;
+};
+
+TestMetricsClientIntegration.prototype.getSessionId = function () {
+	return this.sessionId;
 };
 
 module.exports = TestMetricsClientIntegration;

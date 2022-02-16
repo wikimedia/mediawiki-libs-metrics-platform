@@ -288,4 +288,22 @@ IMetricsClientIntegration.prototype.clone = function ( obj ) {
 	throw new Error( 'Stub!' );
 };
 
+/**
+ * Get the unique identifier for the current pageview.
+ *
+ * @return {!string}
+ */
+IMetricsClientIntegration.prototype.getPageviewId = function () {
+	throw new Error( 'Stub!' );
+};
+
+/**
+ * Get the unique identifier for the current session.
+ *
+ * @return {!string}
+ */
+IMetricsClientIntegration.prototype.getSessionId = function () {
+	throw new Error( 'Stub!' );
+};
+
 module.exports = IMetricsClientIntegration;
