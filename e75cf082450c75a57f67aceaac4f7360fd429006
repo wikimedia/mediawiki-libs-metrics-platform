@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e1e01d2_a904e345",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6176
+      },
+      "writtenOn": "2022-02-16T00:23:32Z",
+      "side": 1,
+      "message": "Thanks for making this easy to understand!",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 65
+      },
+      "revId": "e75cf082450c75a57f67aceaac4f7360fd429006",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e63d88b_1cb7e23c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6176
+      },
+      "writtenOn": "2022-02-16T00:23:32Z",
+      "side": 1,
+      "message": "Makes sense to me 👍",
+      "revId": "e75cf082450c75a57f67aceaac4f7360fd429006",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
