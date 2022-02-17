@@ -68,7 +68,10 @@ QUnit.test( 'containsAny', function ( assert ) {
 } );
 
 QUnit.test( 'shouldProduceEvent()', function ( assert ) {
-	var event, streamConfig = {
+	var event;
+
+	/** @type StreamConfig */
+	var streamConfig = {
 		producers: {
 			metrics_platform_client: {
 				curation: {

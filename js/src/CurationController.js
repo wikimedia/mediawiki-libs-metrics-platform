@@ -18,43 +18,54 @@ CurationController.prototype.isEmpty = function ( value ) {
  * Applies filtering rules to a value.
  *
  * @param {*} value
- * @param {Object} rules
+ * @param {StreamProducerCurationConfig} rules
  * @return {boolean} true if the event passes filtering, false if not
  */
 CurationController.prototype.applyRules = function ( value, rules ) {
-	var i, j, found, comparator, operator, operators = Object.keys( rules );
-	for ( i = 0; i < operators.length; i++ ) {
-		operator = operators[ i ];
-		comparator = rules[ operator ];
-		if ( operator === 'equals' && value !== comparator ) {
+	var i, found, operand;
+
+	/** @type keyof StreamProducerCurationConfig */
+	var operator;
+
+	for ( operator in rules ) {
+		operand = rules[ operator ];
+		if ( operator === 'equals' && value !== operand ) {
 			return false;
-		} else if ( operator === 'not_equals' && value === comparator ) {
+		} else if ( operator === 'not_equals' && value === operand ) {
 			return false;
-		} else if ( operator === 'greater_than' && value <= comparator ) {
+		} else if ( operator === 'greater_than' && value <= Number( operand ) ) {
 			return false;
-		} else if ( operator === 'less_than' && value >= comparator ) {
+		} else if ( operator === 'less_than' && value >= Number( operand ) ) {
 			return false;
-		} else if ( operator === 'greater_than_or_equals' && value < comparator ) {
+		} else if ( operator === 'greater_than_or_equals' && value < Number( operand ) ) {
 			return false;
-		} else if ( operator === 'less_than_or_equals' && value > comparator ) {
+		} else if ( operator === 'less_than_or_equals' && value > Number( operand ) ) {
 			return false;
-		} else if ( operator === 'in' && comparator.indexOf( value ) === -1 ) {
+		} else if (
+			operator === 'in' &&
+			Array.isArray( operand ) &&
+			operand.indexOf( value ) === -1
+		) {
 			return false;
-		} else if ( operator === 'not_in' && comparator.indexOf( value ) > -1 ) {
+		} else if (
+			operator === 'not_in' &&
+			Array.isArray( operand ) &&
+			operand.indexOf( value ) > -1
+		) {
 			return false;
-		} else if ( operator === 'contains' && value.indexOf( comparator ) === -1 ) {
+		} else if ( operator === 'contains' && value.indexOf( operand ) === -1 ) {
 			return false;
-		} else if ( operator === 'does_not_contain' && value.indexOf( comparator ) > -1 ) {
+		} else if ( operator === 'does_not_contain' && value.indexOf( operand ) > -1 ) {
 			return false;
-		} else if ( operator === 'contains_all' ) {
-			for ( j = 0; j < comparator.length; j++ ) {
-				if ( value.indexOf( comparator[ j ] ) === -1 ) {
+		} else if ( operator === 'contains_all' && Array.isArray( operand ) ) {
+			for ( i = 0; i < operand.length; i++ ) {
+				if ( value.indexOf( operand[ i ] ) === -1 ) {
 					return false;
 				}
 			}
-		} else if ( operator === 'contains_any' ) {
-			for ( j = 0; j < comparator.length; j++ ) {
-				if ( value.indexOf( comparator[ j ] ) > -1 ) {
+		} else if ( operator === 'contains_any' && Array.isArray( operand ) ) {
+			for ( i = 0; i < operand.length; i++ ) {
+				if ( value.indexOf( operand[ i ] ) > -1 ) {
 					found = true;
 					break;
 				}
@@ -69,53 +80,53 @@ CurationController.prototype.applyRules = function ( value, rules ) {
 };
 
 /**
- * Apply any curation rules specified in the stream config to the submitted event.
- * Curation filters and associated rules can be added to the 'curation' property under the
- * 'metrics_platform_client' key of the producer config for a given stream configuration.
+ * Apply any curation rules specified in the stream config to the event.
  *
- * Supported rules include:
- *   { equals: x }
- *   { not_equals: x }
- *   { less_than: x }
- *   { greater_than: x }
- *   { less_than_or_equals: x }
- *   { greater_than_or_equals: x }
- *   { in: [x, y, z] }
- *   { not_in: [x, y, z] }
- *   { contains: x }
- *   { not_contains: x }
- *   { contains_all: [x, y, z] }
- *   { contains_any: [x, y, z] }
+ * Curation rules can be added to the 'metrics_platform_client.curation' property of any given
+ * stream configuration. For example:
  *
- * Example config:
- *   'very.cool.stream': {
- *     producer: {
- *       metrics_platform_client: {
- *         [...]
- *         curation: [
- *           // Only events matching these filters get sent
- *           {
- *             property: "user_is_logged_in",
- *             rules: [ { equals: true } ]
- *           },
- *           {
- *             property: "mediawiki_skin",
- *             rules: [ { 'in’: [ ‘Vector’, ‘MinervaNeue’ ] } ]
- *           }
- *         ]
+ * ```
+ * "very.cool.stream": {
+ *   producers: {
+ *     metrics_platform_client: {
+ *       curation: {
+ *         user_is_logged_in: {
+ *           equals: true
+ *         },
+ *         mediawiki_skin: {
+ *           in: [ "Vector", "MinervaNeue" ]
+ *         }
  *       }
  *     }
  *   }
+ * }
+ * ```
  *
+ * The following rules are supported:
  *
- * @param {Object} eventData
- * @param {Object} streamConfig
+ * ```
+ * { equals: x }
+ * { not_equals: x }
+ * { less_than: x }
+ * { greater_than: x }
+ * { less_than_or_equals: x }
+ * { greater_than_or_equals: x }
+ * { in: [x, y, z] }
+ * { not_in: [x, y, z] }
+ * { contains: x }
+ * { not_contains: x }
+ * { contains_all: [x, y, z] }
+ * { contains_any: [x, y, z] }
+ * ```
+ *
+ * @param {EventData} eventData
+ * @param {StreamConfig} streamConfig
  * @return {boolean} true if the event passes filtering, false if not
- * @throws Error if a malformed filter is found
+ * @throws {Error} If a malformed filter is found
  */
 CurationController.prototype.shouldProduceEvent = function ( eventData, streamConfig ) {
 	// eslint-disable camelcase
-	var i, property, properties, curationConfig = streamConfig &&
+	var curationConfig = streamConfig &&
 		streamConfig.producers &&
 		streamConfig.producers.metrics_platform_client &&
 		streamConfig.producers.metrics_platform_client.curation;
@@ -124,9 +135,7 @@ CurationController.prototype.shouldProduceEvent = function ( eventData, streamCo
 		return true;
 	}
 
-	properties = Object.keys( curationConfig );
-	for ( i = 0; i < properties.length; i++ ) {
-		property = properties[ i ];
+	for ( var property in curationConfig ) {
 		switch ( property ) {
 			// page
 			case 'page_id':

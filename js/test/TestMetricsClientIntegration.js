@@ -3,15 +3,17 @@ var IMetricsClientIntegration = require( '../src/IMetricsClientIntegration.js' )
 
 /**
  * @constructor
- * @implements IMetricsClientIntegration
  */
-var TestMetricsClientIntegration = function () {
+function TestMetricsClientIntegration() {
 	this.pageviewId = this.generateRandomId();
 	this.sessionId = this.generateRandomId();
-};
+}
 
 TestMetricsClientIntegration.prototype = IMetricsClientIntegration.prototype;
 
+/**
+ * @param {EventData} eventData
+ */
 TestMetricsClientIntegration.prototype.enqueueEvent = function ( eventData ) {
 	console.log( JSON.stringify( eventData ) );
 };
@@ -32,11 +34,14 @@ TestMetricsClientIntegration.prototype.generateRandomId = function () {
 		( rnds[ 4 ] + 0x10000 ).toString( 16 ).slice( 1 );
 };
 
+/**
+ * @param {string} string
+ */
 TestMetricsClientIntegration.prototype.logWarning = function ( string ) {
 	console.log( string );
 };
 
-// MediaWiki context accessors
+// MediaWiki Context Accessors
 
 // Page
 
@@ -141,7 +146,6 @@ TestMetricsClientIntegration.prototype.getMediaWikiVersion = function () {
 };
 
 // Other
-
 TestMetricsClientIntegration.prototype.getAccessMethod = function () {
 	return 'mobile web';
 };
@@ -158,12 +162,14 @@ TestMetricsClientIntegration.prototype.isProduction = function () {
 	return true;
 };
 
-// Utility methods
-
 TestMetricsClientIntegration.prototype.isDebugMode = function () {
 	return false;
 };
 
+/**
+ * @param {Object} obj
+ * @return {Object}
+ */
 TestMetricsClientIntegration.prototype.clone = function ( obj ) {
 	return JSON.parse( JSON.stringify( obj ) );
 };
@@ -174,6 +180,18 @@ TestMetricsClientIntegration.prototype.getPageviewId = function () {
 
 TestMetricsClientIntegration.prototype.getSessionId = function () {
 	return this.sessionId;
+};
+
+TestMetricsClientIntegration.prototype.getDeviceHardwareConcurrency = function () {
+	return 6;
+};
+
+TestMetricsClientIntegration.prototype.getDeviceMaxTouchPoints = function () {
+	return 5;
+};
+
+TestMetricsClientIntegration.prototype.getDevicePixelRatio = function () {
+	return 2;
 };
 
 module.exports = TestMetricsClientIntegration;

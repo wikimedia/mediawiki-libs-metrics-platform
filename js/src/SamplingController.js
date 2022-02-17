@@ -1,3 +1,5 @@
+var IMetricsClientIntegration = require( './IMetricsClientIntegration.js' ); // eslint-disable-line no-unused-vars
+
 var UINT32_MAX = 4294967295; // (2^32) - 1
 
 /**
@@ -13,7 +15,7 @@ function SamplingController( integration ) {
 /**
  * Determine whether a stream is in or out of sample.
  *
- * @param {?Object} streamConfig stream configuration
+ * @param {?StreamConfig} streamConfig stream configuration
  * @return {!boolean} true if in-sample, false if out-sample.
  */
 SamplingController.prototype.streamInSample = function ( streamConfig ) {

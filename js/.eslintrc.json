@@ -6,6 +6,8 @@
 	],
 	"rules": {
 		"compat/compat": "warn",
-		"no-implicit-globals": "off"
+		"no-implicit-globals": "off",
+		"jsdoc/no-undefined-types": "off",
+		"jsdoc/valid-types": "off"
 	}
 }

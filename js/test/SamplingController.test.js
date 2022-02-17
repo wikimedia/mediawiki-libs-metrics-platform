@@ -79,6 +79,7 @@ QUnit.test( 'streamInSample() - valid and invalid stream configs', function ( as
 	};
 
 	[
+		// @ts-ignore TS2339
 		[ conf.nonExistentStream, false ],
 		[ conf.emptyConfig, true ],
 		[ conf.nonemptyConfigNoSample, true ],
@@ -100,35 +101,33 @@ QUnit.test( 'streamInSample() - valid and invalid stream configs', function ( as
 } );
 
 QUnit.test( 'streamInSample() - session sampling is deterministic', function ( assert ) {
-	var conf, x0, i;
-
-	conf = {
+	/** @type StreamConfig */
+	var conf = {
 		sample: {
 			rate: 0.5,
 			unit: 'session'
 		}
 	};
 
-	x0 = samplingController.streamInSample( conf );
+	var x0 = samplingController.streamInSample( conf );
 
-	for ( i = 0; i < 5; i++ ) {
+	for ( var i = 0; i < 5; i++ ) {
 		assert.strictEqual( x0, samplingController.streamInSample( conf ) );
 	}
 } );
 
 QUnit.test( 'streamInSample() - pageview sampling is deterministic', function ( assert ) {
-	var conf, x0, i;
-
-	conf = {
+	/** @type StreamConfig */
+	var conf = {
 		sample: {
 			rate: 0.5,
 			unit: 'pageview'
 		}
 	};
 
-	x0 = samplingController.streamInSample( conf );
+	var x0 = samplingController.streamInSample( conf );
 
-	for ( i = 0; i < 5; i++ ) {
+	for ( var i = 0; i < 5; i++ ) {
 		assert.strictEqual( x0, samplingController.streamInSample( conf ) );
 	}
 } );

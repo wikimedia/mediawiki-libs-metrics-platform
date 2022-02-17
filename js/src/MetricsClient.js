@@ -1,3 +1,5 @@
+var IMetricsClientIntegration = require( './IMetricsClientIntegration.js' ); // eslint-disable-line no-unused-vars
+
 var ContextController = require( './ContextController.js' ),
 	SamplingController = require( './SamplingController.js' ),
 	CurationController = require( './CurationController.js' );
@@ -5,11 +7,10 @@ var ContextController = require( './ContextController.js' ),
 /**
  * Client for producing events to the Wikimedia metrics platform.
  *
- * Produce events with MetricsClient.submit().
+ * Produce events with `MetricsClient.submit()`.
  *
- * @param {!IMetricsClientIntegration} integration client integration object
- * @param {!Object} streamConfigs stream configs
- * @return {!Object}
+ * @param {IMetricsClientIntegration} integration
+ * @param {StreamConfigs|false} streamConfigs
  * @constructor
  */
 function MetricsClient( integration, streamConfigs ) {
@@ -21,8 +22,8 @@ function MetricsClient( integration, streamConfigs ) {
 }
 
 /**
- * @param {!string} streamName
- * @return {?Object}
+ * @param {string} streamName
+ * @return {StreamConfig|undefined}
  */
 MetricsClient.prototype.getStreamConfig = function ( streamName ) {
 	// If streamConfigs are false, then stream config usage is not enabled.
@@ -44,19 +45,26 @@ MetricsClient.prototype.getStreamConfig = function ( streamName ) {
 
 /**
  * Adds required fields:
- * - meta.stream: the target stream name
- * - meta.domain: the domain associated with this event
- * - dt: the client-side timestamp (unless this is a migrated legacy event,
- *       in which case the timestamp will already be present as client_dt).
  *
- * @param {!Object} eventData
- * @param {!string} streamName
- * @return {!Object}
+ * - `meta.stream`: the target stream name
+ * - `meta.domain`: the domain associated with this event
+ * - `dt`: the client-side timestamp (unless this is a migrated legacy event,
+ *         in which case the timestamp will already be present as `client_dt`).
+ *
+ * @param {BaseEventData} eventData
+ * @param {string} streamName
+ * @return {BaseEventData}
  */
 MetricsClient.prototype.addRequiredMetadata = function ( eventData, streamName ) {
-	eventData.meta = eventData.meta || {};
-	eventData.meta.stream = streamName;
-	eventData.meta.domain = this.integration.getHostname();
+	if ( eventData.meta ) {
+		eventData.meta.stream = streamName;
+		eventData.meta.domain = this.integration.getHostname();
+	} else {
+		eventData.meta = {
+			stream: streamName,
+			domain: this.integration.getHostname()
+		};
+	}
 
 	//
 	// The 'dt' field is reserved for the internal use of this library,
@@ -68,22 +76,22 @@ MetricsClient.prototype.addRequiredMetadata = function ( eventData, streamName )
 	//      so it should be omitted for legacy events (and
 	//      deleted if present).
 	//
-	// We detect legacy events by looking for the 'client_dt' field
-	// set in the .produce() method (see above).
+	// We detect legacy events by looking for the 'client_dt'.
 	//
 	if ( eventData.client_dt ) {
 		delete eventData.dt;
 	} else {
 		eventData.dt = new Date().toISOString();
 	}
+
 	return eventData;
 };
 
 /**
  * Submit an event according to the given stream's configuration.
  *
- * @param {!string} streamName name of the stream to send eventData to
- * @param {!Object} eventData data to send to streamName
+ * @param {string} streamName name of the stream to send eventData to
+ * @param {EventData} eventData data to send to the stream
  */
 MetricsClient.prototype.submit = function ( streamName, eventData ) {
 	//

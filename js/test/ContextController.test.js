@@ -5,6 +5,7 @@ var ContextController = require( '../src/ContextController.js' );
 var integration = new TestMetricsClientIntegration();
 var contextController = new ContextController( integration );
 
+/** @type StreamConfig */
 var streamConfig = {
 	producers: {
 		metrics_platform_client: {
@@ -45,37 +46,56 @@ var streamConfig = {
 QUnit.module( 'ContextController' );
 
 QUnit.test( 'addRequestedValues()', function ( assert ) {
-	var event = contextController.addRequestedValues( {}, streamConfig );
-	assert.strictEqual( event.page.id, 1 );
-	assert.strictEqual( event.page.namespace_id, 0 );
-	assert.strictEqual( event.page.namespace_text, '' );
-	assert.strictEqual( event.page.title, 'Test' );
-	assert.strictEqual( event.page.is_redirect, false );
-	assert.strictEqual( event.page.revision_id, 1 );
-	assert.strictEqual( event.page.wikidata_id, 'Q1' );
-	assert.strictEqual( event.page.content_language, 'zh' );
-	assert.strictEqual( event.page.user_groups_allowed_to_edit.length, 0 );
-	assert.strictEqual( event.page.user_groups_allowed_to_move.length, 0 );
+	var clientDt = new Date().toISOString();
+	var event = contextController.addRequestedValues(
+		{
+			$schema: '/analytics/mediawiki/metrics_platform/event/1.0.0',
+			dt: clientDt,
+			client_dt: clientDt
+		},
+		streamConfig
+	);
 
-	assert.strictEqual( event.user.id, 1 );
-	assert.strictEqual( event.user.is_logged_in, true );
-	assert.strictEqual( event.user.is_bot, false );
-	assert.strictEqual( event.user.name, 'TestUser' );
-	assert.strictEqual( event.user.groups.length, 1 );
-	assert.strictEqual( event.user.groups[ 0 ], '*' );
-	assert.strictEqual( event.user.can_probably_edit_page, true );
-	assert.strictEqual( event.user.edit_count, 10 );
-	assert.strictEqual( event.user.edit_count_bucket, '5-99 edits' );
-	assert.strictEqual( event.user.registration_timestamp, 1427224089000 );
-	assert.strictEqual( event.user.language, 'zh' );
-	assert.strictEqual( event.user.language_variant, 'zh-tw' );
+	assert.deepEqual( event, {
 
-	assert.strictEqual( event.mediawiki.skin, 'timeless' );
-	assert.strictEqual( event.mediawiki.version, '1.37.0' );
-	assert.strictEqual( event.mediawiki.site_content_language, 'zh' );
+		// $schema, dt, and client_dt are unchanged
+		$schema: '/analytics/mediawiki/metrics_platform/event/1.0.0',
+		dt: clientDt,
+		client_dt: clientDt,
 
-	assert.strictEqual( event.access_method, 'mobile web' );
-	assert.strictEqual( event.platform, 'web' );
-	assert.strictEqual( event.platform_family, 'web' );
-	assert.strictEqual( event.is_production, true );
+		page: {
+			id: 1,
+			namespace_id: 0,
+			namespace_text: '',
+			title: 'Test',
+			is_redirect: false,
+			revision_id: 1,
+			wikidata_id: 'Q1',
+			content_language: 'zh',
+			user_groups_allowed_to_edit: [],
+			user_groups_allowed_to_move: []
+		},
+		user: {
+			id: 1,
+			is_logged_in: true,
+			is_bot: false,
+			name: 'TestUser',
+			groups: [ '*' ],
+			can_probably_edit_page: true,
+			edit_count: 10,
+			edit_count_bucket: '5-99 edits',
+			registration_timestamp: 1427224089000,
+			language: 'zh',
+			language_variant: 'zh-tw'
+		},
+		mediawiki: {
+			skin: 'timeless',
+			version: '1.37.0',
+			site_content_language: 'zh'
+		},
+		access_method: 'mobile web',
+		platform: 'web',
+		platform_family: 'web',
+		is_production: true
+	} );
 } );

@@ -1,5 +1,9 @@
 /* eslint-disable no-unused-vars, jsdoc/require-returns-check */
 
+/**
+ * @param {*} val
+ * @return {null|*}
+ */
 function defaultNull( val ) {
 	return val === undefined ? null : val;
 }
@@ -14,14 +18,15 @@ function IMetricsClientIntegration() {}
 /**
  * Handle the actual event submission.
  *
- * @param {!Object} eventData
+ * @param {EventData} _eventData
+ * @return {void}
  */
-IMetricsClientIntegration.prototype.enqueueEvent = function ( eventData ) {
+IMetricsClientIntegration.prototype.enqueueEvent = function ( _eventData ) {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?string}
+ * @return {string}
  */
 IMetricsClientIntegration.prototype.getHostname = function () {
 	throw new Error( 'Stub!' );
@@ -32,16 +37,17 @@ IMetricsClientIntegration.prototype.getHostname = function () {
  *
  * TODO: Replace this with a v4 UUID.
  *
- * @return {!string}
+ * @return {string}
  */
 IMetricsClientIntegration.prototype.generateRandomId = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @param {!string} string
+ * @param {string} _string
+ * @return {void}
  */
-IMetricsClientIntegration.prototype.logWarning = function ( string ) {
+IMetricsClientIntegration.prototype.logWarning = function ( _string ) {
 	throw new Error( 'Stub!' );
 };
 
@@ -50,49 +56,49 @@ IMetricsClientIntegration.prototype.logWarning = function ( string ) {
 // Page
 
 /**
- * @return {?number}
+ * @return {number}
  */
 IMetricsClientIntegration.prototype.getPageId = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?number}
+ * @return {number}
  */
 IMetricsClientIntegration.prototype.getPageNamespaceId = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?string}
+ * @return {string}
  */
 IMetricsClientIntegration.prototype.getPageNamespaceText = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?string}
+ * @return {string}
  */
 IMetricsClientIntegration.prototype.getPageTitle = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?boolean}
+ * @return {boolean}
  */
 IMetricsClientIntegration.prototype.getPageIsRedirect = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?number}
+ * @return {number}
  */
 IMetricsClientIntegration.prototype.getPageRevisionId = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?string}
+ * @return {string}
  */
 IMetricsClientIntegration.prototype.getPageContentLanguage = function () {
 	throw new Error( 'Stub!' );
@@ -106,14 +112,14 @@ IMetricsClientIntegration.prototype.getPageWikidataId = function () {
 };
 
 /**
- * @return {?Array}
+ * @return {string[]}
  */
 IMetricsClientIntegration.prototype.getPageRestrictionEdit = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?Array}
+ * @return {string[]}
  */
 IMetricsClientIntegration.prototype.getPageRestrictionMove = function () {
 	throw new Error( 'Stub!' );
@@ -129,7 +135,7 @@ IMetricsClientIntegration.prototype.getUserId = function () {
 };
 
 /**
- * @return {?boolean}
+ * @return {boolean}
  */
 IMetricsClientIntegration.prototype.getUserIsLoggedIn = function () {
 	throw new Error( 'Stub!' );
@@ -143,7 +149,7 @@ IMetricsClientIntegration.prototype.getUserName = function () {
 };
 
 /**
- * @return {?Array}
+ * @return {string[]}
  */
 IMetricsClientIntegration.prototype.getUserGroups = function () {
 	throw new Error( 'Stub!' );
@@ -164,35 +170,35 @@ IMetricsClientIntegration.prototype.getUserEditCountBucket = function () {
 };
 
 /**
- * @return {?number}
+ * @return {number}
  */
 IMetricsClientIntegration.prototype.getUserRegistrationTimestamp = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?string}
+ * @return {string}
  */
 IMetricsClientIntegration.prototype.getUserLanguage = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?string}
+ * @return {string}
  */
 IMetricsClientIntegration.prototype.getUserLanguageVariant = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?boolean}
+ * @return {boolean}
  */
 IMetricsClientIntegration.prototype.getUserIsBot = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?boolean}
+ * @return {boolean}
  */
 IMetricsClientIntegration.prototype.getUserCanProbablyEditPage = function () {
 	throw new Error( 'Stub!' );
@@ -201,21 +207,21 @@ IMetricsClientIntegration.prototype.getUserCanProbablyEditPage = function () {
 // MediaWiki/Site
 
 /**
- * @return {?string}
+ * @return {string}
  */
 IMetricsClientIntegration.prototype.getMediaWikiSkin = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?string}
+ * @return {string}
  */
 IMetricsClientIntegration.prototype.getMediaWikiVersion = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?string}
+ * @return {string}
  */
 IMetricsClientIntegration.prototype.getMediaWikiSiteContentLanguage = function () {
 	throw new Error( 'Stub!' );
@@ -248,28 +254,28 @@ IMetricsClientIntegration.prototype.getDeviceMaxTouchPoints = function () {
 // Other
 
 /**
- * @return {?string}
+ * @return {string}
  */
 IMetricsClientIntegration.prototype.getAccessMethod = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?string}
+ * @return {string}
  */
 IMetricsClientIntegration.prototype.getPlatform = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?string}
+ * @return {string}
  */
 IMetricsClientIntegration.prototype.getPlatformFamily = function () {
 	throw new Error( 'Stub!' );
 };
 
 /**
- * @return {?boolean}
+ * @return {boolean}
  */
 IMetricsClientIntegration.prototype.isProduction = function () {
 	throw new Error( 'Stub!' );
@@ -278,13 +284,17 @@ IMetricsClientIntegration.prototype.isProduction = function () {
 // Utility methods
 
 /**
- * @return {?boolean}
+ * @return {boolean}
  */
 IMetricsClientIntegration.prototype.isDebugMode = function () {
 	throw new Error( 'Stub!' );
 };
 
-IMetricsClientIntegration.prototype.clone = function ( obj ) {
+/**
+ * @param {Object} _obj
+ * @return {Object}
+ */
+IMetricsClientIntegration.prototype.clone = function ( _obj ) {
 	throw new Error( 'Stub!' );
 };
 
