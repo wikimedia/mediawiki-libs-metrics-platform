@@ -90,7 +90,7 @@ CurationController.prototype.applyRules = function ( value, rules ) {
  *   producers: {
  *     metrics_platform_client: {
  *       curation: {
- *         user_is_logged_in: {
+ *         performer_is_logged_in: {
  *           equals: true
  *         },
  *         mediawiki_skin: {
@@ -119,7 +119,7 @@ CurationController.prototype.applyRules = function ( value, rules ) {
  * { contains_any: [x, y, z] }
  * ```
  *
- * @param {EventData} eventData
+ * @param {MetricsPlatformEventData} eventData
  * @param {StreamConfig} streamConfig
  * @return {boolean} true if the event passes filtering, false if not
  * @throws {Error} If a malformed filter is found
@@ -146,20 +146,20 @@ CurationController.prototype.shouldProduceEvent = function ( eventData, streamCo
 					return false;
 				}
 				break;
-			case 'page_namespace_id':
-				if ( !eventData.page || this.isEmpty( eventData.page.namespace_id ) ) {
+			case 'page_namespace':
+				if ( !eventData.page || this.isEmpty( eventData.page.namespace ) ) {
 					return false;
 				}
-				if ( !this.applyRules( eventData.page.namespace_id,
+				if ( !this.applyRules( eventData.page.namespace,
 					curationConfig[ property ] ) ) {
 					return false;
 				}
 				break;
-			case 'page_namespace_text':
-				if ( !eventData.page || this.isEmpty( eventData.page.namespace_text ) ) {
+			case 'page_namespace_name':
+				if ( !eventData.page || this.isEmpty( eventData.page.namespace_name ) ) {
 					return false;
 				}
-				if ( !this.applyRules( eventData.page.namespace_text,
+				if ( !this.applyRules( eventData.page.namespace_name,
 					curationConfig[ property ] ) ) {
 					return false;
 				}
@@ -230,99 +230,105 @@ CurationController.prototype.shouldProduceEvent = function ( eventData, streamCo
 				break;
 
 				// User
-			case 'user_id':
-				if ( !eventData.user || this.isEmpty( eventData.user.id ) ) {
+			case 'performer_id':
+				if ( !eventData.performer || this.isEmpty( eventData.performer.id ) ) {
 					return false;
 				}
-				if ( !this.applyRules( eventData.user.id, curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'user_name':
-				if ( !eventData.user || this.isEmpty( eventData.user.name ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.user.name, curationConfig[ property ] ) ) {
+				if ( !this.applyRules( eventData.performer.id, curationConfig[ property ] ) ) {
 					return false;
 				}
 				break;
-			case 'user_groups':
-				if ( !eventData.user || this.isEmpty( eventData.user.groups ) ) {
+			case 'performer_name':
+				if ( !eventData.performer || this.isEmpty( eventData.performer.name ) ) {
 					return false;
 				}
-				if ( !this.applyRules( eventData.user.groups, curationConfig[ property ] ) ) {
+				if ( !this.applyRules( eventData.performer.name, curationConfig[ property ] ) ) {
 					return false;
 				}
 				break;
-			case 'user_is_logged_in':
-				if ( !eventData.user || this.isEmpty( eventData.user.is_logged_in ) ) {
+			case 'performer_groups':
+				if ( !eventData.performer || this.isEmpty( eventData.performer.groups ) ) {
 					return false;
 				}
-				if ( !this.applyRules( eventData.user.is_logged_in,
+				if ( !this.applyRules( eventData.performer.groups, curationConfig[ property ] ) ) {
+					return false;
+				}
+				break;
+			case 'performer_is_logged_in':
+				if ( !eventData.performer || this.isEmpty( eventData.performer.is_logged_in ) ) {
+					return false;
+				}
+				if ( !this.applyRules( eventData.performer.is_logged_in,
 					curationConfig[ property ] ) ) {
 					return false;
 				}
 				break;
-			case 'user_is_bot':
-				if ( !eventData.user || this.isEmpty( eventData.user.is_bot ) ) {
+			case 'performer_is_bot':
+				if ( !eventData.performer || this.isEmpty( eventData.performer.is_bot ) ) {
 					return false;
 				}
-				if ( !this.applyRules( eventData.user.is_bot, curationConfig[ property ] ) ) {
+				if ( !this.applyRules( eventData.performer.is_bot, curationConfig[ property ] ) ) {
 					return false;
 				}
 				break;
-			case 'user_can_probably_edit_page':
-				if ( !eventData.user ||
-					this.isEmpty( eventData.user.can_probably_edit_page ) ) {
+			case 'performer_can_probably_edit_page':
+				if ( !eventData.performer ||
+					this.isEmpty( eventData.performer.can_probably_edit_page ) ) {
 					return false;
 				}
-				if ( !this.applyRules( eventData.user.can_probably_edit_page,
+				if ( !this.applyRules( eventData.performer.can_probably_edit_page,
 					curationConfig[ property ] ) ) {
 					return false;
 				}
 				break;
-			case 'user_edit_count':
-				if ( !eventData.user || this.isEmpty( eventData.user.edit_count ) ) {
+			case 'performer_edit_count':
+				if ( !eventData.performer || this.isEmpty( eventData.performer.edit_count ) ) {
 					return false;
 				}
-				if ( !this.applyRules( eventData.user.edit_count,
+				if ( !this.applyRules( eventData.performer.edit_count,
 					curationConfig[ property ] ) ) {
 					return false;
 				}
 				break;
-			case 'user_edit_count_bucket':
-				if ( !eventData.user || this.isEmpty( eventData.user.edit_count_bucket ) ) {
+			case 'performer_edit_count_bucket':
+				if (
+					!eventData.performer ||
+					this.isEmpty( eventData.performer.edit_count_bucket )
+				) {
 					return false;
 				}
-				if ( !this.applyRules( eventData.user.edit_count_bucket,
+				if ( !this.applyRules( eventData.performer.edit_count_bucket,
 					curationConfig[ property ] ) ) {
 					return false;
 				}
 				break;
-			case 'user_registration_timestamp':
-				if ( !eventData.user ||
-					this.isEmpty( eventData.user.registration_timestamp ) ) {
+			case 'performer_registration_timestamp':
+				if ( !eventData.performer ||
+					this.isEmpty( eventData.performer.registration_dt ) ) {
 					return false;
 				}
-				if ( !this.applyRules( eventData.user.registration_timestamp,
+				if ( !this.applyRules( eventData.performer.registration_dt,
 					curationConfig[ property ] ) ) {
 					return false;
 				}
 				break;
-			case 'user_language':
-				if ( !eventData.user || this.isEmpty( eventData.user.language ) ) {
+			case 'performer_language':
+				if ( !eventData.performer || this.isEmpty( eventData.performer.language ) ) {
 					return false;
 				}
-				if ( !this.applyRules( eventData.user.language,
+				if ( !this.applyRules( eventData.performer.language,
 					curationConfig[ property ] ) ) {
 					return false;
 				}
 				break;
-			case 'user_language_variant':
-				if ( !eventData.user || this.isEmpty( eventData.user.language_variant ) ) {
+			case 'performer_language_variant':
+				if (
+					!eventData.performer ||
+					this.isEmpty( eventData.performer.language_variant )
+				) {
 					return false;
 				}
-				if ( !this.applyRules( eventData.user.language_variant,
+				if ( !this.applyRules( eventData.performer.language_variant,
 					curationConfig[ property ] ) ) {
 					return false;
 				}
@@ -353,73 +359,6 @@ CurationController.prototype.shouldProduceEvent = function ( eventData, streamCo
 					return false;
 				}
 				if ( !this.applyRules( eventData.mediawiki.site_content_language,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-
-				// Device
-			case 'device_pixel_ratio':
-				if ( !eventData.device || this.isEmpty( eventData.device.pixel_ratio ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.device.pixel_ratio,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'device_hardware_concurrency':
-				if ( !eventData.device ||
-					this.isEmpty( eventData.device.hardware_concurrency ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.device.hardware_concurrency,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'device_max_touch_points':
-				if ( !eventData.device || this.isEmpty( eventData.device.max_touch_points ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.device.max_touch_points,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-
-				// Misc
-			case 'access_method':
-				if ( this.isEmpty( eventData.access_method ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.access_method,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'platform':
-				if ( this.isEmpty( eventData.platform ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.platform, curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'platform_family':
-				if ( this.isEmpty( eventData.platform_family ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.platform_family,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'is_production':
-				if ( this.isEmpty( eventData.is_production ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.is_production,
 					curationConfig[ property ] ) ) {
 					return false;
 				}

@@ -25,38 +25,44 @@ interface StreamProducerConfig {
 }
 
 type StreamProducerContextAttribute =
+
+    // Agent
+    | "agent_client_platform"
+    | "agent_client_platform_family"
+
+    // Page
     | "page_id"
-    | "page_namespace_id"
-    | "page_namespace_text"
     | "page_title"
-    | "page_is_redirect"
+    | "page_namespace"
+    | "page_namespace_name"
     | "page_revision_id"
     | "page_wikidata_id"
     | "page_content_language"
-    | "page_user_groups_allowed_to_edit"
+    | "page_is_redirect"
     | "page_user_groups_allowed_to_move"
-    | "user_id"
-    | "user_is_logged_in"
-    | "user_is_bot"
-    | "user_name"
-    | "user_groups"
-    | "user_can_probably_edit_page"
-    | "user_edit_count"
-    | "user_edit_count_bucket"
-    | "user_registration_timestamp"
-    | "user_language"
-    | "user_language_variant"
+    | "page_user_groups_allowed_to_edit"
+
+    // MediaWiki
     | "mediawiki_skin"
     | "mediawiki_version"
+    | "mediawiki_is_production"
+    | "mediawiki_is_debug_mode"
     | "mediawiki_site_content_language"
-    | "device_pixel_ratio"
-    | "device_hardware_concurrency"
-    | "device_max_touch_points"
-    | "access_method"
-    | "platform"
-    | "platform_family"
-    | "is_debug_mode"
-    | "is_production"
+
+    // Performer
+    | "performer_is_logged_in"
+    | "performer_id"
+    | "performer_name"
+    | "performer_session_id"
+    | "performer_pageview_id"
+    | "performer_groups"
+    | "performer_is_bot"
+    | "performer_language"
+    | "performer_language_variant"
+    | "performer_can_probably_edit_page"
+    | "performer_edit_count"
+    | "performer_edit_count_bucket"
+    | "performer_registration_dt"
     ;
 
 interface StreamProducerCurationConfig {

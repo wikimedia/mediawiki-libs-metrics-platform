@@ -79,16 +79,16 @@ QUnit.test( 'shouldProduceEvent()', function ( assert ) {
 						less_than: 500,
 						not_equals: 42
 					},
-					page_namespace_text: {
+					page_namespace_name: {
 						equals: 'Talk'
 					},
-					user_is_logged_in: {
+					performer_is_logged_in: {
 						equals: true
 					},
-					user_edit_count_bucket: {
+					performer_edit_count_bucket: {
 						in: [ '100-999 edits', '1000+ edits' ]
 					},
-					user_groups: {
+					performer_groups: {
 						contains_all: [ 'user', 'autoconfirmed' ],
 						does_not_contain: 'sysop'
 					},
@@ -101,6 +101,9 @@ QUnit.test( 'shouldProduceEvent()', function ( assert ) {
 		}
 	};
 
+	/**
+	 * @return {EventData}
+	 */
 	function baseEvent() {
 		return {
 			$schema: 'test/event',
@@ -109,9 +112,9 @@ QUnit.test( 'shouldProduceEvent()', function ( assert ) {
 			},
 			page: {
 				id: 1,
-				namespace_text: 'Talk'
+				namespace_name: 'Talk'
 			},
-			user: {
+			performer: {
 				groups: [ 'user', 'autoconfirmed', 'steward' ],
 				is_logged_in: true,
 				edit_count_bucket: '1000+ edits'
@@ -128,6 +131,7 @@ QUnit.test( 'shouldProduceEvent()', function ( assert ) {
 	);
 
 	event = baseEvent();
+	event.page = event.page || {};
 	event.page.id = 42;
 	assert.strictEqual(
 		curationController.shouldProduceEvent( event, streamConfig ),
@@ -136,7 +140,8 @@ QUnit.test( 'shouldProduceEvent()', function ( assert ) {
 	);
 
 	event = baseEvent();
-	event.page.namespace_text = 'User';
+	event.page = event.page || {};
+	event.page.namespace_name = 'User';
 	assert.strictEqual(
 		curationController.shouldProduceEvent( event, streamConfig ),
 		false,
@@ -144,7 +149,8 @@ QUnit.test( 'shouldProduceEvent()', function ( assert ) {
 	);
 
 	event = baseEvent();
-	event.user.groups = [ 'user', 'autoconfirmed', 'sysop' ];
+	event.performer = event.performer || {};
+	event.performer.groups = [ 'user', 'autoconfirmed', 'sysop' ];
 	assert.strictEqual(
 		curationController.shouldProduceEvent( event, streamConfig ),
 		false,
@@ -152,7 +158,8 @@ QUnit.test( 'shouldProduceEvent()', function ( assert ) {
 	);
 
 	event = baseEvent();
-	event.user.groups = [];
+	event.performer = event.performer || {};
+	event.performer.groups = [];
 	assert.strictEqual(
 		curationController.shouldProduceEvent( event, streamConfig ),
 		false,
@@ -160,7 +167,8 @@ QUnit.test( 'shouldProduceEvent()', function ( assert ) {
 	);
 
 	event = baseEvent();
-	event.user.is_logged_in = false;
+	event.performer = event.performer || {};
+	event.performer.is_logged_in = false;
 	assert.strictEqual(
 		curationController.shouldProduceEvent( event, streamConfig ),
 		false,
@@ -168,26 +176,11 @@ QUnit.test( 'shouldProduceEvent()', function ( assert ) {
 	);
 
 	event = baseEvent();
-	event.user.edit_count_bucket = '5-99 edits';
+	event.performer = event.performer || {};
+	event.performer.edit_count_bucket = '5-99 edits';
 	assert.strictEqual(
 		curationController.shouldProduceEvent( event, streamConfig ),
 		false,
 		'wrong user edit count bucket'
-	);
-
-	event = baseEvent();
-	event.device.pixel_ratio = 1.0;
-	assert.strictEqual(
-		curationController.shouldProduceEvent( event, streamConfig ),
-		false,
-		'device pixel ratio too low'
-	);
-
-	event = baseEvent();
-	event.device.pixel_ratio = 3.0;
-	assert.strictEqual(
-		curationController.shouldProduceEvent( event, streamConfig ),
-		false,
-		'device pixel ratio too high'
 	);
 } );

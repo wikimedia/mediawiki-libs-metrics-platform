@@ -13,15 +13,27 @@ function ContextController( integration ) {
 /**
  * Mixes the contextual attributes requested in stream configuration into the given event data.
  *
- * @param {EventData} eventData
+ * @param {MetricsPlatformEventData} eventData
  * @param {StreamConfig} streamConfig
- * @return {EventData}
+ * @return {MetricsPlatformEventData}
  */
 ContextController.prototype.addRequestedValues = function ( eventData, streamConfig ) {
-	var i, t, requestedValue, requestedValues = streamConfig &&
+	var i, t;
+
+	/** @type {StreamProducerContextAttribute} */
+	var requestedValue;
+
+	var requestedValues = streamConfig &&
 		streamConfig.producers &&
 		streamConfig.producers.metrics_platform_client &&
 		streamConfig.producers.metrics_platform_client.provide_values;
+
+	eventData.agent = eventData.agent || {};
+
+	/* eslint-disable camelcase */
+	eventData.agent.client_platform = this.integration.getPlatform();
+	eventData.agent.client_platform_family = this.integration.getPlatformFamily();
+	/* eslint-enable camelcase */
 
 	if ( !Array.isArray( requestedValues ) ) {
 		return eventData;
@@ -30,26 +42,32 @@ ContextController.prototype.addRequestedValues = function ( eventData, streamCon
 		requestedValue = requestedValues[ i ];
 		/* eslint-disable max-len, camelcase */
 		switch ( requestedValue ) {
+
+			// Agent
+			//
+			// agent.client_platform and agent.client_platform_family are set regardless of the
+			// stream configuration.
+			case 'agent_client_platform':
+				break;
+			case 'agent_client_platform_family':
+				break;
+
 			// Page
 			case 'page_id':
 				eventData.page = eventData.page || {};
 				eventData.page.id = this.integration.getPageId();
 				break;
-			case 'page_namespace_id':
-				eventData.page = eventData.page || {};
-				eventData.page.namespace_id = this.integration.getPageNamespaceId();
-				break;
-			case 'page_namespace_text':
-				eventData.page = eventData.page || {};
-				eventData.page.namespace_text = this.integration.getPageNamespaceText();
-				break;
 			case 'page_title':
 				eventData.page = eventData.page || {};
 				eventData.page.title = this.integration.getPageTitle();
 				break;
-			case 'page_is_redirect':
+			case 'page_namespace':
 				eventData.page = eventData.page || {};
-				eventData.page.is_redirect = this.integration.getPageIsRedirect();
+				eventData.page.namespace = this.integration.getPageNamespaceId();
+				break;
+			case 'page_namespace_name':
+				eventData.page = eventData.page || {};
+				eventData.page.namespace_name = this.integration.getPageNamespaceText();
 				break;
 			case 'page_revision_id':
 				eventData.page = eventData.page || {};
@@ -66,6 +84,10 @@ ContextController.prototype.addRequestedValues = function ( eventData, streamCon
 				eventData.page = eventData.page || {};
 				eventData.page.content_language = this.integration.getPageContentLanguage();
 				break;
+			case 'page_is_redirect':
+				eventData.page = eventData.page || {};
+				eventData.page.is_redirect = this.integration.getPageIsRedirect();
+				break;
 			case 'page_user_groups_allowed_to_edit':
 				eventData.page = eventData.page || {};
 				eventData.page.user_groups_allowed_to_edit = this.integration.getPageRestrictionEdit();
@@ -73,67 +95,6 @@ ContextController.prototype.addRequestedValues = function ( eventData, streamCon
 			case 'page_user_groups_allowed_to_move':
 				eventData.page = eventData.page || {};
 				eventData.page.user_groups_allowed_to_move = this.integration.getPageRestrictionMove();
-				break;
-
-			// User
-			case 'user_id':
-				t = this.integration.getUserId();
-				if ( t ) {
-					eventData.user = eventData.user || {};
-					eventData.user.id = t;
-				}
-				break;
-			case 'user_is_logged_in':
-				eventData.user = eventData.user || {};
-				eventData.user.is_logged_in = this.integration.getUserIsLoggedIn();
-				break;
-			case 'user_is_bot':
-				eventData.user = eventData.user || {};
-				eventData.user.is_bot = this.integration.getUserIsBot();
-				break;
-			case 'user_name':
-				t = this.integration.getUserName();
-				if ( t ) {
-					eventData.user = eventData.user || {};
-					eventData.user.name = t;
-				}
-				break;
-			case 'user_groups':
-				eventData.user = eventData.user || {};
-				eventData.user.groups = this.integration.getUserGroups();
-				break;
-			case 'user_can_probably_edit_page':
-				eventData.user = eventData.user || {};
-				eventData.user.can_probably_edit_page = this.integration.getUserCanProbablyEditPage();
-				break;
-			case 'user_edit_count':
-				t = this.integration.getUserEditCount();
-				if ( t ) {
-					eventData.user = eventData.user || {};
-					eventData.user.edit_count = t;
-				}
-				break;
-			case 'user_edit_count_bucket':
-				t = this.integration.getUserEditCountBucket();
-				if ( t ) {
-					eventData.user = eventData.user || {};
-					eventData.user.edit_count_bucket = t;
-				}
-				break;
-			case 'user_registration_timestamp':
-				t = this.integration.getUserRegistrationTimestamp();
-				if ( t ) {
-					eventData.user = eventData.user || {};
-					eventData.user.registration_timestamp = t;
-				}
-				break;
-			case 'user_language':
-				eventData.user = eventData.user || {};
-				eventData.user.language = this.integration.getUserLanguage();
-				break;
-			case 'user_language_variant':
-				eventData.user = eventData.user || {};
-				eventData.user.language_variant = this.integration.getUserLanguageVariant();
 				break;
 
 			// MediaWiki/Site
@@ -145,49 +106,86 @@ ContextController.prototype.addRequestedValues = function ( eventData, streamCon
 				eventData.mediawiki = eventData.mediawiki || {};
 				eventData.mediawiki.version = this.integration.getMediaWikiVersion();
 				break;
+			case 'mediawiki_is_production':
+				eventData.mediawiki = eventData.mediawiki || {};
+				eventData.mediawiki.is_production = this.integration.isProduction();
+				break;
+			case 'mediawiki_is_debug_mode':
+				eventData.mediawiki = eventData.mediawiki || {};
+				eventData.mediawiki.is_debug_mode = this.integration.isDebugMode();
+				break;
 			case 'mediawiki_site_content_language':
 				eventData.mediawiki = eventData.mediawiki || {};
 				eventData.mediawiki.site_content_language = this.integration.getMediaWikiSiteContentLanguage();
 				break;
 
-			// Device
-			case 'device_pixel_ratio':
-				t = this.integration.getDevicePixelRatio();
+			// Performer
+			case 'performer_is_logged_in':
+				eventData.performer = eventData.performer || {};
+				eventData.performer.is_logged_in = this.integration.getUserIsLoggedIn();
+				break;
+			case 'performer_id':
+				t = this.integration.getUserId();
 				if ( t ) {
-					eventData.device = eventData.device || {};
-					eventData.device.pixel_ratio = t;
+					eventData.performer = eventData.performer || {};
+					eventData.performer.id = t;
 				}
 				break;
-			case 'device_hardware_concurrency':
-				t = this.integration.getDeviceHardwareConcurrency();
+			case 'performer_name':
+				t = this.integration.getUserName();
 				if ( t ) {
-					eventData.device = eventData.device || {};
-					eventData.device.hardware_concurrency = t;
+					eventData.performer = eventData.performer || {};
+					eventData.performer.name = t;
 				}
 				break;
-			case 'device_max_touch_points':
-				t = this.integration.getDeviceMaxTouchPoints();
+			case 'performer_session_id':
+				eventData.performer = eventData.performer || {};
+				eventData.performer.session_id = this.integration.getSessionId();
+				break;
+			case 'performer_pageview_id':
+				eventData.performer = eventData.performer || {};
+				eventData.performer.pageview_id = this.integration.getPageviewId();
+				break;
+			case 'performer_groups':
+				eventData.performer = eventData.performer || {};
+				eventData.performer.groups = this.integration.getUserGroups();
+				break;
+			case 'performer_is_bot':
+				eventData.performer = eventData.performer || {};
+				eventData.performer.is_bot = this.integration.getUserIsBot();
+				break;
+			case 'performer_language':
+				eventData.performer = eventData.performer || {};
+				eventData.performer.language = this.integration.getUserLanguage();
+				break;
+			case 'performer_language_variant':
+				eventData.performer = eventData.performer || {};
+				eventData.performer.language_variant = this.integration.getUserLanguageVariant();
+				break;
+			case 'performer_can_probably_edit_page':
+				eventData.performer = eventData.performer || {};
+				eventData.performer.can_probably_edit_page = this.integration.getUserCanProbablyEditPage();
+				break;
+			case 'performer_edit_count':
+				t = this.integration.getUserEditCount();
 				if ( t ) {
-					eventData.device = eventData.device || {};
-					eventData.device.max_touch_points = t;
+					eventData.performer = eventData.performer || {};
+					eventData.performer.edit_count = t;
 				}
 				break;
-
-			// Other
-			case 'access_method':
-				eventData.access_method = this.integration.getAccessMethod();
+			case 'performer_edit_count_bucket':
+				t = this.integration.getUserEditCountBucket();
+				if ( t ) {
+					eventData.performer = eventData.performer || {};
+					eventData.performer.edit_count_bucket = t;
+				}
 				break;
-			case 'platform':
-				eventData.platform = this.integration.getPlatform();
-				break;
-			case 'platform_family':
-				eventData.platform_family = this.integration.getPlatformFamily();
-				break;
-			case 'is_debug_mode':
-				eventData.is_debug_mode = this.integration.isDebugMode();
-				break;
-			case 'is_production':
-				eventData.is_production = this.integration.isProduction();
+			case 'performer_registration_dt':
+				t = this.integration.getUserRegistrationTimestamp();
+				if ( t ) {
+					eventData.performer = eventData.performer || {};
+					eventData.performer.registration_dt = t;
+				}
 				break;
 
 			default:

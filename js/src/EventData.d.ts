@@ -26,17 +26,8 @@ interface MetricsPlatformEventData extends BaseEventData {
     agent?: EventAgentData;
     page?: EventPageData;
     mediawiki?: EventMediaWikiData;
-    user?: EventUserData;
+    performer?: EventPerformerData;
     custom_data?: Record<string, EventCustomDatum>;
-
-    // NOTE: The return on tightening up the following types is minimal as they will be removed
-    // in the immediate future.
-    access_method?: string;
-    platform?: string;
-    platform_family?: string;
-    is_debug_mode?: boolean;
-    is_production?: boolean;
-    device?: EventDeviceData;
 }
 
 interface EventAgentData {
@@ -48,8 +39,8 @@ interface EventAgentData {
 interface EventPageData {
     id?: number;
     title?: string;
-    namespace_id?: number;
-    namespace_text?: string;
+    namespace?: number;
+    namespace_name?: string;
     revision_id?: number;
     wikidata_id?: string;
     content_language?: string;
@@ -67,27 +58,23 @@ interface EventMediaWikiData {
     site_content_language_variant?: string;
 }
 
-interface EventUserData {
+interface EventPerformerData {
+    is_logged_in?: boolean;
     id?: number;
     name?: string;
-    is_logged_in?: boolean;
-    is_bot?: boolean;
+    session_id?: string;
+    pageview_id?: string;
     groups?: string[];
-    can_probably_edit_page?: boolean;
-    edit_count?: number
-    edit_count_bucket?: string;
-    registration_timestamp?: number;
-    language?: string
+    is_bot?: boolean;
+    language?: string;
     language_variant?: string;
+    can_probably_edit_page?: boolean;
+    edit_count?: number;
+    edit_count_bucket?: string;
+    registration_dt?: number;
 }
 
 interface EventCustomDatum {
     data_type: string;
     value: string;
-}
-
-interface EventDeviceData {
-    pixel_ratio?: number;
-    hardware_concurrency?: number;
-    max_touch_points?: number;
 }
