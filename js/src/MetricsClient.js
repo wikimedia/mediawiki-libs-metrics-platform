@@ -139,11 +139,6 @@ MetricsClient.prototype.submit = function ( streamName, eventData ) {
 	}
 
 	this.addRequiredMetadata( eventData, streamName );
-	this.contextController.addRequestedValues( eventData, streamConfig );
-
-	if ( !this.curationController.shouldProduceEvent( eventData, streamConfig ) ) {
-		return;
-	}
 
 	this.integration.enqueueEvent( eventData );
 };
