@@ -41,6 +41,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2d38e26_a4bebdfe",
+        "filename": "js/src/MetricsClient.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-02-22T16:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86f58e5d_ec21f082",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 2
+      },
+      "revId": "3c9b4328a4dad7d62bdfdc5be88f8d1f33436d5c",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ec2173c_2ab22aea",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-02-17T00:08:24Z",
       "side": 1,
       "message": "As an aside, would a typedef be possible/helpful here and other places where `Object` is used? \n\nI\u0027ve gathered the general shape of the stream config from the tests, the example in CurationController (although that seems to have a typo in it since it uses a singular `producer` key instead of `producers` like below) and from the config you sent me over Slack, but I\u0027d find it very helpful to have the full expected shape of this and other `Object`s documented in the code somewhere. That probably isn\u0027t the responsibility of this patch, though. \n\nI recall you mentioning possibly using typescript when we met. I can see how that would be helpful even if it was just using the `checkJs` option [1] like we have in Vector.\n\nhttps://www.typescriptlang.org/tsconfig#checkJs",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 18
+      },
+      "revId": "3c9b4328a4dad7d62bdfdc5be88f8d1f33436d5c",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55fae3c1_b516d935",
+        "filename": "js/src/MetricsClient.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-02-22T16:24:58Z",
+      "side": 1,
+      "message": "Sorry for the delay in getting back to you. Indeed, the delay was caused in introducing TypeScript into the project in such a way that the supporting changes to the supporting classes and JS interfaces can be done piecemeal and build towards this patch.\n\nDone 😊",
+      "parentUuid": "1ec2173c_2ab22aea",
       "range": {
         "startLine": 49,
         "startChar": 12,
@@ -87,6 +135,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f985100_6ba21a62",
+        "filename": "js/src/MetricsClient.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-02-22T16:24:58Z",
+      "side": 1,
+      "message": "Nope! I\u0027ve removed it.",
+      "parentUuid": "c582e17f_e3fd3b3b",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 54
+      },
+      "revId": "3c9b4328a4dad7d62bdfdc5be88f8d1f33436d5c",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86da92b7_82b6609f",
@@ -100,6 +172,30 @@
       "writtenOn": "2022-02-17T00:08:24Z",
       "side": 1,
       "message": "this seems like an important public method that clients of the MetricsClient will use frequently. Can a description of this method be added?",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 3
+      },
+      "revId": "3c9b4328a4dad7d62bdfdc5be88f8d1f33436d5c",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db66c0f5_18263269",
+        "filename": "js/src/MetricsClient.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-02-22T16:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86da92b7_82b6609f",
       "range": {
         "startLine": 211,
         "startChar": 0,
