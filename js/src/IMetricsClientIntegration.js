@@ -170,7 +170,7 @@ IMetricsClientIntegration.prototype.getUserEditCountBucket = function () {
 };
 
 /**
- * @return {number}
+ * @return {?number}
  */
 IMetricsClientIntegration.prototype.getUserRegistrationTimestamp = function () {
 	throw new Error( 'Stub!' );
