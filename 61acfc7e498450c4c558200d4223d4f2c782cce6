@@ -114,6 +114,30 @@
       },
       "revId": "61acfc7e498450c4c558200d4223d4f2c782cce6",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "091c1184_17a8d84d",
+        "filename": "js/src/CurationController.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-03-01T12:11:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c30abc93_1ad3e243",
+      "range": {
+        "startLine": 93,
+        "startChar": 11,
+        "endLine": 93,
+        "endChar": 28
+      },
+      "revId": "61acfc7e498450c4c558200d4223d4f2c782cce6",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
