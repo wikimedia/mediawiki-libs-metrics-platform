@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b88c907_aac4521a",
+        "filename": "js/src/MetricsClient.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 6176
+      },
+      "writtenOn": "2022-03-01T00:58:35Z",
+      "side": 1,
+      "message": "If `events` can be a string instead of an array, should the `StreamProducerConfig` interface be updated to reflect this?",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 33
+      },
+      "revId": "8db331797b0e979e47de0bd4486fb03a1ab08296",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
