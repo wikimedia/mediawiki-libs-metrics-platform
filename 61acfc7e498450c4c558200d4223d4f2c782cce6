@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2ad6754_3ef2c1bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6176
+      },
+      "writtenOn": "2022-03-01T00:29:47Z",
+      "side": 1,
+      "message": "lgtm, but please see my non-blocking comment below ",
+      "revId": "61acfc7e498450c4c558200d4223d4f2c782cce6",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "546e44c3_dc329e8d",
+        "filename": "js/src/CurationController.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6176
+      },
+      "writtenOn": "2022-03-01T00:29:47Z",
+      "side": 1,
+      "message": "Should this be changed to `performer_is_logged_in`?",
+      "range": {
+        "startLine": 93,
+        "startChar": 11,
+        "endLine": 93,
+        "endChar": 28
+      },
+      "revId": "61acfc7e498450c4c558200d4223d4f2c782cce6",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
