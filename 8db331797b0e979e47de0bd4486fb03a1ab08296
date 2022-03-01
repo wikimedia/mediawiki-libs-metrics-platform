@@ -22,6 +22,30 @@
       },
       "revId": "8db331797b0e979e47de0bd4486fb03a1ab08296",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32896778_83b40fd2",
+        "filename": "js/src/MetricsClient.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-03-01T11:59:01Z",
+      "side": 1,
+      "message": "Done in Ief9a661fb50a6b09b144b85116dda067a1b2514f. Nice catch!",
+      "parentUuid": "4b88c907_aac4521a",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 33
+      },
+      "revId": "8db331797b0e979e47de0bd4486fb03a1ab08296",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
