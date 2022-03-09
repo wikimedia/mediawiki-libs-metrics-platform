@@ -38,7 +38,8 @@ var sinon = require( 'sinon' ),
 	metricsClient = new MetricsClient( integration, streamConfigs ),
 
 	enqueueEventStub = sinon.stub( integration, 'enqueueEvent' ),
-	logWarningStub = sinon.stub( integration, 'logWarning' );
+	logWarningStub = sinon.stub( integration, 'logWarning' ),
+	onSubmitStub = sinon.stub( integration, 'onSubmit' );
 
 QUnit.module( 'MetricsClient', {
 	beforeEach: function () {
@@ -53,12 +54,15 @@ QUnit.test( 'submit() - warn for event without schema', function ( assert ) {
 
 	assert.strictEqual( logWarningStub.callCount, 1, 'logWarning() should be called' );
 	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
+	assert.strictEqual( onSubmitStub.callCount, 0, 'onSubmit() should not be called' );
 } );
 
 QUnit.test( 'submit() - produce an event correctly', function ( assert ) {
 	metricsClient.submit( 'metrics.platform.test', { $schema: 'metrics/platform/test' } );
+
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
 	assert.strictEqual( enqueueEventStub.callCount, 1, 'enqueueEvent() should be called' );
+	assert.strictEqual( onSubmitStub.callCount, 1, 'onSubmit() should be called' );
 } );
 
 QUnit.test( 'streamConfig() - disallow modification', function ( assert ) {

@@ -16,13 +16,24 @@ function defaultNull( val ) {
 function IMetricsClientIntegration() {}
 
 /**
- * Handle the actual event submission.
+ * Submit the event to the event ingestion service.
  *
  * @param {EventData} _eventData
  * @return {void}
  */
 IMetricsClientIntegration.prototype.enqueueEvent = function ( _eventData ) {
 	throw new Error( 'Stub!' );
+};
+
+/**
+ * Called when an event is enqueued to be submitted to the event ingestion service.
+ *
+ * @param {string} _streamName
+ * @param {EventData} _eventData
+ * @return {void}
+ */
+IMetricsClientIntegration.prototype.onSubmit = function ( _streamName, _eventData ) {
+	// NOP
 };
 
 /**

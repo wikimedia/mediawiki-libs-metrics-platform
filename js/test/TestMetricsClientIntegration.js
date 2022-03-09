@@ -18,6 +18,14 @@ TestMetricsClientIntegration.prototype.enqueueEvent = function ( eventData ) {
 	console.log( JSON.stringify( eventData ) );
 };
 
+/**
+ * @param {string} streamEvent
+ * @param {EventData} eventData
+ */
+TestMetricsClientIntegration.prototype.onSubmit = function ( streamEvent, eventData ) {
+	console.log( streamEvent, JSON.stringify( eventData ) );
+};
+
 TestMetricsClientIntegration.prototype.getHostname = function () {
 	return 'test.example.com';
 };

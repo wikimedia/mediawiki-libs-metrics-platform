@@ -149,6 +149,8 @@ MetricsClient.prototype.submit = function ( streamName, eventData ) {
 	this.addRequiredMetadata( eventData, streamName );
 
 	this.integration.enqueueEvent( eventData );
+
+	this.integration.onSubmit( streamName, eventData );
 };
 
 module.exports = MetricsClient;
