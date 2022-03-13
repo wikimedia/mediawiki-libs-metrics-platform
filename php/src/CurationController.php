@@ -339,7 +339,7 @@ class CurationController {
 	 * @param array $streamConfig
 	 * @return array|null
 	 */
-	private function getCurationRules( array $streamConfig ) : ?array {
+	private function getCurationRules( array $streamConfig ): ?array {
 		if ( !$streamConfig ) {
 			return null;
 		}

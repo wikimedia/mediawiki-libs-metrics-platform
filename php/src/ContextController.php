@@ -4,7 +4,7 @@ namespace Wikimedia\Metrics;
 
 class ContextController {
 
-	/** var Integration */
+	/** @var Integration */
 	private $integration;
 
 	/**
@@ -22,7 +22,7 @@ class ContextController {
 	 * @param array $streamConfig
 	 * @return array
 	 */
-	protected function addRequestedValues( array $event, array $streamConfig ) : array {
+	protected function addRequestedValues( array $event, array $streamConfig ): array {
 		if ( !$streamConfig ) {
 			return $event;
 		}
@@ -137,7 +137,7 @@ class ContextController {
 	 * @param array $streamConfig
 	 * @return array|null
 	 */
-	private function getRequestedValues( array $streamConfig ) : ?array {
+	private function getRequestedValues( array $streamConfig ): ?array {
 		if ( !$streamConfig ) {
 			return null;
 		}

@@ -17,7 +17,7 @@ class MetricsClient {
 	 * @param Integration $integration
 	 * @return MetricsClient
 	 */
-	public static function getInstance( Integration $integration ) : MetricsClient {
+	public static function getInstance( Integration $integration ): MetricsClient {
 		return new MetricsClient( $integration );
 	}
 
@@ -39,7 +39,7 @@ class MetricsClient {
 	 * @param array $event
 	 * @return true if the event was submitted, otherwise false
 	 */
-	public function submit( string $streamName, array $event ) : bool {
+	public function submit( string $streamName, array $event ): bool {
 		if ( !isset( $event['$schema'] ) ) {
 			return false;
 		}
@@ -78,7 +78,7 @@ class MetricsClient {
 		string $streamName,
 		array $event,
 		array $eventDefaults = null
-	) : array {
+	): array {
 		$requiredData = [
 			// meta.stream should always be set to $streamName
 			'meta' => [
@@ -125,7 +125,7 @@ class MetricsClient {
 	 *
 	 * @return array
 	 */
-	private function getEventDefaults() : array {
+	private function getEventDefaults(): array {
 		return [
 			'meta' => [
 				'domain' => $this->integration->getHostName(),

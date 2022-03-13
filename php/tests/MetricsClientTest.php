@@ -15,13 +15,13 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 	private $client;
 
 	/** @inheritDoc */
-	protected function setUp() : void {
+	protected function setUp(): void {
 		parent::setUp();
 		$client = MetricsClient::getInstance( new TestIntegration() );
 		$this->client = TestingAccessWrapper::newFromObject( $client );
 	}
 
-	public function testPrepareModernEvent() : void {
+	public function testPrepareModernEvent(): void {
 		$preparedEvent = $this->client->prepareEvent(
 			'test.event',
 			[
@@ -39,7 +39,7 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'B', $preparedEvent['extra_default'] );
 	}
 
-	public function testPrepareModernEventSubmittedWithDt() : void {
+	public function testPrepareModernEventSubmittedWithDt(): void {
 		$preparedEvent = $this->client->prepareEvent(
 			'test.event',
 			[
@@ -52,14 +52,18 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 
 		$this->assertArrayHasKey( 'meta', $preparedEvent );
 		$this->assertSame( 'test.event', $preparedEvent['meta']['stream'] );
-		$this->assertNotSame( '2021-03-15T00:00:01Z', $preparedEvent['dt'] ); // should be overwritten
+		$this->assertNotSame(
+			'2021-03-15T00:00:01Z',
+			$preparedEvent['dt'],
+			'dt should be overwritten'
+		);
 		$ts = TestingAccessWrapper::newFromClass( ConvertibleTimestamp::class );
 		$this->assertRegExp( $ts->regexes['TS_ISO_8601'], $preparedEvent['dt'] );
 		$this->assertStringEndsWith( 'Z', $preparedEvent['dt'] );
 		$this->assertSame( 'B', $preparedEvent['extra_default'] );
 	}
 
-	public function testPrepareMigratedLegacyEvent() : void {
+	public function testPrepareMigratedLegacyEvent(): void {
 		$preparedEvent = $this->client->prepareEvent(
 			'test.event.legacy',
 			[
@@ -77,7 +81,7 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'B', $preparedEvent['extra_default'] );
 	}
 
-	public function testPrepareMigratedLegacyEventSubmittedWithDt() : void {
+	public function testPrepareMigratedLegacyEventSubmittedWithDt(): void {
 		$preparedEvent = $this->client->prepareEvent(
 			'test.event.legacy',
 			[
@@ -96,7 +100,7 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame( 'B', $preparedEvent['extra_default'] );
 	}
 
-	public function testGetEventDefaults() : void {
+	public function testGetEventDefaults(): void {
 		$defaults = $this->client->getEventDefaults();
 		$this->assertSame( 'www.example.org', $defaults['meta']['domain'] );
 		$this->assertTrue( isset( $defaults['http']['request_headers']['user-agent'] ) );
