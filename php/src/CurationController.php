@@ -11,7 +11,7 @@ class CurationController {
 	 * @param array $streamConfig
 	 * @return bool
 	 */
-	protected function eventPassesCurationRules( array $event, array $streamConfig ): bool {
+	public function eventPassesCurationRules( array $event, array $streamConfig ): bool {
 		$curationRules = $this->getCurationRules( $streamConfig );
 		if ( !$curationRules ) {
 			return true;

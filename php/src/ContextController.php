@@ -22,7 +22,7 @@ class ContextController {
 	 * @param array $streamConfig
 	 * @return array
 	 */
-	protected function addRequestedValues( array $event, array $streamConfig ): array {
+	public function addRequestedValues( array $event, array $streamConfig ): array {
 		if ( !$streamConfig ) {
 			return $event;
 		}
