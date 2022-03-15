@@ -53,7 +53,7 @@ class MetricsClient {
 		}
 		$event = self::prepareEvent( $streamName, $event );
 		$event = $this->contextController->addRequestedValues( $event, $streamConfig );
-		if ( $this->curationController->eventPassesCurationRules( $event, $streamConfig ) ) {
+		if ( $this->curationController->shouldProduceEvent( $event, $streamConfig ) ) {
 			$this->integration->send( $event );
 			return true;
 		}

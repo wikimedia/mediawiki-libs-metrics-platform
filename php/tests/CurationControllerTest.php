@@ -62,43 +62,43 @@ class CurationControllerTest extends \PHPUnit\Framework\TestCase {
 
 	public function testEventPassesCurationRules() {
 		$this->assertTrue( $this->curationController->
-			eventPassesCurationRules( $this->baseEvent, $this->streamConfig ) );
+			shouldProduceEvent( $this->baseEvent, $this->streamConfig ) );
 	}
 
 	public function testEventFailsWrongPageId() {
 		$event = $this->baseEvent;
 		$event['page']['id'] = 42;
-		$this->assertFalse( $this->curationController->eventPassesCurationRules( $event, $this->streamConfig ) );
+		$this->assertFalse( $this->curationController->shouldProduceEvent( $event, $this->streamConfig ) );
 	}
 
 	public function testEventFailsWrongPageNamespaceText() {
 		$event = $this->baseEvent;
 		$event['page']['namespace_text'] = 'User';
-		$this->assertFalse( $this->curationController->eventPassesCurationRules( $event, $this->streamConfig ) );
+		$this->assertFalse( $this->curationController->shouldProduceEvent( $event, $this->streamConfig ) );
 	}
 
 	public function testEventFailsWrongUserGroups() {
 		$event = $this->baseEvent;
 		$event['user']['groups'] = [ 'user', 'autoconfirmed', 'sysop' ];
-		$this->assertFalse( $this->curationController->eventPassesCurationRules( $event, $this->streamConfig ) );
+		$this->assertFalse( $this->curationController->shouldProduceEvent( $event, $this->streamConfig ) );
 	}
 
 	public function testEventFailsNoUserGroups() {
 		$event = $this->baseEvent;
 		$event['user']['groups'] = [];
-		$this->assertFalse( $this->curationController->eventPassesCurationRules( $event, $this->streamConfig ) );
+		$this->assertFalse( $this->curationController->shouldProduceEvent( $event, $this->streamConfig ) );
 	}
 
 	public function testEventFailsNotLoggedIn() {
 		$event = $this->baseEvent;
 		$event['user']['is_logged_in'] = false;
-		$this->assertFalse( $this->curationController->eventPassesCurationRules( $event, $this->streamConfig ) );
+		$this->assertFalse( $this->curationController->shouldProduceEvent( $event, $this->streamConfig ) );
 	}
 
 	public function testEventFailsWrongUserEditCountBucket() {
 		$event = $this->baseEvent;
 		$event['user']['edit_count_bucket'] = '5-99 edits';
-		$this->assertFalse( $this->curationController->eventPassesCurationRules( $event, $this->streamConfig ) );
+		$this->assertFalse( $this->curationController->shouldProduceEvent( $event, $this->streamConfig ) );
 	}
 
 	public function testIntegerEqualsRule() {
