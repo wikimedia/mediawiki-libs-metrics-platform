@@ -5,13 +5,6 @@ namespace Wikimedia\Metrics;
 interface Integration {
 
 	/**
-	 * Get the stream configs to be used by the metrics client.
-	 *
-	 * @return array
-	 */
-	public function getStreamConfigs(): ?array;
-
-	/**
 	 * Get the hostname associated with the current request.
 	 *
 	 * @return string

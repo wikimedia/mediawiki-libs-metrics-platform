@@ -6,6 +6,9 @@ use Wikimedia\Metrics\Integration;
 
 class TestIntegration implements Integration {
 
+	/** @var array */
+	private $sentEvents = [];
+
 	/** @inheritDoc */
 	public function getStreamConfigs(): array {
 		return [];
@@ -23,6 +26,14 @@ class TestIntegration implements Integration {
 
 	/** @inheritDoc */
 	public function send( array $event ): void {
+		$this->sentEvents[] = $event;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getSentEvents(): array {
+		return $this->sentEvents;
 	}
 
 	// Context

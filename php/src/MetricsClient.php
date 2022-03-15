@@ -13,23 +13,27 @@ class MetricsClient {
 	/** @var CurationController */
 	private $curationController;
 
-	/**
-	 * @param Integration $integration
-	 * @return MetricsClient
-	 */
-	public static function getInstance( Integration $integration ): MetricsClient {
-		return new MetricsClient( $integration );
-	}
+	/** @var array */
+	private $streamConfigs;
 
 	/**
 	 * MetricsClient constructor.
 	 *
 	 * @param Integration $integration
+	 * @param array $streamConfigs
+	 * @param ?ContextController $contextController
+	 * @param ?CurationController $curationController
 	 */
-	private function __construct( Integration $integration ) {
+	public function __construct(
+		Integration $integration,
+		array $streamConfigs,
+		?ContextController $contextController = null,
+		?CurationController $curationController = null
+	) {
 		$this->integration = $integration;
-		$this->contextController = new ContextController( $integration );
-		$this->curationController = new CurationController();
+		$this->streamConfigs = $streamConfigs;
+		$this->contextController = $contextController ?? new ContextController( $integration );
+		$this->curationController = $curationController ?? new CurationController();
 	}
 
 	/**
@@ -43,15 +47,11 @@ class MetricsClient {
 		if ( !isset( $event['$schema'] ) ) {
 			return false;
 		}
-		$streamConfigs = $this->integration->getStreamConfigs();
-		if ( !$streamConfigs ) {
+		if ( !$this->streamConfigs || !isset( $this->streamConfigs[$streamName] ) ) {
 			return false;
 		}
-		$streamConfig = $streamConfigs[$streamName];
-		if ( !$streamConfig ) {
-			return false;
-		}
-		$event = self::prepareEvent( $streamName, $event );
+		$streamConfig = $this->streamConfigs[$streamName];
+		$event = $this->prepareEvent( $streamName, $event );
 		$event = $this->contextController->addRequestedValues( $event, $streamConfig );
 		if ( $this->curationController->shouldProduceEvent( $event, $streamConfig ) ) {
 			$this->integration->send( $event );
@@ -71,14 +71,9 @@ class MetricsClient {
 	 *
 	 * @param string $streamName
 	 * @param array $event
-	 * @param array|null $eventDefaults
 	 * @return array
 	 */
-	private function prepareEvent(
-		string $streamName,
-		array $event,
-		array $eventDefaults = null
-	): array {
+	private function prepareEvent( string $streamName, array $event ): array {
 		$requiredData = [
 			// meta.stream should always be set to $streamName
 			'meta' => [
@@ -87,7 +82,7 @@ class MetricsClient {
 		];
 
 		$preparedEvent = array_merge_recursive(
-			$eventDefaults ?? self::getEventDefaults(),
+			self::getEventDefaults(),
 			$event,
 			$requiredData
 		);
