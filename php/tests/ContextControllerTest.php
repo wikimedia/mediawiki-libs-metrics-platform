@@ -3,6 +3,7 @@
 namespace Wikimedia\Metrics\Test;
 
 use Wikimedia\Metrics\ContextController;
+use Wikimedia\Metrics\StreamConfig\StreamConfig;
 use Wikimedia\TestingAccessWrapper;
 
 require_once __DIR__ . '/TestIntegration.php';
@@ -19,7 +20,7 @@ class ContextControllerTest extends \PHPUnit\Framework\TestCase {
 	protected function setUp(): void {
 		$contextController = new ContextController( new TestIntegration() );
 		$this->contextController = TestingAccessWrapper::newFromObject( $contextController );
-		$this->streamConfig = [
+		$this->streamConfig = new StreamConfig( [
 			"schema_title" => "test/event",
 			"producers" => [
 				"metrics_platform_client" => [
@@ -56,7 +57,7 @@ class ContextControllerTest extends \PHPUnit\Framework\TestCase {
 					],
 				],
 			],
-		];
+		] );
 	}
 
 	public function testAddContextValues(): void {

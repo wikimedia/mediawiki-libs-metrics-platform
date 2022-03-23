@@ -5,9 +5,14 @@ namespace Wikimedia\Metrics\Test;
 require_once __DIR__ . '/TestIntegration.php';
 
 use Generator;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Wikimedia\Metrics\ContextController;
 use Wikimedia\Metrics\CurationController;
 use Wikimedia\Metrics\MetricsClient;
+use Wikimedia\Metrics\StreamConfig\StreamConfig;
+use Wikimedia\Metrics\StreamConfig\StreamConfigException;
+use Wikimedia\Metrics\StreamConfig\StreamConfigFactory;
 use Wikimedia\TestingAccessWrapper;
 use Wikimedia\Timestamp\ConvertibleTimestamp;
 
@@ -31,7 +36,10 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 		parent::setUp();
 
 		$this->integration = new TestIntegration();
-		$this->client = new MetricsClient( $this->integration, $this->streamConfigs );
+		$this->client = new MetricsClient(
+			$this->integration,
+			new StreamConfigFactory( $this->streamConfigs )
+		);
 	}
 
 	public function provideEvents(): Generator {
@@ -132,13 +140,46 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 
 	public function testSubmitDoesNotSendInvalidEvents() {
 		$this->assertFalse( $this->client->submit( 'test.event', [] ) );
-		$this->assertFalse( $this->client->submit( 'foo', [
-			'$schema' => '/test/event/1.0.0',
-		] ) );
 		$this->assertEmpty( $this->integration->getSentEvents() );
 	}
 
-	public function testSubmitDoesNotSentWhenEventIsNotCurated() {
+	public function testSubmitLogsInvalidStreamConfig() {
+		$streamName = 'foo';
+
+		// The error message passed to StreamConfigException::__construct() below.
+		$validationError = 'foo bar baz';
+
+		$streamConfigFactory = $this->createMock( StreamConfigFactory::class );
+		$streamConfigFactory->expects( $this->once() )
+			->method( 'getStreamConfig' )
+			->willThrowException( new StreamConfigException( $validationError ) );
+
+		$logger = $this->createMock( LoggerInterface::class );
+		$logger->expects( $this->once() )
+			->method( 'error' )
+			->with(
+				'The configuration for stream {streamName} is invalid: {validationError}',
+				[
+					'streamName' => $streamName,
+					'validationError' => $validationError,
+				]
+			);
+
+		$client = new MetricsClient(
+			$this->integration,
+			$streamConfigFactory,
+			$logger
+		);
+
+		$result = $client->submit( $streamName, [
+			'$schema' => '/foo/1.0.0'
+		] );
+
+		$this->assertFalse( $result );
+		$this->assertEmpty( $this->integration->getSentEvents() );
+	}
+
+	public function testSubmitDoesNotSendWhenEventIsNotCurated() {
 		$stream = 'test.event';
 		$event = [
 			'$schema' => '/test/event/1.0.0',
@@ -148,18 +189,20 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 		// Do not make an assertion about its shape.
 		$expectedEvent = $this->anything();
 
+		$expectedStreamConfig = new StreamConfig( $this->streamConfigs[$stream] );
+
 		$curationController = $this->getMockBuilder( CurationController::class )
 			->onlyMethods( [ 'shouldProduceEvent' ] )
 			->getMock();
 
-		$expectedEvent = $this->anything();
 		$curationController->method( 'shouldProduceEvent' )
-			->with( $expectedEvent, $this->streamConfigs[$stream] )
+			->with( $expectedEvent, $expectedStreamConfig )
 			->willReturn( false );
 
 		$client = new MetricsClient(
 			$this->integration,
-			$this->streamConfigs,
+			new StreamConfigFactory( $this->streamConfigs ),
+			new NullLogger(),
 			new ContextController( $this->integration ),
 			$curationController
 		);

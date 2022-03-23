@@ -2,6 +2,11 @@
 
 namespace Wikimedia\Metrics;
 
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
+use Wikimedia\Metrics\StreamConfig\StreamConfigException;
+use Wikimedia\Metrics\StreamConfig\StreamConfigFactory;
+
 class MetricsClient {
 
 	/** @var Integration */
@@ -13,31 +18,43 @@ class MetricsClient {
 	/** @var CurationController */
 	private $curationController;
 
-	/** @var array */
-	private $streamConfigs;
+	/** @var StreamConfigFactory */
+	private $streamConfigFactory;
+
+	/** @var LoggerInterface */
+	private $logger;
 
 	/**
 	 * MetricsClient constructor.
 	 *
 	 * @param Integration $integration
-	 * @param array $streamConfigs
+	 * @param StreamConfigFactory $streamConfigFactory
+	 * @param ?LoggerInterface $logger
 	 * @param ?ContextController $contextController
 	 * @param ?CurationController $curationController
 	 */
 	public function __construct(
 		Integration $integration,
-		array $streamConfigs,
+		StreamConfigFactory $streamConfigFactory,
+		?LoggerInterface $logger = null,
 		?ContextController $contextController = null,
 		?CurationController $curationController = null
 	) {
 		$this->integration = $integration;
-		$this->streamConfigs = $streamConfigs;
+		$this->streamConfigFactory = $streamConfigFactory;
+		$this->logger = $logger ?? new NullLogger();
 		$this->contextController = $contextController ?? new ContextController( $integration );
 		$this->curationController = $curationController ?? new CurationController();
 	}
 
 	/**
-	 * Submit an event according to the given stream's configuration.
+	 * Try to submit an event according to the configuration of the given stream.
+	 *
+	 * An event (E) will be submitted to stream (S) if:
+	 *
+	 * 1. E has the $schema property set;
+	 * 2. S has a valid configuration
+	 * 3. E passes the configured curation rules for S
 	 *
 	 * @param string $streamName
 	 * @param array $event
@@ -47,10 +64,22 @@ class MetricsClient {
 		if ( !isset( $event['$schema'] ) ) {
 			return false;
 		}
-		if ( !$this->streamConfigs || !isset( $this->streamConfigs[$streamName] ) ) {
+		try {
+			$streamConfig = $this->streamConfigFactory->getStreamConfig( $streamName );
+		} catch ( StreamConfigException $e ) {
+			$this->logger->error(
+				'The configuration for stream {streamName} is invalid: {validationError}',
+				[
+					'streamName' => $streamName,
+					'validationError' => $e->getMessage(),
+				]
+			);
+
 			return false;
 		}
-		$streamConfig = $this->streamConfigs[$streamName];
+		if ( !$streamConfig ) {
+			return false;
+		}
 		$event = $this->prepareEvent( $streamName, $event );
 		$event = $this->contextController->addRequestedValues( $event, $streamConfig );
 		if ( $this->curationController->shouldProduceEvent( $event, $streamConfig ) ) {
@@ -132,5 +161,4 @@ class MetricsClient {
 			]
 		];
 	}
-
 }

@@ -2,6 +2,8 @@
 
 namespace Wikimedia\Metrics;
 
+use Wikimedia\Metrics\StreamConfig\StreamConfig;
+
 class ContextController {
 
 	/** @var Integration */
@@ -19,17 +21,11 @@ class ContextController {
 	 * Add context values configured in the stream configuration.
 	 *
 	 * @param array $event
-	 * @param array $streamConfig
+	 * @param StreamConfig $streamConfig
 	 * @return array
 	 */
-	public function addRequestedValues( array $event, array $streamConfig ): array {
-		if ( !$streamConfig ) {
-			return $event;
-		}
-		$requestedValues = $this->getRequestedValues( $streamConfig );
-		if ( !$requestedValues ) {
-			return $event;
-		}
+	public function addRequestedValues( array $event, StreamConfig $streamConfig ): array {
+		$requestedValues = $streamConfig->getRequestedValues();
 		foreach ( $requestedValues as $value ) {
 			switch ( $value ) {
 				// Page
@@ -130,30 +126,4 @@ class ContextController {
 		}
 		return $event;
 	}
-
-	/**
-	 * Extract the list of requested values from a stream configuration, if present.
-	 *
-	 * @param array $streamConfig
-	 * @return array|null
-	 */
-	private function getRequestedValues( array $streamConfig ): ?array {
-		if ( !$streamConfig ) {
-			return null;
-		}
-		if ( !$streamConfig["producers"] ) {
-			return null;
-		}
-		if ( !$streamConfig["producers"]["metrics_platform_client"] ) {
-			return null;
-		}
-		if ( !$streamConfig["producers"]["metrics_platform_client"]["provide_values"] ) {
-			return null;
-		}
-		if ( !is_array( $streamConfig["producers"]["metrics_platform_client"]["provide_values"] ) ) {
-			return null;
-		}
-		return $streamConfig["producers"]["metrics_platform_client"]["provide_values"];
-	}
-
 }

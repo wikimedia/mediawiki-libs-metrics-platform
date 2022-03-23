@@ -2,20 +2,19 @@
 
 namespace Wikimedia\Metrics;
 
+use Wikimedia\Metrics\StreamConfig\StreamConfig;
+
 class CurationController {
 
 	/**
 	 * Returns true if the event passes all curation rules in the stream configuration.
 	 *
 	 * @param array $event
-	 * @param array $streamConfig
+	 * @param StreamConfig $streamConfig
 	 * @return bool
 	 */
-	public function shouldProduceEvent( array $event, array $streamConfig ): bool {
-		$curationRules = $this->getCurationRules( $streamConfig );
-		if ( !$curationRules ) {
-			return true;
-		}
+	public function shouldProduceEvent( array $event, StreamConfig $streamConfig ): bool {
+		$curationRules = $streamConfig->getCurationRules();
 		foreach ( $curationRules as $property => $rules ) {
 			switch ( $property ) {
 				// Page
@@ -332,27 +331,4 @@ class CurationController {
 		}
 		return true;
 	}
-
-	/**
-	 * Extract the list of requested values from a stream configuration, if present.
-	 *
-	 * @param array $streamConfig
-	 * @return array|null
-	 */
-	private function getCurationRules( array $streamConfig ): ?array {
-		if ( !$streamConfig ) {
-			return null;
-		}
-		if ( !isset( $streamConfig["producers"] ) ) {
-			return null;
-		}
-		if ( !isset( $streamConfig["producers"]["metrics_platform_client"] ) ) {
-			return null;
-		}
-		if ( !isset( $streamConfig["producers"]["metrics_platform_client"]["curation"] ) ) {
-			return null;
-		}
-		return $streamConfig["producers"]["metrics_platform_client"]["curation"];
-	}
-
 }
