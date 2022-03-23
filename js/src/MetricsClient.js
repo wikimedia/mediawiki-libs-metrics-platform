@@ -16,9 +16,10 @@ var ContextController = require( './ContextController.js' ),
 function MetricsClient( integration, streamConfigs ) {
 	this.contextController = new ContextController( integration );
 	this.samplingController = new SamplingController( integration );
+	this.curationController = new CurationController();
 	this.integration = integration;
 	this.streamConfigs = streamConfigs;
-	this.curationController = new CurationController();
+	this.eventNameToStreamNamesMap = null;
 }
 
 /**
@@ -41,6 +42,79 @@ MetricsClient.prototype.getStreamConfig = function ( streamName ) {
 	}
 
 	return this.integration.clone( this.streamConfigs[ streamName ] );
+};
+
+/**
+ * @param {StreamConfigs} streamConfigs
+ * @return {Record<string, string[]>}
+ */
+function getEventNameToStreamNamesMap( streamConfigs ) {
+	/** @type Record<string, string[]> */
+	var result = {};
+
+	for ( var streamName in streamConfigs ) {
+		var streamConfig = streamConfigs[ streamName ];
+
+		if (
+			!streamConfig.producers ||
+			!streamConfig.producers.metrics_platform_client ||
+			!streamConfig.producers.metrics_platform_client.events
+		) {
+			continue;
+		}
+
+		var events = streamConfig.producers.metrics_platform_client.events;
+
+		if ( typeof events === 'string' ) {
+			events = [ events ];
+		}
+
+		for ( var i = 0; i < events.length; ++i ) {
+			if ( !result[ events[ i ] ] ) {
+				result[ events[ i ] ] = [];
+			}
+
+			result[ events[ i ] ].push( streamName );
+		}
+	}
+
+	return result;
+}
+
+/**
+ * Get the names of the streams associated with the event.
+ *
+ * A stream (S) can be associated with an event by configuring it as follows:
+ *
+ * ```
+ * 'S' => [
+ *   'producers' => [
+ *     'metrics_platform_client' => [
+ *       'events' => [
+ *         'event1',
+ *         'event2',
+ *         // ...
+ *       ],
+ *     ],
+ *   ],
+ * ],
+ * ```
+ *
+ * @param {string} eventName
+ * @return {string[]}
+ */
+MetricsClient.prototype.getStreamNamesForEvent = function ( eventName ) {
+	if ( this.streamConfigs === false ) {
+		return [];
+	}
+
+	if ( !this.eventNameToStreamNamesMap ) {
+		this.eventNameToStreamNamesMap = getEventNameToStreamNamesMap( this.streamConfigs );
+	}
+
+	return this.eventNameToStreamNamesMap[ eventName ] ?
+		this.eventNameToStreamNamesMap[ eventName ] :
+		[];
 };
 
 /**
@@ -81,7 +155,7 @@ MetricsClient.prototype.addRequiredMetadata = function ( eventData, streamName )
 	if ( eventData.client_dt ) {
 		delete eventData.dt;
 	} else {
-		eventData.dt = new Date().toISOString();
+		eventData.dt = eventData.dt || new Date().toISOString();
 	}
 
 	return eventData;
@@ -91,9 +165,27 @@ MetricsClient.prototype.addRequiredMetadata = function ( eventData, streamName )
  * Submit an event according to the given stream's configuration.
  *
  * @param {string} streamName name of the stream to send eventData to
- * @param {EventData} eventData data to send to the stream
+ * @param {BaseEventData} eventData data to send to the stream
  */
 MetricsClient.prototype.submit = function ( streamName, eventData ) {
+	if ( !eventData || !eventData.$schema ) {
+		//
+		// If the caller has not provided a $schema field
+		// in eventData, the event submission does not
+		// proceed.
+		//
+		// The $schema field represents the (versioned)
+		// schema which the caller expects eventData
+		// will validate against (once the appropriate
+		// additions have been made by this client).
+		//
+		this.integration.logWarning(
+			'submit( ' + streamName + ', eventData ) called with eventData missing required ' +
+			'field "$schema". No event will be produced.'
+		);
+		return;
+	}
+
 	//
 	// NOTE
 	// If stream configuration is disabled (config.streamConfigs === false),
@@ -128,29 +220,111 @@ MetricsClient.prototype.submit = function ( streamName, eventData ) {
 		return;
 	}
 
-	if ( !eventData || !eventData.$schema ) {
-		//
-		// If the caller has not provided a $schema field
-		// in eventData, the event submission does not
-		// proceed.
-		//
-		// The $schema field represents the (versioned)
-		// schema which the caller expects eventData
-		// will validate against (once the appropriate
-		// additions have been made by this client).
-		//
-		this.integration.logWarning(
-			'submit( ' + streamName + ', eventData ) called with eventData ' +
-			'missing required field "$schema". No event will issue.'
-		);
-		return;
-	}
-
 	this.addRequiredMetadata( eventData, streamName );
 
 	this.integration.enqueueEvent( eventData );
 
 	this.integration.onSubmit( streamName, eventData );
+};
+
+/**
+ * Formats the custom data so that it is compatible with the Metrics Platform Event schema.
+ *
+ * `customData` is considered valid if all of its keys are snake_case.
+ *
+ * @param {Record<string,any>|undefined} customData
+ * @return {Record<string,EventCustomDatum>}
+ * @throws {Error} If `customData` is invalid
+ */
+function getFormattedCustomData( customData ) {
+	/** @type {Record<string,EventCustomDatum>} */
+	var result = {};
+
+	if ( !customData ) {
+		return result;
+	}
+
+	for ( var key in customData ) {
+		if ( !key.match( /^[$a-z]+[a-z0-9_]*$/ ) ) {
+			throw new Error( 'The key "' + key + '" is not snake_case.' );
+		}
+
+		var value = customData[ key ];
+		var type = value === null ? 'null' : typeof value;
+
+		result[ key ] = {
+			// eslint-disable-next-line camelcase
+			data_type: type,
+			value: String( value )
+		};
+	}
+
+	return result;
+}
+
+/**
+ * Constructs and submits a Metrics Platform Event from the event name and custom data for each
+ * stream that is interested in those events.
+ *
+ * The Metrics Platform Event for a stream (S) is constructed by: first initializing the minimum
+ * valid event (E) that can be submitted to S; and, second mixing the contextual attributes
+ * requested in the configuration for S into E.
+ *
+ * The Metrics Platform Event is submitted to a stream (S) if: 1) S is in sample; and 2) the event
+ * is filtered due to the filtering rules for S.
+ *
+ * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform
+ *
+ * @param {string} eventName
+ * @param {Record<string, any>} [customData]
+ */
+MetricsClient.prototype.dispatch = function ( eventName, customData ) {
+	var streamNames = this.getStreamNamesForEvent( eventName );
+	var formattedCustomData;
+
+	try {
+		formattedCustomData = getFormattedCustomData( customData );
+	} catch ( e ) {
+		this.integration.logWarning(
+			// @ts-ignore TS2571
+			'dispatch( ' + eventName + ', customData ) called with invalid customData: ' + e.message +
+			'No event(s) will be produced.'
+		);
+
+		return;
+	}
+
+	var dt = new Date().toISOString();
+
+	// Produce the event(s)
+	for ( var i = 0; i < streamNames.length; ++i ) {
+		/* eslint-disable camelcase */
+		/** @type {MetricsPlatformEventData} */
+		var eventData = {
+			$schema: '/analytics/mediawiki/client/metrics_event/1.0.0',
+			dt: dt,
+			name: eventName
+		};
+
+		if ( customData ) {
+			eventData.custom_data = formattedCustomData;
+		}
+		/* eslint-enable camelcase */
+
+		var streamName = streamNames[ i ];
+		var streamConfig = this.getStreamConfig( streamName );
+
+		if ( !streamConfig ) {
+			// NOTE: This SHOULD never happen.
+			continue;
+		}
+
+		this.contextController.addRequestedValues( eventData, streamConfig );
+
+		if ( this.curationController.shouldProduceEvent( eventData, streamConfig ) ) {
+			this.submit( streamName, eventData );
+		}
+	}
 };
 
 module.exports = MetricsClient;

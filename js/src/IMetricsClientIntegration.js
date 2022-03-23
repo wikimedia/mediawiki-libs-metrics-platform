@@ -18,7 +18,7 @@ function IMetricsClientIntegration() {}
 /**
  * Submit the event to the event ingestion service.
  *
- * @param {EventData} _eventData
+ * @param {BaseEventData} _eventData
  * @return {void}
  */
 IMetricsClientIntegration.prototype.enqueueEvent = function ( _eventData ) {
