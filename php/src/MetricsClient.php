@@ -4,10 +4,19 @@ namespace Wikimedia\Metrics;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Wikimedia\Metrics\StreamConfig\StreamConfig;
 use Wikimedia\Metrics\StreamConfig\StreamConfigException;
 use Wikimedia\Metrics\StreamConfig\StreamConfigFactory;
 
 class MetricsClient {
+
+	/**
+	 * The ID of v1.0.0 of the mediawiki/client/metrics_event schema in the schemas/event/secondary
+	 * repository.
+	 *
+	 * @var string
+	 */
+	private const METRICS_PLATFORM_SCHEMA = '/analytics/mediawiki/client/metrics_event/1.0.0';
 
 	/** @var Integration */
 	private $integration;
@@ -80,29 +89,50 @@ class MetricsClient {
 		if ( !$streamConfig ) {
 			return false;
 		}
-		$event = $this->prepareEvent( $streamName, $event );
+
+		return $this->submitInternal( $streamName, $streamConfig, $event );
+	}
+
+	/**
+	 * @param string $streamName
+	 * @param StreamConfig $streamConfig
+	 * @param array $event
+	 * @param string|null $dt
+	 * @return bool
+	 */
+	private function submitInternal(
+		string $streamName,
+		StreamConfig $streamConfig,
+		array $event,
+		string $dt = null
+	): bool {
+		$event = $this->prepareEvent( $streamName, $event, $dt );
 		$event = $this->contextController->addRequestedValues( $event, $streamConfig );
+
 		if ( $this->curationController->shouldProduceEvent( $event, $streamConfig ) ) {
 			$this->integration->send( $event );
+
 			return true;
 		}
+
 		return false;
 	}
 
 	/**
 	 * Prepares the event with extra data for submission.
-	 * This will always set
-	 * - `meta.stream` to $streamName
 	 *
-	 * This will optionally set (if not already in the event):
-	 * - `dt` to the current time to represent the 'event time'
-	 * - $eventDefaults
+	 * This will always set
+	 * - `meta.stream` to `$streamName`
+	 *
+	 * If `client_dt` is in the event, then this will always unset `dt`. If `client_dt` is not in
+	 * the event, then `dt` will be set to the given time or the current time.
 	 *
 	 * @param string $streamName
 	 * @param array $event
+	 * @param string|null $dt
 	 * @return array
 	 */
-	private function prepareEvent( string $streamName, array $event ): array {
+	private function prepareEvent( string $streamName, array $event, string $dt = null ): array {
 		$requiredData = [
 			// meta.stream should always be set to $streamName
 			'meta' => [
@@ -131,7 +161,7 @@ class MetricsClient {
 		if ( isset( $preparedEvent['client_dt'] ) ) {
 			unset( $preparedEvent['dt'] );
 		} else {
-			$preparedEvent['dt'] = $this->integration->getTimestamp();
+			$preparedEvent['dt'] = $dt ?? $this->integration->getTimestamp();
 		}
 
 		return $preparedEvent;
@@ -160,5 +190,71 @@ class MetricsClient {
 				]
 			]
 		];
+	}
+
+	/**
+	 * Constructs a "Metrics Platform Event" event given the event name and custom data. The event
+	 * is submitted to all streams that is interested in the event.
+	 *
+	 * An event (E) is constructed for a stream (S) by:
+	 *
+	 * 1. Initializing the minimum valid event E that can be submitted to S
+	 * 2. If it is given, adding the formatted custom data as the `custom_data` property of E
+	 * 3. Mixing the contextual attributes requested in the configuration for S into E
+	 *
+	 * After which, E is submitted to S.
+	 *
+	 * Note well that all events are submitted with the same client-side event timestamp (the `dt`
+	 * property) for consistency.
+	 *
+	 * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform
+	 *
+	 * @param string $eventName
+	 * @param array $customData
+	 */
+	public function dispatch( string $eventName, array $customData = [] ): void {
+		$customData = $this->formatCustomData( $customData );
+		$timestamp = $this->integration->getTimestamp();
+
+		$streamNames = $this->streamConfigFactory->getStreamNamesForEvent( $eventName );
+
+		foreach ( $streamNames as $streamName ) {
+			$streamConfig = $this->streamConfigFactory->getStreamConfig( $streamName );
+
+			$event = [
+				'$schema' => self::METRICS_PLATFORM_SCHEMA,
+			];
+
+			if ( $customData ) {
+				$event['custom_data'] = $customData;
+			}
+
+			$this->submitInternal( $streamName, $streamConfig, $event, $timestamp );
+		}
+	}
+
+	/**
+	 * @param array $customData
+	 * @return array
+	 */
+	private function formatCustomData( array $customData ): array {
+		return array_map( static function ( $value ) {
+			$type = strtolower( gettype( $value ) );
+
+			// TODO: Should the JavaScript impl. be updated to distinguish between integers and
+			// floating-point numbers?
+			if ( $type === 'integer' || $type === 'double' ) {
+				$type = 'number';
+			} elseif ( $type === 'boolean' ) {
+				$value = $value ? 'true' : 'false';
+			} elseif ( $type === 'null' ) {
+				$value = 'null';
+			}
+
+			return [
+				'data_type' => $type,
+				'value' => (string)$value,
+			];
+		}, $customData );
 	}
 }

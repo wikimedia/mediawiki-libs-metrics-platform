@@ -7,6 +7,9 @@ class StreamConfigFactory {
 	/** @var array|false */
 	protected $rawStreamConfigs;
 
+	/** @var ?string[] */
+	private $eventToStreamNamesMap;
+
 	/**
 	 * @param array|false $rawStreamConfigs
 	 */
@@ -38,5 +41,52 @@ class StreamConfigFactory {
 		}
 
 		return new StreamConfig( $this->rawStreamConfigs[$streamName] );
+	}
+
+	/**
+	 * @param string $eventName
+	 * @return array
+	 */
+	public function getStreamNamesForEvent( string $eventName ): array {
+		$eventToStreamNamesMap = $this->getEventToStreamNamesMap();
+
+		return $eventToStreamNamesMap[$eventName] ?? [];
+	}
+
+	/**
+	 * @return array
+	 */
+	private function getEventToStreamNamesMap(): array {
+		if ( $this->rawStreamConfigs === false ) {
+			return [];
+		}
+
+		if ( $this->eventToStreamNamesMap !== null ) {
+			return $this->eventToStreamNamesMap;
+		}
+
+		$this->eventToStreamNamesMap = [];
+
+		foreach ( $this->rawStreamConfigs as $streamName => $rawStreamConfig ) {
+			if (
+				!isset( $rawStreamConfig['producers'] )
+				|| !isset( $rawStreamConfig['producers']['metrics_platform_client'] )
+				|| !isset( $rawStreamConfig['producers']['metrics_platform_client']['events'] )
+			) {
+				continue;
+			}
+
+			$events = (array)$rawStreamConfig['producers']['metrics_platform_client']['events'];
+
+			foreach ( $events as $event ) {
+				if ( !isset( $this->eventToStreamNamesMap[$event] ) ) {
+					$this->eventToStreamNamesMap[$event] = [];
+				}
+
+				$this->eventToStreamNamesMap[$event][] = $streamName;
+			}
+		}
+
+		return $this->eventToStreamNamesMap;
 	}
 }

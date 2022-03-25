@@ -4,6 +4,8 @@ namespace Wikimedia\Metrics\Test;
 
 require_once __DIR__ . '/TestIntegration.php';
 
+use DateTime;
+use DateTimeZone;
 use Generator;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -29,6 +31,25 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 	private $streamConfigs = [
 		'test.event' => [],
 		'test.event.legacy' => [],
+		'test.event.mpc1' => [
+			'producers' => [
+				'metrics_platform_client' => [
+					'events' => [
+						'foo',
+						'bar',
+					],
+				],
+			],
+		],
+		'test.event.mpc2' => [
+			'producers' => [
+				'metrics_platform_client' => [
+					'events' => [
+						'bar',
+					],
+				],
+			],
+		],
 	];
 
 	/** @inheritDoc */
@@ -209,5 +230,119 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 
 		$this->assertFalse( $client->submit( $stream, $event ) );
 		$this->assertEmpty( $this->integration->getSentEvents() );
+	}
+
+	public function provideDispatch(): Generator {
+		yield [
+			'customData' => [],
+			'expectedCustomData' => null,
+		];
+		yield [
+			'customData' => [
+				'foo' => 1,
+				'bar' => 1.1,
+				'baz' => 'qux',
+				'quux' => true,
+				'quuz' => null,
+			],
+			'expectedCustomData' => [
+				'foo' => [
+					'data_type' => 'number',
+					'value' => '1',
+				],
+				'bar' => [
+					'data_type' => 'number',
+					'value' => '1.1',
+				],
+				'baz' => [
+					'data_type' => 'string',
+					'value' => 'qux',
+				],
+				'quux' => [
+					'data_type' => 'boolean',
+					'value' => 'true',
+				],
+				'quuz' => [
+					'data_type' => 'null',
+					'value' => 'null',
+				],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider provideDispatch
+	 */
+	public function testDispatch( $customData, $expectedCustomData ): void {
+		$this->client->dispatch( 'foo', $customData );
+
+		$event = $this->integration->getSentEvents()[0];
+
+		$this->assertEquals( '/analytics/mediawiki/client/metrics_event/1.0.0', $event['$schema'] );
+		$this->assertEquals( 'test.event.mpc1', $event['meta']['stream'] );
+
+		$this->assertArrayHasKey(
+			'domain',
+			$event['meta'],
+			'The event was prepared with MetricsClient::prepareEvent()'
+		);
+		$this->assertArrayHasKey( 'http', $event );
+
+		if ( $expectedCustomData === null ) {
+			$this->assertArrayNotHasKey( 'custom_data', $event );
+		} else {
+			$this->assertEquals( $expectedCustomData, $event['custom_data'] );
+		}
+	}
+
+	public function testDispatchToMultipleStreams(): void {
+		$integration = $this->getMockBuilder( TestIntegration::class )
+			->onlyMethods( [ 'getTimestamp' ] )
+			->getMock();
+		$integration->expects( $this->once() )
+			->method( 'getTimestamp' )
+			->willReturnCallback( static function () {
+				$result = new DateTime( 'now', new DateTimeZone( 'UTC' ) );
+
+				return $result->format( 'Y-m-d\TH:i:s\Z' );
+			} );
+
+		// It should call addRequestedValues for each event being submitted
+		$contextController = $this->createMock( ContextController::class );
+		$contextController->expects( $this->exactly( 2 ) )
+			->method( 'addRequestedValues' )
+			->willReturnArgument( 0 );
+
+		// It should call shouldProduceEvent for each event being submitted
+		$curationController = $this->createMock( CurationController::class );
+		$curationController->expects( $this->exactly( 2 ) )
+			->method( 'shouldProduceEvent' )
+			->willReturn( true );
+
+		$client = new MetricsClient(
+			$integration,
+			new StreamConfigFactory( $this->streamConfigs ),
+			null,
+			$contextController,
+			$curationController
+		);
+
+		$client->dispatch( 'bar' );
+
+		// @phan-suppress-next-line PhanUndeclaredMethod
+		$events = $integration->getSentEvents();
+
+		$this->assertCount( 2, $events );
+
+		$this->assertEquals( 'test.event.mpc1', $events[0]['meta']['stream'] );
+		$this->assertEquals( 'test.event.mpc2', $events[1]['meta']['stream'] );
+
+		$this->assertIsValidTimestamp( $events[0]['dt'] );
+		$this->assertIsValidTimestamp( $events[1]['dt'] );
+		$this->assertEquals(
+			$events[0]['dt'],
+			$events[1]['dt'],
+			'All events are submitted with the same timestamp.'
+		);
 	}
 }

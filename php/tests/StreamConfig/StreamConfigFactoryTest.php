@@ -53,4 +53,42 @@ class StreamConfigFactoryTest extends TestCase {
 		] );
 		$factory->getStreamConfig( 'foo' );
 	}
+
+	/**
+	 * @covers ::getStreamNamesForEvent
+	 */
+	public function testgetStreamNamesForEvent(): void {
+		$factory = $this->getFactory( [
+			'test.stream' => [],
+			'test.stream2' => [
+				'producers' => [
+					'metrics_platform_client' => [
+						'events' => [
+							'foo',
+							'bar',
+						],
+					],
+				],
+			],
+			'test.stream3' => [
+				'producers' => [
+					'metrics_platform_client' => [
+						'events' => [
+							'bar',
+						],
+					],
+				],
+			],
+		] );
+
+		$this->assertEquals( [ 'test.stream2' ], $factory->getStreamNamesForEvent( 'foo' ) );
+		$this->assertEquals( [ 'test.stream2', 'test.stream3' ], $factory->getStreamNamesForEvent( 'bar' ) );
+		$this->assertEquals( [], $factory->getStreamNamesForEvent( 'baz' ) );
+
+		// ---
+
+		$factory = $this->getFactory( false );
+
+		$this->assertEmpty( $factory->getStreamNamesForEvent( 'foo' ) );
+	}
 }
