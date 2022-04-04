@@ -32,29 +32,39 @@ interface Integration {
 	// Context
 
 	/**
-	 * @return int|null
+	 * @return string|null
 	 */
-	public function getPageId(): ?int;
+	public function getAgentAppInstallId(): ?string;
 
 	/**
-	 * @return int|null
+	 * @return string
 	 */
-	public function getPageNamespaceId(): ?int;
+	public function getAgentClientPlatform(): string;
 
 	/**
 	 * @return string|null
 	 */
-	public function getPageNamespaceText(): ?string;
+	public function getClientPlatformFamily(): ?string;
 
 	/**
-	 * @return string|null
+	 * @return int
 	 */
-	public function getPageTitle(): ?string;
+	public function getPageId(): int;
 
 	/**
-	 * @return bool|null
+	 * @return string
 	 */
-	public function getPageIsRedirect(): ?bool;
+	public function getPageTitle(): string;
+
+	/**
+	 * @return int
+	 */
+	public function getPageNamespace(): int;
+
+	/**
+	 * @return string
+	 */
+	public function getPageNamespaceName(): string;
 
 	/**
 	 * @return int|null
@@ -72,29 +82,59 @@ interface Integration {
 	public function getPageContentLanguage(): ?string;
 
 	/**
-	 * @return array|null
+	 * @return bool
 	 */
-	public function getPageGroupsAllowedToEdit(): ?array;
+	public function getPageIsRedirect(): bool;
 
 	/**
-	 * @return array|null
+	 * @return array
 	 */
-	public function getPageGroupsAllowedToMove(): ?array;
+	public function getPageGroupsAllowedToMove(): array;
 
 	/**
-	 * @return int|null
+	 * @return array
 	 */
-	public function getUserId(): ?int;
+	public function getPageGroupsAllowedToEdit(): array;
 
 	/**
-	 * @return bool|null
+	 * @return string
 	 */
-	public function getUserIsLoggedIn(): ?bool;
+	public function getMediaWikiSkin(): string;
 
 	/**
-	 * @return bool|null
+	 * @return string
 	 */
-	public function getUserIsBot(): ?bool;
+	public function getMediaWikiVersion(): string;
+
+	/**
+	 * @return bool
+	 */
+	public function getMediaWikiIsProduction(): bool;
+
+	/**
+	 * @return bool
+	 */
+	public function getMediaWikiIsDebugMode(): bool;
+
+	/**
+	 * @return string
+	 */
+	public function getMediaWikiSiteContentLanguage(): string;
+
+	/**
+	 * @return string|null
+	 */
+	public function getMediaWikiSiteContentLanguageVariant(): ?string;
+
+	/**
+	 * @return bool
+	 */
+	public function getUserIsLoggedIn(): bool;
+
+	/**
+	 * @return int
+	 */
+	public function getUserId(): int;
 
 	/**
 	 * @return string|null
@@ -102,14 +142,39 @@ interface Integration {
 	public function getUserName(): ?string;
 
 	/**
-	 * @return array|null
+	 * @return string|null
 	 */
-	public function getUserGroups(): ?array;
+	public function getUserSessionId(): ?string;
 
 	/**
-	 * @return bool|null
+	 * @return string|null
 	 */
-	public function getUserCanProbablyEditPage(): ?bool;
+	public function getUserPageviewId(): ?string;
+
+	/**
+	 * @return array
+	 */
+	public function getUserGroups(): array;
+
+	/**
+	 * @return bool
+	 */
+	public function getUserIsBot(): bool;
+
+	/**
+	 * @return string
+	 */
+	public function getUserLanguage(): string;
+
+	/**
+	 * @return string
+	 */
+	public function getUserLanguageVariant(): string;
+
+	/**
+	 * @return bool
+	 */
+	public function getUserCanProbablyEditPage(): bool;
 
 	/**
 	 * @return int|null
@@ -125,40 +190,4 @@ interface Integration {
 	 * @return int|null
 	 */
 	public function getUserRegistrationTimestamp(): ?int;
-
-	/**
-	 * @return string|null
-	 */
-	public function getUserLanguage(): ?string;
-
-	/**
-	 * @return string|null
-	 */
-	public function getUserLanguageVariant(): ?string;
-
-	/**
-	 * @return string|null
-	 */
-	public function getMediaWikiSkin(): ?string;
-
-	/**
-	 * @return string|null
-	 */
-	public function getMediaWikiVersion(): ?string;
-
-	/**
-	 * @return string|null
-	 */
-	public function getMediaWikiSiteContentLanguage(): ?string;
-
-	/**
-	 * @return string|null
-	 */
-	public function getAccessMethod(): ?string;
-
-	/**
-	 * @return bool|null
-	 */
-	public function isProduction(): ?bool;
-
 }

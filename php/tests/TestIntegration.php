@@ -39,27 +39,27 @@ class TestIntegration implements Integration {
 	// Context
 
 	/** @inheritDoc */
-	public function getPageId(): ?int {
+	public function getPageId(): int {
 		return 1;
 	}
 
 	/** @inheritDoc */
-	public function getPageNamespaceId(): ?int {
+	public function getPageNamespace(): int {
 		return 0;
 	}
 
 	/** @inheritDoc */
-	public function getPageNamespaceText(): ?string {
+	public function getPageNamespaceName(): string {
 		return "";
 	}
 
 	/** @inheritDoc */
-	public function getPageTitle(): ?string {
+	public function getPageTitle(): string {
 		return "Test";
 	}
 
 	/** @inheritDoc */
-	public function getPageIsRedirect(): ?bool {
+	public function getPageIsRedirect(): bool {
 		return false;
 	}
 
@@ -79,27 +79,27 @@ class TestIntegration implements Integration {
 	}
 
 	/** @inheritDoc */
-	public function getPageGroupsAllowedToEdit(): ?array {
+	public function getPageGroupsAllowedToEdit(): array {
 		return [];
 	}
 
 	/** @inheritDoc */
-	public function getPageGroupsAllowedToMove(): ?array {
+	public function getPageGroupsAllowedToMove(): array {
 		return [];
 	}
 
 	/** @inheritDoc */
-	public function getUserId(): ?int {
+	public function getUserId(): int {
 		return 1;
 	}
 
 	/** @inheritDoc */
-	public function getUserIsLoggedIn(): ?bool {
+	public function getUserIsLoggedIn(): bool {
 		return true;
 	}
 
 	/** @inheritDoc */
-	public function getUserIsBot(): ?bool {
+	public function getUserIsBot(): bool {
 		return false;
 	}
 
@@ -109,12 +109,12 @@ class TestIntegration implements Integration {
 	}
 
 	/** @inheritDoc */
-	public function getUserGroups(): ?array {
+	public function getUserGroups(): array {
 		return [ "*" ];
 	}
 
 	/** @inheritDoc */
-	public function getUserCanProbablyEditPage(): ?bool {
+	public function getUserCanProbablyEditPage(): bool {
 		return true;
 	}
 
@@ -134,38 +134,67 @@ class TestIntegration implements Integration {
 	}
 
 	/** @inheritDoc */
-	public function getUserLanguage(): ?string {
+	public function getUserLanguage(): string {
 		return "zh";
 	}
 
 	/** @inheritDoc */
-	public function getUserLanguageVariant(): ?string {
+	public function getUserLanguageVariant(): string {
 		return "zh-tw";
 	}
 
 	/** @inheritDoc */
-	public function getMediaWikiSkin(): ?string {
+	public function getMediaWikiSkin(): string {
 		return "timeless";
 	}
 
 	/** @inheritDoc */
-	public function getMediaWikiVersion(): ?string {
+	public function getMediaWikiVersion(): string {
 		return "1.37.0";
 	}
 
 	/** @inheritDoc */
-	public function getMediaWikiSiteContentLanguage(): ?string {
+	public function getMediaWikiSiteContentLanguage(): string {
 		return "zh";
 	}
 
 	/** @inheritDoc */
-	public function getAccessMethod(): ?string {
-		return "mobile web";
+	public function getMediaWikiSiteContentLanguageVariant(): ?string {
+		return "zh-tw";
 	}
 
 	/** @inheritDoc */
-	public function isProduction(): ?bool {
+	public function getAgentAppInstallId(): ?string {
+		return null;
+	}
+
+	/** @inheritDoc */
+	public function getAgentClientPlatform(): string {
+		return 'mediawiki_php';
+	}
+
+	/** @inheritDoc */
+	public function getClientPlatformFamily(): ?string {
+		return null;
+	}
+
+	/** @inheritDoc */
+	public function getMediaWikiIsProduction(): bool {
+		return false;
+	}
+
+	/** @inheritDoc */
+	public function getMediaWikiIsDebugMode(): bool {
 		return true;
 	}
 
+	/** @inheritDoc */
+	public function getUserSessionId(): ?string {
+		return null;
+	}
+
+	/** @inheritDoc */
+	public function getUserPageviewId(): ?string {
+		return null;
+	}
 }

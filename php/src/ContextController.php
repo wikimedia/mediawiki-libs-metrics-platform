@@ -18,7 +18,7 @@ class ContextController {
 	}
 
 	/**
-	 * Add context values configured in the stream configuration.
+	 * Add contextual values configured in the stream configuration.
 	 *
 	 * @param array $event
 	 * @param StreamConfig $streamConfig
@@ -26,104 +26,101 @@ class ContextController {
 	 */
 	public function addRequestedValues( array $event, StreamConfig $streamConfig ): array {
 		$requestedValues = $streamConfig->getRequestedValues();
-		foreach ( $requestedValues as $value ) {
-			switch ( $value ) {
-				// Page
-				case "page_id":
-					$event["page"]["id"] = $this->integration->getPageId();
-					break;
-				case "page_namespace_id":
-					$event["page"]["namespace_id"] = $this->integration->getPageNamespaceId();
-					break;
-				case "page_namespace_text":
-					$event["page"]["namespace_text"] = $this->integration->getPageNamespaceText();
-					break;
-				case "page_title":
-					$event["page"]["title"] = $this->integration->getPageTitle();
-					break;
-				case "page_is_redirect":
-					$event["page"]["is_redirect"] = $this->integration->getPageIsRedirect();
-					break;
-				case "page_revision_id":
-					$event["page"]["revision_id"] = $this->integration->getPageRevisionId();
-					break;
-				case "page_content_language":
-					$event["page"]["content_language"] = $this->integration->getPageContentLanguage();
-					break;
-				case "page_wikidata_id":
-					$event["page"]["wikidata_id"] = $this->integration->getPageWikidataItemId();
-					break;
-				case "page_groups_allowed_to_edit":
-					$event["page"]["groups_allowed_to_edit"] = $this->integration->getPageGroupsAllowedToEdit();
-					break;
-				case "page_groups_allowed_to_move":
-					$event["page"]["groups_allowed_to_move"] = $this->integration->getPageGroupsAllowedToMove();
-					break;
 
-				// User
-				case "user_id":
-					$event["user"]["id"] = $this->integration->getUserId();
-					break;
-				case "user_is_logged_in":
-					$event["user"]["is_logged_in"] = $this->integration->getUserIsLoggedIn();
-					break;
-				case "user_name":
-					$event["user"]["name"] = $this->integration->getUserName();
-					break;
-				case "user_groups":
-					$event["user"]["groups"] = $this->integration->getUserGroups();
-					break;
-				case "user_edit_count":
-					$event["user"]["edit_count"] = $this->integration->getUserEditCount();
-					break;
-				case "user_edit_count_bucket":
-					$event["user"]["edit_count_bucket"] = $this->integration->getUserEditCountBucket();
-					break;
-				case "user_registration_timestamp":
-					$event["user"]["registration_timestamp"] = $this->integration->getUserRegistrationTimestamp();
-					break;
-				case "user_language":
-					$event["user"]["language"] = $this->integration->getUserLanguage();
-					break;
-				case "user_language_variant":
-					$event["user"]["language_variant"] = $this->integration->getUserLanguageVariant();
-					break;
-				case "user_is_bot":
-					$event["user"]["is_bot"] = $this->integration->getUserIsBot();
-					break;
-				case "user_can_probably_edit_page":
-					$event["user"]["can_probably_edit_page"] = $this->integration->getUserCanProbablyEditPage();
-					break;
+		foreach ( $requestedValues as $requestedValue ) {
+			list( $primaryKey, $secondaryKey ) = explode( '_', $requestedValue, 2 );
 
-				// MediaWiki/Site
-				case "mediawiki_skin":
-					$event["mediawiki"]["skin"] = $this->integration->getMediaWikiSkin();
-					break;
-				case "mediawiki_version":
-					$event["mediawiki"]["version"] = $this->integration->getMediaWikiVersion();
-					break;
-				case "mediawiki_site_content_language":
-					$event["mediawiki"]["site_content_language"] =
-						$this->integration->getMediaWikiSiteContentLanguage();
-					break;
+			if ( !isset( $event[$primaryKey] ) ) {
+				$event[$primaryKey] = [];
+			}
 
-				// Misc
-				case "access_method":
-					$event["access_method"] = $this->integration->getAccessMethod();
-					break;
-				case "platform":
-					$event["platform"] = "mediawiki_php";
-					break;
-				case "platform_family":
-					$event["platform_family"] = "web";
-					break;
-				case "is_production":
-					$event["is_production"] = $this->integration->isProduction();
-					break;
-				default:
-					break;
+			$value = $this->getContextualAttributeByName( $requestedValue );
+
+			// Contextual attributes are null by default. Only add the requested contextual
+			// attribute - incurring the cost of transporting it - if it is not null.
+			if ( $value !== null ) {
+				$event[$primaryKey][$secondaryKey] = $value;
 			}
 		}
+
 		return $event;
+	}
+
+	/**
+	 * @param string $name
+	 * @return mixed
+	 */
+	private function getContextualAttributeByName( string $name ) {
+		$int = $this->integration;
+
+		switch ( $name ) {
+			case 'agent_app_install_id':
+				return $int->getAgentAppInstallId();
+			case 'agent_client_platform':
+				return $int->getAgentClientPlatform();
+			case 'agent_client_platform_family':
+				return $int->getClientPlatformFamily();
+
+			case 'page_id':
+				return $int->getPageId();
+			case 'page_title':
+				return $int->getPageTitle();
+			case 'page_namespace':
+				return $int->getPageNamespace();
+			case 'page_namespace_name':
+				return $int->getPageNamespaceName();
+			case 'page_revision_id':
+				return $int->getPageRevisionId();
+			case 'page_wikidata_id':
+				return $int->getPageWikidataItemId();
+			case 'page_content_language':
+				return $int->getPageContentLanguage();
+			case 'page_is_redirect':
+				return $int->getPageIsRedirect();
+			case 'page_user_groups_allowed_to_move':
+				return $int->getPageGroupsAllowedToMove();
+			case 'page_user_groups_allowed_to_edit':
+				return $int->getPageGroupsAllowedToEdit();
+
+			case 'mediawiki_skin':
+				return $int->getMediaWikiSkin();
+			case 'mediawiki_version':
+				return $int->getMediaWikiVersion();
+			case 'mediawiki_is_production':
+				return $int->getMediaWikiIsProduction();
+			case 'mediawiki_is_debug_mode':
+				return $int->getMediaWikiIsDebugMode();
+			case 'mediawiki_site_content_language':
+				return $int->getMediaWikiSiteContentLanguage();
+			case 'mediawiki_site_content_language_variant':
+				return $int->getMediaWikiSiteContentLanguageVariant();
+
+			case 'performer_is_logged_in':
+				return $int->getUserIsLoggedIn();
+			case 'performer_id':
+				return $int->getUserId();
+			case 'performer_name':
+				return $int->getUserName();
+			case 'performer_session_id':
+				return $int->getUserSessionId();
+			case 'performer_pageview_id':
+				return $int->getUserPageviewId();
+			case 'performer_groups':
+				return $int->getUserGroups();
+			case 'performer_is_bot':
+				return $int->getUserIsBot();
+			case 'performer_language':
+				return $int->getUserLanguage();
+			case 'performer_language_variant':
+				return $int->getUserLanguageVariant();
+			case 'performer_can_probably_edit_page':
+				return $int->getUserCanProbablyEditPage();
+			case 'performer_edit_count':
+				return $int->getUserEditCount();
+			case 'performer_edit_count_bucket':
+				return $int->getUserEditCountBucket();
+			case 'performer_registration_dt':
+				return $int->getUserRegistrationTimestamp();
+		}
 	}
 }
