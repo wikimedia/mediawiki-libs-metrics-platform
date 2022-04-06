@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43049669_d8bae2e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34
+      },
+      "writtenOn": "2022-04-06T22:32:41Z",
+      "side": 1,
+      "message": "Ah the bright red text *isn\u0027t* the reason it fails. It\u0027s instead:\n\n Error: EACCES: permission denied, open \u0027/srv/app/.eslintcache\u0027\n\nWell that explains why the cache wasn\u0027t actually on.",
+      "revId": "61879f90a9c921c9e2791c6aadf13378b3139a8f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
