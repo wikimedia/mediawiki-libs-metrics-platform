@@ -90,6 +90,8 @@ class ContextController {
 				return $int->getMediaWikiIsProduction();
 			case 'mediawiki_is_debug_mode':
 				return $int->getMediaWikiIsDebugMode();
+			case 'mediawiki_db_name':
+				return $int->getMediaWikiDBName();
 			case 'mediawiki_site_content_language':
 				return $int->getMediaWikiSiteContentLanguage();
 			case 'mediawiki_site_content_language_variant':

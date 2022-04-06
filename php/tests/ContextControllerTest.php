@@ -61,6 +61,7 @@ class ContextControllerTest extends TestCase {
 		$this->assertSame( "1.37.0", $siteData["version"] );
 		$this->assertSame( false, $siteData["is_production"] );
 		$this->assertSame( true, $siteData["is_debug_mode"] );
+		$this->assertSame( "zhwiki", $siteData['db_name'] );
 		$this->assertSame( "zh", $siteData["site_content_language"] );
 		$this->assertSame( "zh-tw", $siteData["site_content_language_variant"] );
 

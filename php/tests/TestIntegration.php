@@ -154,6 +154,11 @@ class TestIntegration implements Integration {
 	}
 
 	/** @inheritDoc */
+	public function getMediaWikiDBName(): string {
+		return "zhwiki";
+	}
+
+	/** @inheritDoc */
 	public function getMediaWikiSiteContentLanguage(): string {
 		return "zh";
 	}

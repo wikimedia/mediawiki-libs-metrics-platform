@@ -119,6 +119,11 @@ interface Integration {
 	/**
 	 * @return string
 	 */
+	public function getMediaWikiDBName(): string;
+
+	/**
+	 * @return string
+	 */
 	public function getMediaWikiSiteContentLanguage(): string;
 
 	/**
