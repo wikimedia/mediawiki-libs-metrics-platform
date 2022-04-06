@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6739f80_4230d722",
+        "filename": ".pipeline/blubber/js.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 34
+      },
+      "writtenOn": "2022-04-06T22:50:40Z",
+      "side": 1,
+      "message": "https://wikitech.wikimedia.org/wiki/Blubber/User_Guide#Common_Config\n\nWithout this, the test build fails in CI due to not being allowed to create the temporary cache file.",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "8e5144e2178f350574ab8c3c4a79c9086efdcb36",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
