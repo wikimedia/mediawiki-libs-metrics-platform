@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 var IMetricsClientIntegration = require( '../src/IMetricsClientIntegration.js' );
 
 /**

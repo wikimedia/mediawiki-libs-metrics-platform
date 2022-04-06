@@ -4,7 +4,8 @@
 function CurationController() {}
 
 /**
- * Returns true if the value is undefined or null.
+ * Whether the value is undefined or null.
+ *
  * This provides a safe way to check for the existence of possibly-falsy values.
  *
  * @param {*} value
@@ -15,20 +16,19 @@ CurationController.prototype.isEmpty = function ( value ) {
 };
 
 /**
- * Applies filtering rules to a value.
+ * Apply filtering rules to a value.
  *
  * @param {*} value
  * @param {StreamProducerCurationConfig} rules
  * @return {boolean} true if the event passes filtering, false if not
  */
 CurationController.prototype.applyRules = function ( value, rules ) {
-	var i, found, operand;
-
 	/** @type keyof StreamProducerCurationConfig */
 	var operator;
 
 	for ( operator in rules ) {
-		operand = rules[ operator ];
+		var i;
+		var operand = rules[ operator ];
 		if ( operator === 'equals' && value !== operand ) {
 			return false;
 		} else if ( operator === 'not_equals' && value === operand ) {
@@ -64,6 +64,7 @@ CurationController.prototype.applyRules = function ( value, rules ) {
 				}
 			}
 		} else if ( operator === 'contains_any' && Array.isArray( operand ) ) {
+			var found;
 			for ( i = 0; i < operand.length; i++ ) {
 				if ( value.indexOf( operand[ i ] ) > -1 ) {
 					found = true;

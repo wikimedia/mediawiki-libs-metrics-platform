@@ -1,8 +1,8 @@
 var IMetricsClientIntegration = require( './IMetricsClientIntegration.js' ); // eslint-disable-line no-unused-vars
 
-var ContextController = require( './ContextController.js' ),
-	SamplingController = require( './SamplingController.js' ),
-	CurationController = require( './CurationController.js' );
+var ContextController = require( './ContextController.js' );
+var SamplingController = require( './SamplingController.js' );
+var CurationController = require( './CurationController.js' );
 
 /**
  * Client for producing events to the Wikimedia metrics platform.
@@ -228,7 +228,7 @@ MetricsClient.prototype.submit = function ( streamName, eventData ) {
 };
 
 /**
- * Formats the custom data so that it is compatible with the Metrics Platform Event schema.
+ * Format the custom data so that it is compatible with the Metrics Platform Event schema.
  *
  * `customData` is considered valid if all of its keys are snake_case.
  *
@@ -263,7 +263,7 @@ function getFormattedCustomData( customData ) {
 }
 
 /**
- * Constructs and submits a Metrics Platform Event from the event name and custom data for each
+ * Construct and submits a Metrics Platform Event from the event name and custom data for each
  * stream that is interested in those events.
  *
  * The Metrics Platform Event for a stream (S) is constructed by: first initializing the minimum

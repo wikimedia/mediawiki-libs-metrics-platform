@@ -1,7 +1,7 @@
 var IMetricsClientIntegration = require( './IMetricsClientIntegration.js' ); // eslint-disable-line no-unused-vars
 
 /**
- * Adds context requested in stream configuration.
+ * Add context requested in stream configuration.
  *
  * @param {IMetricsClientIntegration} integration
  * @constructor
@@ -11,18 +11,13 @@ function ContextController( integration ) {
 }
 
 /**
- * Mixes the contextual attributes requested in stream configuration into the given event data.
+ * Mix the contextual attributes requested in stream configuration into the given event data.
  *
  * @param {MetricsPlatformEventData} eventData
  * @param {StreamConfig} streamConfig
  * @return {MetricsPlatformEventData}
  */
 ContextController.prototype.addRequestedValues = function ( eventData, streamConfig ) {
-	var i, t;
-
-	/** @type {StreamProducerContextAttribute} */
-	var requestedValue;
-
 	var requestedValues = streamConfig &&
 		streamConfig.producers &&
 		streamConfig.producers.metrics_platform_client &&
@@ -38,8 +33,10 @@ ContextController.prototype.addRequestedValues = function ( eventData, streamCon
 	if ( !Array.isArray( requestedValues ) ) {
 		return eventData;
 	}
-	for ( i = 0; i < requestedValues.length; i++ ) {
-		requestedValue = requestedValues[ i ];
+	for ( var i = 0; i < requestedValues.length; i++ ) {
+		/** @type {StreamProducerContextAttribute} */
+		var requestedValue = requestedValues[ i ];
+		var t;
 		/* eslint-disable max-len, camelcase */
 		switch ( requestedValue ) {
 

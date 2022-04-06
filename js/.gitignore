@@ -1,5 +1,6 @@
-node_modules/
-.eslintcache
-.nyc_output/
-js.iml
-docs/
+/.nyc_output/
+/docs/
+/node_modules/
+
+/.eslintcache
+/js.iml

@@ -3,7 +3,7 @@ var IMetricsClientIntegration = require( './IMetricsClientIntegration.js' ); // 
 var UINT32_MAX = 4294967295; // (2^32) - 1
 
 /**
- * Evaluates events for presence in sample based on the stream configuration.
+ * Evaluate events for presence in sample based on the stream configuration.
  *
  * @param {IMetricsClientIntegration} integration
  * @constructor
@@ -19,8 +19,6 @@ function SamplingController( integration ) {
  * @return {!boolean} true if in-sample, false if out-sample.
  */
 SamplingController.prototype.streamInSample = function ( streamConfig ) {
-	var id;
-
 	if ( !streamConfig ) {
 		// If a stream is not defined, it is not in sample.
 		return false;
@@ -40,6 +38,7 @@ SamplingController.prototype.streamInSample = function ( streamConfig ) {
 		return false;
 	}
 
+	var id;
 	switch ( streamConfig.sample.unit ) {
 		case 'pageview':
 			id = this.integration.getPageviewId();
