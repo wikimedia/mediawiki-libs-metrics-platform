@@ -144,6 +144,10 @@ TestMetricsClientIntegration.prototype.getMediaWikiSkin = function () {
 	return 'timeless';
 };
 
+TestMetricsClientIntegration.prototype.getMediaWikiDBName = function () {
+	return 'zhwiki';
+};
+
 TestMetricsClientIntegration.prototype.getMediaWikiSiteContentLanguage = function () {
 	return 'zh';
 };

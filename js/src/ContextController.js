@@ -111,6 +111,10 @@ ContextController.prototype.addRequestedValues = function ( eventData, streamCon
 				eventData.mediawiki = eventData.mediawiki || {};
 				eventData.mediawiki.is_debug_mode = this.integration.isDebugMode();
 				break;
+			case 'mediawiki_db_name':
+				eventData.mediawiki = eventData.mediawiki || {};
+				eventData.mediawiki.db_name = this.integration.getMediaWikiDBName();
+				break;
 			case 'mediawiki_site_content_language':
 				eventData.mediawiki = eventData.mediawiki || {};
 				eventData.mediawiki.site_content_language = this.integration.getMediaWikiSiteContentLanguage();

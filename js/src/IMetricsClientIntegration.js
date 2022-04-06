@@ -238,6 +238,13 @@ IMetricsClientIntegration.prototype.getMediaWikiSiteContentLanguage = function (
 	throw new Error( 'Stub!' );
 };
 
+/**
+ * @return {string}
+ */
+IMetricsClientIntegration.prototype.getMediaWikiDBName = function () {
+	throw new Error( 'Stub!' );
+};
+
 // Device
 
 /**

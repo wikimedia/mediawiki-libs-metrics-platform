@@ -54,6 +54,7 @@ interface EventMediaWikiData {
     version?: string;
     is_production?: boolean;
     is_debug_mode?: boolean;
+    db_name?: string;
     site_content_language?: string;
     site_content_language_variant?: string;
 }

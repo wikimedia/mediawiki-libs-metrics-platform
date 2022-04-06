@@ -354,6 +354,15 @@ CurationController.prototype.shouldProduceEvent = function ( eventData, streamCo
 					return false;
 				}
 				break;
+			case 'mediawiki_db_name':
+				if ( !eventData.mediawiki || this.isEmpty( eventData.mediawiki.db_name ) ) {
+					return false;
+				}
+				if ( !this.applyRules( eventData.mediawiki.version,
+					curationConfig[ property ] ) ) {
+					return false;
+				}
+				break;
 			case 'mediawiki_site_content_language':
 				if ( !eventData.mediawiki ||
 					this.isEmpty( eventData.mediawiki.site_content_language ) ) {
