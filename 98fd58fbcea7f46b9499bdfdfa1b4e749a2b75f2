@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d2c2cab_18eb67ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34
+      },
+      "writtenOn": "2022-04-06T22:18:09Z",
+      "side": 1,
+      "message": "CI says:\n Unsupported engine \u0027eslint@8.12.0\u0027,\n npm WARN EBADENGINE   required: { node: \u0027^12.22.0 || ^14.17.0 || \u003e\u003d16.0.0\u0027 },\n npm WARN EBADENGINE   current: { node: \u0027v12.21.0\u0027, npm: \u00277.5.2\u0027 }\n\nThat\u0027s very specific. I\u0027ll undo the eslint bump for now until the repo\u0027s pipeline is updated.",
+      "revId": "98fd58fbcea7f46b9499bdfdfa1b4e749a2b75f2",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
