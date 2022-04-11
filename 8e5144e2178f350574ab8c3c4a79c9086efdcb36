@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "f1ccbd5d_5e7e1e11",
+        "filename": ".pipeline/blubber/js.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-04-11T09:46:05Z",
+      "side": 1,
+      "message": "Thanks for this. I\u0027ve added enabling ESLint\u0027s caching feature as an example for the runs.insecurely property: https://wikitech.wikimedia.org/w/index.php?title\u003dBlubber%2FUser_Guide\u0026type\u003drevision\u0026diff\u003d1967756\u0026oldid\u003d1961098",
+      "parentUuid": "a6739f80_4230d722",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "8e5144e2178f350574ab8c3c4a79c9086efdcb36",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "cb8216f2_ed33e121",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 5
