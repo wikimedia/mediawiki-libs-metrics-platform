@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1435ee9_62e18aba",
+        "filename": "php/src/MetricsClient.php",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-04-11T16:38:06Z",
+      "side": 1,
+      "message": "This should be a constant but should also be configurable at construction time, i.e.\n\n $metricsClient \u003d new MetricsClient(\n   $integration,\n   $streamConfigFactory,\n   MetricsClient::SCHEMA_1_0_0\n );",
+      "range": {
+        "startLine": 191,
+        "startChar": 17,
+        "endLine": 191,
+        "endChar": 66
+      },
+      "revId": "e42788967e0e3fbda706f3f4bb969723488c8700",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
