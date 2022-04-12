@@ -5,5 +5,5 @@ variants:
     copies: [local]
     builder:
       command: [composer, install]
-      requirements: [composer.json, composer.lock]
+      requirements: [composer.json, composer.lock, php/]
     entrypoint: [composer, test]

@@ -1,0 +1,7 @@
+/.* export-ignore
+/composer.* export-ignore
+/phpunit.xml.dist export-ignore
+/java/ export-ignore
+/js/ export-ignore
+/php/tests/ export-ignore
+/swift/ export-ignore

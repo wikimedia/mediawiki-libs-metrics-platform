@@ -1,16 +1,15 @@
 <phpunit colors="true"
 	beStrictAboutTestsThatDoNotTestAnything="true"
 	beStrictAboutOutputDuringTests="true"
-	cacheResult="false"
 	bootstrap="vendor/autoload.php">
 	<testsuites>
 		<testsuite name="Metrics Client Tests">
-			<directory suffix="Test.php">./tests</directory>
+			<directory suffix="Test.php">./php/tests</directory>
 		</testsuite>
 	</testsuites>
 	<filter>
 		<whitelist addUncoveredFilesFromWhitelist="true">
-			<directory suffix=".php">./src</directory>
+			<directory suffix=".php">./php/src</directory>
 		</whitelist>
 	</filter>
 </phpunit>
