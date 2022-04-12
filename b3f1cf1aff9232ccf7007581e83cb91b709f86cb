@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b247128e_fef54ccb",
+        "filename": "php/src/Integration.php",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6176
+      },
+      "writtenOn": "2022-04-12T23:30:53Z",
+      "side": 1,
+      "message": "Should this be `string|null`?",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "b3f1cf1aff9232ccf7007581e83cb91b709f86cb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acf0d759_873da42c",
+        "filename": "php/src/Integration.php",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6176
+      },
+      "writtenOn": "2022-04-12T23:30:53Z",
+      "side": 1,
+      "message": "Should this be `string|null`?",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "b3f1cf1aff9232ccf7007581e83cb91b709f86cb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
