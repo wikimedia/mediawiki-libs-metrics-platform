@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77d632d1_a317afb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2022-04-12T14:19:17Z",
+      "side": 1,
+      "message": "One minor nit",
+      "revId": "3147b6ca2928e935eacfd7f1c759d6932a7d98aa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f922d04f_f96b340a",
+        "filename": "composer.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2022-04-12T14:19:17Z",
+      "side": 1,
+      "message": "Mixed indenting...\n\nUsually we\u0027d use tabs, but I\u0027m not fussed if it\u0027s at least consistent in a file/project :)",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 2
+      },
+      "revId": "3147b6ca2928e935eacfd7f1c759d6932a7d98aa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7e9fc04_fb9fe317",
+        "filename": "composer.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2022-04-12T14:19:17Z",
+      "side": 1,
+      "message": "Tabs here too",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 3
+      },
+      "revId": "3147b6ca2928e935eacfd7f1c759d6932a7d98aa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
