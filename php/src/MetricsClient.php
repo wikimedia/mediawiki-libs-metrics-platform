@@ -58,7 +58,7 @@ class MetricsClient {
 	 *
 	 * @param string $streamName
 	 * @param array $event
-	 * @return true if the event was submitted, otherwise false
+	 * @return bool true if the event was submitted, otherwise false
 	 */
 	public function submit( string $streamName, array $event ): bool {
 		if ( !isset( $event['$schema'] ) ) {

@@ -5,7 +5,6 @@ namespace Wikimedia\Metrics\Test;
 use Generator;
 use JsonSchema\Validator;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\NullLogger;
 use Wikimedia\Metrics\StreamConfig\StreamConfigException;
 use Wikimedia\Metrics\StreamConfig\ValidatingStreamConfigFactory;
 
@@ -15,9 +14,8 @@ use Wikimedia\Metrics\StreamConfig\ValidatingStreamConfigFactory;
 class ValidatingStreamConfigFactoryTest extends TestCase {
 	private function getFactory( $rawStreamConfigs ): ValidatingStreamConfigFactory {
 		$validator = new Validator();
-		$logger = new NullLogger();
 
-		return new ValidatingStreamConfigFactory( $rawStreamConfigs, $validator, $logger );
+		return new ValidatingStreamConfigFactory( $rawStreamConfigs, $validator );
 	}
 
 	/**
