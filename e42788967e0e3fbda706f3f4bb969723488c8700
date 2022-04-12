@@ -22,6 +22,30 @@
       },
       "revId": "e42788967e0e3fbda706f3f4bb969723488c8700",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e8e8a50_3be15a67",
+        "filename": "php/src/MetricsClient.php",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-04-12T16:51:37Z",
+      "side": 1,
+      "message": "Partially done. I decided to extract the string to a constant for now. If there\u0027s a clear need to alter the schema in future, then this can be revisited.",
+      "parentUuid": "d1435ee9_62e18aba",
+      "range": {
+        "startLine": 191,
+        "startChar": 17,
+        "endLine": 191,
+        "endChar": 66
+      },
+      "revId": "e42788967e0e3fbda706f3f4bb969723488c8700",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
