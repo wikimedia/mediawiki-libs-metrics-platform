@@ -13,7 +13,9 @@
     }
   },
   "require": {
-    "php": ">=7.2.34"
+    "php": ">=7.2.34",
+  	"justinrainbow/json-schema": "5.2.11",
+    "psr/log": "1.1.4"
   },
   "require-dev": {
     "mediawiki/mediawiki-codesniffer": "38.0.0",

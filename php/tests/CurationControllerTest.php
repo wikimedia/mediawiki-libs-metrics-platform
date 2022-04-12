@@ -3,6 +3,7 @@
 namespace Wikimedia\Metrics\Test;
 
 use Wikimedia\Metrics\CurationController;
+use Wikimedia\Metrics\StreamConfig\StreamConfig;
 use Wikimedia\TestingAccessWrapper;
 
 /** @covers \Wikimedia\Metrics\CurationController */
@@ -20,7 +21,7 @@ class CurationControllerTest extends \PHPUnit\Framework\TestCase {
 	protected function setUp(): void {
 		$curationController = new CurationController();
 		$this->curationController = TestingAccessWrapper::newFromObject( $curationController );
-		$this->streamConfig = [
+		$this->streamConfig = new StreamConfig( [
 			'producers' => [
 				'metrics_platform_client' => [
 					'curation' => [
@@ -44,7 +45,7 @@ class CurationControllerTest extends \PHPUnit\Framework\TestCase {
 					],
 				],
 			],
-		];
+		] );
 		$this->baseEvent = [
 			'meta' => [ 'stream' => 'test.event' ],
 			'$schema' => 'test/event',
