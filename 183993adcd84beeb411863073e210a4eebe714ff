@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db21eb32_3d16cb61",
+        "filename": "php/composer.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 6176
+      },
+      "writtenOn": "2022-04-12T00:47:22Z",
+      "side": 1,
+      "message": "Spacing is off, but can be fixed in a follow up",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 41
+      },
+      "revId": "183993adcd84beeb411863073e210a4eebe714ff",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
