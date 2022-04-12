@@ -41,6 +41,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92061c67_98f82eeb",
+        "filename": "composer.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-04-12T14:27:12Z",
+      "side": 1,
+      "message": "I\u0027m curious why my IDE ignored the mixed indenting and also insisted on two spaces rather than one tab. Regardless, done!",
+      "parentUuid": "f922d04f_f96b340a",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 2
+      },
+      "revId": "3147b6ca2928e935eacfd7f1c759d6932a7d98aa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f7e9fc04_fb9fe317",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-04-12T14:19:17Z",
       "side": 1,
       "message": "Tabs here too",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 3
+      },
+      "revId": "3147b6ca2928e935eacfd7f1c759d6932a7d98aa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31cc6412_4ee4b4e4",
+        "filename": "composer.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-04-12T14:27:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7e9fc04_fb9fe317",
       "range": {
         "startLine": 13,
         "startChar": 1,
