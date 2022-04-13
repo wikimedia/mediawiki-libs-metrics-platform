@@ -7,7 +7,7 @@ class StreamConfigFactory {
 	/** @var array|false */
 	protected $rawStreamConfigs;
 
-	/** @var ?string[] */
+	/** @var array<string,string[]> */
 	private $eventToStreamNamesMap;
 
 	/**

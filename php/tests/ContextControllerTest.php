@@ -14,7 +14,7 @@ class ContextControllerTest extends TestCase {
 	/** @var ContextController */
 	private $contextController;
 
-	/** @var array */
+	/** @var StreamConfig */
 	private $streamConfig;
 
 	protected function setUp(): void {
