@@ -4,9 +4,9 @@
 	"homepage": "https://wikitech.wikimedia.org/wiki/Metrics_Platform",
 	"license": "GPL-2.0-or-later",
 	"autoload": {
-		"classmap": [
-			"php/src/"
-		]
+		"psr-4": {
+			"Wikimedia\\Metrics\\": "php/src/"
+		}
 	},
 	"require": {
 		"php": ">=7.2.34",
