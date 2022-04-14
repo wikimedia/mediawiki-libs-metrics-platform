@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb28117f_c20a2bbf",
+        "filename": "php/src/MetricsClient.php",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6176
+      },
+      "writtenOn": "2022-04-14T00:50:22Z",
+      "side": 1,
+      "message": "At the present time, is this expected to only be used by the tests?",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 23
+      },
+      "revId": "6dae56a3606c144d83dd6c018ded1f647a7c1711",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdd96b1c_ac7b91dc",
+        "filename": "php/src/MetricsClient.php",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 6176
+      },
+      "writtenOn": "2022-04-14T00:50:22Z",
+      "side": 1,
+      "message": "Is this true? I only see it delegating to `Integration` via `$this-\u003eintegration-\u003esend( $event )` on L210.\n\nAlso",
+      "range": {
+        "startLine": 183,
+        "startChar": 36,
+        "endLine": 183,
+        "endChar": 58
+      },
+      "revId": "6dae56a3606c144d83dd6c018ded1f647a7c1711",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c9abac1_b97bd39a",
+        "filename": "php/src/MetricsClient.php",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 6176
+      },
+      "writtenOn": "2022-04-14T00:50:22Z",
+      "side": 1,
+      "message": "Should this be submit?",
+      "range": {
+        "startLine": 210,
+        "startChar": 24,
+        "endLine": 210,
+        "endChar": 28
+      },
+      "revId": "6dae56a3606c144d83dd6c018ded1f647a7c1711",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0ade45f_dd929332",
+        "filename": "php/src/MetricsClient.php",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 6176
+      },
+      "writtenOn": "2022-04-14T00:50:22Z",
+      "side": 1,
+      "message": "Why does MetricsClient.js call this `data_type` but the php calls it type?",
+      "range": {
+        "startLine": 234,
+        "startChar": 5,
+        "endLine": 234,
+        "endChar": 9
+      },
+      "revId": "6dae56a3606c144d83dd6c018ded1f647a7c1711",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
