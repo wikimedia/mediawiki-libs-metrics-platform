@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87b7954e_6452f745",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-04-15T05:27:25Z",
+      "side": 1,
+      "message": "I\u0027ve made a note to update the CI config to watch for changes to these tooling-related file.",
+      "revId": "42a767ee87c6b2a4b8ba4da7d9c9d612cb84c5f5",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
