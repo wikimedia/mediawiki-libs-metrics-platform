@@ -41,6 +41,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d3c624a_120622e4",
+        "filename": "js/src/EventData.d.ts",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-04-25T16:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8bec518_0822ba6d",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 17
+      },
+      "revId": "2ee1659621268386c5185b89ee265fe3608dcfa9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3f6bf7e_56dfad9c",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-04-22T21:44:43Z",
       "side": 1,
       "message": "Extra whitespace",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "2ee1659621268386c5185b89ee265fe3608dcfa9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a28cc1a0_6cf1f789",
+        "filename": "js/src/StreamConfig.d.ts",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-04-25T16:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3f6bf7e_56dfad9c",
       "range": {
         "startLine": 50,
         "startChar": 0,
