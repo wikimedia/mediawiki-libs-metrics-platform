@@ -21,7 +21,11 @@ interface StreamProducerConfig {
     events?: string|string[];
     sampling?: StreamSamplingConfig;
     provide_values?: StreamProducerContextAttribute[];
-    curation?: Record<string, StreamProducerCurationConfig>
+    curation?: StreamProducerCurationConfigs;
+}
+
+type StreamProducerCurationConfigs = {
+	[key in StreamProducerContextAttribute]?: StreamProducerCurationConfig;
 }
 
 type StreamProducerContextAttribute =

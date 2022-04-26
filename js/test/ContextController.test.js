@@ -67,8 +67,8 @@ QUnit.test( 'addRequestedValues()', function ( assert ) {
 		client_dt: clientDt,
 
 		agent: {
-			client_platform: 'web',
-			client_platform_family: 'web'
+			client_platform: 'mediawiki_js',
+			client_platform_family: 'desktop_browser'
 		},
 		page: {
 			id: 1,
@@ -79,8 +79,8 @@ QUnit.test( 'addRequestedValues()', function ( assert ) {
 			wikidata_id: 'Q1',
 			content_language: 'zh',
 			is_redirect: false,
-			user_groups_allowed_to_move: [],
-			user_groups_allowed_to_edit: []
+			user_groups_allowed_to_move: [ '*' ],
+			user_groups_allowed_to_edit: [ '*' ]
 		},
 		mediawiki: {
 			skin: 'timeless',
@@ -98,12 +98,14 @@ QUnit.test( 'addRequestedValues()', function ( assert ) {
 			pageview_id: integration.getPageviewId(),
 			groups: [ '*' ],
 			is_bot: false,
-			language: 'zh',
-			language_variant: 'zh-tw',
+			language: 'en',
 			can_probably_edit_page: true,
 			edit_count: 10,
-			edit_count_bucket: '5-99 edits',
-			registration_dt: 1427224089000
+			edit_count_bucket: '5-99 edits'
+
+			// The language_variant and registration_dt property should not be set. undefined or
+			// null values returned by Integration::getContextAttributes() should not be set by
+			// ContextController::addRequestedValues().
 		}
 	} );
 } );

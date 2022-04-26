@@ -1,3 +1,5 @@
+var getAttributeByName = require( './ContextUtils.js' ).getAttributeByName;
+
 /**
  * @constructor
  */
@@ -131,254 +133,28 @@ CurationController.prototype.shouldProduceEvent = function ( eventData, streamCo
 		streamConfig.producers &&
 		streamConfig.producers.metrics_platform_client &&
 		streamConfig.producers.metrics_platform_client.curation;
+	// eslint-enable camelcase
 
 	if ( !curationConfig || typeof curationConfig !== 'object' ) {
 		return true;
 	}
 
-	for ( var property in curationConfig ) {
-		switch ( property ) {
-			// page
-			case 'page_id':
-				if ( !eventData.page || this.isEmpty( eventData.page.id ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.page.id, curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'page_namespace':
-				if ( !eventData.page || this.isEmpty( eventData.page.namespace ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.page.namespace,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'page_namespace_name':
-				if ( !eventData.page || this.isEmpty( eventData.page.namespace_name ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.page.namespace_name,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'page_title':
-				if ( !eventData.page || this.isEmpty( eventData.page.title ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.page.title, curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'page_revision_id':
-				if ( !eventData.page || this.isEmpty( eventData.page.revision_id ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.page.revision_id,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'page_wikidata_id':
-				if ( !eventData.page || this.isEmpty( eventData.page.wikidata_id ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.page.wikidata_id,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'page_is_redirect':
-				if ( !eventData.page || this.isEmpty( eventData.page.is_redirect ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.page.is_redirect,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'page_content_language':
-				if ( !eventData.page || this.isEmpty( eventData.page.content_language ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.page.content_language,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'page_user_groups_allowed_to_move':
-				if ( !eventData.page ||
-					this.isEmpty( eventData.page.user_groups_allowed_to_move ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.page.user_groups_allowed_to_move,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'page_user_groups_allowed_to_edit':
-				if ( !eventData.page ||
-					this.isEmpty( eventData.page.user_groups_allowed_to_edit ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.page.user_groups_allowed_to_edit,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
+	/** @type {StreamProducerContextAttribute} */
+	var property;
 
-				// User
-			case 'performer_id':
-				if ( !eventData.performer || this.isEmpty( eventData.performer.id ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.performer.id, curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'performer_name':
-				if ( !eventData.performer || this.isEmpty( eventData.performer.name ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.performer.name, curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'performer_groups':
-				if ( !eventData.performer || this.isEmpty( eventData.performer.groups ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.performer.groups, curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'performer_is_logged_in':
-				if ( !eventData.performer || this.isEmpty( eventData.performer.is_logged_in ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.performer.is_logged_in,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'performer_is_bot':
-				if ( !eventData.performer || this.isEmpty( eventData.performer.is_bot ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.performer.is_bot, curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'performer_can_probably_edit_page':
-				if ( !eventData.performer ||
-					this.isEmpty( eventData.performer.can_probably_edit_page ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.performer.can_probably_edit_page,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'performer_edit_count':
-				if ( !eventData.performer || this.isEmpty( eventData.performer.edit_count ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.performer.edit_count,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'performer_edit_count_bucket':
-				if (
-					!eventData.performer ||
-					this.isEmpty( eventData.performer.edit_count_bucket )
-				) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.performer.edit_count_bucket,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'performer_registration_timestamp':
-				if ( !eventData.performer ||
-					this.isEmpty( eventData.performer.registration_dt ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.performer.registration_dt,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'performer_language':
-				if ( !eventData.performer || this.isEmpty( eventData.performer.language ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.performer.language,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'performer_language_variant':
-				if (
-					!eventData.performer ||
-					this.isEmpty( eventData.performer.language_variant )
-				) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.performer.language_variant,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
+	for ( property in curationConfig ) {
+		var value = getAttributeByName( eventData, property );
+		var rules = curationConfig[ property ];
 
-				// MediaWiki
-			case 'mediawiki_skin':
-				if ( !eventData.mediawiki || this.isEmpty( eventData.mediawiki.skin ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.mediawiki.skin,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'mediawiki_version':
-				if ( !eventData.mediawiki || this.isEmpty( eventData.mediawiki.version ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.mediawiki.version,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'mediawiki_db_name':
-				if ( !eventData.mediawiki || this.isEmpty( eventData.mediawiki.db_name ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.mediawiki.version,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			case 'mediawiki_site_content_language':
-				if ( !eventData.mediawiki ||
-					this.isEmpty( eventData.mediawiki.site_content_language ) ) {
-					return false;
-				}
-				if ( !this.applyRules( eventData.mediawiki.site_content_language,
-					curationConfig[ property ] ) ) {
-					return false;
-				}
-				break;
-			default:
-				break;
+		if (
+			this.isEmpty( value ) ||
+			( rules && !this.applyRules( value, rules ) )
+		) {
+			return false;
 		}
 	}
+
 	return true;
-	// eslint-enable camelcase
 };
 
 module.exports = CurationController;

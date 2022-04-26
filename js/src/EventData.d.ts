@@ -20,14 +20,21 @@ interface EventData extends BaseEventData {
     [key: string]: any;
 }
 
-interface MetricsPlatformEventData extends BaseEventData {
+interface MetricsPlatformEventData extends BaseEventData, ContextAttributes {
     name?: string;
-
-    agent?: EventAgentData;
-    page?: EventPageData;
-    mediawiki?: EventMediaWikiData;
-    performer?: EventPerformerData;
     custom_data?: Record<string, EventCustomDatum>;
+}
+
+/**
+ * All the context attributes that can be provided by the Metrics Platform JavaScript client.
+ *
+ * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/Event_Context_Attributes
+ */
+interface ContextAttributes {
+	agent?: EventAgentData;
+	page?: EventPageData;
+	mediawiki?: EventMediaWikiData;
+	performer?: EventPerformerData;
 }
 
 interface EventAgentData {

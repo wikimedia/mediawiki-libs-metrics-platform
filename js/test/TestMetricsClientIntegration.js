@@ -1,5 +1,3 @@
-var IMetricsClientIntegration = require( '../src/IMetricsClientIntegration.js' );
-
 /**
  * @constructor
  */
@@ -8,7 +6,17 @@ function TestMetricsClientIntegration() {
 	this.sessionId = this.generateRandomId();
 }
 
-TestMetricsClientIntegration.prototype = IMetricsClientIntegration.prototype;
+TestMetricsClientIntegration.prototype.generateRandomId = function () {
+	var rnds = new Array( 5 );
+	for ( var i = 0; i < 5; i++ ) {
+		rnds[ i ] = Math.floor( Math.random() * 0x10000 );
+	}
+	return ( rnds[ 0 ] + 0x10000 ).toString( 16 ).slice( 1 ) +
+		( rnds[ 1 ] + 0x10000 ).toString( 16 ).slice( 1 ) +
+		( rnds[ 2 ] + 0x10000 ).toString( 16 ).slice( 1 ) +
+		( rnds[ 3 ] + 0x10000 ).toString( 16 ).slice( 1 ) +
+		( rnds[ 4 ] + 0x10000 ).toString( 16 ).slice( 1 );
+};
 
 /**
  * @param {EventData} eventData
@@ -29,152 +37,11 @@ TestMetricsClientIntegration.prototype.getHostname = function () {
 	return 'test.example.com';
 };
 
-TestMetricsClientIntegration.prototype.generateRandomId = function () {
-	var i, rnds = new Array( 5 );
-	for ( i = 0; i < 5; i++ ) {
-		rnds[ i ] = Math.floor( Math.random() * 0x10000 );
-	}
-	return ( rnds[ 0 ] + 0x10000 ).toString( 16 ).slice( 1 ) +
-		( rnds[ 1 ] + 0x10000 ).toString( 16 ).slice( 1 ) +
-		( rnds[ 2 ] + 0x10000 ).toString( 16 ).slice( 1 ) +
-		( rnds[ 3 ] + 0x10000 ).toString( 16 ).slice( 1 ) +
-		( rnds[ 4 ] + 0x10000 ).toString( 16 ).slice( 1 );
-};
-
 /**
  * @param {string} string
  */
 TestMetricsClientIntegration.prototype.logWarning = function ( string ) {
 	console.log( string );
-};
-
-// MediaWiki Context Accessors
-
-// Page
-
-TestMetricsClientIntegration.prototype.getPageId = function () {
-	return 1;
-};
-
-TestMetricsClientIntegration.prototype.getPageNamespaceId = function () {
-	return 0;
-};
-
-TestMetricsClientIntegration.prototype.getPageNamespaceText = function () {
-	return '';
-};
-
-TestMetricsClientIntegration.prototype.getPageTitle = function () {
-	return 'Test';
-};
-
-TestMetricsClientIntegration.prototype.getPageIsRedirect = function () {
-	return false;
-};
-
-TestMetricsClientIntegration.prototype.getPageRevisionId = function () {
-	return 1;
-};
-
-TestMetricsClientIntegration.prototype.getPageContentLanguage = function () {
-	return 'zh';
-};
-
-TestMetricsClientIntegration.prototype.getPageWikidataId = function () {
-	return 'Q1';
-};
-
-TestMetricsClientIntegration.prototype.getPageRestrictionEdit = function () {
-	return [];
-};
-
-TestMetricsClientIntegration.prototype.getPageRestrictionMove = function () {
-	return [];
-};
-
-// User
-
-TestMetricsClientIntegration.prototype.getUserId = function () {
-	return 1;
-};
-
-TestMetricsClientIntegration.prototype.getUserIsLoggedIn = function () {
-	return true;
-};
-
-TestMetricsClientIntegration.prototype.getUserName = function () {
-	return 'TestUser';
-};
-
-TestMetricsClientIntegration.prototype.getUserGroups = function () {
-	return [ '*' ];
-};
-
-TestMetricsClientIntegration.prototype.getUserEditCount = function () {
-	return 10;
-};
-
-TestMetricsClientIntegration.prototype.getUserEditCountBucket = function () {
-	return '5-99 edits';
-};
-
-TestMetricsClientIntegration.prototype.getUserRegistrationTimestamp = function () {
-	return 1427224089000;
-};
-
-TestMetricsClientIntegration.prototype.getUserLanguage = function () {
-	return 'zh';
-};
-
-TestMetricsClientIntegration.prototype.getUserLanguageVariant = function () {
-	return 'zh-tw';
-};
-
-TestMetricsClientIntegration.prototype.getUserIsBot = function () {
-	return false;
-};
-
-TestMetricsClientIntegration.prototype.getUserCanProbablyEditPage = function () {
-	return true;
-};
-
-// MediaWiki/Site
-
-TestMetricsClientIntegration.prototype.getMediaWikiSkin = function () {
-	return 'timeless';
-};
-
-TestMetricsClientIntegration.prototype.getMediaWikiDBName = function () {
-	return 'zhwiki';
-};
-
-TestMetricsClientIntegration.prototype.getMediaWikiSiteContentLanguage = function () {
-	return 'zh';
-};
-
-TestMetricsClientIntegration.prototype.getMediaWikiVersion = function () {
-	return '1.37.0';
-};
-
-// Other
-TestMetricsClientIntegration.prototype.getAccessMethod = function () {
-	return 'mobile web';
-};
-
-TestMetricsClientIntegration.prototype.getPlatform = function () {
-	return 'web';
-};
-
-TestMetricsClientIntegration.prototype.getPlatformFamily = function () {
-	return 'web';
-};
-
-TestMetricsClientIntegration.prototype.isProduction = function () {
-	return true;
-};
-
-TestMetricsClientIntegration.prototype.isDebugMode = function () {
-	return false;
 };
 
 /**
@@ -185,24 +52,60 @@ TestMetricsClientIntegration.prototype.clone = function ( obj ) {
 	return JSON.parse( JSON.stringify( obj ) );
 };
 
+TestMetricsClientIntegration.prototype.getContextAttributes = function () {
+	/* eslint-disable camelcase */
+	return {
+		agent: {
+			client_platform: 'mediawiki_js',
+			client_platform_family: 'desktop_browser'
+		},
+		page: {
+			id: 1,
+			title: 'Test',
+			namespace: 0,
+			namespace_name: '',
+			revision_id: 1,
+			wikidata_id: 'Q1',
+			content_language: 'zh',
+			is_redirect: false,
+			user_groups_allowed_to_move: [ '*' ],
+			user_groups_allowed_to_edit: [ '*' ]
+		},
+		mediawiki: {
+			skin: 'timeless',
+			version: '1.37.0',
+			is_production: true,
+			is_debug_mode: false,
+			db_name: 'zhwiki',
+			site_content_language: 'zh',
+			site_content_language_variant: 'zh-tw'
+		},
+		performer: {
+			is_logged_in: true,
+			id: 1,
+			name: 'TestUser',
+			session_id: this.getSessionId(),
+			pageview_id: this.getPageviewId(),
+			groups: [ '*' ],
+			is_bot: false,
+			language: 'en',
+			can_probably_edit_page: true,
+			edit_count: 10,
+			edit_count_bucket: '5-99 edits'
+
+			// For whatever reason, there was a problem fetching the registration date of the user.
+			// registration_dt: 1427224089000
+		}
+	};
+	/* eslint-enable camelcase */
+};
+
 TestMetricsClientIntegration.prototype.getPageviewId = function () {
 	return this.pageviewId;
 };
 
 TestMetricsClientIntegration.prototype.getSessionId = function () {
 	return this.sessionId;
-};
-
-TestMetricsClientIntegration.prototype.getDeviceHardwareConcurrency = function () {
-	return 6;
-};
-
-TestMetricsClientIntegration.prototype.getDeviceMaxTouchPoints = function () {
-	return 5;
-};
-
-TestMetricsClientIntegration.prototype.getDevicePixelRatio = function () {
-	return 2;
 };
 
 module.exports = TestMetricsClientIntegration;

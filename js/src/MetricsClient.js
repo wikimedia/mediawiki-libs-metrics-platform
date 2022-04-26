@@ -1,5 +1,3 @@
-var IMetricsClientIntegration = require( './IMetricsClientIntegration.js' ); // eslint-disable-line no-unused-vars
-
 var ContextController = require( './ContextController.js' );
 var SamplingController = require( './SamplingController.js' );
 var CurationController = require( './CurationController.js' );
@@ -9,7 +7,7 @@ var CurationController = require( './CurationController.js' );
  *
  * Produce events with `MetricsClient.submit()`.
  *
- * @param {IMetricsClientIntegration} integration
+ * @param {Integration} integration
  * @param {StreamConfigs|false} streamConfigs
  * @constructor
  */
@@ -267,8 +265,8 @@ function getFormattedCustomData( customData ) {
  * stream that is interested in those events.
  *
  * The Metrics Platform Event for a stream (S) is constructed by: first initializing the minimum
- * valid event (E) that can be submitted to S; and, second mixing the contextual attributes
- * requested in the configuration for S into E.
+ * valid event (E) that can be submitted to S; and, second mixing the context attributes requested
+ * in the configuration for S into E.
  *
  * The Metrics Platform Event is submitted to a stream (S) if: 1) S is in sample; and 2) the event
  * is filtered due to the filtering rules for S.
