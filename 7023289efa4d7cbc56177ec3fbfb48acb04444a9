@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18683829_1c4d8ab8",
+        "filename": "js/src/ContextUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 34
+      },
+      "writtenOn": "2022-04-28T12:47:15Z",
+      "side": 1,
+      "message": "Either I\u0027m misreading the implied parenthesis, or this is an impossible condition. Did you mean || instead of \u0026\u0026?",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 47
+      },
+      "revId": "7023289efa4d7cbc56177ec3fbfb48acb04444a9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
