@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b855c7d_260d2354",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34
+      },
+      "writtenOn": "2022-04-28T13:03:16Z",
+      "side": 1,
+      "message": "LGTM. Nice approach. I haven\u0027t seen the MW version of this yet (did I miss it?) but I imagine you\u0027d approach that with some kind of injected object or a method that returns the object at-once composed of all the mw.config/mw.user return values etc.  If so, it may be worth considering to have some of them behind a native getter so that e.g. getPageviewId and getSessionId don\u0027t result in disk I/O and Crypto overhead early on unconditionally when they aren\u0027t used.\n\ne.g.\n\n  {\n     foo: mw.foo(\u0027cheap\u0027),\n     bar: mw.bar.cheap(),\n     get pageviewId() { \n       return mw.eventLog.getPageviewId();\n     }\n  }\n\nIf you were already going this way, great. If not, consider it, or perhaps it\u0027s incompatible with something. I\u0027m sure we\u0027ll figure someting out, or perhaps it\u0027s an optimisation we don\u0027t yet need.",
+      "revId": "7023289efa4d7cbc56177ec3fbfb48acb04444a9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18683829_1c4d8ab8",
