@@ -1,11 +1,9 @@
 <?php
 
-namespace Wikimedia\Metrics\Test;
+namespace Wikimedia\Metrics\Tests;
 
 require_once __DIR__ . '/TestIntegration.php';
 
-use DateTime;
-use DateTimeZone;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -23,6 +21,9 @@ class MetricsClientTest extends TestCase {
 
 	/** @var TestIntegration */
 	private $integration;
+
+	/** @var StreamConfigFactory */
+	private $config;
 
 	/** @var MetricsClient */
 	private $client;
@@ -57,10 +58,8 @@ class MetricsClientTest extends TestCase {
 		parent::setUp();
 
 		$this->integration = new TestIntegration();
-		$this->client = new MetricsClient(
-			$this->integration,
-			new StreamConfigFactory( $this->streamConfigs )
-		);
+		$this->config = new StreamConfigFactory( $this->streamConfigs );
+		$this->client = new MetricsClient( $this->integration, $this->config );
 	}
 
 	public function provideEvents(): Generator {
@@ -206,10 +205,8 @@ class MetricsClientTest extends TestCase {
 		// The event will have been decorated with additional metadata and contextual properties.
 		// Do not make an assertion about its shape.
 		$expectedEvent = $this->anything();
-
 		$expectedStreamConfig = new StreamConfig( $this->streamConfigs[$stream] );
 
-		$config = new StreamConfigFactory( $this->streamConfigs );
 		$context = new ContextController( $this->integration );
 
 		$curation = $this->getMockBuilder( CurationController::class )
@@ -221,7 +218,7 @@ class MetricsClientTest extends TestCase {
 			->willReturn( false );
 
 		// @phan-suppress-next-line PhanTypeMismatchArgument
-		$client = new MetricsClient( $this->integration, $config, null, $context, $curation );
+		$client = new MetricsClient( $this->integration, $this->config, null, $context, $curation );
 
 		$this->assertFalse( $client->submit( $stream, $event ) );
 		$this->assertEmpty( $this->integration->getSentEvents() );
@@ -291,19 +288,6 @@ class MetricsClientTest extends TestCase {
 	}
 
 	public function testDispatchToMultipleStreams(): void {
-		$integration = $this->getMockBuilder( TestIntegration::class )
-			->onlyMethods( [ 'getTimestamp' ] )
-			->getMock();
-		$integration->expects( $this->once() )
-			->method( 'getTimestamp' )
-			->willReturnCallback( static function () {
-				$result = new DateTime( 'now', new DateTimeZone( 'UTC' ) );
-
-				return $result->format( 'Y-m-d\TH:i:s\Z' );
-			} );
-
-		$config = new StreamConfigFactory( $this->streamConfigs );
-
 		// It should call addRequestedValues for each event being submitted
 		$context = $this->createMock( ContextController::class );
 		$context->expects( $this->exactly( 2 ) )
@@ -317,11 +301,11 @@ class MetricsClientTest extends TestCase {
 			->willReturn( true );
 
 		// @phan-suppress-next-line PhanTypeMismatchArgument
-		$client = new MetricsClient( $integration, $config, null, $context, $curation );
+		$client = new MetricsClient( $this->integration, $this->config, null, $context, $curation );
+
 		$client->dispatch( 'bar' );
 
-		// @phan-suppress-next-line PhanUndeclaredMethod
-		$events = $integration->getSentEvents();
+		$events = $this->integration->getSentEvents();
 
 		$this->assertCount( 2, $events );
 

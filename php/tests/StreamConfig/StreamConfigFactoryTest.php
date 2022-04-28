@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikimedia\Metrics\Test\StreamConfig;
+namespace Wikimedia\Metrics\Tests\StreamConfig;
 
 use Generator;
 use PHPUnit\Framework\TestCase;

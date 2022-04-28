@@ -161,10 +161,22 @@ class MetricsClient {
 		if ( isset( $preparedEvent['client_dt'] ) ) {
 			unset( $preparedEvent['dt'] );
 		} else {
-			$preparedEvent['dt'] = $dt ?? $this->integration->getTimestamp();
+			$preparedEvent['dt'] = $dt ?? $this->getTimestamp();
 		}
 
 		return $preparedEvent;
+	}
+
+	/**
+	 * Get an ISO 8601 timestamp for the current time, e.g. 2022-05-03T14:00:41.000Z.
+	 *
+	 * Note well that the timestamp contains milliseconds for consistency with other Metrics
+	 * Platform client implementations.
+	 *
+	 * @return string
+	 */
+	private function getTimestamp(): string {
+		return gmdate( 'Y-m-d\TH:i:s.v\Z' );
 	}
 
 	/**
@@ -214,7 +226,7 @@ class MetricsClient {
 	 */
 	public function dispatch( string $eventName, array $customData = [] ): void {
 		$customData = $this->formatCustomData( $customData );
-		$timestamp = $this->integration->getTimestamp();
+		$timestamp = $this->getTimestamp();
 
 		$streamNames = $this->streamConfigFactory->getStreamNamesForEvent( $eventName );
 
@@ -228,6 +240,7 @@ class MetricsClient {
 
 			$event = [
 				'$schema' => self::METRICS_PLATFORM_SCHEMA,
+				'name' => $eventName,
 			];
 
 			if ( $customData ) {

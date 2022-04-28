@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikimedia\Metrics\Test;
+namespace Wikimedia\Metrics\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Wikimedia\Metrics\ContextController;

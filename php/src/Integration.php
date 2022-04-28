@@ -12,17 +12,6 @@ interface Integration {
 	public function getHostName(): string;
 
 	/**
-	 * Get an ISO 8601 timestamp string for the current time.
-	 * The timestamp *should* include milliseconds represented as
-	 * fractional seconds to three decimal places:
-	 *
-	 * YYYY-MM-DDTHH:mm:ss.sssZ
-	 *
-	 * @return string
-	 */
-	public function getTimestamp(): string;
-
-	/**
 	 * Transmit an event to a destination intake service.
 	 *
 	 * @param array $event event data, represented as an associative array
@@ -172,9 +161,9 @@ interface Integration {
 	public function getUserLanguage(): string;
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
-	public function getUserLanguageVariant(): string;
+	public function getUserLanguageVariant(): ?string;
 
 	/**
 	 * @return bool

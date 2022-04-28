@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikimedia\Metrics\Test;
+namespace Wikimedia\Metrics\Tests;
 
 use Generator;
 use JsonSchema\Validator;

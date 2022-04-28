@@ -31,6 +31,7 @@ type StreamProducerCurationConfigs = {
 type StreamProducerContextAttribute =
 
     // Agent
+    | "agent_app_install_id"
     | "agent_client_platform"
     | "agent_client_platform_family"
 
@@ -53,6 +54,7 @@ type StreamProducerContextAttribute =
     | "mediawiki_is_debug_mode"
     | "mediawiki_db_name"
     | "mediawiki_site_content_language"
+    | "mediawiki_site_content_language_variant"
 
     // Performer
     | "performer_is_logged_in"
