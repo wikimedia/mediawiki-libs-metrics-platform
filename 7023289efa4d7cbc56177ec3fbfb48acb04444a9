@@ -39,6 +39,30 @@
       },
       "revId": "7023289efa4d7cbc56177ec3fbfb48acb04444a9",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e34ef333_18d9e929",
+        "filename": "js/src/ContextUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-04-29T09:20:21Z",
+      "side": 1,
+      "message": "You\u0027re haven\u0027t misread this. It\u0027s an impossible condition. Fortunately, this highlighted a lack of rigour in the ContextController unit tests, which I\u0027ve now rectified.",
+      "parentUuid": "18683829_1c4d8ab8",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 47
+      },
+      "revId": "7023289efa4d7cbc56177ec3fbfb48acb04444a9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
