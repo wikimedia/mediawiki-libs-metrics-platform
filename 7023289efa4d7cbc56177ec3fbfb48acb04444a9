@@ -18,6 +18,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3806f8b7_63aea0b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-05-04T11:46:55Z",
+      "side": 1,
+      "message": "\u003e I imagine you\u0027d approach that with some kind of injected object or a method that returns the object at-once composed of all the mw.config/mw.user return values etc.\n\nThe latter. That method be called the first time MetricsClient::submit or ::dispatch is called to submit an event to a stream (or streams) that have requested context attributes be added to the event. Coupling this with your native getter approach (supported by all Grade C browsers AIUI) should guarantee that disk I/O and Crypto overhead is minimised.",
+      "parentUuid": "6b855c7d_260d2354",
+      "revId": "7023289efa4d7cbc56177ec3fbfb48acb04444a9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18683829_1c4d8ab8",
