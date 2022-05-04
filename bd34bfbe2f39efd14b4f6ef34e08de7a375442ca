@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c4f4d7e_026c67be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-05-04T18:04:38Z",
+      "side": 1,
+      "message": "PS3 renames Integration::getContextualAttributes() to ::getContextAttributes()",
+      "revId": "bd34bfbe2f39efd14b4f6ef34e08de7a375442ca",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
