@@ -7,8 +7,8 @@ require_once __DIR__ . '/TestIntegration.php';
 use DateTime;
 use DateTimeZone;
 use Generator;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Wikimedia\Metrics\ContextController;
 use Wikimedia\Metrics\CurationController;
 use Wikimedia\Metrics\MetricsClient;
@@ -19,7 +19,7 @@ use Wikimedia\TestingAccessWrapper;
 use Wikimedia\Timestamp\ConvertibleTimestamp;
 
 /** @covers \Wikimedia\Metrics\MetricsClient */
-class MetricsClientTest extends \PHPUnit\Framework\TestCase {
+class MetricsClientTest extends TestCase {
 
 	/** @var TestIntegration */
 	private $integration;
@@ -186,11 +186,8 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 				]
 			);
 
-		$client = new MetricsClient(
-			$this->integration,
-			$streamConfigFactory,
-			$logger
-		);
+		// @phan-suppress-next-line PhanTypeMismatchArgument
+		$client = new MetricsClient( $this->integration, $streamConfigFactory, $logger );
 
 		$result = $client->submit( $streamName, [
 			'$schema' => '/foo/1.0.0'
@@ -212,21 +209,19 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 
 		$expectedStreamConfig = new StreamConfig( $this->streamConfigs[$stream] );
 
-		$curationController = $this->getMockBuilder( CurationController::class )
+		$config = new StreamConfigFactory( $this->streamConfigs );
+		$context = new ContextController( $this->integration );
+
+		$curation = $this->getMockBuilder( CurationController::class )
 			->onlyMethods( [ 'shouldProduceEvent' ] )
 			->getMock();
 
-		$curationController->method( 'shouldProduceEvent' )
+		$curation->method( 'shouldProduceEvent' )
 			->with( $expectedEvent, $expectedStreamConfig )
 			->willReturn( false );
 
-		$client = new MetricsClient(
-			$this->integration,
-			new StreamConfigFactory( $this->streamConfigs ),
-			new NullLogger(),
-			new ContextController( $this->integration ),
-			$curationController
-		);
+		// @phan-suppress-next-line PhanTypeMismatchArgument
+		$client = new MetricsClient( $this->integration, $config, null, $context, $curation );
 
 		$this->assertFalse( $client->submit( $stream, $event ) );
 		$this->assertEmpty( $this->integration->getSentEvents() );
@@ -307,26 +302,22 @@ class MetricsClientTest extends \PHPUnit\Framework\TestCase {
 				return $result->format( 'Y-m-d\TH:i:s\Z' );
 			} );
 
+		$config = new StreamConfigFactory( $this->streamConfigs );
+
 		// It should call addRequestedValues for each event being submitted
-		$contextController = $this->createMock( ContextController::class );
-		$contextController->expects( $this->exactly( 2 ) )
+		$context = $this->createMock( ContextController::class );
+		$context->expects( $this->exactly( 2 ) )
 			->method( 'addRequestedValues' )
 			->willReturnArgument( 0 );
 
 		// It should call shouldProduceEvent for each event being submitted
-		$curationController = $this->createMock( CurationController::class );
-		$curationController->expects( $this->exactly( 2 ) )
+		$curation = $this->createMock( CurationController::class );
+		$curation->expects( $this->exactly( 2 ) )
 			->method( 'shouldProduceEvent' )
 			->willReturn( true );
 
-		$client = new MetricsClient(
-			$integration,
-			new StreamConfigFactory( $this->streamConfigs ),
-			null,
-			$contextController,
-			$curationController
-		);
-
+		// @phan-suppress-next-line PhanTypeMismatchArgument
+		$client = new MetricsClient( $integration, $config, null, $context, $curation );
 		$client->dispatch( 'bar' );
 
 		// @phan-suppress-next-line PhanUndeclaredMethod

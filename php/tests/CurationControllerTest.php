@@ -2,17 +2,18 @@
 
 namespace Wikimedia\Metrics\Test;
 
+use PHPUnit\Framework\TestCase;
 use Wikimedia\Metrics\CurationController;
 use Wikimedia\Metrics\StreamConfig\StreamConfig;
 use Wikimedia\TestingAccessWrapper;
 
 /** @covers \Wikimedia\Metrics\CurationController */
-class CurationControllerTest extends \PHPUnit\Framework\TestCase {
+class CurationControllerTest extends TestCase {
 
-	/** @var CurationController */
+	/** @var TestingAccessWrapper */
 	private $curationController;
 
-	/** @var array */
+	/** @var StreamConfig */
 	private $streamConfig;
 
 	/** @var array */
