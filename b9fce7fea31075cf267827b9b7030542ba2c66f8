@@ -16,6 +16,24 @@
       "message": "Was this meant to be added?",
       "revId": "b9fce7fea31075cf267827b9b7030542ba2c66f8",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "684519cf_065afe1f",
+        "filename": ".editorconfig",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-05-09T09:52:39Z",
+      "side": 1,
+      "message": "No!",
+      "parentUuid": "36cc764c_0bc27fa6",
+      "revId": "b9fce7fea31075cf267827b9b7030542ba2c66f8",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
