@@ -21,16 +21,16 @@ class StreamConfigFactory {
 	 * Gets the configuration for the given stream.
 	 *
 	 * Note well that if the raw stream configuration is falsy, then this will always return
-	 * `null`.
+	 * an empty stream configuration.
 	 *
 	 * @param string $streamName
-	 * @return ?StreamConfig
+	 * @return StreamConfig
 	 * @throws StreamConfigException If the given stream is not configured
 	 * @throws StreamConfigException If the given stream configuration is not an ordered dictionary
 	 */
-	public function getStreamConfig( string $streamName ): ?StreamConfig {
+	public function getStreamConfig( string $streamName ): StreamConfig {
 		if ( $this->rawStreamConfigs === false ) {
-			return null;
+			return new StreamConfig( [] );
 		}
 
 		if (

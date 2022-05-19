@@ -86,9 +86,6 @@ class MetricsClient {
 
 			return false;
 		}
-		if ( !$streamConfig ) {
-			return false;
-		}
 
 		return $this->submitInternal( $streamName, $streamConfig, $event );
 	}

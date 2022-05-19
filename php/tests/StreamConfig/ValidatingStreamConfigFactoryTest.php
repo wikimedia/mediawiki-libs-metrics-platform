@@ -5,6 +5,7 @@ namespace Wikimedia\Metrics\Tests;
 use Generator;
 use JsonSchema\Validator;
 use PHPUnit\Framework\TestCase;
+use Wikimedia\Metrics\StreamConfig\StreamConfig;
 use Wikimedia\Metrics\StreamConfig\StreamConfigException;
 use Wikimedia\Metrics\StreamConfig\ValidatingStreamConfigFactory;
 
@@ -21,9 +22,10 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 	/**
 	 * @covers ::getStreamConfig
 	 */
-	public function testItShouldHandleSimpleInvalidStreamConfigs(): void {
-		$this->assertNull( $this->getFactory( false )->getStreamConfig( 'test.stream' ) );
-		$this->assertNull( $this->getFactory( [] )->getStreamConfig( 'test.stream' ) );
+	public function testItShouldThrowSimple(): void {
+		$this->expectException( StreamConfigException::class );
+
+		$this->getFactory( [] )->getStreamConfig( 'test.stream' );
 	}
 
 	public function provideShouldHandleValidStreamConfigs(): Generator {
@@ -81,6 +83,19 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 		$this->assertNotNull( $streamConfig );
 		$this->assertEquals( $expectedRequestValues, $streamConfig->getRequestedValues() );
 		$this->assertEquals( $expectedCurationRules, $streamConfig->getCurationRules() );
+	}
+
+	/**
+	 * @covers ::getStreamConfig
+	 */
+	public function testItShouldHandleDisabledStreamConfigs() {
+		$streamName = 'test.stream';
+		$streamConfigs = false;
+
+		$factory = $this->getFactory( $streamConfigs );
+		$streamConfig = $factory->getStreamConfig( $streamName );
+
+		$this->assertEquals( new StreamConfig( [] ), $streamConfig );
 	}
 
 	public function provideMetricsPlatformClientConfig(): Generator {

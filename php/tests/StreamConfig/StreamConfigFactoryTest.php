@@ -22,8 +22,8 @@ class StreamConfigFactoryTest extends TestCase {
 	public function testGetStreamConfig(): void {
 		$factory = $this->getFactory( false );
 
-		$this->assertNull( $factory->getStreamConfig( 'test.stream' ) );
-		$this->assertNull( $factory->getStreamConfig( 'foo' ) );
+		$this->assertEquals( new StreamConfig( [] ), $factory->getStreamConfig( 'test.stream' ) );
+		$this->assertEquals( new StreamConfig( [] ), $factory->getStreamConfig( 'foo' ) );
 
 		// ---
 

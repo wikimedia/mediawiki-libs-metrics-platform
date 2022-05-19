@@ -31,12 +31,11 @@ class ValidatingStreamConfigFactory extends StreamConfigFactory {
 	 * @throws StreamConfigException If the given stream configuration does not validate against
 	 *  the Metrics Platform Client configuration schema
 	 */
-	public function getStreamConfig( $streamName ): ?StreamConfig {
-		if (
-			!$this->rawStreamConfigs
-			|| !isset( $this->rawStreamConfigs[$streamName] )
-		) {
-			return null;
+	public function getStreamConfig( $streamName ): StreamConfig {
+		$result = parent::getStreamConfig( $streamName );
+
+		if ( $this->rawStreamConfigs === false ) {
+			return $result;
 		}
 
 		$streamConfig = $this->rawStreamConfigs[$streamName];
@@ -45,7 +44,7 @@ class ValidatingStreamConfigFactory extends StreamConfigFactory {
 		// If there is no Metrics Platform Client configuration to validate, then do not attempt to
 		// validate it - at the very least, this avoids reading the schema from disk.
 		if ( !$metricsPlatformClientConfig ) {
-			return parent::getStreamConfig( $streamName );
+			return $result;
 		}
 
 		$this->validator->validate(
@@ -74,6 +73,6 @@ class ValidatingStreamConfigFactory extends StreamConfigFactory {
 			throw new StreamConfigException( $message );
 		}
 
-		return parent::getStreamConfig( $streamName );
+		return $result;
 	}
 }
