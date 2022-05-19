@@ -159,7 +159,24 @@ class MetricsClientTest extends TestCase {
 	}
 
 	public function testSubmitDoesNotSendInvalidEvents() {
-		$this->assertFalse( $this->client->submit( 'test.event', [] ) );
+		$streamName = 'test.event';
+		$event = [];
+
+		$logger = $this->createMock( LoggerInterface::class );
+		$logger->expects( $this->once() )
+			->method( 'warning' )
+			->with(
+				'The event submitted to stream {streamName} is missing the required "$schema" property: {event}',
+				[
+					'streamName' => $streamName,
+					'event' => $event,
+				]
+			);
+
+		// @phan-suppress-next-line PhanTypeMismatchArgument
+		$client = new MetricsClient( $this->integration, $this->config, $logger );
+
+		$this->assertFalse( $client->submit( 'test.event', [] ) );
 		$this->assertEmpty( $this->integration->getSentEvents() );
 	}
 
@@ -176,7 +193,7 @@ class MetricsClientTest extends TestCase {
 
 		$logger = $this->createMock( LoggerInterface::class );
 		$logger->expects( $this->once() )
-			->method( 'error' )
+			->method( 'warning' )
 			->with(
 				'The configuration for stream {streamName} is invalid: {validationError}',
 				[

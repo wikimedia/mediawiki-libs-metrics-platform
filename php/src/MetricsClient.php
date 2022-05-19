@@ -71,12 +71,20 @@ class MetricsClient {
 	 */
 	public function submit( string $streamName, array $event ): bool {
 		if ( !isset( $event['$schema'] ) ) {
+			$this->logger->warning(
+				'The event submitted to stream {streamName} is missing the required "$schema" property: {event}',
+				[
+					'streamName' => $streamName,
+					'event' => $event,
+				]
+			);
+
 			return false;
 		}
 		try {
 			$streamConfig = $this->streamConfigFactory->getStreamConfig( $streamName );
 		} catch ( StreamConfigException $e ) {
-			$this->logger->error(
+			$this->logger->warning(
 				'The configuration for stream {streamName} is invalid: {validationError}',
 				[
 					'streamName' => $streamName,
