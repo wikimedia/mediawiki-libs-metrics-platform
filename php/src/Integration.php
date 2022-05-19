@@ -33,7 +33,7 @@ interface Integration {
 	/**
 	 * @return string|null
 	 */
-	public function getClientPlatformFamily(): ?string;
+	public function getAgentClientPlatformFamily(): ?string;
 
 	/**
 	 * @return int
@@ -63,7 +63,7 @@ interface Integration {
 	/**
 	 * @return string|null
 	 */
-	public function getPageWikidataItemId(): ?string;
+	public function getPageWikidataId(): ?string;
 
 	/**
 	 * @return string|null

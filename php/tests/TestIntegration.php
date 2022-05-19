@@ -64,7 +64,7 @@ class TestIntegration implements Integration {
 	}
 
 	/** @inheritDoc */
-	public function getPageWikidataItemId(): ?string {
+	public function getPageWikidataId(): ?string {
 		return "Q1";
 	}
 
@@ -174,7 +174,7 @@ class TestIntegration implements Integration {
 	}
 
 	/** @inheritDoc */
-	public function getClientPlatformFamily(): ?string {
+	public function getAgentClientPlatformFamily(): ?string {
 		return null;
 	}
 

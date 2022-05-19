@@ -59,7 +59,7 @@ class ContextController {
 			case 'agent_client_platform':
 				return $int->getAgentClientPlatform();
 			case 'agent_client_platform_family':
-				return $int->getClientPlatformFamily();
+				return $int->getAgentClientPlatformFamily();
 
 			case 'page_id':
 				return $int->getPageId();
@@ -72,7 +72,7 @@ class ContextController {
 			case 'page_revision_id':
 				return $int->getPageRevisionId();
 			case 'page_wikidata_id':
-				return $int->getPageWikidataItemId();
+				return $int->getPageWikidataId();
 			case 'page_content_language':
 				return $int->getPageContentLanguage();
 			case 'page_is_redirect':
