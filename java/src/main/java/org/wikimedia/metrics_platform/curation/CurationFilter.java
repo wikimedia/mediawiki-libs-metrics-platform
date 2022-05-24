@@ -6,6 +6,8 @@ import org.wikimedia.metrics_platform.curation.rules.CollectionCurationRules;
 import org.wikimedia.metrics_platform.curation.rules.ComparableCurationRules;
 import org.wikimedia.metrics_platform.curation.rules.CurationRules;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 public class CurationFilter {
     @SerializedName("page_id") private ComparableCurationRules<Integer> pageIdRules;
     @SerializedName("page_namespace_id") private ComparableCurationRules<Integer> pageNamespaceIdRules;
@@ -188,6 +190,7 @@ public class CurationFilter {
         return isProductionRules;
     }
 
+    @SuppressFBWarnings(value = "CC_CYCLOMATIC_COMPLEXITY", justification = "TODO: needs to be refactored!")
     public boolean apply(Event event) {
         // Page
 

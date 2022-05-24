@@ -5,8 +5,11 @@ import org.wikimedia.metrics_platform.MetricsClientIntegration;
 import org.wikimedia.metrics_platform.StreamConfig;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import static org.wikimedia.metrics_platform.context.ContextValue.*;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 public class ContextController {
 
@@ -16,6 +19,7 @@ public class ContextController {
         this.integration = integration;
     }
 
+    @SuppressFBWarnings(value = "CC_CYCLOMATIC_COMPLEXITY", justification = "TODO: needs to be refactored")
     public void addRequestedValues(Event event, StreamConfig streamConfig) {
         if (!streamConfig.hasRequestedContextValuesConfig()) {
             return;
@@ -188,7 +192,7 @@ public class ContextController {
                     event.setIsProduction(integration.isProduction());
                     break;
                 default:
-                    throw new IllegalArgumentException(String.format("Unknown property %s", value));
+                    throw new IllegalArgumentException(String.format(Locale.ROOT, "Unknown property %s", value));
             }
         }
     }

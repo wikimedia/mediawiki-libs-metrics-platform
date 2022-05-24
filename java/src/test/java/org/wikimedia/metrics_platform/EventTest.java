@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -47,7 +48,7 @@ public class EventTest {
 
         Gson gson = new Gson();
         String json = gson.toJson(event);
-        assertThat(json, is(String.format("{\"$schema\":\"test/event/1.0.0\",\"meta\":{\"stream\":\"test.event\"}," +
+        assertThat(json, is(String.format(Locale.ROOT, "{\"$schema\":\"test/event/1.0.0\",\"meta\":{\"stream\":\"test.event\"}," +
                 "\"dt\":\"2021-08-27T12:00:00Z\",\"app_install_id\":\"%s\",\"app_session_id\":\"%s\"," +
                 "\"access_method\":\"mobile app\",\"platform\":\"android\",\"platform_family\":\"app\"," +
                 "\"is_production\":true}", uuid, uuid)));

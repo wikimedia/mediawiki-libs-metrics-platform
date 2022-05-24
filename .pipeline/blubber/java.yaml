@@ -5,4 +5,4 @@ variants:
     copies: [local]
     runs:
       insecurely: true
-    entrypoint: [./gradlew, test]
+    entrypoint: [./mvnw, test]
