@@ -292,6 +292,15 @@ MetricsClient.prototype.dispatch = function ( eventName, customData ) {
 		return;
 	}
 
+	// T309083
+	if ( this.streamConfigs === false ) {
+		this.integration.logWarning(
+			'dispatch( ' + eventName + ', customData ) cannot dispatch events when stream configs are disabled.'
+		);
+
+		return;
+	}
+
 	var dt = new Date().toISOString();
 
 	// Produce the event(s)

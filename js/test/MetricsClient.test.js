@@ -243,3 +243,13 @@ QUnit.test( 'dispatch() - warn/do not produce event when bespokeData properties 
 	assert.strictEqual( logWarningStub.callCount, 1, 'logWarning() should be called' );
 	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
 } );
+
+QUnit.test( 'dispatch() - warn/do not produce event when streamConfigs is false', function ( assert ) {
+	// eslint-disable-next-line no-shadow
+	var metricsClient = new MetricsClient( integration, false );
+
+	metricsClient.dispatch( 'otherWidgetClick' );
+
+	assert.strictEqual( logWarningStub.callCount, 1, 'logWarning() should be called' );
+	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
+} );
