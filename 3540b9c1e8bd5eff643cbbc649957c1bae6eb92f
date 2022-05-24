@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1536b3b2_f2b6c139",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-05-24T10:41:45Z",
+      "side": 1,
+      "message": "Thanks for those nitpicks, Nray. Fixing them forced me to fix the inconsistency I\u0027d introduced with ValidatingStreamConfigFactory too, which is great!",
+      "revId": "3540b9c1e8bd5eff643cbbc649957c1bae6eb92f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
