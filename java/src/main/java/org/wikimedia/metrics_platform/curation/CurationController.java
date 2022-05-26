@@ -5,8 +5,7 @@ import org.wikimedia.metrics_platform.StreamConfig;
 
 public class CurationController {
 
-    public boolean eventPassesCurationRules(Event event, StreamConfig streamConfig)
-            throws IllegalArgumentException {
+    public boolean eventPassesCurationRules(Event event, StreamConfig streamConfig) {
         StreamConfig.ProducerConfig producerConfig = streamConfig.getProducerConfig();
         if (producerConfig == null) {
             return true;

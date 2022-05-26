@@ -3,6 +3,8 @@ package org.wikimedia.metrics_platform;
 import java.util.Date;
 import java.util.UUID;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Manages sessions and session IDs for the Metrics Platform client.
  *
@@ -40,6 +42,7 @@ class SessionController {
         return (new Date()).getTime() - sessionTouched.getTime() >= SESSION_TIMEOUT;
     }
 
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "TODO: This needs some non trivial refactoring")
     void beginNewSession() {
         SESSION_ID = generateSessionId();
         touchSession();

@@ -8,6 +8,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+@SuppressFBWarnings(
+        value = "IS2_INCONSISTENT_SYNC",
+        justification = "FIXME: inconsistent synchronization to streamConfigs, probably needs non trivial refactoring")
 public final class MetricsClient {
 
     public static MetricsClient getInstance(MetricsClientIntegration integration) {
@@ -146,6 +151,7 @@ public final class MetricsClient {
      * @param stream stream name
      * @return boolean
      */
+    @SuppressFBWarnings(value = "MUI_CONTAINSKEY_BEFORE_GET", justification = "TODO: needs to be fixed.")
     boolean shouldProcessEventsForStream(String stream) {
         return streamConfigs.containsKey(stream) &&
                 samplingController.isInSample(streamConfigs.get(stream));
@@ -207,6 +213,9 @@ public final class MetricsClient {
      *
      * @param event event
      */
+    @SuppressFBWarnings(
+            value = "STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE",
+            justification = "FIXME: call to DATE_FORMAT.format() is not threadsafe.")
     private void addRequiredMetadata(Event event) {
         event.setAppInstallId(integration.getAppInstallId());
         event.setAppSessionId(sessionController.getSessionId());
@@ -302,6 +311,9 @@ public final class MetricsClient {
      * @param fetchStreamConfigsTask optional custom implementation of stream configs fetch task (for testing)
      * @param eventSubmissionTask optional custom implementation of event submission task (for testing)
      */
+    @SuppressFBWarnings(
+            value = "STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE",
+            justification = "FIXME: call to DATE_FORMAT.format() is not threadsafe.")
     MetricsClient(
             MetricsClientIntegration integration,
             SessionController sessionController,
