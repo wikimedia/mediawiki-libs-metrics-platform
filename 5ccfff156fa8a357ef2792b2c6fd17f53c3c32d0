@@ -16,6 +16,23 @@
       "message": "Recheck.",
       "revId": "5ccfff156fa8a357ef2792b2c6fd17f53c3c32d0",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5580484f_ebd7427d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-05-26T08:06:24Z",
+      "side": 1,
+      "message": "That the test failed and then passed (and is related to a timed task) is indicative of a logic error in the test. That shouldn\u0027t block merging this change though.",
+      "revId": "5ccfff156fa8a357ef2792b2c6fd17f53c3c32d0",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
