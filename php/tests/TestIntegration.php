@@ -1,8 +1,8 @@
 <?php
 
-namespace Wikimedia\Metrics\Tests;
+namespace Wikimedia\MetricsPlatform\Tests;
 
-use Wikimedia\Metrics\Integration;
+use Wikimedia\MetricsPlatform\Integration;
 
 class TestIntegration implements Integration {
 

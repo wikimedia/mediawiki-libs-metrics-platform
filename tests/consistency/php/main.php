@@ -1,10 +1,10 @@
 <?php
 
-namespace Wikimedia\Metrics\Tests\Consistency;
+namespace Wikimedia\MetricsPlatform\Tests\Consistency;
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
-use Wikimedia\Metrics\MetricsClient;
+use Wikimedia\MetricsPlatform\MetricsClient;
 
 require __DIR__ . '/Integration.php';
 require __DIR__ . '/StreamConfigFactory.php';

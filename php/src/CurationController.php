@@ -1,8 +1,8 @@
 <?php
 
-namespace Wikimedia\Metrics;
+namespace Wikimedia\MetricsPlatform;
 
-use Wikimedia\Metrics\StreamConfig\StreamConfig;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfig;
 
 class CurationController {
 

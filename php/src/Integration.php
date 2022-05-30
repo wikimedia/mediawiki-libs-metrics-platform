@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikimedia\Metrics;
+namespace Wikimedia\MetricsPlatform;
 
 interface Integration {
 

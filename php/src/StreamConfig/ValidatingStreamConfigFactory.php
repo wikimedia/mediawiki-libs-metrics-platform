@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikimedia\Metrics\StreamConfig;
+namespace Wikimedia\MetricsPlatform\StreamConfig;
 
 use JsonSchema\Constraints\Constraint;
 use JsonSchema\Validator;

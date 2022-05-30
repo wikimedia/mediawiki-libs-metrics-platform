@@ -1,22 +1,22 @@
 <?php
 
-namespace Wikimedia\Metrics\Tests;
+namespace Wikimedia\MetricsPlatform\Tests;
 
 require_once __DIR__ . '/TestIntegration.php';
 
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Wikimedia\Metrics\ContextController;
-use Wikimedia\Metrics\CurationController;
-use Wikimedia\Metrics\MetricsClient;
-use Wikimedia\Metrics\StreamConfig\StreamConfig;
-use Wikimedia\Metrics\StreamConfig\StreamConfigException;
-use Wikimedia\Metrics\StreamConfig\StreamConfigFactory;
+use Wikimedia\MetricsPlatform\ContextController;
+use Wikimedia\MetricsPlatform\CurationController;
+use Wikimedia\MetricsPlatform\MetricsClient;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfig;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigException;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
 use Wikimedia\TestingAccessWrapper;
 use Wikimedia\Timestamp\ConvertibleTimestamp;
 
-/** @covers \Wikimedia\Metrics\MetricsClient */
+/** @covers \Wikimedia\MetricsPlatform\MetricsClient */
 class MetricsClientTest extends TestCase {
 
 	/** @var TestIntegration */

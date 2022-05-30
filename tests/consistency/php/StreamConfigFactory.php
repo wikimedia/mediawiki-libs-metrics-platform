@@ -1,8 +1,8 @@
 <?php
 
-namespace Wikimedia\Metrics\Tests\Consistency;
+namespace Wikimedia\MetricsPlatform\Tests\Consistency;
 
-use Wikimedia\Metrics\StreamConfig\StreamConfigFactory as BaseStreamConfigFactory;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory as BaseStreamConfigFactory;
 
 class StreamConfigFactory extends BaseStreamConfigFactory {
 	public function __construct( $filename ) {

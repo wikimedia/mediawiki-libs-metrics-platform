@@ -1,15 +1,15 @@
 <?php
 
-namespace Wikimedia\Metrics\Tests\StreamConfig;
+namespace Wikimedia\MetricsPlatform\Tests\StreamConfig;
 
 use Generator;
 use PHPUnit\Framework\TestCase;
-use Wikimedia\Metrics\StreamConfig\StreamConfig;
-use Wikimedia\Metrics\StreamConfig\StreamConfigException;
-use Wikimedia\Metrics\StreamConfig\StreamConfigFactory;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfig;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigException;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
 
 /**
- * @coversDefaultClass \Wikimedia\Metrics\StreamConfig\StreamConfigFactory
+ * @coversDefaultClass \Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory
  */
 class StreamConfigFactoryTest extends TestCase {
 	private function getFactory( $rawStreamConfigs ): StreamConfigFactory {

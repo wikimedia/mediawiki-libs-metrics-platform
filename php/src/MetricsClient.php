@@ -1,12 +1,12 @@
 <?php
 
-namespace Wikimedia\Metrics;
+namespace Wikimedia\MetricsPlatform;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use Wikimedia\Metrics\StreamConfig\StreamConfig;
-use Wikimedia\Metrics\StreamConfig\StreamConfigException;
-use Wikimedia\Metrics\StreamConfig\StreamConfigFactory;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfig;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigException;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
 
 class MetricsClient {
 

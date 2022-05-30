@@ -1,8 +1,8 @@
 <?php
 
-namespace Wikimedia\Metrics\Tests\Consistency;
+namespace Wikimedia\MetricsPlatform\Tests\Consistency;
 
-use Wikimedia\Metrics\Integration as IIntegration;
+use Wikimedia\MetricsPlatform\Integration as IIntegration;
 
 class Integration implements IIntegration {
 

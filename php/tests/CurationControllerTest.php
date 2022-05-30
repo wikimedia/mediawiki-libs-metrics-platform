@@ -1,13 +1,13 @@
 <?php
 
-namespace Wikimedia\Metrics\Tests;
+namespace Wikimedia\MetricsPlatform\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Wikimedia\Metrics\CurationController;
-use Wikimedia\Metrics\StreamConfig\StreamConfig;
+use Wikimedia\MetricsPlatform\CurationController;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfig;
 use Wikimedia\TestingAccessWrapper;
 
-/** @covers \Wikimedia\Metrics\CurationController */
+/** @covers \Wikimedia\MetricsPlatform\CurationController */
 class CurationControllerTest extends TestCase {
 
 	/** @var TestingAccessWrapper */

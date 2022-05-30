@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikimedia\Metrics\Tests\Consistency;
+namespace Wikimedia\MetricsPlatform\Tests\Consistency;
 
 use PHPUnit\Framework\TestCase;
 use Swaggest\JsonDiff\JsonDiff;

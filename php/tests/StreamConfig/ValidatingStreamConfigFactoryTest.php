@@ -1,16 +1,16 @@
 <?php
 
-namespace Wikimedia\Metrics\Tests;
+namespace Wikimedia\MetricsPlatform\Tests;
 
 use Generator;
 use JsonSchema\Validator;
 use PHPUnit\Framework\TestCase;
-use Wikimedia\Metrics\StreamConfig\StreamConfig;
-use Wikimedia\Metrics\StreamConfig\StreamConfigException;
-use Wikimedia\Metrics\StreamConfig\ValidatingStreamConfigFactory;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfig;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigException;
+use Wikimedia\MetricsPlatform\StreamConfig\ValidatingStreamConfigFactory;
 
 /**
- * @coversDefaultClass \Wikimedia\Metrics\StreamConfig\ValidatingStreamConfigFactory
+ * @coversDefaultClass \Wikimedia\MetricsPlatform\StreamConfig\ValidatingStreamConfigFactory
  */
 class ValidatingStreamConfigFactoryTest extends TestCase {
 	private function getFactory( $rawStreamConfigs ): ValidatingStreamConfigFactory {

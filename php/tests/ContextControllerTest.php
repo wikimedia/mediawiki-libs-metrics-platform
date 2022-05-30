@@ -1,14 +1,14 @@
 <?php
 
-namespace Wikimedia\Metrics\Tests;
+namespace Wikimedia\MetricsPlatform\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Wikimedia\Metrics\ContextController;
-use Wikimedia\Metrics\StreamConfig\StreamConfig;
+use Wikimedia\MetricsPlatform\ContextController;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfig;
 
 require_once __DIR__ . '/TestIntegration.php';
 
-/** @covers \Wikimedia\Metrics\ContextController */
+/** @covers \Wikimedia\MetricsPlatform\ContextController */
 class ContextControllerTest extends TestCase {
 
 	/** @var ContextController */
