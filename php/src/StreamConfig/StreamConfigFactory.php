@@ -48,9 +48,15 @@ class StreamConfigFactory {
 	 * @return array
 	 */
 	public function getStreamNamesForEvent( string $eventName ): array {
-		$eventToStreamNamesMap = $this->getEventToStreamNamesMap();
+		$result = [];
 
-		return $eventToStreamNamesMap[$eventName] ?? [];
+		foreach ( $this->getEventToStreamNamesMap() as $key => $streamNames ) {
+			if ( strpos( $eventName, $key ) === 0 ) {
+				$result = array_merge( $result, $streamNames );
+			}
+		}
+
+		return $result;
 	}
 
 	/**
