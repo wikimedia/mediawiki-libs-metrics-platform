@@ -10,7 +10,8 @@ use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigException;
 use Wikimedia\MetricsPlatform\StreamConfig\ValidatingStreamConfigFactory;
 
 /**
- * @coversDefaultClass \Wikimedia\MetricsPlatform\StreamConfig\ValidatingStreamConfigFactory
+ * @covers \Wikimedia\MetricsPlatform\StreamConfig\StreamConfig
+ * @covers \Wikimedia\MetricsPlatform\StreamConfig\ValidatingStreamConfigFactory
  */
 class ValidatingStreamConfigFactoryTest extends TestCase {
 	private function getFactory( $rawStreamConfigs ): ValidatingStreamConfigFactory {
@@ -19,9 +20,6 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 		return new ValidatingStreamConfigFactory( $rawStreamConfigs, $validator );
 	}
 
-	/**
-	 * @covers ::getStreamConfig
-	 */
 	public function testItShouldThrowSimple(): void {
 		$this->expectException( StreamConfigException::class );
 
@@ -61,11 +59,34 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 			'expectedRequestValues' => [],
 			'expectedCurationRules' => [],
 		];
+		yield [
+			'streamConfig' => [
+				'producers' => [
+					'metrics_platform_client' => [
+						'provide_values' => [
+							'performer_name',
+						],
+						'curation' => [
+							'performer_name' => [
+								'equals' => 'Phuedx',
+							],
+						],
+					],
+				],
+			],
+			'expectedRequestValues' => [
+				'performer_name',
+			],
+			'expectedCurationRules' => [
+				'performer_name' => [
+					'equals' => 'Phuedx',
+				],
+			],
+		];
 	}
 
 	/**
 	 * @dataProvider provideShouldHandleValidStreamConfigs
-	 * @covers ::getStreamConfig
 	 */
 	public function testItShouldHandleValidStreamConfigs(
 		$rawStreamConfig,
@@ -85,9 +106,6 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 		$this->assertEquals( $expectedCurationRules, $streamConfig->getCurationRules() );
 	}
 
-	/**
-	 * @covers ::getStreamConfig
-	 */
 	public function testItShouldHandleDisabledStreamConfigs() {
 		$streamName = 'test.stream';
 		$streamConfigs = false;
@@ -155,7 +173,6 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 
 	/**
 	 * @dataProvider provideMetricsPlatformClientConfig
-	 * @covers ::getStreamConfig
 	 */
 	public function testItShouldValidateMetricsPlatformClientConfig( $metricsPlatformClientConfig ): void {
 		$this->expectException( StreamConfigException::class );

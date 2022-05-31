@@ -16,7 +16,9 @@ use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
 use Wikimedia\TestingAccessWrapper;
 use Wikimedia\Timestamp\ConvertibleTimestamp;
 
-/** @covers \Wikimedia\MetricsPlatform\MetricsClient */
+/**
+ * @covers \Wikimedia\MetricsPlatform\MetricsClient
+ */
 class MetricsClientTest extends TestCase {
 
 	/** @var TestIntegration */

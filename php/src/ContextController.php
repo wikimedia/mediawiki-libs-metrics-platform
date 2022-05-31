@@ -30,17 +30,19 @@ class ContextController {
 		foreach ( $requestedValues as $requestedValue ) {
 			list( $primaryKey, $secondaryKey ) = explode( '_', $requestedValue, 2 );
 
-			if ( !isset( $event[$primaryKey] ) ) {
-				$event[$primaryKey] = [];
-			}
-
 			$value = $this->getContextualAttributeByName( $requestedValue );
 
 			// Contextual attributes are null by default. Only add the requested contextual
 			// attribute - incurring the cost of transporting it - if it is not null.
-			if ( $value !== null ) {
-				$event[$primaryKey][$secondaryKey] = $value;
+			if ( $value === null ) {
+				continue;
 			}
+
+			if ( !isset( $event[$primaryKey] ) ) {
+				$event[$primaryKey] = [];
+			}
+
+			$event[$primaryKey][$secondaryKey] = $value;
 		}
 
 		return $event;
@@ -123,6 +125,9 @@ class ContextController {
 				return $int->getUserEditCountBucket();
 			case 'performer_registration_dt':
 				return $int->getUserRegistrationTimestamp();
+
+			default:
+				return null;
 		}
 	}
 }

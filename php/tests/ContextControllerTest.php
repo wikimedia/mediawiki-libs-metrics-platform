@@ -8,7 +8,9 @@ use Wikimedia\MetricsPlatform\StreamConfig\StreamConfig;
 
 require_once __DIR__ . '/TestIntegration.php';
 
-/** @covers \Wikimedia\MetricsPlatform\ContextController */
+/**
+ * @covers \Wikimedia\MetricsPlatform\ContextController
+ */
 class ContextControllerTest extends TestCase {
 
 	/** @var ContextController */

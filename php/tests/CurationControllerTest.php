@@ -42,6 +42,9 @@ class CurationControllerTest extends TestCase {
 						'user_groups' => [
 							'contains_all' => [ 'user', 'autoconfirmed' ],
 							'does_not_contain' => 'sysop',
+
+							// Unknown contextual attribute with valid comparator.
+							'unknown_rule' => false,
 						],
 					],
 				],
