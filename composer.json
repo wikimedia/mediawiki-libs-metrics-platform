@@ -1,12 +1,23 @@
 {
 	"name": "wikimedia/metrics-platform",
-	"description": "Client libraries for Wikimedia analytics instrumentation",
+	"description": "The PHP Metrics Platform client.",
 	"homepage": "https://wikitech.wikimedia.org/wiki/Metrics_Platform",
 	"license": "GPL-2.0-or-later",
-	"autoload": {
-		"psr-4": {
-			"Wikimedia\\MetricsPlatform\\": "php/src/"
+	"authors": [
+		{
+			"name": "Michael Holloway"
+		},
+		{
+			"name": "Jason Linehan"
+		},
+		{
+			"name": "Sam Smith",
+			"email": "phuedx@wikimedia.org"
 		}
+	],
+	"support": {
+		"issues": "https://phabricator.wikimedia.org/project/board/5324/"
+
 	},
 	"require": {
 		"php": ">=7.2.34",
@@ -25,23 +36,27 @@
 		"wikimedia/timestamp": "3.0.0",
 		"symfony/process": "^5.4"
 	},
+	"autoload": {
+		"psr-4": {
+			"Wikimedia\\MetricsPlatform\\": "php/src/"
+		}
+	},
 	"scripts": {
-		"lint": "parallel-lint . --exclude vendor",
-		"phan": "phan -d . -p --require-config-exists --allow-polyfill-parser --long-progress-bar",
-		"phpcs": "phpcs -p -s",
 		"test": [
+			"parallel-lint . --exclude vendor",
 			"phpunit",
-			"@lint",
-			"@phpcs",
 			"covers-validator",
-			"minus-x check .",
-			"@phan"
+			"@phan",
+			"@phpcs",
+			"minus-x check ."
 		],
-		"test-consistency": "phpunit tests/consistency/ConsistencyTest.php",
+		"cover": "phpunit --coverage-html coverage",
 		"fix": [
 			"minus-x fix .",
 			"phpcbf"
 		],
-		"coverage-html": "phpunit --coverage-html docs/coverage php/tests/"
+		"phan": "phan --allow-polyfill-parser --no-progress-bar",
+		"phpcs": "phpcs -sp",
+		"test-consistency": "phpunit tests/consistency/ConsistencyTest.php"
 	}
 }
