@@ -13,7 +13,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>Metrics Platform</name>
-    <description>Metrics Platform</description>
+    <description>The Java Metrics Platform Client.</description>
 
     <licenses>
         <license>

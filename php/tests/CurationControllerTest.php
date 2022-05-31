@@ -43,7 +43,7 @@ class CurationControllerTest extends TestCase {
 							'contains_all' => [ 'user', 'autoconfirmed' ],
 							'does_not_contain' => 'sysop',
 
-							// Unknown contextual attribute with valid comparator.
+							// Unknown context attribute with valid comparator.
 							'unknown_rule' => false,
 						],
 					],
@@ -123,10 +123,10 @@ class CurationControllerTest extends TestCase {
 	}
 
 	public function testStringEqualsRule() {
-		$rules = [ 'equals' => "foo" ];
-		$this->assertTrue( $this->curationController->applyRules( "foo", $rules ) );
-		$this->assertFalse( $this->curationController->applyRules( "bar", $rules ) );
-		$this->assertFalse( $this->curationController->applyRules( "", $rules ) );
+		$rules = [ 'equals' => 'foo' ];
+		$this->assertTrue( $this->curationController->applyRules( 'foo', $rules ) );
+		$this->assertFalse( $this->curationController->applyRules( 'bar', $rules ) );
+		$this->assertFalse( $this->curationController->applyRules( '', $rules ) );
 		$this->assertFalse( $this->curationController->applyRules( null, $rules ) );
 	}
 
@@ -163,9 +163,9 @@ class CurationControllerTest extends TestCase {
 	}
 
 	public function testStringNotEqualsRule() {
-		$rules = [ 'not_equals' => "foo" ];
-		$this->assertFalse( $this->curationController->applyRules( "foo", $rules ) );
-		$this->assertTrue( $this->curationController->applyRules( "bar", $rules ) );
+		$rules = [ 'not_equals' => 'foo' ];
+		$this->assertFalse( $this->curationController->applyRules( 'foo', $rules ) );
+		$this->assertTrue( $this->curationController->applyRules( 'bar', $rules ) );
 		$this->assertTrue( $this->curationController->applyRules( "", $rules ) );
 		$this->assertTrue( $this->curationController->applyRules( null, $rules ) );
 	}

@@ -1,5 +1,5 @@
 /**
- * An adaptor for the environment that the Metrics Platform JavaScript client is executing in.
+ * An adaptor for the environment that the Metrics Platform Client is executing in.
  */
 interface Integration {
 

@@ -217,7 +217,7 @@ class MetricsClient {
 	 *
 	 * 1. Initializing the minimum valid event E that can be submitted to S
 	 * 2. If it is given, adding the formatted custom data as the `custom_data` property of E
-	 * 3. Mixing the contextual attributes requested in the configuration for S into E
+	 * 3. Mixing the context attributes requested in the configuration for S into E
 	 *
 	 * After which, E is submitted to S.
 	 *

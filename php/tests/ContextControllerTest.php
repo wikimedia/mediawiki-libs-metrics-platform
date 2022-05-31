@@ -22,10 +22,10 @@ class ContextControllerTest extends TestCase {
 	protected function setUp(): void {
 		$this->contextController = new ContextController( new TestIntegration() );
 		$this->streamConfig = new StreamConfig( [
-			"schema_title" => "test/event",
-			"producers" => [
-				"metrics_platform_client" => [
-					"provide_values" => StreamConfig::CONTEXTUAL_ATTRIBUTES,
+			'schema_title' => 'test/event',
+			'producers' => [
+				'metrics_platform_client' => [
+					'provide_values' => StreamConfig::CONTEXTUAL_ATTRIBUTES,
 				],
 			],
 		] );
@@ -33,26 +33,26 @@ class ContextControllerTest extends TestCase {
 
 	public function testAddContextValues(): void {
 		$baseEvent = [
-			'$schema' => "test/event",
-			"meta" => [ "stream" => "test.event" ],
+			'$schema' => 'test/event',
+			'meta' => [ 'stream' => 'test.event' ],
 		];
 
 		$event = $this->contextController->addRequestedValues( $baseEvent, $this->streamConfig );
 
-		$agentData = $event["agent"];
-		$pageData = $event["page"];
-		$userData = $event["performer"];
-		$siteData = $event["mediawiki"];
+		$agentData = $event['agent'];
+		$pageData = $event['page'];
+		$userData = $event['performer'];
+		$siteData = $event['mediawiki'];
 
-		$this->assertArrayNotHasKey( "app_install_id", $agentData );
-		$this->assertSame( "mediawiki_php", $agentData["client_platform"] );
-		$this->assertArrayNotHasKey( "client_platform_family", $agentData );
+		$this->assertArrayNotHasKey( 'app_install_id', $agentData );
+		$this->assertSame( 'mediawiki_php', $agentData['client_platform'] );
+		$this->assertArrayNotHasKey( 'client_platform_family', $agentData );
 
-		$this->assertSame( 1, $pageData["id"] );
-		$this->assertSame( "Test", $pageData["title"] );
-		$this->assertSame( 0, $pageData["namespace"] );
-		$this->assertSame( "", $pageData["namespace_name"] );
-		$this->assertSame( 1, $pageData["revision_id"] );
+		$this->assertSame( 1, $pageData['id'] );
+		$this->assertSame( 'Test', $pageData['title'] );
+		$this->assertSame( 0, $pageData['namespace'] );
+		$this->assertSame( '', $pageData['namespace_name'] );
+		$this->assertSame( 1, $pageData['revision_id'] );
 		$this->assertSame( "Q1", $pageData["wikidata_id"] );
 		$this->assertSame( "zh", $pageData["content_language"] );
 		$this->assertSame( false, $pageData["is_redirect"] );
