@@ -110,9 +110,16 @@ MetricsClient.prototype.getStreamNamesForEvent = function ( eventName ) {
 		this.eventNameToStreamNamesMap = getEventNameToStreamNamesMap( this.streamConfigs );
 	}
 
-	return this.eventNameToStreamNamesMap[ eventName ] ?
-		this.eventNameToStreamNamesMap[ eventName ] :
-		[];
+	/** @type string[] */
+	var result = [];
+
+	for ( var key in this.eventNameToStreamNamesMap ) {
+		if ( eventName.indexOf( key ) === 0 ) {
+			result = result.concat( this.eventNameToStreamNamesMap[ key ] );
+		}
+	}
+
+	return result;
 };
 
 /**

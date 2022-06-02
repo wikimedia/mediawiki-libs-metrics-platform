@@ -37,6 +37,16 @@ var streamConfigs = {
 	},
 	'metrics.platform.test4': {
 		schema_title: 'metrics/platform/test4'
+	},
+	'metrics.platform.test5': {
+		schema_title: 'metrics/platform/test5',
+		producers: {
+			metrics_platform_client: {
+				events: [
+					'click'
+				]
+			}
+		}
 	}
 };
 
@@ -152,6 +162,20 @@ QUnit.test( 'getStreamConfigsForEvent() ', function ( assert ) {
 			message
 		);
 	} );
+} );
+
+QUnit.test( 'getStreamNamesForEvent() - prefix matching', function ( assert ) {
+	assert.deepEqual(
+		metricsClient.getStreamNamesForEvent( 'widgetClickFoo' ),
+		[
+			'metrics.platform.test2',
+			'metrics.platform.test3'
+		]
+	);
+	assert.deepEqual(
+		metricsClient.getStreamNamesForEvent( 'click' ),
+		[ 'metrics.platform.test5' ]
+	);
 } );
 
 QUnit.test( 'getStreamNamesForEvent() - streamConfigs is falsy', function ( assert ) {
