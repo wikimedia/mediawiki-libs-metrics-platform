@@ -9,16 +9,14 @@ use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigException;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
 
 /**
- * @coversDefaultClass \Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory
+ * @covers \Wikimedia\MetricsPlatform\StreamConfig\StreamConfig
+ * @covers \Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory
  */
 class StreamConfigFactoryTest extends TestCase {
 	private function getFactory( $rawStreamConfigs ): StreamConfigFactory {
 		return new StreamConfigFactory( $rawStreamConfigs );
 	}
 
-	/**
-	 * @covers ::getStreamConfig
-	 */
 	public function testGetStreamConfig(): void {
 		$factory = $this->getFactory( false );
 
@@ -42,7 +40,6 @@ class StreamConfigFactoryTest extends TestCase {
 	}
 
 	/**
-	 * @covers ::getStreamConfig
 	 * @dataProvider provideStreamConfigThrows
 	 */
 	public function testGetStreamConfigThrows( $rawStreamConfig ): void {
@@ -54,10 +51,7 @@ class StreamConfigFactoryTest extends TestCase {
 		$factory->getStreamConfig( 'foo' );
 	}
 
-	/**
-	 * @covers ::getStreamNamesForEvent
-	 */
-	public function testgetStreamNamesForEvent(): void {
+	public function testGetStreamNamesForEvent(): void {
 		$factory = $this->getFactory( [
 			'test.stream' => [],
 			'test.stream2' => [

@@ -237,12 +237,6 @@ class MetricsClient {
 
 		foreach ( $streamNames as $streamName ) {
 			$streamConfig = $this->streamConfigFactory->getStreamConfig( $streamName );
-
-			if ( !$streamConfig ) {
-				// NOTE: This SHOULD never happen.
-				continue;
-			}
-
 			$event = [
 				'$schema' => self::METRICS_PLATFORM_SCHEMA,
 				'name' => $eventName,
