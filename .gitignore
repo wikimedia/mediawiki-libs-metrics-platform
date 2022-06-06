@@ -2,7 +2,7 @@
 /.gradle/
 /gradle*
 
-/docs/
+/coverage/
 
 # Created by https://www.toptal.com/developers/gitignore/api/composer,phpcodesniffer,phpunit
 # Edit at https://www.toptal.com/developers/gitignore?templates=composer,phpcodesniffer,phpunit
