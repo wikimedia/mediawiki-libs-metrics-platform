@@ -16,6 +16,23 @@
       "message": "Per the above.",
       "revId": "bf325f5a0a46acb586dc9074914d18b5f3790863",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "798efef7_1c511e3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-06-06T10:26:01Z",
+      "side": 1,
+      "message": "Hrrm. There doesn\u0027t appear to be a corresponding gate-and-submit job created. I\u0027ll submit this now and take a look at the CI configuration.",
+      "revId": "bf325f5a0a46acb586dc9074914d18b5f3790863",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
