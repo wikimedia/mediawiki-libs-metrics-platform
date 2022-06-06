@@ -31,7 +31,7 @@ class Integration implements IIntegration {
 		return $this->data['agent']['client_platform'];
 	}
 
-	public function getClientPlatformFamily(): ?string {
+	public function getAgentClientPlatformFamily(): ?string {
 		return $this->data['agent']['client_platform_family'] ?? null;
 	}
 
@@ -55,7 +55,7 @@ class Integration implements IIntegration {
 		return $this->data['page']['revision_id'] ?? null;
 	}
 
-	public function getPageWikidataItemId(): ?string {
+	public function getPageWikidataId(): ?string {
 		return $this->data['page']['wikidata_id'] ?? null;
 	}
 
