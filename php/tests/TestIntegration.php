@@ -45,12 +45,12 @@ class TestIntegration implements Integration {
 
 	/** @inheritDoc */
 	public function getPageNamespaceName(): string {
-		return "";
+		return '';
 	}
 
 	/** @inheritDoc */
 	public function getPageTitle(): string {
-		return "Test";
+		return 'Test';
 	}
 
 	/** @inheritDoc */
@@ -65,12 +65,12 @@ class TestIntegration implements Integration {
 
 	/** @inheritDoc */
 	public function getPageWikidataId(): ?string {
-		return "Q1";
+		return 'Q1';
 	}
 
 	/** @inheritDoc */
 	public function getPageContentLanguage(): ?string {
-		return "zh";
+		return 'zh';
 	}
 
 	/** @inheritDoc */
@@ -100,12 +100,12 @@ class TestIntegration implements Integration {
 
 	/** @inheritDoc */
 	public function getUserName(): ?string {
-		return "TestUser";
+		return 'TestUser';
 	}
 
 	/** @inheritDoc */
 	public function getUserGroups(): array {
-		return [ "*" ];
+		return [ '*' ];
 	}
 
 	/** @inheritDoc */
@@ -120,7 +120,7 @@ class TestIntegration implements Integration {
 
 	/** @inheritDoc */
 	public function getUserEditCountBucket(): ?string {
-		return "5-99 edits";
+		return '5-99 edits';
 	}
 
 	/** @inheritDoc */
@@ -130,37 +130,37 @@ class TestIntegration implements Integration {
 
 	/** @inheritDoc */
 	public function getUserLanguage(): string {
-		return "zh";
+		return 'zh';
 	}
 
 	/** @inheritDoc */
 	public function getUserLanguageVariant(): string {
-		return "zh-tw";
+		return 'zh-tw';
 	}
 
 	/** @inheritDoc */
 	public function getMediaWikiSkin(): string {
-		return "timeless";
+		return 'timeless';
 	}
 
 	/** @inheritDoc */
 	public function getMediaWikiVersion(): string {
-		return "1.37.0";
+		return '1.37.0';
 	}
 
 	/** @inheritDoc */
 	public function getMediaWikiDBName(): string {
-		return "zhwiki";
+		return 'zhwiki';
 	}
 
 	/** @inheritDoc */
 	public function getMediaWikiSiteContentLanguage(): string {
-		return "zh";
+		return 'zh';
 	}
 
 	/** @inheritDoc */
 	public function getMediaWikiSiteContentLanguageVariant(): ?string {
-		return "zh-tw";
+		return 'zh-tw';
 	}
 
 	/** @inheritDoc */

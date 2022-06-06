@@ -221,8 +221,8 @@ class MetricsClientTest extends TestCase {
 			'$schema' => '/test/event/1.0.0',
 		];
 
-		// The event will have been decorated with additional metadata and contextual properties.
-		// Do not make an assertion about its shape.
+		// The event will have been decorated with additional metadata and context properties. Do
+		// not make an assertion about its shape.
 		$expectedEvent = $this->anything();
 		$expectedStreamConfig = new StreamConfig( $this->streamConfigs[$stream] );
 

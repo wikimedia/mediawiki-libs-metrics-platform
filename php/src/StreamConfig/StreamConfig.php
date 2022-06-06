@@ -5,8 +5,7 @@ namespace Wikimedia\MetricsPlatform\StreamConfig;
 class StreamConfig {
 
 	/**
-	 * @var string[] The contextual attributes that the Metrics Platform Client can add to an event
-	 * dispatched via the Metrics Platform client.
+	 * @var string[] The context attributes that the Metrics Platform Client can add to an event
 	 */
 	public const CONTEXTUAL_ATTRIBUTES = [
 		'agent_app_install_id',
@@ -58,7 +57,7 @@ class StreamConfig {
 	}
 
 	/**
-	 * Gets the contextual attributes that should be mixed into an event before submission.
+	 * Gets the context attributes that should be mixed into an event before submission.
 	 *
 	 * @see StreamConfig::CONTEXTUAL_ATTRIBUTES
 	 * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/Event_Context_Attributes

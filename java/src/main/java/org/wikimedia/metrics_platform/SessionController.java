@@ -6,7 +6,7 @@ import java.util.UUID;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * Manages sessions and session IDs for the Metrics Platform client.
+ * Manages sessions and session IDs for the Metrics Platform Client.
  *
  * A session begins when the application is launched and expires when the app is in the background
  * for 15 minutes or more.

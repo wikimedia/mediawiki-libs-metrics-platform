@@ -2,7 +2,7 @@
 	"$schema": "http://json-schema.org/schema#",
 	"description": "Metrics Platform Client configuration schema. See https://phabricator.wikimedia.org/T299916 and associated tasks for detail.",
 	"$defs": {
-		"contextual_attribute": {
+		"context_attribute": {
 			"type": "string",
 			"enum": [
 				"agent_app_install_id",
@@ -114,10 +114,10 @@
 			"required": false
 		},
 		"provide_values": {
-			"description": "The contextual attributes that the Metrics Platform Client will include in the events produced to the stream.",
+			"description": "The context attributes that the Metrics Platform Client will include in the events produced to the stream.",
 			"type": "array",
 			"items": {
-				"$ref": "#/$defs/contextual_attribute"
+				"$ref": "#/$defs/context_attribute"
 			},
 			"uniqueItems": true,
 			"required": false

@@ -18,7 +18,7 @@ class ContextController {
 	}
 
 	/**
-	 * Add contextual values configured in the stream configuration.
+	 * Add context attributes configured in the stream configuration.
 	 *
 	 * @param array $event
 	 * @param StreamConfig $streamConfig
@@ -32,8 +32,8 @@ class ContextController {
 
 			$value = $this->getContextualAttributeByName( $requestedValue );
 
-			// Contextual attributes are null by default. Only add the requested contextual
-			// attribute - incurring the cost of transporting it - if it is not null.
+			// Context attributes are null by default. Only add the requested context attribute
+			// - incurring the cost of transporting it - if it is not null.
 			if ( $value === null ) {
 				continue;
 			}

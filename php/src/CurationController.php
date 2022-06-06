@@ -31,7 +31,7 @@ class CurationController {
 	}
 
 	/**
-	 * Apply configured rules to a contextual value.
+	 * Apply configured rules to a context attribute.
 	 *
 	 * @param mixed $value
 	 * @param array $rules
@@ -40,62 +40,62 @@ class CurationController {
 	private function applyRules( $value, array $rules ): bool {
 		foreach ( $rules as $operator => $comparator ) {
 			switch ( $operator ) {
-				case "equals":
+				case 'equals':
 					if ( $value !== $comparator ) {
 						return false;
 					}
 					break;
-				case "not_equals":
+				case 'not_equals':
 					if ( $value === $comparator ) {
 						return false;
 					}
 					break;
-				case "greater_than":
+				case 'greater_than':
 					if ( $value <= $comparator ) {
 						return false;
 					}
 					break;
-				case "less_than":
+				case 'less_than':
 					if ( $value >= $comparator ) {
 						return false;
 					}
 					break;
-				case "greater_than_or_equals":
+				case 'greater_than_or_equals':
 					if ( $value < $comparator ) {
 						return false;
 					}
 					break;
-				case "less_than_or_equals":
+				case 'less_than_or_equals':
 					if ( $value > $comparator ) {
 						return false;
 					}
 					break;
-				case "in":
+				case 'in':
 					if ( !in_array( $value, $comparator ) ) {
 						return false;
 					}
 					break;
-				case "not_in":
+				case 'not_in':
 					if ( in_array( $value, $comparator ) ) {
 						return false;
 					}
 					break;
-				case "contains":
+				case 'contains':
 					if ( !in_array( $comparator, $value ) ) {
 						return false;
 					}
 					break;
-				case "does_not_contain":
+				case 'does_not_contain':
 					if ( in_array( $comparator, $value ) ) {
 						return false;
 					}
 					break;
-				case "contains_all":
+				case 'contains_all':
 					if ( count( array_diff( $comparator, $value ) ) > 0 ) {
 						return false;
 					}
 					break;
-				case "contains_any":
+				case 'contains_any':
 					if ( count( array_intersect( $comparator, $value ) ) === 0 ) {
 						return false;
 					}

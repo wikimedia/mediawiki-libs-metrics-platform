@@ -1,6 +1,6 @@
 {
 	"name": "wikimedia/metrics-platform",
-	"description": "The PHP Metrics Platform client.",
+	"description": "The PHP Metrics Platform Client.",
 	"homepage": "https://wikitech.wikimedia.org/wiki/Metrics_Platform",
 	"license": "GPL-2.0-or-later",
 	"authors": [

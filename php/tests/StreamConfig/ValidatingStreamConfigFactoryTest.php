@@ -149,7 +149,7 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 		yield [
 			'metricsPlatformClientConfig' => [
 				'curation' => [
-					// Valid contextual attribute name with valid operator and invalid operand.
+					// Valid context attribute name with valid operator and invalid operand.
 					'performer_is_logged_in' => [
 						'equals' => [],
 					],
@@ -159,7 +159,7 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 		yield [
 			'metricsPlatformClientConfig' => [
 				'curation' => [
-					// Invalid contextual attribute name with valid operator/operand.
+					// Invalid context attribute name with valid operator/operand.
 					'performer_is_not_logged_in' => [
 						'equals' => true,
 					],
