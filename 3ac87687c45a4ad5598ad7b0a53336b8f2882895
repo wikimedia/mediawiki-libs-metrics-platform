@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bdaa2b1_310b11d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-06-14T06:19:36Z",
+      "side": 1,
+      "message": "Per Nray\u0027s votes above.",
+      "revId": "3ac87687c45a4ad5598ad7b0a53336b8f2882895",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
