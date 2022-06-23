@@ -25,7 +25,7 @@ interface Integration {
 	logWarning: ( message: string ) => void;
 
 	/**
-	 * Clones the object.
+	 * Gets a deep clone of the object.
 	 */
 	clone: ( obj: Object ) => Object;
 
