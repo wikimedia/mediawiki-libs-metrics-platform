@@ -5,4 +5,4 @@ variants:
     copies: [local]
     runs:
       insecurely: true
-    entrypoint: [./mvnw, test]
+    entrypoint: [./mvnw, verify]
