@@ -16,7 +16,7 @@ class MetricsClient {
 	 *
 	 * @var string
 	 */
-	private const METRICS_PLATFORM_SCHEMA = '/analytics/mediawiki/client/metrics_event/1.0.0';
+	private const METRICS_PLATFORM_SCHEMA = '/analytics/mediawiki/client/metrics_event/1.1.0';
 
 	/** @var Integration */
 	private $integration;

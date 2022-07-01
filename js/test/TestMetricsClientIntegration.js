@@ -76,7 +76,7 @@ TestMetricsClientIntegration.prototype.getContextAttributes = function () {
 			version: '1.37.0',
 			is_production: true,
 			is_debug_mode: false,
-			db_name: 'zhwiki',
+			database: 'zhwiki',
 			site_content_language: 'zh',
 			site_content_language_variant: 'zh-tw'
 		},
