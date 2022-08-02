@@ -1,8 +1,8 @@
 package org.wikimedia.metrics_platform.context;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Collection;
+
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Page context data context fields.

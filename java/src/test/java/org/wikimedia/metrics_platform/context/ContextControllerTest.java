@@ -1,15 +1,15 @@
 package org.wikimedia.metrics_platform.context;
 
+import static java.util.Collections.singletonList;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.util.Collections;
+
 import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.Event;
 import org.wikimedia.metrics_platform.StreamConfig;
 import org.wikimedia.metrics_platform.TestMetricsClientIntegration;
-
-import java.util.ArrayList;
-import java.util.Collections;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContextControllerTest {
 
@@ -38,7 +38,7 @@ public class ContextControllerTest {
         assertThat(userData.getId(), is(1));
         assertThat(userData.isLoggedIn(), is(true));
         assertThat(userData.getName(), is("TestUser"));
-        assertThat(userData.getGroups(), is(new ArrayList<String>(){{ add("*"); }}));
+        assertThat(userData.getGroups(), is(singletonList("*")));
         assertThat(userData.getEditCount(), is(10));
         assertThat(userData.getEditCountBucket(), is("5-99 edits"));
         assertThat(userData.getRegistrationTimestamp(), is(1427224089000L));

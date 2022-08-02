@@ -1,13 +1,40 @@
 package org.wikimedia.metrics_platform.context;
 
-import org.wikimedia.metrics_platform.Event;
-import org.wikimedia.metrics_platform.MetricsClientIntegration;
-import org.wikimedia.metrics_platform.StreamConfig;
+import static org.wikimedia.metrics_platform.context.ContextValue.ACCESS_METHOD;
+import static org.wikimedia.metrics_platform.context.ContextValue.DEVICE_HARDWARE_CONCURRENCY;
+import static org.wikimedia.metrics_platform.context.ContextValue.DEVICE_MAX_TOUCH_POINTS;
+import static org.wikimedia.metrics_platform.context.ContextValue.DEVICE_PIXEL_RATIO;
+import static org.wikimedia.metrics_platform.context.ContextValue.IS_PRODUCTION;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_CONTENT_LANGUAGE;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_ID;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_IS_REDIRECT;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_NAMESPACE_ID;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_NAMESPACE_TEXT;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_REVISION_ID;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_TITLE;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_USER_GROUPS_ALLOWED_TO_EDIT;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_USER_GROUPS_ALLOWED_TO_MOVE;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_WIKIDATA_ID;
+import static org.wikimedia.metrics_platform.context.ContextValue.PLATFORM;
+import static org.wikimedia.metrics_platform.context.ContextValue.PLATFORM_FAMILY;
+import static org.wikimedia.metrics_platform.context.ContextValue.USER_CAN_PROBABLY_EDIT_PAGE;
+import static org.wikimedia.metrics_platform.context.ContextValue.USER_EDIT_COUNT;
+import static org.wikimedia.metrics_platform.context.ContextValue.USER_EDIT_COUNT_BUCKET;
+import static org.wikimedia.metrics_platform.context.ContextValue.USER_GROUPS;
+import static org.wikimedia.metrics_platform.context.ContextValue.USER_ID;
+import static org.wikimedia.metrics_platform.context.ContextValue.USER_IS_BOT;
+import static org.wikimedia.metrics_platform.context.ContextValue.USER_IS_LOGGED_IN;
+import static org.wikimedia.metrics_platform.context.ContextValue.USER_LANGUAGE;
+import static org.wikimedia.metrics_platform.context.ContextValue.USER_LANGUAGE_VARIANT;
+import static org.wikimedia.metrics_platform.context.ContextValue.USER_NAME;
+import static org.wikimedia.metrics_platform.context.ContextValue.USER_REGISTRATION_TIMESTAMP;
 
 import java.util.Collection;
 import java.util.Locale;
 
-import static org.wikimedia.metrics_platform.context.ContextValue.*;
+import org.wikimedia.metrics_platform.Event;
+import org.wikimedia.metrics_platform.MetricsClientIntegration;
+import org.wikimedia.metrics_platform.StreamConfig;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -20,6 +47,7 @@ public class ContextController {
     }
 
     @SuppressFBWarnings(value = "CC_CYCLOMATIC_COMPLEXITY", justification = "TODO: needs to be refactored")
+    @SuppressWarnings("checkstyle:CyclomaticComplexity")
     public void addRequestedValues(Event event, StreamConfig streamConfig) {
         if (!streamConfig.hasRequestedContextValuesConfig()) {
             return;

@@ -1,8 +1,8 @@
 package org.wikimedia.metrics_platform.curation.rules;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Collection;
+
+import com.google.gson.annotations.SerializedName;
 
 public class ComparableCurationRules<T extends Comparable<T>> {
     private T equals;
@@ -25,6 +25,7 @@ public class ComparableCurationRules<T extends Comparable<T>> {
         this.notIn = builder.notIn;
     }
 
+    @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity"})
     public boolean apply(T value) {
         if (equals != null && !equals.equals(value)) {
             return false;

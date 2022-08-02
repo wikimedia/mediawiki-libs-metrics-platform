@@ -1,15 +1,16 @@
 package org.wikimedia.metrics_platform;
 
-import com.google.gson.Gson;
-import org.junit.jupiter.api.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.wikimedia.metrics_platform.MetricsClient.DATE_FORMAT;
 
 import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.wikimedia.metrics_platform.MetricsClient.DATE_FORMAT;
+import org.junit.jupiter.api.Test;
+
+import com.google.gson.Gson;
 
 public class EventTest {
 

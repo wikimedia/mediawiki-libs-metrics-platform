@@ -1,8 +1,8 @@
 package org.wikimedia.metrics_platform.curation.rules;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Collection;
+
+import com.google.gson.annotations.SerializedName;
 
 public class CurationRules<T> {
     private T equals;

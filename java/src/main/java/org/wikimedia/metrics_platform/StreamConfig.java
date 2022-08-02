@@ -1,9 +1,10 @@
 package org.wikimedia.metrics_platform;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.Collection;
+
 import org.wikimedia.metrics_platform.curation.CurationFilter;
 
-import java.util.Collection;
+import com.google.gson.annotations.SerializedName;
 
 public class StreamConfig {
 

@@ -1,9 +1,9 @@
 package org.wikimedia.metrics_platform;
 
-import org.junit.jupiter.api.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.jupiter.api.Test;
 
 public class DestinationEventServiceTest {
 

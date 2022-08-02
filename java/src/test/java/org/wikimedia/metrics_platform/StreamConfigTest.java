@@ -1,12 +1,13 @@
 package org.wikimedia.metrics_platform;
 
-import com.google.gson.Gson;
-import org.junit.jupiter.api.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.Arrays;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.jupiter.api.Test;
+
+import com.google.gson.Gson;
 
 public class StreamConfigTest {
 
@@ -41,7 +42,9 @@ public class StreamConfigTest {
         assertThat(streamConfig.getStreamName(), is("test.event"));
         assertThat(streamConfig.getSchemaTitle(), is("test/event"));
         assertThat(streamConfig.getProducerConfig().getMetricsPlatformClientConfig().getSamplingConfig().getRate(), is(0.5));
-        assertThat(streamConfig.getProducerConfig().getMetricsPlatformClientConfig().getSamplingConfig().getIdentifier(), is(SamplingConfig.Identifier.SESSION));
+        assertThat(
+                streamConfig.getProducerConfig().getMetricsPlatformClientConfig().getSamplingConfig().getIdentifier(),
+                is(SamplingConfig.Identifier.SESSION));
         assertThat(streamConfig.getProducerConfig().getMetricsPlatformClientConfig().getRequestedValues(), is(Arrays.asList("page_id", "user_id")));
         assertThat(streamConfig.getDestinationEventService(), is(DestinationEventService.ANALYTICS));
     }

@@ -1,14 +1,21 @@
 package org.wikimedia.metrics_platform;
 
+import static java.util.Collections.singletonList;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.wikimedia.metrics_platform.curation.CurationFilter;
 import org.wikimedia.metrics_platform.curation.rules.CollectionCurationRules;
 import org.wikimedia.metrics_platform.curation.rules.CurationRules;
 
-import java.util.*;
-
 public class TestMetricsClientIntegration implements MetricsClientIntegration {
 
-    public static final Map<String, StreamConfig> STREAM_CONFIGS = new HashMap<String, StreamConfig>(){{
+    public static final Map<String, StreamConfig> STREAM_CONFIGS = new HashMap<String, StreamConfig>() {{
         put("test.event", new StreamConfig(
                 "test.event",
                 "test/event",
@@ -145,9 +152,7 @@ public class TestMetricsClientIntegration implements MetricsClientIntegration {
 
     @Override
     public List<String> getUserGroups() {
-        return new ArrayList<String>(){{
-            add("*");
-        }};
+        return singletonList("*");
     }
 
     @Override

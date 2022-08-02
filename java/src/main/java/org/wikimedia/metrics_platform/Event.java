@@ -1,9 +1,10 @@
 package org.wikimedia.metrics_platform;
 
-import com.google.gson.annotations.SerializedName;
 import org.wikimedia.metrics_platform.context.DeviceData;
 import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.UserData;
+
+import com.google.gson.annotations.SerializedName;
 
 public class Event {
 
@@ -116,7 +117,7 @@ public class Event {
         this.isProduction = production;
     }
 
-    private static class Meta {
+    private static final class Meta {
         private final String stream;
 
         private Meta(String stream) {

@@ -1,12 +1,21 @@
 package org.wikimedia.metrics_platform;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Queue;
+import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.wikimedia.metrics_platform.context.ContextController;
 import org.wikimedia.metrics_platform.curation.CurationController;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 

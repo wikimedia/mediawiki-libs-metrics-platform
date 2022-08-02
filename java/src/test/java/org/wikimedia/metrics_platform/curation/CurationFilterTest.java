@@ -1,6 +1,11 @@
 package org.wikimedia.metrics_platform.curation;
 
-import com.google.gson.Gson;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.util.Arrays;
+import java.util.Collections;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.Event;
@@ -8,11 +13,7 @@ import org.wikimedia.metrics_platform.context.DeviceData;
 import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.UserData;
 
-import java.util.Arrays;
-import java.util.Collections;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import com.google.gson.Gson;
 
 public class CurationFilterTest {
 
