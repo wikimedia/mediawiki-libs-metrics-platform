@@ -16,6 +16,23 @@
       "message": "recheck",
       "revId": "c41584c17dc497aeb3c389c399db5c2f9b1627a8",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90e6ccf1_cb6ea7ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-08-03T17:38:50Z",
+      "side": 1,
+      "message": "Thanks for this. The relaxed version constraints make sense and are in line with other MediaWiki libraries that have the same dependencies.",
+      "revId": "c41584c17dc497aeb3c389c399db5c2f9b1627a8",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
