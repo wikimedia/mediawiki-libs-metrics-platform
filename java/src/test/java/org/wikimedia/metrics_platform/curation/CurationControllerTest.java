@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.Event;
 import org.wikimedia.metrics_platform.StreamConfig;
 import org.wikimedia.metrics_platform.TestMetricsClientIntegration;
-import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.UserData;
 
 public class CurationControllerTest {
@@ -29,44 +28,36 @@ public class CurationControllerTest {
 
     @Test
     public void testEventPassesCurationFilters() {
-        PageData pageData = new PageData();
-        pageData.setTitle("Test");
         UserData userData = new UserData();
         userData.setGroups(Collections.singleton("steward"));
-        event.setPageData(pageData);
+        event.getPageData().setTitle("Test");
         event.setUserData(userData);
         assertThat(curationController.eventPassesCurationRules(event, streamConfig), is(true));
     }
 
     @Test
     public void testEventFailsEqualsRule() {
-        PageData pageData = new PageData();
-        pageData.setTitle("Not Test");
+        event.getPageData().setTitle("Not Test");
         UserData userData = new UserData();
         userData.setGroups(Collections.singleton("steward"));
-        event.setPageData(pageData);
         event.setUserData(userData);
         assertThat(curationController.eventPassesCurationRules(event, streamConfig), is(false));
     }
 
     @Test
     public void testEventFailsCollectionContainsAnyRule() {
-        PageData pageData = new PageData();
-        pageData.setTitle("Test");
         UserData userData = new UserData();
         userData.setGroups(Collections.singleton("*"));
-        event.setPageData(pageData);
+        event.getPageData().setTitle("Test");
         event.setUserData(userData);
         assertThat(curationController.eventPassesCurationRules(event, streamConfig), is(false));
     }
 
     @Test
     public void testEventFailsCollectionDoesNotContainRule() {
-        PageData pageData = new PageData();
-        pageData.setTitle("Test");
         UserData userData = new UserData();
         userData.setGroups(new HashSet<>(Arrays.asList("steward", "sysop")));
-        event.setPageData(pageData);
+        event.getPageData().setTitle("Test");
         event.setUserData(userData);
         assertThat(curationController.eventPassesCurationRules(event, streamConfig), is(false));
     }

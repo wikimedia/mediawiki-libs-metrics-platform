@@ -2,6 +2,10 @@ package org.wikimedia.metrics_platform;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.NonNull;
+import lombok.Value;
+
+@Value
 class SamplingConfig {
 
     enum Identifier {
@@ -9,31 +13,11 @@ class SamplingConfig {
         @SerializedName("device") DEVICE
     }
 
-    private double rate = 1.0;
+    /** Sampling rate. **/
+    private double rate;
+
+    /** ID type to use for sampling. */
+    @NonNull
     private Identifier identifier;
-
-    // This constructor is needed for correct Gson deserialization. Do not remove!
-    SamplingConfig() { }
-
-    /**
-     * Constructor for testing.
-     *
-     * In practice, field values will be set by Gson during deserialization using reflection.
-     *
-     * @param rate sampling rate
-     * @param identifier ID type to use for sampling
-     */
-    SamplingConfig(double rate, Identifier identifier) {
-        this.rate = rate;
-        this.identifier = identifier;
-    }
-
-    double getRate() {
-        return rate;
-    }
-
-    Identifier getIdentifier() {
-        return identifier != null ? identifier : Identifier.SESSION;
-    }
 
 }
