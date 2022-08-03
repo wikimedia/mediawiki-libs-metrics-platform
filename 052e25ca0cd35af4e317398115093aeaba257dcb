@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0adb4493_4cc13ed2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-08-03T12:55:43Z",
+      "side": 1,
+      "message": "Thank you so much for this \u003c3. I\u0027ll read over this soon.",
+      "revId": "052e25ca0cd35af4e317398115093aeaba257dcb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
