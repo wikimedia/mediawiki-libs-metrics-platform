@@ -1,5 +1,8 @@
 package org.wikimedia.metrics_platform.context;
 
+import javax.annotation.concurrent.ThreadSafe;
+
+@ThreadSafe
 public final class ContextValue {
     public static final String PAGE_ID = "page_id";
     public static final String PAGE_NAMESPACE_ID = "page_namespace_id";

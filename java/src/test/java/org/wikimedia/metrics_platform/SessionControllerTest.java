@@ -1,10 +1,11 @@
 package org.wikimedia.metrics_platform;
 
+import static java.time.temporal.ChronoUnit.HOURS;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.Date;
+import java.time.Instant;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,14 +21,14 @@ public class SessionControllerTest {
 
     @Test
     public void testSessionExpiry() {
-        Date oneHourAgo = new Date((new Date()).getTime() - 3600000);
+        Instant oneHourAgo = Instant.now().minus(1, HOURS);
         SessionController sessionController = new SessionController(oneHourAgo);
         assertThat(sessionController.sessionExpired(), is(true));
     }
 
     @Test
     public void testTouchSession() {
-        Date oneHourAgo = new Date((new Date()).getTime() - 3600000);
+        Instant oneHourAgo = Instant.now().minus(1, HOURS);
         SessionController sessionController = new SessionController(oneHourAgo);
         sessionController.touchSession();
         assertThat(sessionController.sessionExpired(), is(false));

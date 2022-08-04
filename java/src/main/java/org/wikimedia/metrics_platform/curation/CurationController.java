@@ -1,8 +1,11 @@
 package org.wikimedia.metrics_platform.curation;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 import org.wikimedia.metrics_platform.Event;
 import org.wikimedia.metrics_platform.StreamConfig;
 
+@ThreadSafe
 public class CurationController {
 
     public boolean eventPassesCurationRules(Event event, StreamConfig streamConfig) {

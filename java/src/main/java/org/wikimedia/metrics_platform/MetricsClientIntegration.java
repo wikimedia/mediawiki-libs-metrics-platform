@@ -3,6 +3,9 @@ package org.wikimedia.metrics_platform;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.annotation.concurrent.ThreadSafe;
+
+@ThreadSafe
 public interface MetricsClientIntegration {
     Integer getPageId();
     Integer getPageNamespaceId();
@@ -39,11 +42,13 @@ public interface MetricsClientIntegration {
 
     void sendEvents(String baseUri, Collection<Event> events, SendEventsCallback callback);
 
+    @ThreadSafe
     interface FetchStreamConfigsCallback {
         void onSuccess(Map<String, StreamConfig> streamConfigs);
         void onFailure();
     }
 
+    @ThreadSafe
     interface SendEventsCallback {
         void onSuccess();
         void onFailure();
