@@ -1,5 +1,7 @@
 package org.wikimedia.metrics_platform;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
@@ -10,6 +12,7 @@ import javax.annotation.concurrent.ThreadSafe;
  * part of its configuration.
  */
 @ThreadSafe
+@ParametersAreNonnullByDefault
 class SamplingController {
 
     private final MetricsClientIntegration integration;
@@ -54,6 +57,7 @@ class SamplingController {
      * @param identifier Identifier enum value
      * @return the requested ID string
      */
+    @Nonnull
     String getSamplingId(SamplingConfig.Identifier identifier) {
         if (identifier == SamplingConfig.Identifier.SESSION) {
             return sessionController.getSessionId();

@@ -2,6 +2,8 @@ package org.wikimedia.metrics_platform.context;
 
 import java.util.Collection;
 
+import javax.annotation.ParametersAreNullableByDefault;
+
 import com.google.gson.annotations.SerializedName;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +18,7 @@ import lombok.NoArgsConstructor;
  * unexpected default values from being used where the true value is null.
  */
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
+@ParametersAreNullableByDefault
 public class PageData {
     private Integer id;
     @SerializedName("namespace_id") private Integer namespaceId;

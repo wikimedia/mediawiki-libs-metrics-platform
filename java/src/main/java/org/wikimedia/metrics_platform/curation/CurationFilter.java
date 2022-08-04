@@ -1,5 +1,8 @@
 package org.wikimedia.metrics_platform.curation;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNullableByDefault;
+
 import org.wikimedia.metrics_platform.Event;
 import org.wikimedia.metrics_platform.curation.rules.CollectionCurationRules;
 import org.wikimedia.metrics_platform.curation.rules.ComparableCurationRules;
@@ -14,6 +17,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Builder @AllArgsConstructor @EqualsAndHashCode @ToString
+@ParametersAreNullableByDefault
 public class CurationFilter {
     @SerializedName("page_id") private ComparableCurationRules<Integer> pageIdRules;
     @SerializedName("page_namespace_id") private ComparableCurationRules<Integer> pageNamespaceIdRules;
@@ -52,7 +56,7 @@ public class CurationFilter {
 
     @SuppressFBWarnings(value = "CC_CYCLOMATIC_COMPLEXITY", justification = "TODO: needs to be refactored!")
     @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity"})
-    public boolean apply(Event event) {
+    public boolean apply(@Nonnull Event event) {
         // Page
 
         if (pageIdRules != null) {

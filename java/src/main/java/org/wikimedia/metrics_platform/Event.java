@@ -1,5 +1,7 @@
 package org.wikimedia.metrics_platform;
 
+import javax.annotation.ParametersAreNullableByDefault;
+
 import org.wikimedia.metrics_platform.context.DeviceData;
 import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.UserData;
@@ -10,6 +12,7 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Data
+@ParametersAreNullableByDefault
 public class Event {
 
     @SerializedName("$schema") private final String schema;

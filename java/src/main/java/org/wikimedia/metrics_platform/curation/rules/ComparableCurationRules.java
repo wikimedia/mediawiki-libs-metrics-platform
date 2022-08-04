@@ -2,6 +2,9 @@ package org.wikimedia.metrics_platform.curation.rules;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNullableByDefault;
+
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Builder;
@@ -9,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Builder @EqualsAndHashCode @ToString
+@ParametersAreNullableByDefault
 public class ComparableCurationRules<T extends Comparable<T>> {
     private T equals;
     @SerializedName("not_equals") private T notEquals;
@@ -20,7 +24,7 @@ public class ComparableCurationRules<T extends Comparable<T>> {
     @SerializedName("not_in") private Collection<T> notIn;
 
     @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity"})
-    public boolean apply(T value) {
+    public boolean apply(@Nonnull T value) {
         if (equals != null && !equals.equals(value)) {
             return false;
         }

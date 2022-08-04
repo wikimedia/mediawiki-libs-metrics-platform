@@ -2,6 +2,7 @@ package org.wikimedia.metrics_platform;
 
 import java.util.Collection;
 
+import javax.annotation.ParametersAreNullableByDefault;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.wikimedia.metrics_platform.curation.CurationFilter;
@@ -11,6 +12,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Value;
 
 @Value @ThreadSafe
+@ParametersAreNullableByDefault
 public class StreamConfig {
 
     @SerializedName("stream") private String streamName;

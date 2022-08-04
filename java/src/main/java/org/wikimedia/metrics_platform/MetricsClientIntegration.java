@@ -3,9 +3,11 @@ package org.wikimedia.metrics_platform;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.ThreadSafe;
 
 @ThreadSafe
+@ParametersAreNonnullByDefault
 public interface MetricsClientIntegration {
     Integer getPageId();
     Integer getPageNamespaceId();

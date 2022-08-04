@@ -2,6 +2,9 @@ package org.wikimedia.metrics_platform.curation.rules;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNullableByDefault;
+
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Builder;
@@ -9,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Builder @EqualsAndHashCode @ToString
+@ParametersAreNullableByDefault
 public class CollectionCurationRules<T> {
     private T contains;
     @SerializedName("does_not_contain") private T doesNotContain;
@@ -16,7 +20,7 @@ public class CollectionCurationRules<T> {
     @SerializedName("contains_any") private Collection<T> containsAny;
 
     @SuppressWarnings("checkstyle:CyclomaticComplexity")
-    public boolean apply(Collection<T> value) {
+    public boolean apply(@Nonnull Collection<T> value) {
         if (contains != null && !value.contains(contains)) {
             return false;
         }

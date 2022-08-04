@@ -6,6 +6,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -18,12 +20,15 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * for 15 minutes or more.
  */
 @ThreadSafe
+@ParametersAreNonnullByDefault
 class SessionController {
 
     private static final Duration SESSION_TIMEOUT = Duration.of(15, MINUTES); // 15 minutes
     @GuardedBy("this")
+    @Nonnull
     private String sessionId = generateSessionId();
     @GuardedBy("this")
+    @Nonnull
     private Instant sessionTouched;
 
     SessionController() {
@@ -39,6 +44,7 @@ class SessionController {
         this.sessionTouched = date;
     }
 
+    @Nonnull
     synchronized String getSessionId() {
         return sessionId;
     }
@@ -57,6 +63,7 @@ class SessionController {
         touchSession();
     }
 
+    @Nonnull
     private static String generateSessionId() {
         return UUID.randomUUID().toString();
     }
