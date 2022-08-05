@@ -1,6 +1,6 @@
 package org.wikimedia.metrics_platform.context;
 
-public class ContextValue {
+public final class ContextValue {
     public static final String PAGE_ID = "page_id";
     public static final String PAGE_NAMESPACE_ID = "page_namespace_id";
     public static final String PAGE_NAMESPACE_TEXT = "page_namespace_text";
@@ -32,4 +32,8 @@ public class ContextValue {
     public static final String PLATFORM = "platform";
     public static final String PLATFORM_FAMILY = "platform_family";
     public static final String IS_PRODUCTION = "is_production";
+
+    private ContextValue() {
+        // utility class should never be constructed
+    }
 }

@@ -75,17 +75,6 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <configuration>
-                    <!--
-                        Not failing on violations. Needs to be re-enabled once that violations are fixed
-                    -->
-                    <failOnViolation>false</failOnViolation>
-                    <failsOnError>false</failsOnError>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <executions>
                     <execution>

@@ -1,5 +1,12 @@
 package org.wikimedia.metrics_platform.curation;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.Event;
@@ -7,13 +14,6 @@ import org.wikimedia.metrics_platform.StreamConfig;
 import org.wikimedia.metrics_platform.TestMetricsClientIntegration;
 import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.UserData;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CurationControllerTest {
 

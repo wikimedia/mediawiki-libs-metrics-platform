@@ -1,7 +1,5 @@
 package org.wikimedia.metrics_platform;
 
-import org.junit.jupiter.api.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -9,6 +7,8 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.wikimedia.metrics_platform.SamplingConfig.Identifier.DEVICE;
 import static org.wikimedia.metrics_platform.SamplingConfig.Identifier.SESSION;
+
+import org.junit.jupiter.api.Test;
 
 public class SamplingControllerTest {
 

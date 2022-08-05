@@ -1,12 +1,12 @@
 package org.wikimedia.metrics_platform;
 
-import org.junit.jupiter.api.Test;
-
-import java.util.Date;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.util.Date;
+
+import org.junit.jupiter.api.Test;
 
 public class SessionControllerTest {
 

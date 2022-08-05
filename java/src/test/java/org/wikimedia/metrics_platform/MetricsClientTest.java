@@ -1,20 +1,27 @@
 package org.wikimedia.metrics_platform;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.wikimedia.metrics_platform.context.ContextController;
-import org.wikimedia.metrics_platform.curation.CurationController;
-
-import java.util.*;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyCollection;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Queue;
+import java.util.TimerTask;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.wikimedia.metrics_platform.context.ContextController;
+import org.wikimedia.metrics_platform.curation.CurationController;
 
 public class MetricsClientTest {
 
@@ -130,7 +137,10 @@ public class MetricsClientTest {
     @Test
     public void testFetchStreamConfigsTaskFetchesStreamConfigs() {
         client.new FetchStreamConfigsTask().run();
-        verify(mockIntegration, times(1)).fetchStreamConfigs(any(MetricsClientIntegration.FetchStreamConfigsCallback.class));
+        // FIXME: Since configuration loading can happen either from a Timer (MetricsClient:348) or
+        //  from the explicit call above, the fetchStreamConfigs() method can be called either once
+        //  or twice. Fixing this properly will require some refactoring of the MetricsClient class.
+        verify(mockIntegration).fetchStreamConfigs(any(MetricsClientIntegration.FetchStreamConfigsCallback.class));
     }
 
     @Test
@@ -217,7 +227,8 @@ public class MetricsClientTest {
      */
     private Map<String, StreamConfig> setStreamConfigs() {
         StreamConfig streamConfig = new StreamConfig("test_event", "test/event", null, null);
-        Map<String, StreamConfig> streamConfigs = new HashMap<String, StreamConfig>(){{  put("test_event", streamConfig); }};
+        Map<String, StreamConfig> streamConfigs = new HashMap<>();
+        streamConfigs.put("test_event", streamConfig);
         client.setStreamConfigs(streamConfigs);
         return streamConfigs;
     }

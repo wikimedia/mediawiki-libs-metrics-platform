@@ -1,12 +1,13 @@
 package org.wikimedia.metrics_platform.context;
 
-import com.google.gson.Gson;
-import org.junit.jupiter.api.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.Collections;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.jupiter.api.Test;
+
+import com.google.gson.Gson;
 
 public class PageDataTest {
 

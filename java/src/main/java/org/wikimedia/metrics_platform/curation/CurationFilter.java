@@ -1,10 +1,11 @@
 package org.wikimedia.metrics_platform.curation;
 
-import com.google.gson.annotations.SerializedName;
 import org.wikimedia.metrics_platform.Event;
 import org.wikimedia.metrics_platform.curation.rules.CollectionCurationRules;
 import org.wikimedia.metrics_platform.curation.rules.ComparableCurationRules;
 import org.wikimedia.metrics_platform.curation.rules.CurationRules;
+
+import com.google.gson.annotations.SerializedName;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -191,6 +192,7 @@ public class CurationFilter {
     }
 
     @SuppressFBWarnings(value = "CC_CYCLOMATIC_COMPLEXITY", justification = "TODO: needs to be refactored!")
+    @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity"})
     public boolean apply(Event event) {
         // Page
 

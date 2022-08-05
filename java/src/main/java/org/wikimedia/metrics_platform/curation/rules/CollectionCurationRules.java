@@ -1,8 +1,8 @@
 package org.wikimedia.metrics_platform.curation.rules;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Collection;
+
+import com.google.gson.annotations.SerializedName;
 
 public class CollectionCurationRules<T> {
     private T contains;
@@ -17,6 +17,7 @@ public class CollectionCurationRules<T> {
         this.containsAny = builder.containsAny;
     }
 
+    @SuppressWarnings("checkstyle:CyclomaticComplexity")
     public boolean apply(Collection<T> value) {
         if (contains != null && !value.contains(contains)) {
             return false;

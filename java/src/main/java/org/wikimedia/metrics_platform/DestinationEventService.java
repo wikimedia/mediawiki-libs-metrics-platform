@@ -10,13 +10,11 @@ import com.google.gson.annotations.SerializedName;
  */
 enum DestinationEventService {
 
-    @SerializedName("eventgate-analytics-external") ANALYTICS (
-            "https://intake-analytics.wikimedia.org"
-            ),
+    @SerializedName("eventgate-analytics-external")
+    ANALYTICS("https://intake-analytics.wikimedia.org"),
 
-    @SerializedName("eventgate-logging-external") ERROR_LOGGING (
-            "https://intake-logging.wikimedia.org"
-            );
+    @SerializedName("eventgate-logging-external")
+    ERROR_LOGGING("https://intake-logging.wikimedia.org");
 
     private final String baseUri;
 
