@@ -16,6 +16,23 @@
       "message": "Recheck",
       "revId": "843a7fdc216ffe4a0293616d9a47df103c5557d3",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65c22df0_87828eea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-08-05T15:13:05Z",
+      "side": 1,
+      "message": "^ The flaky test was fixed in the parent commit.",
+      "revId": "843a7fdc216ffe4a0293616d9a47df103c5557d3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
