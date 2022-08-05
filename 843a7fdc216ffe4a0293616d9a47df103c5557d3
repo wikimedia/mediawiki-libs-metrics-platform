@@ -73,6 +73,30 @@
       },
       "revId": "843a7fdc216ffe4a0293616d9a47df103c5557d3",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a765c1d_c54e60c1",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/DeviceData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-08-05T15:30:40Z",
+      "side": 1,
+      "message": "Good catch!",
+      "parentUuid": "c53ccd84_0da81181",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 51
+      },
+      "revId": "843a7fdc216ffe4a0293616d9a47df103c5557d3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
