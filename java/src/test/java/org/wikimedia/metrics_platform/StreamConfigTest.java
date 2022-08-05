@@ -13,12 +13,12 @@ public class StreamConfigTest {
 
     @Test
     public void testStreamConfig() {
-        SamplingConfig samplingConfig = new SamplingConfig();
+        SamplingConfig samplingConfig = new SamplingConfig(1.0f, SamplingConfig.Identifier.SESSION);
         StreamConfig streamConfig = new StreamConfig(
                 "test.event",
                 "test/event",
                 DestinationEventService.ANALYTICS,
-                new StreamConfig.ProducerConfig(new StreamConfig.ProducerConfig.MetricsPlatformClientConfig(
+                new StreamConfig.ProducerConfig(new StreamConfig.MetricsPlatformClientConfig(
                         samplingConfig,
                         null,
                         null

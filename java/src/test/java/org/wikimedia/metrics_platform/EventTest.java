@@ -45,14 +45,25 @@ public class EventTest {
         assertThat(event.getAccessMethod(), is("mobile app"));
         assertThat(event.getPlatform(), is("android"));
         assertThat(event.getPlatformFamily(), is("app"));
-        assertThat(event.isProduction(), is(true));
+        assertThat(event.getIsProduction(), is(true));
 
         Gson gson = new Gson();
         String json = gson.toJson(event);
-        assertThat(json, is(String.format(Locale.ROOT, "{\"$schema\":\"test/event/1.0.0\",\"meta\":{\"stream\":\"test.event\"}," +
-                "\"dt\":\"2021-08-27T12:00:00Z\",\"app_install_id\":\"%s\",\"app_session_id\":\"%s\"," +
-                "\"access_method\":\"mobile app\",\"platform\":\"android\",\"platform_family\":\"app\"," +
-                "\"is_production\":true}", uuid, uuid)));
+        assertThat(json, is(String.format(Locale.ROOT,
+                "{" +
+                            "\"$schema\":\"test/event/1.0.0\"," +
+                            "\"meta\":{\"stream\":\"test.event\"}," +
+                            "\"dt\":\"2021-08-27T12:00:00Z\"," +
+                            "\"app_install_id\":\"%s\"," +
+                            "\"app_session_id\":\"%s\"," +
+                            "\"page\":{}," +
+                            "\"user\":{}," +
+                            "\"device\":{}," +
+                            "\"access_method\":\"mobile app\"" +
+                            ",\"platform\":\"android\"," +
+                            "\"platform_family\":\"app\"," +
+                            "\"is_production\":true" +
+                        "}", uuid, uuid)));
     }
 
 }

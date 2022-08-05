@@ -11,7 +11,7 @@ public class DeviceDataTest {
 
     @Test
     public void testDeviceData() {
-        DeviceData deviceData = new DeviceData.Builder()
+        DeviceData deviceData = DeviceData.builder()
                 .pixelRatio(1.0f)
                 .hardwareConcurrency(1)
                 .maxTouchPoints(1)

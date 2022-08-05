@@ -10,7 +10,7 @@ public class CurationController {
         if (producerConfig == null) {
             return true;
         }
-        StreamConfig.ProducerConfig.MetricsPlatformClientConfig metricsPlatformClientConfig =
+        StreamConfig.MetricsPlatformClientConfig metricsPlatformClientConfig =
                 producerConfig.getMetricsPlatformClientConfig();
         if (metricsPlatformClientConfig == null) {
             return true;

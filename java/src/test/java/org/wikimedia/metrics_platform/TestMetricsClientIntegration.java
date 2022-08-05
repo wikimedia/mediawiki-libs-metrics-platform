@@ -21,7 +21,7 @@ public class TestMetricsClientIntegration implements MetricsClientIntegration {
                 "test/event",
                 DestinationEventService.ANALYTICS,
                 new StreamConfig.ProducerConfig(
-                        new StreamConfig.ProducerConfig.MetricsPlatformClientConfig(
+                        new StreamConfig.MetricsPlatformClientConfig(
                             null,
                             Arrays.asList(
                                 "page_id",
@@ -52,10 +52,10 @@ public class TestMetricsClientIntegration implements MetricsClientIntegration {
                                 "platform",
                                 "platform_family",
                                 "is_production"
-                            ), new CurationFilter.Builder()
-                                .pageTitleRules(new CurationRules.Builder<String>().setEquals("Test").build())
+                            ), CurationFilter.builder()
+                                .pageTitleRules(CurationRules.<String>builder().isEquals("Test").build())
                                 .userGroupsRules(
-                                        new CollectionCurationRules.Builder<String>()
+                                        CollectionCurationRules.<String>builder()
                                                 .doesNotContain("sysop")
                                                 .containsAny(Arrays.asList("steward", "bureaucrat"))
                                                 .build()

@@ -13,7 +13,7 @@ public class UserDataTest {
 
     @Test
     public void testUserData() {
-        UserData userData = new UserData.Builder()
+        UserData userData = UserData.builder()
                 .id(1)
                 .name("TestUser")
                 .groups(Collections.singletonList("*"))
@@ -30,9 +30,9 @@ public class UserDataTest {
         assertThat(userData.getId(), is(1));
         assertThat(userData.getName(), is("TestUser"));
         assertThat(userData.getGroups(), is(Collections.singletonList("*")));
-        assertThat(userData.isLoggedIn(), is(true));
-        assertThat(userData.isBot(), is(false));
-        assertThat(userData.canProbablyEditPage(), is(true));
+        assertThat(userData.getIsLoggedIn(), is(true));
+        assertThat(userData.getIsBot(), is(false));
+        assertThat(userData.getCanProbablyEditPage(), is(true));
         assertThat(userData.getEditCount(), is(10));
         assertThat(userData.getEditCountBucket(), is("5-99 edits"));
         assertThat(userData.getRegistrationTimestamp(), is(1427224089000L));

@@ -12,7 +12,7 @@ public class CollectionCurationRulesTest {
 
     @Test
     public void testIntegerCollectionContains() {
-        CollectionCurationRules<Integer> rules = new CollectionCurationRules.Builder<Integer>()
+        CollectionCurationRules<Integer> rules = CollectionCurationRules.<Integer>builder()
                 .contains(1)
                 .build();
         assertThat(rules.apply(Arrays.asList(1, 2, 3)), is(true));
@@ -22,7 +22,7 @@ public class CollectionCurationRulesTest {
 
     @Test
     public void testFloatCollectionContains() {
-        CollectionCurationRules<Float> rules = new CollectionCurationRules.Builder<Float>()
+        CollectionCurationRules<Float> rules = CollectionCurationRules.<Float>builder()
                 .contains(1.0f)
                 .build();
         assertThat(rules.apply(Arrays.asList(1.0f, 2.0f, 3.0f)), is(true));
@@ -32,7 +32,7 @@ public class CollectionCurationRulesTest {
 
     @Test
     public void testStringCollectionContains() {
-        CollectionCurationRules<String> rules = new CollectionCurationRules.Builder<String>()
+        CollectionCurationRules<String> rules = CollectionCurationRules.<String>builder()
                 .contains("a")
                 .build();
         assertThat(rules.apply(Arrays.asList("a", "b", "c")), is(true));
@@ -42,7 +42,7 @@ public class CollectionCurationRulesTest {
 
     @Test
     public void testIntegerCollectionDoesNotContain() {
-        CollectionCurationRules<Integer> rules = new CollectionCurationRules.Builder<Integer>()
+        CollectionCurationRules<Integer> rules = CollectionCurationRules.<Integer>builder()
                 .doesNotContain(1)
                 .build();
         assertThat(rules.apply(Arrays.asList(1, 2, 3)), is(false));
@@ -52,7 +52,7 @@ public class CollectionCurationRulesTest {
 
     @Test
     public void testFloatCollectionDoesNotContain() {
-        CollectionCurationRules<Float> rules = new CollectionCurationRules.Builder<Float>()
+        CollectionCurationRules<Float> rules = CollectionCurationRules.<Float>builder()
                 .doesNotContain(1.0f)
                 .build();
         assertThat(rules.apply(Arrays.asList(1.0f, 2.0f, 3.0f)), is(false));
@@ -62,7 +62,7 @@ public class CollectionCurationRulesTest {
 
     @Test
     public void testStringCollectionDoesNotContain() {
-        CollectionCurationRules<String> rules = new CollectionCurationRules.Builder<String>()
+        CollectionCurationRules<String> rules = CollectionCurationRules.<String>builder()
                 .doesNotContain("a")
                 .build();
         assertThat(rules.apply(Arrays.asList("a", "b", "c")), is(false));
@@ -72,7 +72,7 @@ public class CollectionCurationRulesTest {
 
     @Test
     public void testIntegerCollectionContainsAll() {
-        CollectionCurationRules<Integer> rules = new CollectionCurationRules.Builder<Integer>()
+        CollectionCurationRules<Integer> rules = CollectionCurationRules.<Integer>builder()
                 .containsAll(Arrays.asList(1, 2, 3))
                 .build();
         assertThat(rules.apply(Arrays.asList(1, 2, 3)), is(true));
@@ -83,7 +83,7 @@ public class CollectionCurationRulesTest {
 
     @Test
     public void testFloatCollectionContainsAll() {
-        CollectionCurationRules<Float> rules = new CollectionCurationRules.Builder<Float>()
+        CollectionCurationRules<Float> rules = CollectionCurationRules.<Float>builder()
                 .containsAll(Arrays.asList(1.0f, 2.0f, 3.0f))
                 .build();
         assertThat(rules.apply(Arrays.asList(1.0f, 2.0f, 3.0f)), is(true));
@@ -94,7 +94,7 @@ public class CollectionCurationRulesTest {
 
     @Test
     public void testStringCollectionContainsAll() {
-        CollectionCurationRules<String> rules = new CollectionCurationRules.Builder<String>()
+        CollectionCurationRules<String> rules = CollectionCurationRules.<String>builder()
                 .containsAll(Arrays.asList("a", "b", "c"))
                 .build();
         assertThat(rules.apply(Arrays.asList("a", "b", "c")), is(true));
@@ -105,7 +105,7 @@ public class CollectionCurationRulesTest {
 
     @Test
     public void testIntegerCollectionContainsAny() {
-        CollectionCurationRules<Integer> rules = new CollectionCurationRules.Builder<Integer>()
+        CollectionCurationRules<Integer> rules = CollectionCurationRules.<Integer>builder()
                 .containsAny(Arrays.asList(1, 2, 3))
                 .build();
         assertThat(rules.apply(Arrays.asList(1, 2, 3)), is(true));
@@ -116,7 +116,7 @@ public class CollectionCurationRulesTest {
 
     @Test
     public void testFloatCollectionContainsAny() {
-        CollectionCurationRules<Float> rules = new CollectionCurationRules.Builder<Float>()
+        CollectionCurationRules<Float> rules = CollectionCurationRules.<Float>builder()
                 .containsAny(Arrays.asList(1.0f, 2.0f, 3.0f))
                 .build();
         assertThat(rules.apply(Arrays.asList(1.0f, 2.0f, 3.0f)), is(true));
@@ -127,7 +127,7 @@ public class CollectionCurationRulesTest {
 
     @Test
     public void testStringCollectionContainsAny() {
-        CollectionCurationRules<String> rules = new CollectionCurationRules.Builder<String>()
+        CollectionCurationRules<String> rules = CollectionCurationRules.<String>builder()
                 .containsAny(Arrays.asList("a", "b", "c"))
                 .build();
         assertThat(rules.apply(Arrays.asList("a", "b", "c")), is(true));

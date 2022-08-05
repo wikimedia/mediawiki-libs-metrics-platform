@@ -11,7 +11,7 @@ public class CurationRulesTest {
 
     @Test
     public void testIntegerEquals() {
-        CurationRules<Integer> rules = new CurationRules.Builder<Integer>().setEquals(1).build();
+        CurationRules<Integer> rules = CurationRules.<Integer>builder().isEquals(1).build();
         assertThat(rules.apply(1), is(true));
         assertThat(rules.apply(0), is(false));
         assertThat(rules.apply(-1), is(false));
@@ -20,7 +20,7 @@ public class CurationRulesTest {
 
     @Test
     public void testFloatEquals() {
-        CurationRules<Float> rules = new CurationRules.Builder<Float>().setEquals(1.0f).build();
+        CurationRules<Float> rules = CurationRules.<Float>builder().isEquals(1.0f).build();
         assertThat(rules.apply(1.0f), is(true));
         assertThat(rules.apply(0.0f), is(false));
         assertThat(rules.apply(-1.0f), is(false));
@@ -29,7 +29,7 @@ public class CurationRulesTest {
 
     @Test
     public void testStringEquals() {
-        CurationRules<String> rules = new CurationRules.Builder<String>().setEquals("foo").build();
+        CurationRules<String> rules = CurationRules.<String>builder().isEquals("foo").build();
         assertThat(rules.apply("foo"), is(true));
         assertThat(rules.apply("bar"), is(false));
         assertThat(rules.apply(""), is(false));
@@ -38,7 +38,7 @@ public class CurationRulesTest {
 
     @Test
     public void testBooleanEquals() {
-        CurationRules<Boolean> rules = new CurationRules.Builder<Boolean>().setEquals(true).build();
+        CurationRules<Boolean> rules = CurationRules.<Boolean>builder().isEquals(true).build();
         assertThat(rules.apply(true), is(true));
         assertThat(rules.apply(false), is(false));
         assertThat(rules.apply(null), is(false));
@@ -46,7 +46,7 @@ public class CurationRulesTest {
 
     @Test
     public void testIntegerNotEquals() {
-        CurationRules<Integer> rules = new CurationRules.Builder<Integer>().setNotEquals(1).build();
+        CurationRules<Integer> rules = CurationRules.<Integer>builder().notEquals(1).build();
         assertThat(rules.apply(1), is(false));
         assertThat(rules.apply(0), is(true));
         assertThat(rules.apply(-1), is(true));
@@ -55,7 +55,7 @@ public class CurationRulesTest {
 
     @Test
     public void testFloatNotEquals() {
-        CurationRules<Float> rules = new CurationRules.Builder<Float>().setNotEquals(1.0f).build();
+        CurationRules<Float> rules = CurationRules.<Float>builder().notEquals(1.0f).build();
         assertThat(rules.apply(1.0f), is(false));
         assertThat(rules.apply(0.0f), is(true));
         assertThat(rules.apply(-1.0f), is(true));
@@ -64,7 +64,7 @@ public class CurationRulesTest {
 
     @Test
     public void testStringNotEquals() {
-        CurationRules<String> rules = new CurationRules.Builder<String>().setNotEquals("foo").build();
+        CurationRules<String> rules = CurationRules.<String>builder().notEquals("foo").build();
         assertThat(rules.apply("foo"), is(false));
         assertThat(rules.apply("bar"), is(true));
         assertThat(rules.apply(""), is(true));
@@ -73,7 +73,7 @@ public class CurationRulesTest {
 
     @Test
     public void testBooleanNotEquals() {
-        CurationRules<Boolean> rules = new CurationRules.Builder<Boolean>().setNotEquals(true).build();
+        CurationRules<Boolean> rules = CurationRules.<Boolean>builder().notEquals(true).build();
         assertThat(rules.apply(true), is(false));
         assertThat(rules.apply(false), is(true));
         assertThat(rules.apply(null), is(true));
@@ -81,7 +81,7 @@ public class CurationRulesTest {
 
     @Test
     public void testIntegerInCollection() {
-        CurationRules<Integer> rules = new CurationRules.Builder<Integer>().setIn(Arrays.asList(1, 2, 3)).build();
+        CurationRules<Integer> rules = CurationRules.<Integer>builder().in(Arrays.asList(1, 2, 3)).build();
         assertThat(rules.apply(1), is(true));
         assertThat(rules.apply(4), is(false));
         assertThat(rules.apply(-1), is(false));
@@ -90,7 +90,7 @@ public class CurationRulesTest {
 
     @Test
     public void testFloatInCollection() {
-        CurationRules<Float> rules = new CurationRules.Builder<Float>().setIn(Arrays.asList(1.0f, 2.0f, 3.0f)).build();
+        CurationRules<Float> rules = CurationRules.<Float>builder().in(Arrays.asList(1.0f, 2.0f, 3.0f)).build();
         assertThat(rules.apply(1.0f), is(true));
         assertThat(rules.apply(4.0f), is(false));
         assertThat(rules.apply(-1.0f), is(false));
@@ -99,7 +99,7 @@ public class CurationRulesTest {
 
     @Test
     public void testStringInCollection() {
-        CurationRules<String> rules = new CurationRules.Builder<String>().setIn(Arrays.asList("a", "b", "c")).build();
+        CurationRules<String> rules = CurationRules.<String>builder().in(Arrays.asList("a", "b", "c")).build();
         assertThat(rules.apply("a"), is(true));
         assertThat(rules.apply("d"), is(false));
         assertThat(rules.apply(""), is(false));
@@ -108,7 +108,7 @@ public class CurationRulesTest {
 
     @Test
     public void testIntegerNotInCollection() {
-        CurationRules<Integer> rules = new CurationRules.Builder<Integer>().setNotIn(Arrays.asList(1, 2, 3)).build();
+        CurationRules<Integer> rules = CurationRules.<Integer>builder().notIn(Arrays.asList(1, 2, 3)).build();
         assertThat(rules.apply(1), is(false));
         assertThat(rules.apply(4), is(true));
         assertThat(rules.apply(-1), is(true));
@@ -117,8 +117,8 @@ public class CurationRulesTest {
 
     @Test
     public void testFloaNotInCollection() {
-        CurationRules<Float> rules = new CurationRules.Builder<Float>()
-                .setNotIn(Arrays.asList(1.0f, 2.0f, 3.0f))
+        CurationRules<Float> rules = CurationRules.<Float>builder()
+                .notIn(Arrays.asList(1.0f, 2.0f, 3.0f))
                 .build();
         assertThat(rules.apply(1.0f), is(false));
         assertThat(rules.apply(4.0f), is(true));
@@ -128,8 +128,8 @@ public class CurationRulesTest {
 
     @Test
     public void testStringNotInCollection() {
-        CurationRules<String> rules = new CurationRules.Builder<String>()
-                .setNotIn(Arrays.asList("a", "b", "c"))
+        CurationRules<String> rules = CurationRules.<String>builder()
+                .notIn(Arrays.asList("a", "b", "c"))
                 .build();
         assertThat(rules.apply("a"), is(false));
         assertThat(rules.apply("d"), is(true));

@@ -28,7 +28,7 @@ public class ContextControllerTest {
         assertThat(pageData.getNamespaceId(), is(0));
         assertThat(pageData.getNamespaceText(), is(""));
         assertThat(pageData.getTitle(), is("Test"));
-        assertThat(pageData.isRedirect(), is(false));
+        assertThat(pageData.getIsRedirect(), is(false));
         assertThat(pageData.getRevisionId(), is(1));
         assertThat(pageData.getContentLanguage(), is("zh"));
         assertThat(pageData.getWikidataItemId(), is("Q1"));
@@ -36,7 +36,7 @@ public class ContextControllerTest {
         assertThat(pageData.getGroupsAllowedToMove(), is(Collections.emptySet()));
 
         assertThat(userData.getId(), is(1));
-        assertThat(userData.isLoggedIn(), is(true));
+        assertThat(userData.getIsLoggedIn(), is(true));
         assertThat(userData.getName(), is("TestUser"));
         assertThat(userData.getGroups(), is(singletonList("*")));
         assertThat(userData.getEditCount(), is(10));
@@ -44,8 +44,8 @@ public class ContextControllerTest {
         assertThat(userData.getRegistrationTimestamp(), is(1427224089000L));
         assertThat(userData.getLanguage(), is("zh"));
         assertThat(userData.getLanguageVariant(), is("zh-tw"));
-        assertThat(userData.isBot(), is(false));
-        assertThat(userData.canProbablyEditPage(), is(true));
+        assertThat(userData.getIsBot(), is(false));
+        assertThat(userData.getCanProbablyEditPage(), is(true));
 
         assertThat(deviceData.getPixelRatio(), is(1.0f));
         assertThat(deviceData.getHardwareConcurrency(), is(1));
@@ -54,7 +54,7 @@ public class ContextControllerTest {
         assertThat(event.getAccessMethod(), is("mobile app"));
         assertThat(event.getPlatform(), is("android"));
         assertThat(event.getPlatformFamily(), is("app"));
-        assertThat(event.isProduction(), is(true));
+        assertThat(event.getIsProduction(), is(true));
     }
 
 }

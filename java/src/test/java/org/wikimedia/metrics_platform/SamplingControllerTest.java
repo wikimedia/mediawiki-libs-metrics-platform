@@ -39,8 +39,8 @@ public class SamplingControllerTest {
     @Test
     public void testAlwaysInSample() {
         StreamConfig alwaysInSample = new StreamConfig("foo", "bar", null,
-                new StreamConfig.ProducerConfig(new StreamConfig.ProducerConfig.MetricsPlatformClientConfig(
-                        new SamplingConfig(1.0, null),
+                new StreamConfig.ProducerConfig(new StreamConfig.MetricsPlatformClientConfig(
+                        new SamplingConfig(1.0, SESSION),
                         null,
                         null
                 )));
@@ -50,8 +50,8 @@ public class SamplingControllerTest {
     @Test
     public void testNeverInSample() {
         StreamConfig neverInSample = new StreamConfig("foo", "bar", null,
-                new StreamConfig.ProducerConfig(new StreamConfig.ProducerConfig.MetricsPlatformClientConfig(
-                        new SamplingConfig(0.0, null),
+                new StreamConfig.ProducerConfig(new StreamConfig.MetricsPlatformClientConfig(
+                        new SamplingConfig(0.0, SESSION),
                         null,
                         null
                 )));

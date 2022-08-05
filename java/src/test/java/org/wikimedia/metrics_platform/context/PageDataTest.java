@@ -13,14 +13,14 @@ public class PageDataTest {
 
     @Test
     public void testPageData() {
-        PageData pageData = new PageData.Builder()
+        PageData pageData = PageData.builder()
                 .id(1)
                 .namespaceId(0)
                 .namespaceText("")
                 .title("Test")
                 .isRedirect(false)
                 .revisionId(1)
-                .wikidataId("Q1")
+                .wikidataItemId("Q1")
                 .contentLanguage("zh")
                 .groupsAllowedToEdit(Collections.emptyList())
                 .groupsAllowedToMove(Collections.emptyList())
@@ -30,7 +30,7 @@ public class PageDataTest {
         assertThat(pageData.getNamespaceId(), is(0));
         assertThat(pageData.getNamespaceText(), is(""));
         assertThat(pageData.getTitle(), is("Test"));
-        assertThat(pageData.isRedirect(), is(false));
+        assertThat(pageData.getIsRedirect(), is(false));
         assertThat(pageData.getRevisionId(), is(1));
         assertThat(pageData.getWikidataItemId(), is("Q1"));
         assertThat(pageData.getContentLanguage(), is("zh"));

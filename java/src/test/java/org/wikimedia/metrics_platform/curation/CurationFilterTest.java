@@ -31,10 +31,10 @@ public class CurationFilterTest {
     }
 
     private static Event getBaseEvent() {
-        PageData pageData = new PageData.Builder().id(1).namespaceText("Talk").build();
-        UserData userData = new UserData.Builder().groups(Arrays.asList("user", "autoconfirmed", "steward"))
+        PageData pageData = PageData.builder().id(1).namespaceText("Talk").build();
+        UserData userData = UserData.builder().groups(Arrays.asList("user", "autoconfirmed", "steward"))
                 .isLoggedIn(true).editCountBucket("1000+ edits").build();
-        DeviceData deviceData = new DeviceData.Builder().pixelRatio(2.0f).build();
+        DeviceData deviceData = DeviceData.builder().pixelRatio(2.0f).build();
 
         Event event = new Event("test/event", "test.event");
         event.setPageData(pageData);

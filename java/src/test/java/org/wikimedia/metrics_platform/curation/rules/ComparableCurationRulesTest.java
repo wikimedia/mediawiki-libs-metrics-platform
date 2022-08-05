@@ -9,8 +9,8 @@ public class ComparableCurationRulesTest {
 
     @Test
     public void testIntegerGreaterThan() {
-        ComparableCurationRules<Integer> rules = new ComparableCurationRules.Builder<Integer>()
-                .setGreaterThan(0)
+        ComparableCurationRules<Integer> rules = ComparableCurationRules.<Integer>builder()
+                .greaterThan(0)
                 .build();
         assertThat(rules.apply(1), is(true));
         assertThat(rules.apply(0), is(false));
@@ -19,8 +19,8 @@ public class ComparableCurationRulesTest {
 
     @Test
     public void testFloatGreaterThan() {
-        ComparableCurationRules<Float> rules = new ComparableCurationRules.Builder<Float>()
-                .setGreaterThan(0.0f)
+        ComparableCurationRules<Float> rules = ComparableCurationRules.<Float>builder()
+                .greaterThan(0.0f)
                 .build();
         assertThat(rules.apply(1.0f), is(true));
         assertThat(rules.apply(0.0f), is(false));
@@ -29,8 +29,8 @@ public class ComparableCurationRulesTest {
 
     @Test
     public void testIntegerLessThan() {
-        ComparableCurationRules<Integer> rules = new ComparableCurationRules.Builder<Integer>()
-                .setLessThan(0)
+        ComparableCurationRules<Integer> rules = ComparableCurationRules.<Integer>builder()
+                .lessThan(0)
                 .build();
         assertThat(rules.apply(1), is(false));
         assertThat(rules.apply(0), is(false));
@@ -39,8 +39,8 @@ public class ComparableCurationRulesTest {
 
     @Test
     public void testFloatLessThan() {
-        ComparableCurationRules<Float> rules = new ComparableCurationRules.Builder<Float>()
-                .setLessThan(0.0f)
+        ComparableCurationRules<Float> rules = ComparableCurationRules.<Float>builder()
+                .lessThan(0.0f)
                 .build();
         assertThat(rules.apply(1.0f), is(false));
         assertThat(rules.apply(0.0f), is(false));
@@ -49,8 +49,8 @@ public class ComparableCurationRulesTest {
 
     @Test
     public void testIntegerGreaterThanOrEquals() {
-        ComparableCurationRules<Integer> rules = new ComparableCurationRules.Builder<Integer>()
-                .setGreaterThanOrEquals(0)
+        ComparableCurationRules<Integer> rules = ComparableCurationRules.<Integer>builder()
+                .greaterThanOrEquals(0)
                 .build();
         assertThat(rules.apply(1), is(true));
         assertThat(rules.apply(0), is(true));
@@ -59,8 +59,8 @@ public class ComparableCurationRulesTest {
 
     @Test
     public void testFloatGreaterThanOrEquals() {
-        ComparableCurationRules<Float> rules = new ComparableCurationRules.Builder<Float>()
-                .setGreaterThanOrEquals(0.0f)
+        ComparableCurationRules<Float> rules = ComparableCurationRules.<Float>builder()
+                .greaterThanOrEquals(0.0f)
                 .build();
         assertThat(rules.apply(1.0f), is(true));
         assertThat(rules.apply(0.0f), is(true));
@@ -69,8 +69,8 @@ public class ComparableCurationRulesTest {
 
     @Test
     public void testIntegerLessThanOrEquals() {
-        ComparableCurationRules<Integer> rules = new ComparableCurationRules.Builder<Integer>()
-                .setLessThanOrEquals(0)
+        ComparableCurationRules<Integer> rules = ComparableCurationRules.<Integer>builder()
+                .lessThanOrEquals(0)
                 .build();
         assertThat(rules.apply(1), is(false));
         assertThat(rules.apply(0), is(true));
@@ -79,8 +79,8 @@ public class ComparableCurationRulesTest {
 
     @Test
     public void testFloatLessThanOrEquals() {
-        ComparableCurationRules<Float> rules = new ComparableCurationRules.Builder<Float>()
-                .setLessThanOrEquals(0.0f)
+        ComparableCurationRules<Float> rules = ComparableCurationRules.<Float>builder()
+                .lessThanOrEquals(0.0f)
                 .build();
         assertThat(rules.apply(1.0f), is(false));
         assertThat(rules.apply(0.0f), is(true));
