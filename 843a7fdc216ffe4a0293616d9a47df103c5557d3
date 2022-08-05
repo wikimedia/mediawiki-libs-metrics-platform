@@ -35,6 +35,23 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a87e2c20_c201e2ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-08-05T15:27:35Z",
+      "side": 1,
+      "message": "Aside from the comment, this looks _great_ to me \u003c3",
+      "revId": "843a7fdc216ffe4a0293616d9a47df103c5557d3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c53ccd84_0da81181",
