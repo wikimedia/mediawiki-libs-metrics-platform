@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71d86e9a_43aeb8c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-08-05T15:08:56Z",
+      "side": 1,
+      "message": "Thanks for getting that flaky test to pass. Improving that particular test should fall out of extracting responsibilities from the MetricsClient class into their own classes.",
+      "revId": "96eb5c1fb449d1c2820f743c2309249f51932a1c",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
