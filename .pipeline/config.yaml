@@ -6,7 +6,6 @@ pipelines:
       - name: test
   test-java:
     blubberfile: blubber/java.yaml
-    directory: java/
     stages:
       - name: test
   test-php:

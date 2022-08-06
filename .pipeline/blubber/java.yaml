@@ -5,4 +5,4 @@ variants:
     copies: [local]
     runs:
       insecurely: true
-    entrypoint: [./mvnw, verify]
+    entrypoint: [./mvnw, --file, ./java/pom.xml, verify]
