@@ -2,13 +2,15 @@ package org.wikimedia.metrics_platform;
 
 import java.util.Collection;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 import org.wikimedia.metrics_platform.curation.CurationFilter;
 
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Value;
 
-@Value
+@Value @ThreadSafe
 public class StreamConfig {
 
     @SerializedName("stream") private String streamName;
@@ -35,13 +37,13 @@ public class StreamConfig {
         return destinationEventService != null ? destinationEventService : DestinationEventService.ANALYTICS;
     }
 
-    @Value
+    @Value @ThreadSafe
     public static class ProducerConfig {
         @SerializedName("metrics_platform_client")
         StreamConfig.MetricsPlatformClientConfig metricsPlatformClientConfig;
     }
 
-    @Value
+    @Value @ThreadSafe
     public static class MetricsPlatformClientConfig {
         @SerializedName("sampling") SamplingConfig samplingConfig;
         @SerializedName("provide_values") Collection<String> requestedValues;

@@ -1,7 +1,13 @@
 package org.wikimedia.metrics_platform;
 
-import java.util.Date;
+import static java.time.temporal.ChronoUnit.MINUTES;
+
+import java.time.Duration;
+import java.time.Instant;
 import java.util.UUID;
+
+import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.concurrent.ThreadSafe;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -11,14 +17,17 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * A session begins when the application is launched and expires when the app is in the background
  * for 15 minutes or more.
  */
+@ThreadSafe
 class SessionController {
 
-    private static final int SESSION_TIMEOUT = 900000; // 15 minutes
-    private static String SESSION_ID = generateSessionId();
-    private Date sessionTouched;
+    private static final Duration SESSION_TIMEOUT = Duration.of(15, MINUTES); // 15 minutes
+    @GuardedBy("this")
+    private String sessionId = generateSessionId();
+    @GuardedBy("this")
+    private Instant sessionTouched;
 
     SessionController() {
-        this(new Date());
+        this(Instant.now());
     }
 
     /**
@@ -26,25 +35,25 @@ class SessionController {
      *
      * @param date session start time
      */
-    SessionController(Date date) {
+    SessionController(Instant date) {
         this.sessionTouched = date;
     }
 
-    String getSessionId() {
-        return SESSION_ID;
+    synchronized String getSessionId() {
+        return sessionId;
     }
 
-    void touchSession() {
-        sessionTouched = new Date();
+    synchronized void touchSession() {
+        sessionTouched = Instant.now();
     }
 
-    boolean sessionExpired() {
-        return (new Date()).getTime() - sessionTouched.getTime() >= SESSION_TIMEOUT;
+    synchronized boolean sessionExpired() {
+        return Duration.between(sessionTouched, Instant.now()).compareTo(SESSION_TIMEOUT) >= 0;
     }
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "TODO: This needs some non trivial refactoring")
-    void beginNewSession() {
-        SESSION_ID = generateSessionId();
+    synchronized void beginNewSession() {
+        sessionId = generateSessionId();
         touchSession();
     }
 

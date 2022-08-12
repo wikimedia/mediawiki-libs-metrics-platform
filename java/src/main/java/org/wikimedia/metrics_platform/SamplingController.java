@@ -1,5 +1,7 @@
 package org.wikimedia.metrics_platform;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 /**
  * SamplingController: computes various sampling functions on the client
  *
@@ -7,6 +9,7 @@ package org.wikimedia.metrics_platform;
  * well-defined scope, and sampling config, which each stream provides as
  * part of its configuration.
  */
+@ThreadSafe
 class SamplingController {
 
     private final MetricsClientIntegration integration;
