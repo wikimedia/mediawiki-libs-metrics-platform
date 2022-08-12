@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@ParametersAreNonnullByDefault
 public class EventBuffer {
     private final ArrayList<Event> events;
     private final DestinationEventService destination;
@@ -13,6 +17,7 @@ public class EventBuffer {
         this.destination = destination;
     }
 
+    @Nonnull
     DestinationEventService getDestinationService() {
         return destination;
     }
@@ -39,6 +44,7 @@ public class EventBuffer {
      *
      * @return events
      */
+    @Nonnull
     List<Event> peekAll() {
         return (ArrayList<Event>)events.clone();
     }

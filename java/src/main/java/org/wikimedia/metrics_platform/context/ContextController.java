@@ -32,6 +32,8 @@ import static org.wikimedia.metrics_platform.context.ContextValue.USER_REGISTRAT
 import java.util.Collection;
 import java.util.Locale;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.wikimedia.metrics_platform.Event;
@@ -41,8 +43,10 @@ import org.wikimedia.metrics_platform.StreamConfig;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @ThreadSafe
+@ParametersAreNonnullByDefault
 public class ContextController {
 
+    @Nonnull
     private final MetricsClientIntegration integration;
 
     public ContextController(MetricsClientIntegration integration) {
