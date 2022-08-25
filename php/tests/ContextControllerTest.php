@@ -60,7 +60,7 @@ class ContextControllerTest extends TestCase {
 		$this->assertSame( $pageData["user_groups_allowed_to_edit"], [] );
 
 		$this->assertSame( "timeless", $siteData["skin"] );
-		$this->assertSame( "1.37.0", $siteData["version"] );
+		$this->assertSame( "1.39.0", $siteData["version"] );
 		$this->assertSame( false, $siteData["is_production"] );
 		$this->assertSame( true, $siteData["is_debug_mode"] );
 		$this->assertSame( "zhwiki", $siteData['db_name'] );

@@ -30,7 +30,7 @@ class ContextController {
 		foreach ( $requestedValues as $requestedValue ) {
 			list( $primaryKey, $secondaryKey ) = explode( '_', $requestedValue, 2 );
 
-			$value = $this->getContextualAttributeByName( $requestedValue );
+			$value = $this->integration->getContextAttribute( $requestedValue );
 
 			// Context attributes are null by default. Only add the requested context attribute
 			// - incurring the cost of transporting it - if it is not null.
@@ -46,88 +46,5 @@ class ContextController {
 		}
 
 		return $event;
-	}
-
-	/**
-	 * @param string $name
-	 * @return mixed
-	 */
-	private function getContextualAttributeByName( string $name ) {
-		$int = $this->integration;
-
-		switch ( $name ) {
-			case 'agent_app_install_id':
-				return $int->getAgentAppInstallId();
-			case 'agent_client_platform':
-				return $int->getAgentClientPlatform();
-			case 'agent_client_platform_family':
-				return $int->getAgentClientPlatformFamily();
-
-			case 'page_id':
-				return $int->getPageId();
-			case 'page_title':
-				return $int->getPageTitle();
-			case 'page_namespace':
-				return $int->getPageNamespace();
-			case 'page_namespace_name':
-				return $int->getPageNamespaceName();
-			case 'page_revision_id':
-				return $int->getPageRevisionId();
-			case 'page_wikidata_id':
-				return $int->getPageWikidataId();
-			case 'page_content_language':
-				return $int->getPageContentLanguage();
-			case 'page_is_redirect':
-				return $int->getPageIsRedirect();
-			case 'page_user_groups_allowed_to_move':
-				return $int->getPageGroupsAllowedToMove();
-			case 'page_user_groups_allowed_to_edit':
-				return $int->getPageGroupsAllowedToEdit();
-
-			case 'mediawiki_skin':
-				return $int->getMediaWikiSkin();
-			case 'mediawiki_version':
-				return $int->getMediaWikiVersion();
-			case 'mediawiki_is_production':
-				return $int->getMediaWikiIsProduction();
-			case 'mediawiki_is_debug_mode':
-				return $int->getMediaWikiIsDebugMode();
-			case 'mediawiki_db_name':
-				return $int->getMediaWikiDBName();
-			case 'mediawiki_site_content_language':
-				return $int->getMediaWikiSiteContentLanguage();
-			case 'mediawiki_site_content_language_variant':
-				return $int->getMediaWikiSiteContentLanguageVariant();
-
-			case 'performer_is_logged_in':
-				return $int->getUserIsLoggedIn();
-			case 'performer_id':
-				return $int->getUserId();
-			case 'performer_name':
-				return $int->getUserName();
-			case 'performer_session_id':
-				return $int->getUserSessionId();
-			case 'performer_pageview_id':
-				return $int->getUserPageviewId();
-			case 'performer_groups':
-				return $int->getUserGroups();
-			case 'performer_is_bot':
-				return $int->getUserIsBot();
-			case 'performer_language':
-				return $int->getUserLanguage();
-			case 'performer_language_variant':
-				return $int->getUserLanguageVariant();
-			case 'performer_can_probably_edit_page':
-				return $int->getUserCanProbablyEditPage();
-			case 'performer_edit_count':
-				return $int->getUserEditCount();
-			case 'performer_edit_count_bucket':
-				return $int->getUserEditCountBucket();
-			case 'performer_registration_dt':
-				return $int->getUserRegistrationTimestamp();
-
-			default:
-				return null;
-		}
 	}
 }
