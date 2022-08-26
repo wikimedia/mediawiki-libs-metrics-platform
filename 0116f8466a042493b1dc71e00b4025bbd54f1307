@@ -33,6 +33,24 @@
       "message": "For testing, it may be nicer to append to an array, and to add a getter that allows the test case to access and check the content of the array. That\u0027s assuming this is for use in a phpuniot test. Is it?",
       "revId": "0116f8466a042493b1dc71e00b4025bbd54f1307",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2ff9418_b1eb6669",
+        "filename": "tests/consistency/php/ConsistencyTestIntegration.php",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-08-26T11:25:02Z",
+      "side": 1,
+      "message": "This is part of a top-level consistency test, which checks, given some predefined values for contextual attributes, whether the various implementations emit the same event. The test harness reads the console output of the individual implementations (see tests/consistency/php/main.php).",
+      "parentUuid": "e48a74ed_c360c5ef",
+      "revId": "0116f8466a042493b1dc71e00b4025bbd54f1307",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
