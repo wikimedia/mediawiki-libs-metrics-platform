@@ -53,6 +53,23 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0d3d5aa_10208c57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2022-08-30T12:29:27Z",
+      "side": 1,
+      "message": "This is a breaking change, so it needs a major version bump, right?\n\nMaybe go to 1.0? Things that make it into production with an 0.x version number tend to get stuck on it. ",
+      "revId": "0116f8466a042493b1dc71e00b4025bbd54f1307",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e48a74ed_c360c5ef",
