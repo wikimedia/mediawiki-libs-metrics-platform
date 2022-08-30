@@ -35,6 +35,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44504e4f_590c8b1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-08-30T11:13:41Z",
+      "side": 1,
+      "message": "Done. Sorry for the delay.\n\nPS19 of that patch, which uses the old interface, adds 1465 LOC. PS20, which uses the new interface, adds 756.",
+      "parentUuid": "1094d619_afc6e5cb",
+      "revId": "0116f8466a042493b1dc71e00b4025bbd54f1307",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e48a74ed_c360c5ef",
