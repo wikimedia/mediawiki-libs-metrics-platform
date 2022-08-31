@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "daaba114_02e40432",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-08-31T09:01:57Z",
+      "side": 1,
+      "message": "For sure. Up until now I\u0027ve tagged a new version and pushed it to release it (have it picked up by Packagist). My intention is to tag 1.0.0 once this change is merged.\n\nI\u0027m happy to declare the version in composer.json, if you\u0027d prefer. Though I\u0027d note that other libraries don\u0027t appear to take this approach [0].\n\n[0] https://codesearch.wmcloud.org/libraries/?q\u003d%22version%22\u0026files\u003dcomposer.json%24",
+      "parentUuid": "b0d3d5aa_10208c57",
+      "revId": "0116f8466a042493b1dc71e00b4025bbd54f1307",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e48a74ed_c360c5ef",
         "filename": "tests/consistency/php/ConsistencyTestIntegration.php",
         "patchSetId": 2
