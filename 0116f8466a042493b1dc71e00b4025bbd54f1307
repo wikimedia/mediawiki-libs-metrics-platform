@@ -88,6 +88,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c402156_bfb9da2c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2022-08-31T09:12:08Z",
+      "side": 1,
+      "message": "No need. I think the spec actually recommends against it.",
+      "parentUuid": "daaba114_02e40432",
+      "revId": "0116f8466a042493b1dc71e00b4025bbd54f1307",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e48a74ed_c360c5ef",
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "This is part of a top-level consistency test, which checks, given some predefined values for contextual attributes, whether the various implementations emit the same event. The test harness reads the console output of the individual implementations (see tests/consistency/php/main.php).",
       "parentUuid": "e48a74ed_c360c5ef",
+      "revId": "0116f8466a042493b1dc71e00b4025bbd54f1307",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c374de7_837ccf4d",
+        "filename": "tests/consistency/php/ConsistencyTestIntegration.php",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2022-08-31T09:12:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2ff9418_b1eb6669",
       "revId": "0116f8466a042493b1dc71e00b4025bbd54f1307",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
