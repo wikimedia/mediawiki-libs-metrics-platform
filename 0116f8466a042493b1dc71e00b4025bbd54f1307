@@ -123,6 +123,23 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5e96a70_1459662e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34
+      },
+      "writtenOn": "2022-08-31T23:08:44Z",
+      "side": 1,
+      "message": "I assume this will need to be released before the vendor and EventLogging patch can pass. I assume you already have permission and familiarity with that from the previous release. Let me know if you need any help.",
+      "revId": "0116f8466a042493b1dc71e00b4025bbd54f1307",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e48a74ed_c360c5ef",
