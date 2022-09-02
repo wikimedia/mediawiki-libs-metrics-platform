@@ -2,6 +2,7 @@ package org.wikimedia.metrics_platform;
 
 import static java.util.Collections.singletonList;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -212,17 +213,18 @@ public class TestMetricsClientIntegration implements MetricsClientIntegration {
         return "6f31a4fa-0a77-4c65-9994-f242fa58ce94";
     }
 
-    @Override
-    public void fetchStreamConfigs(FetchStreamConfigsCallback callback) {
-        callback.onSuccess(STREAM_CONFIGS);
+    public Map<String, StreamConfig> fetchStreamConfigs() throws IOException {
+        if (shouldFail) {
+            throw new IOException();
+        }
+
+        return STREAM_CONFIGS;
     }
 
     @Override
-    public void sendEvents(String baseUri, Collection<Event> events, SendEventsCallback callback) {
+    public void sendEvents(String baseUri, Collection<Event> events) throws IOException {
         if (shouldFail) {
-            callback.onFailure();
-        } else {
-            callback.onSuccess();
+            throw new IOException();
         }
     }
 

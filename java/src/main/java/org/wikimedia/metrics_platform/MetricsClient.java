@@ -1,5 +1,6 @@
 package org.wikimedia.metrics_platform;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -200,17 +201,12 @@ public final class MetricsClient {
      * events in the input buffer over to the output buffer.
      */
     private void fetchStreamConfigs() {
-        integration.fetchStreamConfigs(new MetricsClientIntegration.FetchStreamConfigsCallback() {
-            @Override
-            public void onSuccess(Map<String, StreamConfig> fetchedStreamConfigs) {
-                setStreamConfigs(fetchedStreamConfigs);
-                processUnvalidatedEvents();
-            }
-
-            @Override
-            public void onFailure() {
-            }
-        });
+        try {
+            Map<String, StreamConfig> streamConfig = integration.fetchStreamConfigs();
+            setStreamConfigs(streamConfig);
+        } catch (IOException ignore) {
+            // TODO: decide what to do with logging
+        }
     }
 
     /**
@@ -248,21 +244,19 @@ public final class MetricsClient {
                 return;
             }
             List<Event> pendingEvents = buffer.peekAll();
-            MetricsClientIntegration.SendEventsCallback callback = new MetricsClientIntegration.SendEventsCallback() {
-                @Override
-                public void onSuccess() {
-                    // Sending succeeded; remove sent events from the output buffer.
-                    buffer.removeAll(pendingEvents);
-                }
 
-                @Override
-                public void onFailure() {
-                    // Sending failed, events remain in output buffer :'(
-                    // TODO: Verify that this is what we want to happen, ensure all libraries are in sync
-                }
-            };
-            integration.sendEvents(buffer.getDestinationService().getBaseUri(), pendingEvents, callback);
+            try {
+                integration.sendEvents(buffer.getDestinationService().getBaseUri(), pendingEvents);
+                buffer.removeAll(pendingEvents);
+            } catch (IOException ignored) {
+                // Sending failed, events remain in output buffer :(
+                // TODO: Verify that this is what we want to happen, ensure all libraries are in sync
+            }
         });
+    }
+
+    boolean streamConfigIsEmpty() {
+        return streamConfigs.isEmpty();
     }
 
     /**

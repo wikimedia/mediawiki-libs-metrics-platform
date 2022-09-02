@@ -1,5 +1,6 @@
 package org.wikimedia.metrics_platform;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -40,19 +41,7 @@ public interface MetricsClientIntegration {
 
     String getAppInstallId();
 
-    void fetchStreamConfigs(FetchStreamConfigsCallback callback);
+    Map<String, StreamConfig> fetchStreamConfigs() throws IOException;
 
-    void sendEvents(String baseUri, Collection<Event> events, SendEventsCallback callback);
-
-    @ThreadSafe
-    interface FetchStreamConfigsCallback {
-        void onSuccess(Map<String, StreamConfig> streamConfigs);
-        void onFailure();
-    }
-
-    @ThreadSafe
-    interface SendEventsCallback {
-        void onSuccess();
-        void onFailure();
-    }
+    void sendEvents(String baseUri, Collection<Event> events) throws IOException;
 }

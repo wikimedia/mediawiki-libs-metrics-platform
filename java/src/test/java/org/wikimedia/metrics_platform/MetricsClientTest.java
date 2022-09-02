@@ -6,11 +6,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -135,16 +137,51 @@ public class MetricsClientTest {
     }
 
     @Test
-    public void testFetchStreamConfigsTaskFetchesStreamConfigs() {
+    public void testFetchStreamConfigsTaskFetchesStreamConfigs() throws IOException {
         client.new FetchStreamConfigsTask().run();
         // FIXME: Since configuration loading can happen either from a Timer (MetricsClient:348) or
         //  from the explicit call above, the fetchStreamConfigs() method can be called either once
         //  or twice. Fixing this properly will require some refactoring of the MetricsClient class.
-        verify(mockIntegration).fetchStreamConfigs(any(MetricsClientIntegration.FetchStreamConfigsCallback.class));
+        verify(mockIntegration).fetchStreamConfigs();
+        when(mockIntegration.fetchStreamConfigs()).thenReturn(setStreamConfigs());
     }
 
     @Test
-    public void testEventSubmissionTaskSendsEnqueuedEvents() {
+    public void testValidatedEventsNotAddedWhenFetchStreamConfigFails() {
+        MetricsClient testClient = new MetricsClient(
+                mockIntegration,
+                mockSessionController,
+                new SamplingController(mockIntegration, mockSessionController),
+                mockContextController,
+                mockCurationController,
+                mockUnvalidatedEvents,
+                new EventBuffer(DestinationEventService.ANALYTICS),
+                new EventBuffer(DestinationEventService.ERROR_LOGGING),
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                    }
+                },
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                    }
+                }
+        );
+
+        try {
+            when(mockIntegration.fetchStreamConfigs()).thenThrow(IOException.class);
+            testClient.new FetchStreamConfigsTask();
+            testClient.submit(new Event("stream", "stream"), "stream");
+
+            verify(mockValidatedEvents, never()).add(any());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void testEventSubmissionTaskSendsEnqueuedEvents() throws Exception {
         setStreamConfigs();
 
         Event event = new Event("foo", "bar");
@@ -156,7 +193,7 @@ public class MetricsClientTest {
         when(mockValidatedErrors.isEmpty()).thenReturn(true);
 
         client.new EventSubmissionTask().run();
-        verify(mockIntegration, times(1)).sendEvents(anyString(), anyCollection(), any(MetricsClientIntegration.SendEventsCallback.class));
+        verify(mockIntegration, times(1)).sendEvents(anyString(), anyCollection());
     }
 
     @Test
@@ -173,8 +210,16 @@ public class MetricsClientTest {
                 mockUnvalidatedEvents,
                 new EventBuffer(DestinationEventService.ANALYTICS),
                 new EventBuffer(DestinationEventService.ERROR_LOGGING),
-                new TimerTask() { @Override public void run() { } },
-                new TimerTask() { @Override public void run() { } }
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                    }
+                },
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                    }
+                }
         );
 
         Map<String, StreamConfig> streamConfigs = new HashMap<>();
@@ -204,8 +249,16 @@ public class MetricsClientTest {
                 mockUnvalidatedEvents,
                 new EventBuffer(DestinationEventService.ANALYTICS),
                 new EventBuffer(DestinationEventService.ERROR_LOGGING),
-                new TimerTask() { @Override public void run() { } },
-                new TimerTask() { @Override public void run() { } }
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                    }
+                },
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                    }
+                }
         );
 
         Map<String, StreamConfig> streamConfigs = new HashMap<>();
@@ -223,6 +276,7 @@ public class MetricsClientTest {
 
     /**
      * Convenience method for setting up stream configs.
+     *
      * @return stream configs
      */
     private Map<String, StreamConfig> setStreamConfigs() {
