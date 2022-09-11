@@ -1,20 +1,23 @@
 package org.wikimedia.metrics_platform;
 
+import static java.util.stream.Collectors.groupingBy;
+
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Queue;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.wikimedia.metrics_platform.context.ContextController;
 import org.wikimedia.metrics_platform.curation.CurationController;
 
@@ -24,6 +27,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
         value = "IS2_INCONSISTENT_SYNC",
         justification = "FIXME: inconsistent synchronization to streamConfigs, probably needs non trivial refactoring")
 public final class MetricsClient {
+
+    private final BlockingQueue<Event> pendingEvents;
 
     public static MetricsClient getInstance(MetricsClientIntegration integration) {
         return new MetricsClient(integration);
@@ -61,24 +66,6 @@ public final class MetricsClient {
      */
     private final CurationController curationController;
 
-    /**
-     * Queue used to store unvalidated events when stream configurations are not yet available.
-     * Because we cannot yet validate events, we cap the size at MAX_INPUT_BUFFER_SIZE. Upon
-     * reaching maximum capacity, events are dropped in the order in which they were added.
-     *
-     * After stream configs are fetched, the contents of this queue are validated and moved to
-     * validatedEvents/validatedErrors to await submission, and this queue is no longer used.
-     */
-    final Queue<Event> unvalidatedEvents;
-
-    /**
-     * These ArrayLists hold validated events for submission every WAIT_MS ms.
-     *
-     * When SEND_INTERVAL passes, all scheduled events are submitted together in a single "burst"
-     * per destination event service.
-     */
-    final EventBuffer validatedEvents;
-    final EventBuffer validatedErrors;
     private static final int SEND_INTERVAL = 30000; // 30 seconds
 
 
@@ -87,40 +74,21 @@ public final class MetricsClient {
 
     /**
      * Submit an event to be enqueued and sent to the Event Platform.
-     *
+     * <p>
      * If stream configs are not yet fetched, the event will be held temporarily in the input
      * buffer (provided there is space to do so).
-     *
+     * <p>
      * If stream configs are available, the event will be validated and enqueued for submission
      * to the configured event platform intake service.
-     *
+     * <p>
      * Supplemental metadata is added immediately on intake, regardless of the presence or absence
      * of stream configs, so that the event timestamp is recorded accurately.
      *
-     * @param event event data
-     * @param stream stream name
+     * @param event  event data
      */
-    public synchronized void submit(Event event, String stream) {
+    public synchronized void submit(Event event) {
         addRequiredMetadata(event);
-        if (streamConfigs.isEmpty()) {
-            unvalidatedEvents.add(event);
-        } else if (shouldProcessEventsForStream(stream)) {
-            StreamConfig streamConfig = streamConfigs.get(stream);
-            contextController.addRequestedValues(event, streamConfig);
-            if (curationController.eventPassesCurationRules(event, streamConfig)) {
-                switch (streamConfig.getDestinationEventService()) {
-                    case ANALYTICS:
-                        validatedEvents.add(event);
-                        break;
-                    case ERROR_LOGGING:
-                        validatedErrors.add(event);
-                        break;
-                    default:
-                        // TODO: Log client error
-                        break;
-                }
-            }
-        }
+        pendingEvents.add(event);
     }
 
     /**
@@ -155,7 +123,7 @@ public final class MetricsClient {
 
     /**
      * Returns true if the specified stream is configured and in sample.
-     *
+     * <p>
      * Visible for testing.
      *
      * @param stream stream name
@@ -165,35 +133,6 @@ public final class MetricsClient {
     boolean shouldProcessEventsForStream(String stream) {
         return streamConfigs.containsKey(stream) &&
                 samplingController.isInSample(streamConfigs.get(stream));
-    }
-
-    /**
-     * Validate events in the input buffer, add metadata to valid events, and move them to the output buffer.
-     *
-     * Visible for testing.
-     */
-    synchronized void processUnvalidatedEvents() {
-        while (!unvalidatedEvents.isEmpty()) {
-            Event event = unvalidatedEvents.remove();
-            String stream = event.getStream();
-            if (shouldProcessEventsForStream(stream)) {
-                StreamConfig streamConfig = streamConfigs.get(stream);
-                contextController.addRequestedValues(event, streamConfig);
-                if (curationController.eventPassesCurationRules(event, streamConfig)) {
-                    switch (streamConfig.getDestinationEventService()) {
-                        case ANALYTICS:
-                            validatedEvents.add(event);
-                            break;
-                        case ERROR_LOGGING:
-                            validatedErrors.add(event);
-                            break;
-                        default:
-                            // TODO: Log client error
-                            break;
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -229,30 +168,46 @@ public final class MetricsClient {
 
     /**
      * Send all events currently in the output buffer.
-     *
+     * <p>
      * A shallow clone of the output buffer is created and passed to the integration layer for
      * submission by the client. If the event submission succeeds, the events are removed from the
      * output buffer. (Note that the shallow copy created by clone() retains pointers to the original
      * Event objects.) If the event submission fails, a client error is produced, and the events remain
      * in buffer to be retried on the next submission attempt.
-     *
+     * <p>
      * TODO: Add client error logging.
      */
     void sendEnqueuedEvents() {
-        Arrays.asList(validatedEvents, validatedErrors).forEach((buffer) -> {
-            if (buffer.isEmpty()) {
-                return;
-            }
-            List<Event> pendingEvents = buffer.peekAll();
+        if (this.streamConfigs.isEmpty()) {
+            return;
+        }
 
-            try {
-                integration.sendEvents(buffer.getDestinationService().getBaseUri(), pendingEvents);
-                buffer.removeAll(pendingEvents);
-            } catch (IOException ignored) {
-                // Sending failed, events remain in output buffer :(
-                // TODO: Verify that this is what we want to happen, ensure all libraries are in sync
-            }
-        });
+        ArrayList<Event> pending = new ArrayList<>();
+        this.pendingEvents.drainTo(pending);
+
+        pending.stream()
+                .filter(this::eventPassesCurationRules)
+                .collect(groupingBy(this::destinationEventService, Collectors.toList()))
+                .forEach(this::sendEventsToDestination);
+    }
+
+    private boolean eventPassesCurationRules(Event event) {
+        StreamConfig streamConfig = streamConfigs.get(event.getStream());
+        contextController.addRequestedValues(event, streamConfig);
+        return curationController.eventPassesCurationRules(event, streamConfig);
+    }
+
+    private DestinationEventService destinationEventService(Event event) {
+        StreamConfig streamConfig = streamConfigs.get(event.getStream());
+        return streamConfig.getDestinationEventService();
+    }
+
+    private void sendEventsToDestination(DestinationEventService destinationEventService, List<Event> pendingValidEvents) {
+        try {
+            integration.sendEvents(destinationEventService.getBaseUri(), pendingValidEvents);
+        } catch (IOException ignore) {
+            MetricsClient.this.pendingEvents.addAll(pendingValidEvents);
+        }
     }
 
     boolean streamConfigIsEmpty() {
@@ -261,6 +216,7 @@ public final class MetricsClient {
 
     /**
      * MetricsClient Constructor.
+     *
      * @param integration integration implementation
      */
     MetricsClient(MetricsClientIntegration integration) {
@@ -268,7 +224,7 @@ public final class MetricsClient {
     }
 
     /**
-     * @param integration integration
+     * @param integration       integration
      * @param sessionController session controller
      */
     MetricsClient(MetricsClientIntegration integration, SessionController sessionController) {
@@ -292,27 +248,22 @@ public final class MetricsClient {
                 samplingController,
                 contextController,
                 new CurationController(),
-                new CircularFifoQueue<>(128),
-                new EventBuffer(DestinationEventService.ANALYTICS),
-                new EventBuffer(DestinationEventService.ERROR_LOGGING),
                 null,
-                null
+                null, 10
         );
     }
 
     /**
      * Constructor for testing.
      *
-     * @param integration integration
-     * @param sessionController session controller
-     * @param samplingController sampling controller
-     * @param contextController context controller
-     * @param curationController curation controller
-     * @param unvalidatedEvents buffer for unverified events prior to stream configs being fetched
-     * @param validatedEvents buffer for verified events pending submission to analytics event intake
-     * @param validatedErrors buffer for verified events pending submission to error logging intake
+     * @param integration            integration
+     * @param sessionController      session controller
+     * @param samplingController     sampling controller
+     * @param contextController      context controller
+     * @param curationController     curation controller
      * @param fetchStreamConfigsTask optional custom implementation of stream configs fetch task (for testing)
-     * @param eventSubmissionTask optional custom implementation of event submission task (for testing)
+     * @param eventSubmissionTask    optional custom implementation of event submission task (for testing)
+     * @param capacity
      */
     @SuppressFBWarnings(
             value = "STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE",
@@ -323,20 +274,16 @@ public final class MetricsClient {
             SamplingController samplingController,
             ContextController contextController,
             CurationController curationController,
-            Queue<Event> unvalidatedEvents,
-            EventBuffer validatedEvents,
-            EventBuffer validatedErrors,
             TimerTask fetchStreamConfigsTask,
-            TimerTask eventSubmissionTask
+            TimerTask eventSubmissionTask,
+            int capacity
     ) {
         this.integration = integration;
         this.sessionController = sessionController;
         this.samplingController = samplingController;
         this.contextController = contextController;
         this.curationController = curationController;
-        this.unvalidatedEvents = unvalidatedEvents;
-        this.validatedEvents = validatedEvents;
-        this.validatedErrors = validatedErrors;
+        this.pendingEvents = new LinkedBlockingQueue<>(capacity);
 
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
         TIMER.schedule(fetchStreamConfigsTask != null ? fetchStreamConfigsTask : new FetchStreamConfigsTask(), 0, STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL);
@@ -345,21 +292,19 @@ public final class MetricsClient {
 
     /**
      * Periodic task that sends enqueued events if stream configs are present.
-     *
+     * <p>
      * Visible for testing.
      */
     class EventSubmissionTask extends TimerTask {
         @Override
         public void run() {
-            if (!streamConfigs.isEmpty()) {
-                sendEnqueuedEvents();
-            }
+            sendEnqueuedEvents();
         }
     }
 
     /**
      * Periodic task that attempts to fetch stream configs if they are not already present.
-     *
+     * <p>
      * Visible for testing.
      */
     class FetchStreamConfigsTask extends TimerTask {
