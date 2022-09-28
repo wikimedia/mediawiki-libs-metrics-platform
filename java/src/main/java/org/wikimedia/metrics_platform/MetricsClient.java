@@ -92,24 +92,26 @@ public final class MetricsClient {
     }
 
     /**
-     * Convenience method to be called when an Android Application activity reaches the onPause()
-     * stage of its lifecycle. Updates the session-touched timestamp so that we can determine
-     * whether the session has expired if and when the application is resumed.
+     * Convenience method to be called when
+     * <a href="https://developer.android.com/guide/components/activities/activity-lifecycle#onpause">
+     * the onPause() activity lifecycle callback</a> is called.
+     *
+     * Touches the session so that we can determine whether it session has expired if and when the
+     * application is resumed.
      */
     public void onApplicationPause() {
         sessionController.touchSession();
     }
 
     /**
-     * Convenience method to be called when an Android Application activity reaches the onResume()
-     * stage of its lifecycle. Resets the session if it has expired since the application was paused.
+     * Convenience method to be called when
+     * <a href="https://developer.android.com/guide/components/activities/activity-lifecycle#onresume">
+     * the onResume() activity lifecycle callback</a> is called.
+     *
+     * Touches the session so that we can determine whether it has expired.
      */
     public void onApplicationResume() {
-        if (sessionController.sessionExpired()) {
-            sessionController.beginNewSession();
-        } else {
-            sessionController.touchSession();
-        }
+        sessionController.touchSession();
     }
 
     /**

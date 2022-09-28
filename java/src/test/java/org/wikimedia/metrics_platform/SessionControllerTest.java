@@ -12,14 +12,6 @@ import org.junit.jupiter.api.Test;
 public class SessionControllerTest {
 
     @Test
-    public void testBeginNewSession() {
-        SessionController sessionController = new SessionController();
-        String oldSessionId = sessionController.getSessionId();
-        sessionController.beginNewSession();
-        assertThat(sessionController.getSessionId(), not(oldSessionId));
-    }
-
-    @Test
     public void testSessionExpiry() {
         Instant oneHourAgo = Instant.now().minus(1, HOURS);
         SessionController sessionController = new SessionController(oneHourAgo);
@@ -30,8 +22,12 @@ public class SessionControllerTest {
     public void testTouchSession() {
         Instant oneHourAgo = Instant.now().minus(1, HOURS);
         SessionController sessionController = new SessionController(oneHourAgo);
+        String sessionId1 = sessionController.getSessionId();
         sessionController.touchSession();
         assertThat(sessionController.sessionExpired(), is(false));
-    }
 
+        String sessionId2 = sessionController.getSessionId();
+
+        assertThat(sessionId1, not(sessionId2));
+    }
 }

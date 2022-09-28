@@ -11,8 +11,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * Manages sessions and session IDs for the Metrics Platform Client.
  *
@@ -50,6 +48,10 @@ class SessionController {
     }
 
     synchronized void touchSession() {
+        if (sessionExpired()) {
+            sessionId = generateSessionId();
+        }
+
         sessionTouched = Instant.now();
     }
 
@@ -57,15 +59,8 @@ class SessionController {
         return Duration.between(sessionTouched, Instant.now()).compareTo(SESSION_TIMEOUT) >= 0;
     }
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "TODO: This needs some non trivial refactoring")
-    synchronized void beginNewSession() {
-        sessionId = generateSessionId();
-        touchSession();
-    }
-
     @Nonnull
     private static String generateSessionId() {
         return UUID.randomUUID().toString();
     }
-
 }
