@@ -1,15 +1,13 @@
 package org.wikimedia.metrics_platform;
 
-import java.io.IOException;
 import java.util.Collection;
-import java.util.Map;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.ThreadSafe;
 
 @ThreadSafe
 @ParametersAreNonnullByDefault
-public interface MetricsClientIntegration {
+public interface ClientMetadata {
     Integer getPageId();
     Integer getPageNamespaceId();
     String getPageNamespaceText();
@@ -40,8 +38,4 @@ public interface MetricsClientIntegration {
     Boolean isProduction();
 
     String getAppInstallId();
-
-    Map<String, StreamConfig> fetchStreamConfigs() throws IOException;
-
-    void sendEvents(String baseUri, Collection<Event> events) throws IOException;
 }

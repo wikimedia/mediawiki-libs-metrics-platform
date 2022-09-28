@@ -24,14 +24,18 @@ import org.wikimedia.metrics_platform.curation.CurationController;
 
 public class MetricsClientTest {
 
-    private final MetricsClientIntegration mockIntegration = mock(MetricsClientIntegration.class);
+    private final ClientMetadata mockClientMetadata = mock(ClientMetadata.class);
+    private final StreamConfigsFetcher mockStreamConfigFetcher = mock(StreamConfigsFetcher.class);
+    private final EventSender mockEventSender = mock(EventSender.class);
     private final SessionController mockSessionController = mock(SessionController.class);
     private final SamplingController mockSamplingController = mock(SamplingController.class);
     private final ContextController mockContextController = mock(ContextController.class);
     private final CurationController mockCurationController = new AlwaysAcceptCurationController();
 
     private final MetricsClient client = new MetricsClient(
-            mockIntegration,
+            mockClientMetadata,
+            mockStreamConfigFetcher,
+            mockEventSender,
             mockSessionController,
             mockSamplingController,
             mockContextController,
@@ -42,7 +46,7 @@ public class MetricsClientTest {
 
     @BeforeEach
     public void resetClient() {
-        reset(mockIntegration, mockSessionController, mockSamplingController, mockContextController);
+        reset(mockClientMetadata, mockSessionController, mockSamplingController, mockContextController);
         client.setStreamConfigs(emptyMap());
     }
 
@@ -65,7 +69,7 @@ public class MetricsClientTest {
 
         Event event = new Event("test/event/1.0.0", "test_event");
         client.submit(event);
-        verify(mockIntegration, times(1)).getAppInstallId();
+        verify(mockClientMetadata, times(1)).getAppInstallId();
         verify(mockSessionController, times(1)).getSessionId();
     }
 
@@ -87,16 +91,17 @@ public class MetricsClientTest {
         // FIXME: Since configuration loading can happen either from a Timer (MetricsClient:348) or
         //  from the explicit call above, the fetchStreamConfigs() method can be called either once
         //  or twice. Fixing this properly will require some refactoring of the MetricsClient class.
-        verify(mockIntegration).fetchStreamConfigs();
-        when(mockIntegration.fetchStreamConfigs()).thenReturn(setStreamConfigs());
+        when(mockStreamConfigFetcher.fetchStreamConfigs()).thenReturn(setStreamConfigs());
     }
 
     @Test
     public void eventsNotSentWhenFetchStreamConfigFails() throws IOException {
         MetricsClient testClient = new MetricsClient(
-                mockIntegration,
+                mockClientMetadata,
+                mockStreamConfigFetcher,
+                mockEventSender,
                 mockSessionController,
-                new SamplingController(mockIntegration, mockSessionController),
+                new SamplingController(mockClientMetadata, mockSessionController),
                 mockContextController,
                 mockCurationController,
                 new TimerTask() {
@@ -111,12 +116,12 @@ public class MetricsClientTest {
                 }, 10
         );
 
-        when(mockIntegration.fetchStreamConfigs()).thenThrow(IOException.class);
+        when(mockStreamConfigFetcher.fetchStreamConfigs()).thenThrow(IOException.class);
 
         testClient.new FetchStreamConfigsTask();
         testClient.submit(new Event("stream", "stream"));
 
-        verify(mockIntegration, never()).sendEvents(anyString(), anyCollection());
+        verify(mockEventSender, never()).sendEvents(anyString(), anyCollection());
     }
 
     @Test
@@ -128,18 +133,22 @@ public class MetricsClientTest {
         client.submit(event);
         client.new EventSubmissionTask().run();
 
-        verify(mockIntegration, times(1)).sendEvents(anyString(), anyCollection());
+        verify(mockEventSender, times(1)).sendEvents(anyString(), anyCollection());
     }
 
     @Test
     public void testEventsRemovedFromOutputBufferOnSuccess() {
-        MetricsClientIntegration integration = new TestMetricsClientIntegration();
+        ClientMetadata clientMetadata = new TestClientMetadata();
+        StreamConfigsFetcher configsFetcher = new TestStreamConfigsFetcher();
+        EventSender eventSender = new TestEventSender();
         SessionController sessionController = new SessionController();
 
         MetricsClient testClient = new MetricsClient(
-                integration,
+                clientMetadata,
+                configsFetcher,
+                eventSender,
                 sessionController,
-                new SamplingController(integration, sessionController),
+                new SamplingController(clientMetadata, sessionController),
                 mockContextController,
                 mockCurationController,
                 new TimerTask() {
@@ -151,7 +160,8 @@ public class MetricsClientTest {
                     @Override
                     public void run() {
                     }
-                }, 10
+                },
+                10
         );
 
         Map<String, StreamConfig> streamConfigs = new HashMap<>();
@@ -168,13 +178,17 @@ public class MetricsClientTest {
 
     @Test
     public void testEventsRemainInOutputBufferOnFailure() {
-        MetricsClientIntegration integration = new TestMetricsClientIntegration(true);
+        ClientMetadata clientMetadata = new TestClientMetadata();
+        StreamConfigsFetcher configsFetcher = new TestStreamConfigsFetcher(true);
+        EventSender eventSender = new TestEventSender(true);
         SessionController sessionController = new SessionController();
 
         MetricsClient testClient = new MetricsClient(
-                integration,
+                clientMetadata,
+                configsFetcher,
+                eventSender,
                 sessionController,
-                new SamplingController(integration, sessionController),
+                new SamplingController(clientMetadata, sessionController),
                 mockContextController,
                 mockCurationController,
                 new TimerTask() {

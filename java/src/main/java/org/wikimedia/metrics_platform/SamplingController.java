@@ -15,11 +15,11 @@ import javax.annotation.concurrent.ThreadSafe;
 @ParametersAreNonnullByDefault
 class SamplingController {
 
-    private final MetricsClientIntegration integration;
+    private final ClientMetadata clientMetadata;
     private final SessionController sessionController;
 
-    SamplingController(MetricsClientIntegration integration, SessionController sessionController) {
-        this.integration = integration;
+    SamplingController(ClientMetadata clientMetadata, SessionController sessionController) {
+        this.clientMetadata = clientMetadata;
         this.sessionController = sessionController;
     }
 
@@ -63,7 +63,7 @@ class SamplingController {
             return sessionController.getSessionId();
         }
         if (identifier == SamplingConfig.Identifier.DEVICE) {
-            return integration.getAppInstallId();
+            return clientMetadata.getAppInstallId();
         }
         throw new RuntimeException("Bad identifier type");
     }

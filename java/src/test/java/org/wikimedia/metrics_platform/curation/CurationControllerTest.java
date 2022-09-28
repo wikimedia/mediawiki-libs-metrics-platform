@@ -11,12 +11,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.Event;
 import org.wikimedia.metrics_platform.StreamConfig;
-import org.wikimedia.metrics_platform.TestMetricsClientIntegration;
+import org.wikimedia.metrics_platform.TestStreamConfigsFetcher;
 import org.wikimedia.metrics_platform.context.UserData;
 
 public class CurationControllerTest {
 
-    private final StreamConfig streamConfig = TestMetricsClientIntegration.STREAM_CONFIGS.get("test.event");
+    private final StreamConfig streamConfig = TestStreamConfigsFetcher.STREAM_CONFIGS.get("test.event");
     private final CurationController curationController = new CurationController();
 
     private Event event;

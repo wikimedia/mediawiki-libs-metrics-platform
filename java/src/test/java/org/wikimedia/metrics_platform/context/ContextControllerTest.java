@@ -9,15 +9,16 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.Event;
 import org.wikimedia.metrics_platform.StreamConfig;
-import org.wikimedia.metrics_platform.TestMetricsClientIntegration;
+import org.wikimedia.metrics_platform.TestClientMetadata;
+import org.wikimedia.metrics_platform.TestStreamConfigsFetcher;
 
 public class ContextControllerTest {
 
     @Test
     public void testAddRequestedValues() {
-        ContextController contextController = new ContextController(new TestMetricsClientIntegration());
+        ContextController contextController = new ContextController(new TestClientMetadata());
         Event event = new Event("test/event", "test.event");
-        StreamConfig streamConfig = TestMetricsClientIntegration.STREAM_CONFIGS.get("test.event");
+        StreamConfig streamConfig = TestStreamConfigsFetcher.STREAM_CONFIGS.get("test.event");
         contextController.addRequestedValues(event, streamConfig);
 
         PageData pageData = event.getPageData();

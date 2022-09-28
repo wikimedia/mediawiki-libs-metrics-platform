@@ -30,8 +30,10 @@ public final class MetricsClient {
 
     private final BlockingQueue<Event> pendingEvents;
 
-    public static MetricsClient getInstance(MetricsClientIntegration integration) {
-        return new MetricsClient(integration);
+    public static MetricsClient getInstance(ClientMetadata clientMetadata,
+                                            StreamConfigsFetcher streamConfigsFetcher,
+                                            EventSender eventSender) {
+        return new MetricsClient(clientMetadata, streamConfigsFetcher, eventSender);
     }
 
     /**
@@ -43,7 +45,11 @@ public final class MetricsClient {
     /**
      * Integration layer exposing hosting application functionality to the client library.
      */
-    private final MetricsClientIntegration integration;
+    private final ClientMetadata clientMetadata;
+
+    private final StreamConfigsFetcher streamConfigsFetcher;
+
+    private final EventSender eventSender;
 
     /**
      * Handles logging session management. A new session begins (and a new session ID is created)
@@ -142,7 +148,7 @@ public final class MetricsClient {
      */
     private void fetchStreamConfigs() {
         try {
-            Map<String, StreamConfig> streamConfig = integration.fetchStreamConfigs();
+            Map<String, StreamConfig> streamConfig = streamConfigsFetcher.fetchStreamConfigs();
             setStreamConfigs(streamConfig);
         } catch (IOException ignore) {
             // TODO: decide what to do with logging
@@ -162,7 +168,7 @@ public final class MetricsClient {
             value = "STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE",
             justification = "FIXME: call to DATE_FORMAT.format() is not threadsafe.")
     private void addRequiredMetadata(Event event) {
-        event.setAppInstallId(integration.getAppInstallId());
+        event.setAppInstallId(clientMetadata.getAppInstallId());
         event.setAppSessionId(sessionController.getSessionId());
         event.setTimestamp(DATE_FORMAT.format(new Date()));
     }
@@ -205,86 +211,99 @@ public final class MetricsClient {
 
     private void sendEventsToDestination(DestinationEventService destinationEventService, List<Event> pendingValidEvents) {
         try {
-            integration.sendEvents(destinationEventService.getBaseUri(), pendingValidEvents);
+            eventSender.sendEvents(destinationEventService.getBaseUri(), pendingValidEvents);
         } catch (IOException ignore) {
             MetricsClient.this.pendingEvents.addAll(pendingValidEvents);
         }
     }
 
-    boolean streamConfigIsEmpty() {
-        return streamConfigs.isEmpty();
-    }
-
     /**
      * MetricsClient Constructor.
      *
-     * @param integration integration implementation
+     * @param ClientMetadata clientMetadata implementation
      */
-    MetricsClient(MetricsClientIntegration integration) {
-        this(integration, new SessionController());
+    MetricsClient(ClientMetadata clientMetadata,
+                  StreamConfigsFetcher streamConfigsFetcher,
+                  EventSender eventSender) {
+        this(clientMetadata, streamConfigsFetcher, eventSender, new SessionController());
     }
 
     /**
-     * @param integration       integration
+     * @param clientMetadata       clientMetadata
      * @param sessionController session controller
      */
-    MetricsClient(MetricsClientIntegration integration, SessionController sessionController) {
+    MetricsClient(ClientMetadata clientMetadata,
+                  StreamConfigsFetcher streamConfigsFetcher,
+                  EventSender eventSender,
+                  SessionController sessionController) {
         this(
-                integration,
+                clientMetadata,
+                streamConfigsFetcher,
+                eventSender,
                 sessionController,
-                new SamplingController(integration, sessionController),
-                new ContextController(integration)
+                new SamplingController(clientMetadata, sessionController),
+                new ContextController(clientMetadata)
         );
     }
 
     private MetricsClient(
-            MetricsClientIntegration integration,
+            ClientMetadata clientMetadata,
+            StreamConfigsFetcher streamConfigsFetcher,
+            EventSender eventSender,
             SessionController sessionController,
             SamplingController samplingController,
             ContextController contextController
     ) {
         this(
-                integration,
+                clientMetadata,
+                streamConfigsFetcher,
+                eventSender,
                 sessionController,
                 samplingController,
                 contextController,
                 new CurationController(),
                 null,
-                null, 10
+                null,
+                10
         );
     }
 
     /**
      * Constructor for testing.
      *
-     * @param integration            integration
+     * @param clientMetadata        clientMetadata
+     * @param streamConfigsFetcher   stream config fetcher
+     * @param eventSender           event sender
      * @param sessionController      session controller
      * @param samplingController     sampling controller
      * @param contextController      context controller
      * @param curationController     curation controller
      * @param fetchStreamConfigsTask optional custom implementation of stream configs fetch task (for testing)
      * @param eventSubmissionTask    optional custom implementation of event submission task (for testing)
-     * @param capacity
+     * @param capacity               queue capacity
      */
     @SuppressFBWarnings(
             value = "STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE",
             justification = "FIXME: call to DATE_FORMAT.format() is not threadsafe.")
     MetricsClient(
-            MetricsClientIntegration integration,
+            ClientMetadata clientMetadata,
+            StreamConfigsFetcher streamConfigsFetcher,
+            EventSender eventSender,
             SessionController sessionController,
             SamplingController samplingController,
             ContextController contextController,
             CurationController curationController,
             TimerTask fetchStreamConfigsTask,
             TimerTask eventSubmissionTask,
-            int capacity
-    ) {
-        this.integration = integration;
+            int capacity) {
+        this.clientMetadata = clientMetadata;
         this.sessionController = sessionController;
         this.samplingController = samplingController;
         this.contextController = contextController;
         this.curationController = curationController;
         this.pendingEvents = new LinkedBlockingQueue<>(capacity);
+        this.streamConfigsFetcher = streamConfigsFetcher;
+        this.eventSender = eventSender;
 
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
         TIMER.schedule(fetchStreamConfigsTask != null ? fetchStreamConfigsTask : new FetchStreamConfigsTask(), 0, STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL);

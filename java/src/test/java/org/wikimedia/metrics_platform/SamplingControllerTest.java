@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class SamplingControllerTest {
 
     private final SamplingController samplingController = new SamplingController(
-            new TestMetricsClientIntegration(),
+            new TestClientMetadata(),
             new SessionController()
     );
 

@@ -37,7 +37,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.wikimedia.metrics_platform.Event;
-import org.wikimedia.metrics_platform.MetricsClientIntegration;
+import org.wikimedia.metrics_platform.ClientMetadata;
 import org.wikimedia.metrics_platform.StreamConfig;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -47,10 +47,10 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public class ContextController {
 
     @Nonnull
-    private final MetricsClientIntegration integration;
+    private final ClientMetadata clientMetadata;
 
-    public ContextController(MetricsClientIntegration integration) {
-        this.integration = integration;
+    public ContextController(ClientMetadata clientMetadata) {
+        this.clientMetadata = clientMetadata;
     }
 
     @SuppressFBWarnings(value = "CC_CYCLOMATIC_COMPLEXITY", justification = "TODO: needs to be refactored")
@@ -65,80 +65,80 @@ public class ContextController {
             switch (value) {
                 // Page
                 case PAGE_ID:
-                    event.getPageData().setId(integration.getPageId());
+                    event.getPageData().setId(clientMetadata.getPageId());
                     break;
                 case PAGE_NAMESPACE_ID:
-                    event.getPageData().setNamespaceId(integration.getPageNamespaceId());
+                    event.getPageData().setNamespaceId(clientMetadata.getPageNamespaceId());
                     break;
                 case PAGE_NAMESPACE_TEXT:
-                    event.getPageData().setNamespaceText(integration.getPageNamespaceText());
+                    event.getPageData().setNamespaceText(clientMetadata.getPageNamespaceText());
                     break;
                 case PAGE_TITLE:
-                    event.getPageData().setTitle(integration.getPageTitle());
+                    event.getPageData().setTitle(clientMetadata.getPageTitle());
                     break;
                 case PAGE_IS_REDIRECT:
-                    event.getPageData().setIsRedirect(integration.getPageIsRedirect());
+                    event.getPageData().setIsRedirect(clientMetadata.getPageIsRedirect());
                     break;
                 case PAGE_REVISION_ID:
-                    event.getPageData().setRevisionId(integration.getPageRevisionId());
+                    event.getPageData().setRevisionId(clientMetadata.getPageRevisionId());
                     break;
                 case PAGE_WIKIDATA_ID:
-                    event.getPageData().setWikidataItemId(integration.getPageWikidataItemId());
+                    event.getPageData().setWikidataItemId(clientMetadata.getPageWikidataItemId());
                     break;
                 case PAGE_CONTENT_LANGUAGE:
-                    event.getPageData().setContentLanguage(integration.getPageContentLanguage());
+                    event.getPageData().setContentLanguage(clientMetadata.getPageContentLanguage());
                     break;
                 case PAGE_USER_GROUPS_ALLOWED_TO_EDIT:
-                    event.getPageData().setGroupsAllowedToEdit(integration.getPageGroupsAllowedToEdit());
+                    event.getPageData().setGroupsAllowedToEdit(clientMetadata.getPageGroupsAllowedToEdit());
                     break;
                 case PAGE_USER_GROUPS_ALLOWED_TO_MOVE:
-                    event.getPageData().setGroupsAllowedToMove(integration.getPageGroupsAllowedToMove());
+                    event.getPageData().setGroupsAllowedToMove(clientMetadata.getPageGroupsAllowedToMove());
                     break;
 
                     // User
                 case USER_ID:
-                    event.getUserData().setId(integration.getUserId());
+                    event.getUserData().setId(clientMetadata.getUserId());
                     break;
                 case USER_IS_LOGGED_IN:
-                    event.getUserData().setIsLoggedIn(integration.getUserIsLoggedIn());
+                    event.getUserData().setIsLoggedIn(clientMetadata.getUserIsLoggedIn());
                     break;
                 case USER_IS_BOT:
-                    event.getUserData().setIsBot(integration.getUserIsBot());
+                    event.getUserData().setIsBot(clientMetadata.getUserIsBot());
                     break;
                 case USER_NAME:
-                    event.getUserData().setName(integration.getUserName());
+                    event.getUserData().setName(clientMetadata.getUserName());
                     break;
                 case USER_GROUPS:
-                    event.getUserData().setGroups(integration.getUserGroups());
+                    event.getUserData().setGroups(clientMetadata.getUserGroups());
                     break;
                 case USER_CAN_PROBABLY_EDIT_PAGE:
-                    event.getUserData().setCanProbablyEditPage(integration.getUserCanProbablyEditPage());
+                    event.getUserData().setCanProbablyEditPage(clientMetadata.getUserCanProbablyEditPage());
                     break;
                 case USER_EDIT_COUNT:
-                    event.getUserData().setEditCount(integration.getUserEditCount());
+                    event.getUserData().setEditCount(clientMetadata.getUserEditCount());
                     break;
                 case USER_EDIT_COUNT_BUCKET:
-                    event.getUserData().setEditCountBucket(integration.getUserEditCountBucket());
+                    event.getUserData().setEditCountBucket(clientMetadata.getUserEditCountBucket());
                     break;
                 case USER_REGISTRATION_TIMESTAMP:
-                    event.getUserData().setRegistrationTimestamp(integration.getUserRegistrationTimestamp());
+                    event.getUserData().setRegistrationTimestamp(clientMetadata.getUserRegistrationTimestamp());
                     break;
                 case USER_LANGUAGE:
-                    event.getUserData().setLanguage(integration.getUserLanguage());
+                    event.getUserData().setLanguage(clientMetadata.getUserLanguage());
                     break;
                 case USER_LANGUAGE_VARIANT:
-                    event.getUserData().setLanguageVariant(integration.getUserLanguageVariant());
+                    event.getUserData().setLanguageVariant(clientMetadata.getUserLanguageVariant());
                     break;
 
                     // Device
                 case DEVICE_PIXEL_RATIO:
-                    event.getDeviceData().setPixelRatio(integration.getDevicePixelRatio());
+                    event.getDeviceData().setPixelRatio(clientMetadata.getDevicePixelRatio());
                     break;
                 case DEVICE_HARDWARE_CONCURRENCY:
-                    event.getDeviceData().setHardwareConcurrency(integration.getDeviceHardwareConcurrency());
+                    event.getDeviceData().setHardwareConcurrency(clientMetadata.getDeviceHardwareConcurrency());
                     break;
                 case DEVICE_MAX_TOUCH_POINTS:
-                    event.getDeviceData().setMaxTouchPoints(integration.getDeviceMaxTouchPoints());
+                    event.getDeviceData().setMaxTouchPoints(clientMetadata.getDeviceMaxTouchPoints());
                     break;
 
                     // Other
@@ -152,7 +152,7 @@ public class ContextController {
                     event.setPlatformFamily("app");
                     break;
                 case IS_PRODUCTION:
-                    event.setIsProduction(integration.isProduction());
+                    event.setIsProduction(clientMetadata.isProduction());
                     break;
                 default:
                     throw new IllegalArgumentException(String.format(Locale.ROOT, "Unknown property %s", value));
