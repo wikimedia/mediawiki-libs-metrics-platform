@@ -1,7 +1,5 @@
 package org.wikimedia.metrics_platform;
 
-import static java.time.temporal.ChronoUnit.MINUTES;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
@@ -15,13 +13,13 @@ import javax.annotation.concurrent.ThreadSafe;
  * Manages sessions and session IDs for the Metrics Platform Client.
  *
  * A session begins when the application is launched and expires when the app is in the background
- * for 15 minutes or more.
+ * for 30 minutes or more.
  */
 @ThreadSafe
 @ParametersAreNonnullByDefault
 class SessionController {
 
-    private static final Duration SESSION_TIMEOUT = Duration.of(15, MINUTES); // 15 minutes
+    private static final Duration SESSION_LENGTH = Duration.ofMinutes(30);
     @GuardedBy("this")
     @Nonnull
     private String sessionId = generateSessionId();
@@ -56,7 +54,7 @@ class SessionController {
     }
 
     synchronized boolean sessionExpired() {
-        return Duration.between(sessionTouched, Instant.now()).compareTo(SESSION_TIMEOUT) >= 0;
+        return Duration.between(sessionTouched, Instant.now()).compareTo(SESSION_LENGTH) >= 0;
     }
 
     @Nonnull
