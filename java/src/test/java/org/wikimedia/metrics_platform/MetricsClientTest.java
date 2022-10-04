@@ -1,10 +1,10 @@
 package org.wikimedia.metrics_platform;
 
 import static java.util.Collections.emptyMap;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static java.util.Collections.singletonMap;
 import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
@@ -74,24 +74,14 @@ public class MetricsClientTest {
     }
 
     @Test
-    public void testShouldProcessEventsForStream() {
-        Map<String, StreamConfig> streamConfigs = setStreamConfigs();
-        streamConfigs.put("test_event_2", new StreamConfig("test_event_2", "test/event/2", null, null));
-        when(mockSamplingController.isInSample(streamConfigs.get("test_event"))).thenReturn(true);
-        when(mockSamplingController.isInSample(streamConfigs.get("test_event_2"))).thenReturn(false);
-
-        assertThat(client.shouldProcessEventsForStream("test_event"), is(true));
-        assertThat(client.shouldProcessEventsForStream("test_event_2"), is(false));
-        assertThat(client.shouldProcessEventsForStream("no_such_stream"), is(false));
-    }
-
-    @Test
     public void testFetchStreamConfigsTaskFetchesStreamConfigs() throws IOException {
+        when(mockStreamConfigFetcher.fetchStreamConfigs()).thenReturn(getTestStreamConfigMap());
+
         client.new FetchStreamConfigsTask().run();
         // FIXME: Since configuration loading can happen either from a Timer (MetricsClient:348) or
         //  from the explicit call above, the fetchStreamConfigs() method can be called either once
         //  or twice. Fixing this properly will require some refactoring of the MetricsClient class.
-        when(mockStreamConfigFetcher.fetchStreamConfigs()).thenReturn(setStreamConfigs());
+        verify(mockStreamConfigFetcher, atLeastOnce()).fetchStreamConfigs();
     }
 
     @Test
@@ -221,11 +211,14 @@ public class MetricsClientTest {
      * @return stream configs
      */
     private Map<String, StreamConfig> setStreamConfigs() {
-        StreamConfig streamConfig = new StreamConfig("test_event", "test/event", null, null);
-        Map<String, StreamConfig> streamConfigs = new HashMap<>();
-        streamConfigs.put("test_event", streamConfig);
+        Map<String, StreamConfig> streamConfigs = getTestStreamConfigMap();
         client.setStreamConfigs(streamConfigs);
         return streamConfigs;
+    }
+
+    private static Map<String, StreamConfig> getTestStreamConfigMap() {
+        StreamConfig streamConfig = new StreamConfig("test_event", "test/event", null, null);
+        return singletonMap("test_event", streamConfig);
     }
 
     private static class AlwaysAcceptCurationController extends CurationController {

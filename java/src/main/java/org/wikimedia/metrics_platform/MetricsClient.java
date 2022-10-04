@@ -1,12 +1,12 @@
 package org.wikimedia.metrics_platform;
 
+import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.groupingBy;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -16,16 +16,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+
+import javax.annotation.Nonnull;
 
 import org.wikimedia.metrics_platform.context.ContextController;
 import org.wikimedia.metrics_platform.curation.CurationController;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-@SuppressFBWarnings(
-        value = "IS2_INCONSISTENT_SYNC",
-        justification = "FIXME: inconsistent synchronization to streamConfigs, probably needs non trivial refactoring")
 public final class MetricsClient {
 
     private final BlockingQueue<Event> pendingEvents;
@@ -39,7 +39,8 @@ public final class MetricsClient {
     /**
      * Stream configs to be fetched on startup and stored for the duration of the app lifecycle.
      */
-    private Map<String, StreamConfig> streamConfigs = Collections.emptyMap();
+    private final AtomicReference<Map<String, StreamConfig>> streamConfigsReference = new AtomicReference<>(emptyMap());
+
     private static final int STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL = 30000; // 30 seconds
 
     /**
@@ -92,7 +93,7 @@ public final class MetricsClient {
      *
      * @param event  event data
      */
-    public synchronized void submit(Event event) {
+    public void submit(Event event) {
         addRequiredMetadata(event);
         pendingEvents.add(event);
     }
@@ -123,10 +124,10 @@ public final class MetricsClient {
     /**
      * Setter exposed for testing.
      *
-     * @param streamConfigs stream configs
+     * @param streamConfigsReference stream configs
      */
-    synchronized void setStreamConfigs(Map<String, StreamConfig> streamConfigs) {
-        this.streamConfigs = streamConfigs;
+    void setStreamConfigs(@Nonnull Map<String, StreamConfig> streamConfigsReference) {
+        this.streamConfigsReference.set(streamConfigsReference);
     }
 
     /**
@@ -137,8 +138,10 @@ public final class MetricsClient {
      * @param stream stream name
      * @return boolean
      */
+    // Todo: include condition in filter when sendingEnqueuedEvents
     boolean shouldProcessEventsForStream(String stream) {
-        StreamConfig streamConfig = streamConfigs.get(stream);
+        Map<String, StreamConfig> streamConfigMap = streamConfigsReference.get();
+        StreamConfig streamConfig = streamConfigMap.get(stream);
         return streamConfig != null && samplingController.isInSample(streamConfig);
     }
 
@@ -149,7 +152,7 @@ public final class MetricsClient {
     private void fetchStreamConfigs() {
         try {
             Map<String, StreamConfig> streamConfig = streamConfigsFetcher.fetchStreamConfigs();
-            setStreamConfigs(streamConfig);
+            if (!streamConfig.isEmpty()) setStreamConfigs(streamConfig);
         } catch (IOException ignore) {
             // TODO: decide what to do with logging
         }
@@ -185,27 +188,26 @@ public final class MetricsClient {
      * TODO: Add client error logging.
      */
     void sendEnqueuedEvents() {
-        if (this.streamConfigs.isEmpty()) {
-            return;
-        }
+        Map<String, StreamConfig> streamConfigMap = streamConfigsReference.get();
 
         ArrayList<Event> pending = new ArrayList<>();
         this.pendingEvents.drainTo(pending);
 
         pending.stream()
-                .filter(this::eventPassesCurationRules)
-                .collect(groupingBy(this::destinationEventService, Collectors.toList()))
+                .filter(event -> eventPassesCurationRules(event, streamConfigMap))
+                .collect(groupingBy(event -> destinationEventService(event, streamConfigMap), Collectors.toList()))
                 .forEach(this::sendEventsToDestination);
     }
 
-    private boolean eventPassesCurationRules(Event event) {
-        StreamConfig streamConfig = streamConfigs.get(event.getStream());
+    private boolean eventPassesCurationRules(Event event, Map<String, StreamConfig> streamConfigMap) {
+        // Todo: what to do when stream config is null
+        StreamConfig streamConfig = streamConfigMap.get(event.getStream());
         contextController.addRequestedValues(event, streamConfig);
         return curationController.eventPassesCurationRules(event, streamConfig);
     }
 
-    private DestinationEventService destinationEventService(Event event) {
-        StreamConfig streamConfig = streamConfigs.get(event.getStream());
+    private DestinationEventService destinationEventService(Event event, Map<String, StreamConfig> streamConfigMap) {
+        StreamConfig streamConfig = streamConfigMap.get(event.getStream());
         return streamConfig.getDestinationEventService();
     }
 
@@ -330,7 +332,7 @@ public final class MetricsClient {
     class FetchStreamConfigsTask extends TimerTask {
         @Override
         public void run() {
-            if (streamConfigs.isEmpty()) {
+            if (streamConfigsReference.get().isEmpty()) {
                 fetchStreamConfigs();
             }
         }
