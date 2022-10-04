@@ -33,6 +33,24 @@
       "message": "realized my previous screenshot captured the examples data\n\nverifying the database name in the actual event:\nhttps://phabricator.wikimedia.org/F35546694\n\nwill merge shortly",
       "revId": "ab662536e372226fc50154d6dbbc1314f52d4ec0",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b385c4c0_5911cae8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-10-04T17:53:08Z",
+      "side": 1,
+      "message": "updating screenshot - https://phabricator.wikimedia.org/F35546695",
+      "parentUuid": "9d6ba4a2_709a14c1",
+      "revId": "ab662536e372226fc50154d6dbbc1314f52d4ec0",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
