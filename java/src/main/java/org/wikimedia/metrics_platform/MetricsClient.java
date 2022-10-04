@@ -131,10 +131,9 @@ public final class MetricsClient {
      * @param stream stream name
      * @return boolean
      */
-    @SuppressFBWarnings(value = "MUI_CONTAINSKEY_BEFORE_GET", justification = "TODO: needs to be fixed.")
     boolean shouldProcessEventsForStream(String stream) {
-        return streamConfigs.containsKey(stream) &&
-                samplingController.isInSample(streamConfigs.get(stream));
+        StreamConfig streamConfig = streamConfigs.get(stream);
+        return streamConfig != null && samplingController.isInSample(streamConfig);
     }
 
     /**
