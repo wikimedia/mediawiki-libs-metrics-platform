@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "507f41d0_a8d261af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-10-04T15:27:36Z",
+      "side": 1,
+      "message": "tested locally with https://gerrit.wikimedia.org/r/c/schemas/event/secondary/+/777844\n\nhttps://phabricator.wikimedia.org/F35546581\n\npending Q: do all references to \u0027/analytics/mediawiki/client/metrics_event/1.0.0\u0027 need to be updated to \u0027/analytics/mediawiki/client/metrics_event/1.1.0\u0027 in both the js + php clients?",
+      "revId": "bb246a0d2d6de5b8124b44e01932a856bfb7d64b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
