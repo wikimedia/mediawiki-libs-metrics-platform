@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c4024cc_0f1eb90c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-10-04T17:46:10Z",
+      "side": 1,
+      "message": "Sam: if this lgtu, please +1 and I\u0027ll be happy to merge",
+      "revId": "ab662536e372226fc50154d6dbbc1314f52d4ec0",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
