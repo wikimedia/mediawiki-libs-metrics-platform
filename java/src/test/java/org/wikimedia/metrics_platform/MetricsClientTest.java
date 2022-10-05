@@ -53,17 +53,8 @@ public class MetricsClientTest {
     }
 
     @Test
-    public void testBeginNewSessionOnApplicationResume() {
-        when(mockSessionController.sessionExpired()).thenReturn(true);
-        client.onApplicationResume();
-        verify(mockSessionController, times(1)).beginNewSession();
-    }
-
-    @Test
     public void testResumeSessionOnApplicationResume() {
-        when(mockSessionController.sessionExpired()).thenReturn(false);
         client.onApplicationResume();
-        verify(mockSessionController, times(0)).beginNewSession();
         verify(mockSessionController, times(1)).touchSession();
     }
 
