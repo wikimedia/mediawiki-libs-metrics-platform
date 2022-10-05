@@ -200,7 +200,7 @@ QUnit.test( 'dispatch() - produce events correctly', function ( assert ) {
 	var event2 = enqueueEventStub.args[ 1 ][ 0 ];
 
 	// Test that the first event was constructed and produced correctly
-	assert.strictEqual( event1.$schema, '/analytics/mediawiki/client/metrics_event/1.0.0' );
+	assert.strictEqual( event1.$schema, '/analytics/mediawiki/client/metrics_event/1.1.0' );
 	assert.deepEqual( event1.meta, {
 		stream: 'metrics.platform.test2',
 		domain: integration.getHostname()
@@ -209,7 +209,7 @@ QUnit.test( 'dispatch() - produce events correctly', function ( assert ) {
 	assert.strictEqual( event1.name, 'widgetClick' );
 
 	// Test that the second event was constructed and produced correctly
-	assert.strictEqual( event2.$schema, '/analytics/mediawiki/client/metrics_event/1.0.0' );
+	assert.strictEqual( event2.$schema, '/analytics/mediawiki/client/metrics_event/1.1.0' );
 	assert.deepEqual( event2.meta, {
 		stream: 'metrics.platform.test3',
 		domain: integration.getHostname()

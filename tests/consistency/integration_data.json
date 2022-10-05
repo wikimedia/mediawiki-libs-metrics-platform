@@ -22,7 +22,7 @@
 		"version": "1.39.0-wmf.8",
 		"is_production": true,
 		"is_debug_mode": false,
-		"db_name": "enwiki",
+		"database": "enwiki",
 		"site_content_language": "en"
 	},
 	"performer": {

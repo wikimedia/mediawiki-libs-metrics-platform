@@ -31,7 +31,7 @@ class TestIntegration implements Integration {
 		'mediawiki_version' => '1.39.0',
 		'mediawiki_is_production' => false,
 		'mediawiki_is_debug_mode' => true,
-		'mediawiki_db_name' => 'zhwiki',
+		'mediawiki_database' => 'zhwiki',
 		'mediawiki_site_content_language' => 'zh',
 		'mediawiki_site_content_language_variant' => 'zh-tw',
 

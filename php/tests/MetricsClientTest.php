@@ -289,7 +289,7 @@ class MetricsClientTest extends TestCase {
 
 		$event = $this->integration->getSentEvents()[0];
 
-		$this->assertEquals( '/analytics/mediawiki/client/metrics_event/1.0.0', $event['$schema'] );
+		$this->assertEquals( '/analytics/mediawiki/client/metrics_event/1.1.0', $event['$schema'] );
 		$this->assertEquals( 'test.event.mpc1', $event['meta']['stream'] );
 
 		$this->assertArrayHasKey(

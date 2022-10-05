@@ -26,7 +26,7 @@ var streamConfig = {
 				'mediawiki_version',
 				'mediawiki_is_production',
 				'mediawiki_is_debug_mode',
-				'mediawiki_db_name',
+				'mediawiki_database',
 				'mediawiki_site_content_language',
 				'performer_is_logged_in',
 				'performer_id',
@@ -87,7 +87,7 @@ QUnit.test( 'addRequestedValues()', function ( assert ) {
 			version: '1.37.0',
 			is_production: true,
 			is_debug_mode: false,
-			db_name: 'zhwiki',
+			database: 'zhwiki',
 			site_content_language: 'zh'
 		},
 		performer: {
