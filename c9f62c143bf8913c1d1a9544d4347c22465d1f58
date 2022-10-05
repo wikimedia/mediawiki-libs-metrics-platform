@@ -16,6 +16,23 @@
       "message": "Thanks \u003c3 \u003c3 \u003c3",
       "revId": "c9f62c143bf8913c1d1a9544d4347c22465d1f58",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c862d3a_9bb2090b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-05T15:06:50Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "c9f62c143bf8913c1d1a9544d4347c22465d1f58",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
