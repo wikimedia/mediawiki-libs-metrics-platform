@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5626d92e_e6235a24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-05T15:05:22Z",
+      "side": 1,
+      "message": "Concurrency is hard! We should probably have a discussion about the concepts around concurrency.",
+      "revId": "9f14c0b55427b51e2bcd5fff888038a75344bcec",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51c865a9_d5064554",

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1ae1a25_31af9e05",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-05T15:05:22Z",
+      "side": 0,
+      "message": "We don\u0027t know which thread is going to call `submit()`. It could come from the UI thread, or from any other source. So this code needs to be threadsafe. Since this specific method does not access any shared mutable state (or that this mutable state is encapsulated in a threadsafe way for pendingEvents), we don\u0027t need synchronization at this level.",
+      "range": {
+        "startLine": 89,
+        "startChar": 11,
+        "endLine": 89,
+        "endChar": 23
+      },
+      "revId": "6d606dc4aa49f06ee7b39797763871194f92f50c",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f39e148e_5f1c135e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-05T15:05:22Z",
+      "side": 0,
+      "message": "This synchronized is needed. `streamConfigs` is written from the Timer thread and read from other threads. The problem at the moment is that this instance variable isn\u0027t synchronized on all reads and writes consistently.",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 16
+      },
+      "revId": "6d606dc4aa49f06ee7b39797763871194f92f50c",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
