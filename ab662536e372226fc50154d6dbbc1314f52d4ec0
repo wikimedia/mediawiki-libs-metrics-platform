@@ -51,6 +51,23 @@
       "parentUuid": "9d6ba4a2_709a14c1",
       "revId": "ab662536e372226fc50154d6dbbc1314f52d4ec0",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aebb24c3_16ad35e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-10-05T04:18:56Z",
+      "side": 1,
+      "message": "Thanks for updating the patch, @cjming.",
+      "revId": "ab662536e372226fc50154d6dbbc1314f52d4ec0",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
