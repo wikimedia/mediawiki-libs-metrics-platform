@@ -33,6 +33,24 @@
       "message": "Is this the call that the methods were marked as synchronized for? It\u0027s invoked by a timer task initialised in the constructor below.",
       "revId": "9f14c0b55427b51e2bcd5fff888038a75344bcec",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e27295e0_c054fc0a",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-05T16:29:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51c865a9_d5064554",
+      "revId": "9f14c0b55427b51e2bcd5fff888038a75344bcec",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
