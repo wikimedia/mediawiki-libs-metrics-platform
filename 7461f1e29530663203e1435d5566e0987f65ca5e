@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efcd7127_4b0c9c09",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-10-06T18:36:56Z",
+      "side": 1,
+      "message": "Nit that is way out of scope for this patch: I\u0027ve tried and failed to be consistent with how to \"tag\" commit messages to signal to reviewers which languages are affected. We (Metrics Platform) should create a CONTRIBUTING.md that includes a style guide for commit messages.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "7461f1e29530663203e1435d5566e0987f65ca5e",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f429e92a_94eeb0d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-10-06T18:36:56Z",
+      "side": 1,
+      "message": "Nice!",
+      "revId": "7461f1e29530663203e1435d5566e0987f65ca5e",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
