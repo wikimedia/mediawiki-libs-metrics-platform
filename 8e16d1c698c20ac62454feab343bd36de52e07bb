@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56acf5fd_125b01b2",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-06T09:46:56Z",
+      "side": 1,
+      "message": "this does not seem related to the fix of SimpleDateFormat. Addressing the thread safety of this class should be done in a different patch.",
+      "range": {
+        "startLine": 82,
+        "startChar": 11,
+        "endLine": 82,
+        "endChar": 23
+      },
+      "revId": "8e16d1c698c20ac62454feab343bd36de52e07bb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c198b7a2_ec52aec8",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-06T09:46:56Z",
+      "side": 1,
+      "message": "this does not seem related to the fix of SimpleDateFormat. Addressing the thread safety of this class should be done in a different patch.",
+      "range": {
+        "startLine": 115,
+        "startChar": 4,
+        "endLine": 115,
+        "endChar": 16
+      },
+      "revId": "8e16d1c698c20ac62454feab343bd36de52e07bb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
