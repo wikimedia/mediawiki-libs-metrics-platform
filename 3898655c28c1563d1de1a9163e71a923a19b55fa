@@ -41,6 +41,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a04be7d_9c239c88",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-06T14:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fffb4668_4de34596",
+      "range": {
+        "startLine": 223,
+        "startChar": 33,
+        "endLine": 223,
+        "endChar": 44
+      },
+      "revId": "3898655c28c1563d1de1a9163e71a923a19b55fa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea40ac86_efb43150",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-10-06T09:54:27Z",
       "side": 1,
       "message": "rename?",
+      "range": {
+        "startLine": 21,
+        "startChar": 38,
+        "endLine": 21,
+        "endChar": 49
+      },
+      "revId": "3898655c28c1563d1de1a9163e71a923a19b55fa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14b71b13_0d6f714f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/SamplingController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-06T14:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea40ac86_efb43150",
       "range": {
         "startLine": 21,
         "startChar": 38,
@@ -87,6 +135,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "50b031eb_d96bcba1",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/ContextController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-06T14:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdbf6ca0_c23b6ce9",
+      "range": {
+        "startLine": 52,
+        "startChar": 44,
+        "endLine": 52,
+        "endChar": 55
+      },
+      "revId": "3898655c28c1563d1de1a9163e71a923a19b55fa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "31c7f5ec_bf161211",
@@ -100,6 +172,30 @@
       "writtenOn": "2022-10-06T09:54:27Z",
       "side": 1,
       "message": "this commented out code should be removed",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 78
+      },
+      "revId": "3898655c28c1563d1de1a9163e71a923a19b55fa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "affcc312_6fc3cbc8",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-06T14:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31c7f5ec_bf161211",
       "range": {
         "startLine": 104,
         "startChar": 0,
@@ -156,6 +252,54 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e31bade_0434be7e",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-06T14:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05b7794a_f859fb39",
+      "range": {
+        "startLine": 151,
+        "startChar": 41,
+        "endLine": 151,
+        "endChar": 69
+      },
+      "revId": "3898655c28c1563d1de1a9163e71a923a19b55fa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00084283_71ee7fd3",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-06T14:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e6c4679_2e53c5c9",
+      "range": {
+        "startLine": 151,
+        "startChar": 23,
+        "endLine": 151,
+        "endChar": 34
+      },
+      "revId": "3898655c28c1563d1de1a9163e71a923a19b55fa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2401d1e7_32d8c1a1",
@@ -169,6 +313,30 @@
       "writtenOn": "2022-10-06T09:54:27Z",
       "side": 1,
       "message": "rename?",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "3898655c28c1563d1de1a9163e71a923a19b55fa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50e9fc9a_5d2198f6",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/TestMetricsClientIntegration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-06T14:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2401d1e7_32d8c1a1",
       "range": {
         "startLine": 9,
         "startChar": 13,
