@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f5958cb_66906bbd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-06T09:49:16Z",
+      "side": 1,
+      "message": "See comment inline, and ping me for a larger discussion on thread safety.",
+      "revId": "afa43d4a68501c707b43f3f92e8f0b33f37be885",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}

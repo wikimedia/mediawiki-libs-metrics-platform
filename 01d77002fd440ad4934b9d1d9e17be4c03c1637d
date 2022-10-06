@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b691b4f_2fa80919",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-06T09:49:16Z",
+      "side": 0,
+      "message": "Here, synchronization is required. The stream config is written and read by different threads.",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 16
+      },
+      "revId": "01d77002fd440ad4934b9d1d9e17be4c03c1637d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
