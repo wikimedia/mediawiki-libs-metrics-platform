@@ -81,6 +81,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b624b4e_975d4545",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-06T15:29:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbdd7ec6_26e438fc",
+      "range": {
+        "startLine": 123,
+        "startChar": 9,
+        "endLine": 123,
+        "endChar": 34
+      },
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ead06ae_d052dab8",
@@ -94,6 +118,30 @@
       "writtenOn": "2022-10-06T14:41:19Z",
       "side": 1,
       "message": "This null-check should not be needed.\n\nNote that this whole method is only called from tests but not from production code. This seems like a check that was done in the previous event sending implementation but has not been ported to the new one. There is already a \"TODO\" on L199 that addresses this issue, so this method can be removed (this should ideally be done in a previous CR, but can be done as part of this one if it is easier).",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 50
+      },
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8158102_1dc23e13",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-06T15:29:48Z",
+      "side": 1,
+      "message": "Does that mean SamplingController is not needed on the MetricsClient",
+      "parentUuid": "1ead06ae_d052dab8",
       "range": {
         "startLine": 137,
         "startChar": 0,
@@ -140,6 +188,30 @@
       "writtenOn": "2022-10-06T14:41:19Z",
       "side": 1,
       "message": "Not related to this CR, but those 3 lines could be replaced with\n\n    return Map.of(\"test_event\", streamConfig)\n\nwith the additional benefit of returning an immutable map.",
+      "range": {
+        "startLine": 218,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 29
+      },
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3144ca70_8a052b06",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-06T15:29:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f16e1085_8e088b1b",
       "range": {
         "startLine": 218,
         "startChar": 8,
