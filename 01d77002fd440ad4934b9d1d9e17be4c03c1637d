@@ -22,6 +22,30 @@
       },
       "revId": "01d77002fd440ad4934b9d1d9e17be4c03c1637d",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e200b6b_77ce9a22",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-06T14:41:19Z",
+      "side": 0,
+      "message": "This synchronization isn\u0027t needed now that we are using an AtomicRef.",
+      "parentUuid": "0b691b4f_2fa80919",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 16
+      },
+      "revId": "01d77002fd440ad4934b9d1d9e17be4c03c1637d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }

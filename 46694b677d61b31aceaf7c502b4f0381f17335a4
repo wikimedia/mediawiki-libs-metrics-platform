@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b648a6ca_bc5bf4fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-06T14:41:19Z",
+      "side": 1,
+      "message": "Commit message should be updated to reflect the current status of this CR.",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 78
+      },
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc446044_0edb8bc9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-06T14:41:19Z",
+      "side": 1,
+      "message": "A few minor comments inline. I would appreciate having David review this as well.",
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbdd7ec6_26e438fc",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-06T14:41:19Z",
+      "side": 1,
+      "message": "I would keep the name `setStreamConfigs`. The fact that we are using an AtomicRef is an implementation detail that should be hidden from the caller.",
+      "range": {
+        "startLine": 123,
+        "startChar": 9,
+        "endLine": 123,
+        "endChar": 34
+      },
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ead06ae_d052dab8",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-06T14:41:19Z",
+      "side": 1,
+      "message": "This null-check should not be needed.\n\nNote that this whole method is only called from tests but not from production code. This seems like a check that was done in the previous event sending implementation but has not been ported to the new one. There is already a \"TODO\" on L199 that addresses this issue, so this method can be removed (this should ideally be done in a previous CR, but can be done as part of this one if it is easier).",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 50
+      },
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f16e1085_8e088b1b",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-06T14:41:19Z",
+      "side": 1,
+      "message": "Not related to this CR, but those 3 lines could be replaced with\n\n    return Map.of(\"test_event\", streamConfig)\n\nwith the additional benefit of returning an immutable map.",
+      "range": {
+        "startLine": 218,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 29
+      },
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
