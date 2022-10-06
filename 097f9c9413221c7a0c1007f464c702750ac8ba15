@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da43cbc7_0b4c7321",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-06T14:49:53Z",
+      "side": 1,
+      "message": "LGTM\n\nComments inline, but one is trivially minor and does not necessarily need to be addressed, the other is about future cleanups that should not happen as part of this CR.\n\nI would appreciate Phuedx to review and merge.",
+      "revId": "097f9c9413221c7a0c1007f464c702750ac8ba15",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d587f138_5c876140",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-06T14:49:53Z",
+      "side": 1,
+      "message": "nit: complete detail, feel free to ignore, but I prefer the following formatting:\n\n    public static MetricsClient getInstance(\n            ClientMetadata clientMetadata,\n            StreamConfigsFetcher streamConfigsFetcher,\n            EventSender eventSender) {\n        return new MetricsClient(clientMetadata, streamConfigsFetcher, eventSender);\n    }\n\nHaving a line with a single parameter and a line with 2 looks a bit strange to me. But that\u0027s really me being pedantic, don\u0027t feel obligated to change this.",
+      "range": {
+        "startLine": 33,
+        "startChar": 44,
+        "endLine": 34,
+        "endChar": 111
+      },
+      "revId": "097f9c9413221c7a0c1007f464c702750ac8ba15",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed467c89_ca608813",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-06T14:49:53Z",
+      "side": 1,
+      "message": "Don\u0027t address this in this CR, but this is useless documentation. It does not tell us anything that we couldn\u0027t get from the method signature. We should delete all those useless docs at some point.",
+      "range": {
+        "startLine": 222,
+        "startChar": 5,
+        "endLine": 222,
+        "endChar": 58
+      },
+      "revId": "097f9c9413221c7a0c1007f464c702750ac8ba15",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
