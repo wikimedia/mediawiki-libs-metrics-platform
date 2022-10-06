@@ -41,6 +41,23 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2980a47c_5cb8a122",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2638
+      },
+      "writtenOn": "2022-10-06T15:15:56Z",
+      "side": 1,
+      "message": "lgtm\nconcerns unrelated to the patch itself:\n- there does not seem to be any limit in size of the BlockingQueue, in case that the streamConfig can\u0027t be fetched (running the app offline?) we might blowup mem usage?",
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbdd7ec6_26e438fc",
@@ -82,6 +99,29 @@
         "startChar": 0,
         "endLine": 137,
         "endChar": 50
+      },
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f539244_fe8a8ff1",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 2638
+      },
+      "writtenOn": "2022-10-06T15:15:56Z",
+      "side": 1,
+      "message": "nit: single space",
+      "range": {
+        "startLine": 151,
+        "startChar": 40,
+        "endLine": 151,
+        "endChar": 42
       },
       "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
