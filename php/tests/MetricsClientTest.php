@@ -156,7 +156,7 @@ class MetricsClientTest extends TestCase {
 
 	private function assertIsValidTimestamp( string $timestamp ) {
 		$ts = TestingAccessWrapper::newFromClass( ConvertibleTimestamp::class );
-		$this->assertRegExp( $ts->regexes['TS_ISO_8601'], $timestamp );
+		$this->assertMatchesRegularExpression( $ts->regexes['TS_ISO_8601'], $timestamp );
 		$this->assertStringEndsWith( 'Z', $timestamp );
 	}
 
@@ -168,6 +168,7 @@ class MetricsClientTest extends TestCase {
 		$logger->expects( $this->once() )
 			->method( 'warning' )
 			->with(
+				// @phan-suppress-next-line PhanTypeMismatchArgumentProbablyReal
 				'The event submitted to stream {streamName} is missing the required "$schema" property: {event}',
 				[
 					'streamName' => $streamName,
@@ -197,6 +198,7 @@ class MetricsClientTest extends TestCase {
 		$logger->expects( $this->once() )
 			->method( 'warning' )
 			->with(
+				// @phan-suppress-next-line PhanTypeMismatchArgumentProbablyReal
 				'The configuration for stream {streamName} is invalid: {validationError}',
 				[
 					'streamName' => $streamName,
@@ -233,6 +235,7 @@ class MetricsClientTest extends TestCase {
 			->getMock();
 
 		$curation->method( 'shouldProduceEvent' )
+			// @phan-suppress-next-line PhanTypeMismatchArgumentProbablyReal
 			->with( $expectedEvent, $expectedStreamConfig )
 			->willReturn( false );
 
