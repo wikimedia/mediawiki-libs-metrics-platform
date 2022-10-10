@@ -50,6 +50,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "3728a106_0adb0390",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-10T14:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b648a6ca_bc5bf4fc",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 78
+      },
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "fc446044_0edb8bc9",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
@@ -200,6 +224,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc5fac12_27f589ee",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-10T14:53:44Z",
+      "side": 1,
+      "message": "Add a filter on the next patch",
+      "parentUuid": "f8158102_1dc23e13",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 50
+      },
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f539244_fe8a8ff1",
@@ -213,6 +261,30 @@
       "writtenOn": "2022-10-06T15:15:56Z",
       "side": 1,
       "message": "nit: single space",
+      "range": {
+        "startLine": 151,
+        "startChar": 40,
+        "endLine": 151,
+        "endChar": 42
+      },
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1270a2b1_a03bbee1",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-10T14:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f539244_fe8a8ff1",
       "range": {
         "startLine": 151,
         "startChar": 40,
