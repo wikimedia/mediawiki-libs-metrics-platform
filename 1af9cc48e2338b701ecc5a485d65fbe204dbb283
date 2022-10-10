@@ -41,6 +41,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53415c40_7276efc8",
+        "filename": "java/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-10T14:55:26Z",
+      "side": 1,
+      "message": "Map.of seems to be a java 9 syntax, the IDE recommended it",
+      "parentUuid": "838a05d7_1ce29a2a",
+      "range": {
+        "startLine": 105,
+        "startChar": 20,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "1af9cc48e2338b701ecc5a485d65fbe204dbb283",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "deb61f9d_a5d75202",
