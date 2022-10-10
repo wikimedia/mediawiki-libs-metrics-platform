@@ -154,6 +154,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d497723d_e1417a2f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-10T14:42:02Z",
+      "side": 1,
+      "message": "No, it looks like we forgot about it during the metrics sending refactoring. We\u0027ll need to re-introduce it in another CR.",
+      "parentUuid": "f8158102_1dc23e13",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 50
+      },
+      "revId": "46694b677d61b31aceaf7c502b4f0381f17335a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1f539244_fe8a8ff1",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 4
