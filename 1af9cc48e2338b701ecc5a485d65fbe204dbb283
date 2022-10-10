@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "838a05d7_1ce29a2a",
+        "filename": "java/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-10T14:49:44Z",
+      "side": 1,
+      "message": "Do we use any Java 9 syntax? If we want to raise the minimal Java version, we should do it with properties, which ensures that not only the compiler plugin is configured, but any other plugin that respect those standard properties. See https://github.com/wikimedia/wikimedia-discovery-discovery-parent-pom/blob/master/pom.xml#L75-L76",
+      "range": {
+        "startLine": 105,
+        "startChar": 20,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "1af9cc48e2338b701ecc5a485d65fbe204dbb283",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "deb61f9d_a5d75202",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-10T14:49:44Z",
+      "side": 1,
+      "message": "This method is still a bit problematic. We get the config on L313, but by the time we run the test on L314, another thread might have already loaded the config. It\u0027s not terrible, just not nice. This should be refactored in another CR, where we look at how the config reload mechanism works in more details.",
+      "range": {
+        "startLine": 312,
+        "startChar": 20,
+        "endLine": 312,
+        "endChar": 23
+      },
+      "revId": "1af9cc48e2338b701ecc5a485d65fbe204dbb283",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
