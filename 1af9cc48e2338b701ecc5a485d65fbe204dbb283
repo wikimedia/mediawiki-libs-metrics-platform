@@ -67,6 +67,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "471fe8e3_3d7731f6",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-10-10T14:56:03Z",
+      "side": 1,
+      "message": "Out of scope for this patch: We should first filter the pending batch of events to see if there are events for streams that no longer exist.",
+      "range": {
+        "startLine": 198,
+        "startChar": 8,
+        "endLine": 198,
+        "endChar": 54
+      },
+      "revId": "1af9cc48e2338b701ecc5a485d65fbe204dbb283",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "deb61f9d_a5d75202",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 5
