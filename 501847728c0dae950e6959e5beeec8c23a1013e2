@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f343d84b_94af1335",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-11T07:43:32Z",
+      "side": 1,
+      "message": "The build is currently failing because our CI is configured for Java 8 only. See https://integration.wikimedia.org/ci/job/metrics-platform-pipeline-test-java/187/console",
+      "revId": "501847728c0dae950e6959e5beeec8c23a1013e2",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
