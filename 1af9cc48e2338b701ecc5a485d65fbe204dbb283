@@ -157,6 +157,30 @@
       },
       "revId": "1af9cc48e2338b701ecc5a485d65fbe204dbb283",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5abc4508_098848e5",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-10-13T12:47:17Z",
+      "side": 1,
+      "message": "\u003e this is not even a \"reload\" mechanism as it loads the config only once.\n\u003e To make it reload on regular basis removing the if might be sufficient.\n\nI wholeheartedly agree but this is out of scope for this patch. I would like to work on a specification for how/when the Swift, Java, and JavaScript patches fetch and re-fetch stream configurations.",
+      "parentUuid": "e04dd2d1_0c341165",
+      "range": {
+        "startLine": 312,
+        "startChar": 20,
+        "endLine": 312,
+        "endChar": 23
+      },
+      "revId": "1af9cc48e2338b701ecc5a485d65fbe204dbb283",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
