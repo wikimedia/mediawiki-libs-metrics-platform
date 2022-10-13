@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe4ed351_685b65e9",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 2638
+      },
+      "writtenOn": "2022-10-13T07:27:06Z",
+      "side": 1,
+      "message": "I think that:\n  if (streamConfigsMap.isEmpty()) { return; }\n\nshould still be tested unless we want to drop (actually fail with NPE currently, c.f. TODO) the events collected before the stream configs are fetched.",
+      "revId": "a77b94e7298ba858871925c04a3fc30ef3367b5a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}

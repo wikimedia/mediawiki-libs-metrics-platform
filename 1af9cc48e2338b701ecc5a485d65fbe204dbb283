@@ -133,6 +133,30 @@
       },
       "revId": "1af9cc48e2338b701ecc5a485d65fbe204dbb283",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e04dd2d1_0c341165",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 2638
+      },
+      "writtenOn": "2022-10-13T07:27:06Z",
+      "side": 1,
+      "message": "this is not even a \"reload\" mechanism as it loads the config only once.\nTo make it reload on regular basis removing the if might be sufficient.\nBut I agree that it might make sense to extract this logic into its own component like \"ReloadableStreamConfigs\"",
+      "parentUuid": "deb61f9d_a5d75202",
+      "range": {
+        "startLine": 312,
+        "startChar": 20,
+        "endLine": 312,
+        "endChar": 23
+      },
+      "revId": "1af9cc48e2338b701ecc5a485d65fbe204dbb283",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
