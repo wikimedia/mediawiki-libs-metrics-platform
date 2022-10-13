@@ -1,17 +1,16 @@
 package org.wikimedia.metrics_platform;
 
+import static java.time.Instant.now;
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.groupingBy;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.BlockingQueue;
@@ -23,8 +22,6 @@ import javax.annotation.Nonnull;
 
 import org.wikimedia.metrics_platform.context.ContextController;
 import org.wikimedia.metrics_platform.curation.CurationController;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 public final class MetricsClient {
 
@@ -76,7 +73,9 @@ public final class MetricsClient {
     private static final int SEND_INTERVAL = 30000; // 30 seconds
 
 
-    static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT);
+    static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter
+            .ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
+            .withZone(ZoneId.of("UTC"));
     private static final Timer TIMER = new Timer();
 
     /**
@@ -140,8 +139,7 @@ public final class MetricsClient {
      */
     // Todo: include condition in filter when sendingEnqueuedEvents
     boolean shouldProcessEventsForStream(String stream) {
-        Map<String, StreamConfig> streamConfigMap = streamConfigsReference.get();
-        StreamConfig streamConfig = streamConfigMap.get(stream);
+        StreamConfig streamConfig = streamConfigsReference.get().get(stream);
         return streamConfig != null && samplingController.isInSample(streamConfig);
     }
 
@@ -167,13 +165,10 @@ public final class MetricsClient {
      *
      * @param event event
      */
-    @SuppressFBWarnings(
-            value = "STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE",
-            justification = "FIXME: call to DATE_FORMAT.format() is not threadsafe.")
     private void addRequiredMetadata(Event event) {
         event.setAppInstallId(clientMetadata.getAppInstallId());
         event.setAppSessionId(sessionController.getSessionId());
-        event.setTimestamp(DATE_FORMAT.format(new Date()));
+        event.setTimestamp(DATE_FORMAT.format(now()));
     }
 
     /**
@@ -284,9 +279,6 @@ public final class MetricsClient {
      * @param eventSubmissionTask    optional custom implementation of event submission task (for testing)
      * @param capacity               queue capacity
      */
-    @SuppressFBWarnings(
-            value = "STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE",
-            justification = "FIXME: call to DATE_FORMAT.format() is not threadsafe.")
     MetricsClient(
             ClientMetadata clientMetadata,
             StreamConfigsFetcher streamConfigsFetcher,
@@ -307,7 +299,6 @@ public final class MetricsClient {
         this.streamConfigsFetcher = streamConfigsFetcher;
         this.eventSender = eventSender;
 
-        DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
         TIMER.schedule(fetchStreamConfigsTask != null ? fetchStreamConfigsTask : new FetchStreamConfigsTask(), 0, STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL);
         TIMER.schedule(eventSubmissionTask != null ? eventSubmissionTask : new EventSubmissionTask(), SEND_INTERVAL, SEND_INTERVAL);
     }

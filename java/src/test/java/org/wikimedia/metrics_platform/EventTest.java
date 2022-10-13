@@ -4,7 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.wikimedia.metrics_platform.MetricsClient.DATE_FORMAT;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -17,8 +17,7 @@ public class EventTest {
     @Test
     public void testEvent() {
         Event event = new Event("test/event/1.0.0", "test.event");
-        // FIXME: this is system dependent
-        String timestamp = DATE_FORMAT.format(new Date(0));
+        String timestamp = DATE_FORMAT.format(Instant.EPOCH);
         event.setAppInstallId("foo");
         event.setAppSessionId("bar");
         event.setTimestamp(timestamp);
