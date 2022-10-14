@@ -181,6 +181,30 @@
       },
       "revId": "1af9cc48e2338b701ecc5a485d65fbe204dbb283",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3e82c2d_1f5b88aa",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-14T08:15:07Z",
+      "side": 1,
+      "message": "Can we merge this patch and fix the issues on later patches",
+      "parentUuid": "5abc4508_098848e5",
+      "range": {
+        "startLine": 312,
+        "startChar": 20,
+        "endLine": 312,
+        "endChar": 23
+      },
+      "revId": "1af9cc48e2338b701ecc5a485d65fbe204dbb283",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
