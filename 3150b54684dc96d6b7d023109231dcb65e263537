@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34c563b6_fbad0d7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-14T14:08:23Z",
+      "side": 1,
+      "message": "Minor naming issue (see inline). Otherwise LGTM.",
+      "revId": "3150b54684dc96d6b7d023109231dcb65e263537",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67f50b4d_fc2be1b4",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-14T14:08:23Z",
+      "side": 1,
+      "message": "This rename to from `event` to `event1` seems unnecessary.",
+      "range": {
+        "startLine": 186,
+        "startChar": 29,
+        "endLine": 186,
+        "endChar": 30
+      },
+      "revId": "3150b54684dc96d6b7d023109231dcb65e263537",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
