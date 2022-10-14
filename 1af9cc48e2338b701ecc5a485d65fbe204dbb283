@@ -89,6 +89,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd006f03_379c853d",
+        "filename": "java/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-14T09:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eef123aa_9a1e0ee9",
+      "range": {
+        "startLine": 105,
+        "startChar": 20,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "1af9cc48e2338b701ecc5a485d65fbe204dbb283",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "471fe8e3_3d7731f6",
@@ -102,6 +126,30 @@
       "writtenOn": "2022-10-10T14:56:03Z",
       "side": 1,
       "message": "Out of scope for this patch: We should first filter the pending batch of events to see if there are events for streams that no longer exist.",
+      "range": {
+        "startLine": 198,
+        "startChar": 8,
+        "endLine": 198,
+        "endChar": 54
+      },
+      "revId": "1af9cc48e2338b701ecc5a485d65fbe204dbb283",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aeb5859c_d0b8bf69",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-14T09:07:40Z",
+      "side": 1,
+      "message": "Marking resolved as this can be addressed in a follow up CR.",
+      "parentUuid": "471fe8e3_3d7731f6",
       "range": {
         "startLine": 198,
         "startChar": 8,
@@ -197,6 +245,30 @@
       "side": 1,
       "message": "Can we merge this patch and fix the issues on later patches",
       "parentUuid": "5abc4508_098848e5",
+      "range": {
+        "startLine": 312,
+        "startChar": 20,
+        "endLine": 312,
+        "endChar": 23
+      },
+      "revId": "1af9cc48e2338b701ecc5a485d65fbe204dbb283",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8543023_910e5200",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-14T09:07:40Z",
+      "side": 1,
+      "message": "Yeah, it is an async load at the moment, which does not make a ton of sense to me. Allowing reload of config would make more sense (I think). Anyway, this is for another CR.",
+      "parentUuid": "e04dd2d1_0c341165",
       "range": {
         "startLine": 312,
         "startChar": 20,
