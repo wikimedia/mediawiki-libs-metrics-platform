@@ -51,6 +51,24 @@
       "parentUuid": "fe4ed351_685b65e9",
       "revId": "a77b94e7298ba858871925c04a3fc30ef3367b5a",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6493516a_74e1ce96",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-10-14T09:16:59Z",
+      "side": 1,
+      "message": "Captured in https://phabricator.wikimedia.org/T320783.",
+      "parentUuid": "fe4ed351_685b65e9",
+      "revId": "a77b94e7298ba858871925c04a3fc30ef3367b5a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
