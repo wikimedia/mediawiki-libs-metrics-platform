@@ -22,6 +22,30 @@
       },
       "revId": "6989ae7f6e1fcf89aa3b8437b97996f4e224f90b",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90ad1d71_aed4fa51",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-14T14:05:01Z",
+      "side": 1,
+      "message": "Nice! I\u0027m not the only one to use the term \"temporal coupling\"!\n\nMerging those 2 filter methods in a single one seems like a good idea!",
+      "parentUuid": "8affcb3c_8d13ebb0",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 54
+      },
+      "revId": "6989ae7f6e1fcf89aa3b8437b97996f4e224f90b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
