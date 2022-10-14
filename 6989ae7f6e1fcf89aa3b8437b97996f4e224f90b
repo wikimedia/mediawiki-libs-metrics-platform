@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8affcb3c_8d13ebb0",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-10-14T12:35:14Z",
+      "side": 1,
+      "message": "This will never be the case now, right?\n\n---\n\nAfter I wrote the above, it occurred to me that there\u0027s now a temporal coupling between eventPassesCurationRules() and shouldProcessEventsForStream(), i.e. shouldProcessEventsForStream() MUST be called before eventPassesCurationRules(). Perhaps they should be combined into canEventBeSentToDestinationService() (or something like that).",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 54
+      },
+      "revId": "6989ae7f6e1fcf89aa3b8437b97996f4e224f90b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
