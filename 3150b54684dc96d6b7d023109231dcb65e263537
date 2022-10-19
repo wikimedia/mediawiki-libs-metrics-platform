@@ -39,6 +39,30 @@
       },
       "revId": "3150b54684dc96d6b7d023109231dcb65e263537",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f0b4d61_568f5c8b",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 9678
+      },
+      "writtenOn": "2022-10-19T13:43:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67f50b4d_fc2be1b4",
+      "range": {
+        "startLine": 186,
+        "startChar": 29,
+        "endLine": 186,
+        "endChar": 30
+      },
+      "revId": "3150b54684dc96d6b7d023109231dcb65e263537",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
