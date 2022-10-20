@@ -17,12 +17,14 @@ public class EventTest {
     @Test
     public void testEvent() {
         Event event = new Event("test/event/1.0.0", "test.event");
-        String timestamp = DATE_FORMAT.format(new Date());
+        // FIXME: this is system dependent
+        String timestamp = DATE_FORMAT.format(new Date(0));
         event.setAppInstallId("foo");
         event.setAppSessionId("bar");
         event.setTimestamp(timestamp);
 
         assertThat(event.getStream(), is("test.event"));
+        assertThat(event.getTimestamp(), is("1970-01-01T00:00:00Z"));
     }
 
     @Test
