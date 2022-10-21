@@ -19,6 +19,14 @@ TestMetricsClientIntegration.prototype.generateRandomId = function () {
 };
 
 /**
+ * @return {Promise<StreamConfigs>}
+ */
+TestMetricsClientIntegration.prototype.fetchStreamConfigs = function () {
+	// @ts-ignore TS2585
+	return Promise.resolve( {} );
+};
+
+/**
  * @param {EventData} eventData
  */
 TestMetricsClientIntegration.prototype.enqueueEvent = function ( eventData ) {

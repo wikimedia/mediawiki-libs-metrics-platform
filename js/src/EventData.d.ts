@@ -20,9 +20,11 @@ interface EventData extends BaseEventData {
     [key: string]: any;
 }
 
+type FormattedCustomData = Record<string, EventCustomDatum>;
+
 interface MetricsPlatformEventData extends BaseEventData, ContextAttributes {
     name?: string;
-    custom_data?: Record<string, EventCustomDatum>;
+    custom_data?: FormattedCustomData;
 }
 
 /**
