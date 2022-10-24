@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee566222_d74bd43a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-10-24T11:24:12Z",
+      "side": 1,
+      "message": "Minor issue inline. Otherwise this LGTM.",
+      "revId": "63f59b15cfc0efcee12e6b164fc7947de4b283ff",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}

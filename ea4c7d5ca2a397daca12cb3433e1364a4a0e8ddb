@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2e5d8a0_89a67324",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-10-24T11:24:12Z",
+      "side": 0,
+      "message": "This comment still applies. SamplingController#isInSample() doesn\u0027t handle the case when streamConfig is null, for example.",
+      "range": {
+        "startLine": 198,
+        "startChar": 8,
+        "endLine": 198,
+        "endChar": 54
+      },
+      "revId": "ea4c7d5ca2a397daca12cb3433e1364a4a0e8ddb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
