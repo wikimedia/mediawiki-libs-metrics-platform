@@ -46,6 +46,30 @@
       },
       "revId": "ea4c7d5ca2a397daca12cb3433e1364a4a0e8ddb",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4eae24d0_dec81e0d",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-10-26T06:04:24Z",
+      "side": 0,
+      "message": "In I821c3158b9e154e55bbca25afaecb529a9c959b4, we short-circuited the processing events by returning early if there were no stream configs. To be consistent with that, canEventBeSentToDestinationService should return false when streamConfig is null, i.e.\n\n return streamConfig !\u003d null \u0026\u0026\n   samplingController.isInSample(streamConfig)\n   curationController.eventPassesCurationRules(event, streamConfig);\n\nThat way, events that have no corresponding stream config (for now) are left in pending, ready to be sent later.",
+      "parentUuid": "7e441295_093627b7",
+      "range": {
+        "startLine": 198,
+        "startChar": 8,
+        "endLine": 198,
+        "endChar": 54
+      },
+      "revId": "ea4c7d5ca2a397daca12cb3433e1364a4a0e8ddb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
