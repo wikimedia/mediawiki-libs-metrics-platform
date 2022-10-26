@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2759c8b_efa52fe1",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/curation/rules/CollectionCurationRules.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-26T20:41:32Z",
+      "side": 1,
+      "message": "This assumes that this class is immutable, which isn\u0027t enforced or documented. It seems to make sense to have rules be immutable, so that\u0027s a good option.",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 9
+      },
+      "revId": "1256bb3724c8f59d83a200bf93bd24b9887ec474",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
