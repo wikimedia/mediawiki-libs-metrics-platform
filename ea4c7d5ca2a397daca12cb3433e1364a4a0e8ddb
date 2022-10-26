@@ -94,6 +94,29 @@
       },
       "revId": "ea4c7d5ca2a397daca12cb3433e1364a4a0e8ddb",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b17303a9_6b33db56",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-10-26T20:10:53Z",
+      "side": 0,
+      "message": "Using `drainTo()` is a good way to work with a blocking queue, as it ensures that events are processed only once. In the previous implementation, it was also taking care of removing events from the pendingEvents, which we loose in the current implementation.\n\nWe should probably use a simpler approach of just adding a filter to filter out events that don\u0027t have a config. At least until we know what we want to do with those events.",
+      "range": {
+        "startLine": 189,
+        "startChar": 27,
+        "endLine": 189,
+        "endChar": 34
+      },
+      "revId": "ea4c7d5ca2a397daca12cb3433e1364a4a0e8ddb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
