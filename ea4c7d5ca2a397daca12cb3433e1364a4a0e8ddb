@@ -117,6 +117,30 @@
       },
       "revId": "ea4c7d5ca2a397daca12cb3433e1364a4a0e8ddb",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58b4a854_804df0b9",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 2638
+      },
+      "writtenOn": "2022-10-27T09:24:09Z",
+      "side": 0,
+      "message": "The LinkedBlockingQueue iterator is non blocking so fine to use this case, (note that it\u0027s calling iterator.remove(), so processed events are not kept forever). It allows to achieve what was asked by Sam in a earlier comment:\n\u003e That way, events that have no corresponding stream config (for now) are left in pending, ready to be sent later.\n\nIt does not solve the case of pathological events that might never have a corresponding config and will remain in the queue for ever causing future event addition to fail on the queue max capacity. But I think this part is tracked in the todo (https://phabricator.wikimedia.org/T320783).\n\nIf ultimately we decide to simply drop these events and not give them a second chance then drainTo is certainly a better approach.",
+      "parentUuid": "b17303a9_6b33db56",
+      "range": {
+        "startLine": 189,
+        "startChar": 27,
+        "endLine": 189,
+        "endChar": 34
+      },
+      "revId": "ea4c7d5ca2a397daca12cb3433e1364a4a0e8ddb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
