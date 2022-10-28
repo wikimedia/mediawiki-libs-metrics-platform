@@ -55,7 +55,8 @@ public class TestStreamConfigsFetcher implements StreamConfigsFetcher {
                                                     .containsAny(Arrays.asList("steward", "bureaucrat"))
                                                     .build()
                                     )
-                                    .build()
+                                    .build(),
+                                null
                             )
                     )
             ));

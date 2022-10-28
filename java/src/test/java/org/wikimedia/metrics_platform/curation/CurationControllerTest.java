@@ -23,7 +23,7 @@ public class CurationControllerTest {
 
     @BeforeEach
     public void resetEvent() {
-        event = new Event("test/event", "test.event");
+        event = new Event("test/event", "test.event", "testEvent");
     }
 
     @Test

@@ -20,7 +20,10 @@ enum DestinationEventService {
     ANALYTICS("https://intake-analytics.wikimedia.org"),
 
     @SerializedName("eventgate-logging-external")
-    ERROR_LOGGING("https://intake-logging.wikimedia.org");
+    ERROR_LOGGING("https://intake-logging.wikimedia.org"),
+
+    @SerializedName("eventgate-logging-local")
+    LOCAL("http://localhost:8192/v1/events");
 
     private final String baseUri;
 

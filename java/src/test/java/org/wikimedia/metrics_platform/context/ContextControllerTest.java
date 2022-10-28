@@ -17,7 +17,7 @@ public class ContextControllerTest {
     @Test
     public void testAddRequestedValues() {
         ContextController contextController = new ContextController(new TestClientMetadata());
-        Event event = new Event("test/event", "test.event");
+        Event event = new Event("test/event", "test.event", "testEvent");
         StreamConfig streamConfig = TestStreamConfigsFetcher.STREAM_CONFIGS.get("test.event");
         contextController.addRequestedValues(event, streamConfig);
 

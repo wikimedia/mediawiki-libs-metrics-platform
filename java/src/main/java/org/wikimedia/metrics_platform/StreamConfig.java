@@ -1,6 +1,7 @@
 package org.wikimedia.metrics_platform;
 
 import java.util.Collection;
+import java.util.Set;
 
 import javax.annotation.ParametersAreNullableByDefault;
 import javax.annotation.concurrent.ThreadSafe;
@@ -35,6 +36,29 @@ public class StreamConfig {
                 producerConfig.metricsPlatformClientConfig.samplingConfig != null;
     }
 
+    /**
+     * Return whether this stream has any events it is interested in.
+     *
+     * @return if the stream has events
+     */
+    public boolean hasEvents() {
+        return producerConfig != null &&
+            producerConfig.metricsPlatformClientConfig != null &&
+            producerConfig.metricsPlatformClientConfig.events != null;
+    }
+
+    /**
+     * Return the event objects this stream is interested in.
+     *
+     * @return event objects for the stream
+     */
+    public Set<String> getEvents() {
+        if (hasEvents()) {
+            return producerConfig.metricsPlatformClientConfig.events;
+        }
+        return null;
+    }
+
     DestinationEventService getDestinationEventService() {
         return destinationEventService != null ? destinationEventService : DestinationEventService.ANALYTICS;
     }
@@ -50,5 +74,6 @@ public class StreamConfig {
         @SerializedName("sampling") SamplingConfig samplingConfig;
         @SerializedName("provide_values") Collection<String> requestedValues;
         @SerializedName("curation") CurationFilter curationFilter;
+        @SerializedName("events") Set<String> events;
     }
 }
