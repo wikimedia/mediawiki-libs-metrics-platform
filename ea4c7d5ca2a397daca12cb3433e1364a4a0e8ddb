@@ -141,6 +141,30 @@
       },
       "revId": "ea4c7d5ca2a397daca12cb3433e1364a4a0e8ddb",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7a1231d_18c0d259",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-01T15:09:05Z",
+      "side": 0,
+      "message": "If I\u0027m reading the code correctly, it still requires sendEnqueuedEvents() to not be called concurrently, otherwise it might send duplicate events.",
+      "parentUuid": "58b4a854_804df0b9",
+      "range": {
+        "startLine": 189,
+        "startChar": 27,
+        "endLine": 189,
+        "endChar": 34
+      },
+      "revId": "ea4c7d5ca2a397daca12cb3433e1364a4a0e8ddb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
