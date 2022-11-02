@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8c6f991_00884a39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-02T13:23:17Z",
+      "side": 1,
+      "message": "-1 for your attention only.\n\nSee inline for a couple comments about whitespace and two comments about the dispatch method and the formatting of the customData blob. I hope the comments are detailed enough but I\u0027m also happy to sync about this (and take notes on what I haven\u0027t provided enough detail about!).",
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60b1b438_be87c320",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-02T13:23:17Z",
+      "side": 1,
+      "message": "Whitespace",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 1
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69c09a80_0603c601",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-02T13:23:17Z",
+      "side": 1,
+      "message": "String eventName",
+      "range": {
+        "startLine": 119,
+        "startChar": 25,
+        "endLine": 119,
+        "endChar": 36
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "113446fd_2c58a761",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-02T13:23:17Z",
+      "side": 1,
+      "message": "Here you\u0027ll need to find which streams that are interested in the event. A stream is said to be interested in an event if it contains the event name or a prefix of the event name in its producers.metrics_platform_client.events property. \n\nSee \nhttps://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/libs/metrics-platform/+/refs/heads/master/js/src/MetricsClient.js#62 and https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/libs/metrics-platform/+/refs/heads/master/php/src/StreamConfig/StreamConfigFactory.php#65 for the JS and PHP implementations, respectively.",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 81
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f777745e_c612c9a8",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-02T13:23:17Z",
+      "side": 1,
+      "message": "Whitespace",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 2
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c12260b1_0b3e13e8",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-02T13:23:17Z",
+      "side": 1,
+      "message": "We should discuss whether the allowed values for data_type should be opened up/how to map Java.lang.Class.getSimpleName() to the allowed values.\n\nThe allowed values for data_type are specified here: https://gerrit.wikimedia.org/g/schemas/event/secondary/+/e3f3166162cbeca7d61e1ff7e9afee4f91cef49d/jsonschema/analytics/mediawiki/client/metrics_event/current.yaml#421\n\nSee also https://gerrit.wikimedia.org/g/mediawiki/libs/metrics-platform/+/627e245a12f29ddc6477058f447958eb4cab3608/js/src/MetricsClient.js#257",
+      "range": {
+        "startLine": 26,
+        "startChar": 43,
+        "endLine": 26,
+        "endChar": 86
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9807019d_165c6f42",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-02T13:23:17Z",
+      "side": 1,
+      "message": "AIUI this will result in a map with two entries, which correspond to the data type and value of the last member of the entry set of the keyValues map:\n\n {\n   data_type: \"…\"\n   value: \"…\"\n }\n\nRather, we want to create a map with an entry per entry set in the keyValues map:\n\n {\n   key: {\n     data_type: \"…\",\n     value: \"…\"\n   }\n }",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
