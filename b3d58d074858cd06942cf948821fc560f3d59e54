@@ -66,6 +66,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cf15db25_f060da91",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-02T13:34:09Z",
+      "side": 1,
+      "message": "This is mostly me being curious and not entirely understanding the intent. Feel free to ignore me:\n\nI\u0027m not sure I understand the intent of this dispatch() method. It seems to do something similar to the submit() method, and the following event processing that happens in sendEnqueuedEvents() and sendEventsToDestination(). In which case do we expect to use dispatch() over submit()? Is it just to support events with custom data? In that case, wouldn\u0027t it make sense to extend submit() to support this use case?\n\nHappy to have a more direct conversation about this (and also happy if you know where you are going and don\u0027t need me interfering!)",
+      "range": {
+        "startLine": 119,
+        "startChar": 16,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "113446fd_2c58a761",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 10
