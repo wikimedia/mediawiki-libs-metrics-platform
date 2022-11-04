@@ -95,7 +95,7 @@ public class ContextController {
                     event.getPageData().setGroupsAllowedToMove(clientMetadata.getPageGroupsAllowedToMove());
                     break;
 
-                    // User
+                // User
                 case USER_ID:
                     event.getUserData().setId(clientMetadata.getUserId());
                     break;
@@ -130,7 +130,7 @@ public class ContextController {
                     event.getUserData().setLanguageVariant(clientMetadata.getUserLanguageVariant());
                     break;
 
-                    // Device
+                // Device
                 case DEVICE_PIXEL_RATIO:
                     event.getDeviceData().setPixelRatio(clientMetadata.getDevicePixelRatio());
                     break;
@@ -141,7 +141,7 @@ public class ContextController {
                     event.getDeviceData().setMaxTouchPoints(clientMetadata.getDeviceMaxTouchPoints());
                     break;
 
-                    // Other
+                // Other
                 case ACCESS_METHOD:
                     event.setAccessMethod("mobile app");
                     break;
