@@ -41,6 +41,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29dbe3cd_3db4fc09",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-10T06:30:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60b1b438_be87c320",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 1
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69c09a80_0603c601",
@@ -89,6 +113,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "31957a9b_e31a6397",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-10T06:30:46Z",
+      "side": 1,
+      "message": "i think the Event object is needed here to call the setter method?",
+      "parentUuid": "69c09a80_0603c601",
+      "range": {
+        "startLine": 119,
+        "startChar": 25,
+        "endLine": 119,
+        "endChar": 36
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33e1a2a6_8f59c5b9",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-10T06:30:46Z",
+      "side": 1,
+      "message": "good question - I will confer with Sam about whether it makes sense to extend submit() in lieu of creating dispatch()",
+      "parentUuid": "cf15db25_f060da91",
+      "range": {
+        "startLine": 119,
+        "startChar": 16,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "113446fd_2c58a761",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 10
@@ -112,6 +184,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "621808bb_1acd9f64",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-10T06:30:46Z",
+      "side": 1,
+      "message": "thanks - latest ps emulates js + php clients for checking streams for an event",
+      "parentUuid": "113446fd_2c58a761",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 81
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f777745e_c612c9a8",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
         "patchSetId": 10
@@ -123,6 +219,30 @@
       "writtenOn": "2022-11-02T13:23:17Z",
       "side": 1,
       "message": "Whitespace",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 2
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fae1983b_ddde1798",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-10T06:30:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f777745e_c612c9a8",
       "range": {
         "startLine": 20,
         "startChar": 0,
@@ -158,6 +278,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c84f6fe1_c05f29ca",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-10T06:30:46Z",
+      "side": 1,
+      "message": "got it -- limited to allowed enum values",
+      "parentUuid": "c12260b1_0b3e13e8",
+      "range": {
+        "startLine": 26,
+        "startChar": 43,
+        "endLine": 26,
+        "endChar": 86
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3275f8c3_7056cb38",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-10T06:30:46Z",
+      "side": 1,
+      "message": "latest ps contains additional method for parsing data type",
+      "parentUuid": "c12260b1_0b3e13e8",
+      "range": {
+        "startLine": 26,
+        "startChar": 43,
+        "endLine": 26,
+        "endChar": 86
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9807019d_165c6f42",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
         "patchSetId": 10
@@ -169,6 +337,54 @@
       "writtenOn": "2022-11-02T13:23:17Z",
       "side": 1,
       "message": "AIUI this will result in a map with two entries, which correspond to the data type and value of the last member of the entry set of the keyValues map:\n\n {\n   data_type: \"…\"\n   value: \"…\"\n }\n\nRather, we want to create a map with an entry per entry set in the keyValues map:\n\n {\n   key: {\n     data_type: \"…\",\n     value: \"…\"\n   }\n }",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a7b899f_c6f8700c",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-10T06:30:46Z",
+      "side": 1,
+      "message": "aha - ok latest ps attempts to address this",
+      "parentUuid": "9807019d_165c6f42",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6b032d8_10e72ce3",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-10T06:30:46Z",
+      "side": 1,
+      "message": "ah - hopefully latest ps addresses",
+      "parentUuid": "9807019d_165c6f42",
       "range": {
         "startLine": 24,
         "startChar": 0,
