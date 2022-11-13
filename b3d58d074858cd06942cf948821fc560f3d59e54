@@ -161,6 +161,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d6e83e35_93ce676c",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-13T21:26:43Z",
+      "side": 1,
+      "message": "Turns out we do want a separate these methods -- iirc submit() sends events via the modern event platform while dispatch() will send them via the metrics platform client.",
+      "parentUuid": "33e1a2a6_8f59c5b9",
+      "range": {
+        "startLine": 119,
+        "startChar": 16,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "113446fd_2c58a761",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 10
