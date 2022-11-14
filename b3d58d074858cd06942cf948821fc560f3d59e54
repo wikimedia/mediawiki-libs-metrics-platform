@@ -185,6 +185,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dac3e38b_9c872407",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-14T10:06:26Z",
+      "side": 1,
+      "message": "In the JS and PHP implementations, we construct the event internally rather than accepting the event from the client. This allows us to vary the representation of Metrics Platform Events (and how they are validated) transparently to the user (the instrumentation engineer).",
+      "parentUuid": "31957a9b_e31a6397",
+      "range": {
+        "startLine": 119,
+        "startChar": 25,
+        "endLine": 119,
+        "endChar": 36
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "113446fd_2c58a761",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 10
@@ -220,6 +244,30 @@
       "side": 1,
       "message": "thanks - latest ps emulates js + php clients for checking streams for an event",
       "parentUuid": "113446fd_2c58a761",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 81
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22581d81_9fa5595f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-14T10:06:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "621808bb_1acd9f64",
       "range": {
         "startLine": 124,
         "startChar": 8,
@@ -348,6 +396,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e33cfc85_490cdeea",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-14T10:06:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c84f6fe1_c05f29ca",
+      "range": {
+        "startLine": 26,
+        "startChar": 43,
+        "endLine": 26,
+        "endChar": 86
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9807019d_165c6f42",
@@ -409,6 +481,30 @@
       "side": 1,
       "message": "ah - hopefully latest ps addresses",
       "parentUuid": "9807019d_165c6f42",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4345392_484c49e5",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-14T10:06:26Z",
+      "side": 1,
+      "message": "I think the latest PS still has the same problem. Try writing a test for CustomData#formatCustomData() given input like\n\n  {\n    time_to_x: 1015\n  }\n\nyou get output like:\n\n  {\n    time_to_x: {\n      data_type: \"number\",\n      value: \"1015\"\n    }\n  }",
+      "parentUuid": "b6b032d8_10e72ce3",
       "range": {
         "startLine": 24,
         "startChar": 0,

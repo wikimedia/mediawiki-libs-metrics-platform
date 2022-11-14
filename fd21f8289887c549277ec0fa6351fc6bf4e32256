@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81d60fac_232e654a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-14T10:06:26Z",
+      "side": 1,
+      "message": "See inline for a handful of comments.\n\nPlease also double-check your editor settings as there\u0027s still a bunch of tabs where there shouldn\u0027t be. Perhaps it would be worth adding a Java-specific .editorconfig in a separate patch?",
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19608d69_16fc8d3c",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-14T10:06:26Z",
+      "side": 1,
+      "message": "In the interest of limiting the scope of this variable, you should declare it inside the loop (on L141).",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 33
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a702f94f_36371075",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-14T10:06:26Z",
+      "side": 1,
+      "message": "If you use Set\u003cString\u003e here, then you can simplify L149 onwards as checking whether or not an element is in a set and adding an element to a set are O(1).\n\nL149 onwards could be written like:\n\n  for (String event : events ) {\n    eventsMap.putIfAbsent( event, new HashSet\u003cString\u003e() );\n    eventsMap.get( event ).add( streamName )\n  }\n\nNote well that Set#add() will only add a value if it is not already present (see https://docs.oracle.com/javase/8/docs/api/java/util/Set.html#add-E-).",
+      "range": {
+        "startLine": 139,
+        "startChar": 20,
+        "endLine": 139,
+        "endChar": 37
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b118cd0d_f679c6e9",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/StreamConfig.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-14T10:06:26Z",
+      "side": 1,
+      "message": "Is it worth documenting that this returns a copy of the list of the events that this stream has registered interested in?",
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea48f2ad_30374d0b",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/StreamConfig.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-14T10:06:26Z",
+      "side": 1,
+      "message": "ArrayList has a copy constructor [0] so you can rewrite this like so:\n\n  return new ArrayList\u003cString\u003e( producerConfig.metricsPlatformClientConfig.events );\n\nYou might also want to consider returning a Set (HashSet concretely) here.\n\n[0] https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html#ArrayList-java.util.Collection-",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
