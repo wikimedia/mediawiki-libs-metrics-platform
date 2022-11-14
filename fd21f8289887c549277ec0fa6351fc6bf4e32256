@@ -18,6 +18,23 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc56280e_c987dda2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-14T15:55:14Z",
+      "side": 1,
+      "message": "A few comments inline. Feel free to ping me on IRC (gehel) or slack if you want to have more of a conversation about the weird parts of the Java language.",
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19608d69_16fc8d3c",
@@ -99,6 +116,98 @@
         "startChar": 12,
         "endLine": 51,
         "endChar": 30
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcb2d093_2bc87445",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-14T15:55:14Z",
+      "side": 1,
+      "message": "Variables should be defined as the most generic type possible. In this case, a List instead of an ArrayList (unless there is a very good reason to only allow ArrayLists). This same comment also applies to method parameters and method-local variables.",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "867ba60d_c1dc2c7d",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-14T15:55:14Z",
+      "side": 1,
+      "message": "I suspect that this code does not do what you expect. The forattedDataArrayList is initialized from the formattedData Map, which is empty at this stage.",
+      "range": {
+        "startLine": 30,
+        "startChar": 41,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f82f7764_f2f7c18f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-14T15:55:14Z",
+      "side": 1,
+      "message": "Assertions are rarely used in Java. Especially about parameter nullity, you should use the @javax.annotation.Nonnull annotation. This will not do a runtime null-check, but will allow static analysis tools to validate the non-nullity.\n\nThere are multiple ways to actively check for parameter non-nullity, but those should really be reserved for external interfaces (used by code that you don\u0027t control). For example, you could use `java.lang.Objects.requireNonNull()`.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 22
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22baea53_89f6576c",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-14T15:55:14Z",
+      "side": 1,
+      "message": "There is no need to specify the types again here, using \u003c\u003e will infer the type from the variable declaration:\n\n    Map\u003cString, String\u003e thisKeyValue \u003d new HashMap\u003c\u003e();",
+      "range": {
+        "startLine": 44,
+        "startChar": 55,
+        "endLine": 44,
+        "endChar": 69
       },
       "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
