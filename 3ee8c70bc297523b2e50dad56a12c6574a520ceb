@@ -16,6 +16,23 @@
       "message": "I rebased @Gehel\u0027s WIP patch and added tests for EventProcessor -- Qs inline.",
       "revId": "3ee8c70bc297523b2e50dad56a12c6574a520ceb",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98b85720_ea87a633",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EventProcessorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-15T01:06:41Z",
+      "side": 1,
+      "message": "I\u0027m sure I\u0027m missing something very basic -- but I couldn\u0027t figure out how to mock properly to use \"verify\" for the sendEnqueuedEvents() method",
+      "revId": "3ee8c70bc297523b2e50dad56a12c6574a520ceb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
