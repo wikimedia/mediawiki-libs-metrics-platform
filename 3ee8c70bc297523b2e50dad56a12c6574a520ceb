@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7bb25591_8909f46f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-15T01:08:23Z",
+      "side": 1,
+      "message": "does this method cover the requirement for event batching?",
+      "revId": "3ee8c70bc297523b2e50dad56a12c6574a520ceb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "98b85720_ea87a633",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/EventProcessorTest.java",
         "patchSetId": 3
