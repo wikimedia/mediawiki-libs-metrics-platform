@@ -209,6 +209,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "770bbfee_733c9c36",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-16T10:10:35Z",
+      "side": 1,
+      "message": "makes sense -- latest ps doesn\u0027t have this change yet -- may need to confer on how to get event from event name",
+      "parentUuid": "dac3e38b_9c872407",
+      "range": {
+        "startLine": 119,
+        "startChar": 25,
+        "endLine": 119,
+        "endChar": 36
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "113446fd_2c58a761",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 10
@@ -505,6 +529,30 @@
       "side": 1,
       "message": "I think the latest PS still has the same problem. Try writing a test for CustomData#formatCustomData() given input like\n\n  {\n    time_to_x: 1015\n  }\n\nyou get output like:\n\n  {\n    time_to_x: {\n      data_type: \"number\",\n      value: \"1015\"\n    }\n  }",
       "parentUuid": "b6b032d8_10e72ce3",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a2f14dd_7816c93e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-16T10:10:35Z",
+      "side": 1,
+      "message": "one more time - i\u0027m still having issues with getting it to format correctly - hope to discuss in sync",
+      "parentUuid": "a4345392_484c49e5",
       "range": {
         "startLine": 24,
         "startChar": 0,

@@ -58,6 +58,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4d1f9d1_3420d989",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-16T10:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19608d69_16fc8d3c",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 33
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a702f94f_36371075",
@@ -71,6 +95,30 @@
       "writtenOn": "2022-11-14T10:06:26Z",
       "side": 1,
       "message": "If you use Set\u003cString\u003e here, then you can simplify L149 onwards as checking whether or not an element is in a set and adding an element to a set are O(1).\n\nL149 onwards could be written like:\n\n  for (String event : events ) {\n    eventsMap.putIfAbsent( event, new HashSet\u003cString\u003e() );\n    eventsMap.get( event ).add( streamName )\n  }\n\nNote well that Set#add() will only add a value if it is not already present (see https://docs.oracle.com/javase/8/docs/api/java/util/Set.html#add-E-).",
+      "range": {
+        "startLine": 139,
+        "startChar": 20,
+        "endLine": 139,
+        "endChar": 37
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b784c7a3_4a6a5cd5",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-16T10:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a702f94f_36371075",
       "range": {
         "startLine": 139,
         "startChar": 20,
@@ -100,6 +148,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "02e2ad1f_89bcb5b1",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/StreamConfig.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-16T10:10:35Z",
+      "side": 1,
+      "message": "for sure -- once this ps is closer, I\u0027ll go through and add comments, params, etc",
+      "parentUuid": "b118cd0d_f679c6e9",
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ea48f2ad_30374d0b",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/StreamConfig.java",
         "patchSetId": 17
@@ -123,6 +189,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c940d869_acaaa4d7",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/StreamConfig.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-16T10:10:35Z",
+      "side": 1,
+      "message": "gtk! changed to Set\u003cString\u003e",
+      "parentUuid": "ea48f2ad_30374d0b",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dcb2d093_2bc87445",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
         "patchSetId": 17
@@ -134,6 +224,30 @@
       "writtenOn": "2022-11-14T15:55:14Z",
       "side": 1,
       "message": "Variables should be defined as the most generic type possible. In this case, a List instead of an ArrayList (unless there is a very good reason to only allow ArrayLists). This same comment also applies to method parameters and method-local variables.",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72ad5dac_d27c9a7e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-16T10:10:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dcb2d093_2bc87445",
       "range": {
         "startLine": 18,
         "startChar": 12,
@@ -169,6 +283,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0f63863d_74a1381f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-16T10:10:35Z",
+      "side": 1,
+      "message": "refactored per our pairing session",
+      "parentUuid": "867ba60d_c1dc2c7d",
+      "range": {
+        "startLine": 30,
+        "startChar": 41,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f82f7764_f2f7c18f",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
         "patchSetId": 17
@@ -180,6 +318,30 @@
       "writtenOn": "2022-11-14T15:55:14Z",
       "side": 1,
       "message": "Assertions are rarely used in Java. Especially about parameter nullity, you should use the @javax.annotation.Nonnull annotation. This will not do a runtime null-check, but will allow static analysis tools to validate the non-nullity.\n\nThere are multiple ways to actively check for parameter non-nullity, but those should really be reserved for external interfaces (used by code that you don\u0027t control). For example, you could use `java.lang.Objects.requireNonNull()`.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 22
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "089851e4_52183efc",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-16T10:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f82f7764_f2f7c18f",
       "range": {
         "startLine": 42,
         "startChar": 2,
@@ -203,6 +365,30 @@
       "writtenOn": "2022-11-14T15:55:14Z",
       "side": 1,
       "message": "There is no need to specify the types again here, using \u003c\u003e will infer the type from the variable declaration:\n\n    Map\u003cString, String\u003e thisKeyValue \u003d new HashMap\u003c\u003e();",
+      "range": {
+        "startLine": 44,
+        "startChar": 55,
+        "endLine": 44,
+        "endChar": 69
+      },
+      "revId": "fd21f8289887c549277ec0fa6351fc6bf4e32256",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "672ab56d_b480cc62",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-16T10:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22baea53_89f6576c",
       "range": {
         "startLine": 44,
         "startChar": 55,
