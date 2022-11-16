@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccb22ccf_3e13aedf",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-16T11:14:58Z",
+      "side": 1,
+      "message": "This accessor will be created automagically by the @Data annotation, no need to add it manually.",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 5
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7a8421f_ca544f26",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-16T11:14:58Z",
+      "side": 1,
+      "message": "Since we now have a CustomData class, I would use it here for the paramter (`Set\u003cCustomData customData`) instead of asking the client to use a loosely defined Map.",
+      "range": {
+        "startLine": 126,
+        "startChar": 38,
+        "endLine": 126,
+        "endChar": 68
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b14ef6b8_207081ee",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-16T11:14:58Z",
+      "side": 1,
+      "message": "We should probably have this annotation on the class, and mark the exceptions on the few parameters that are nullable with the `@javax.annotation.Nullable` annotation. The thinking is that nullable parameters should be the rare exception. And defaults are usually set at the class level, so putting them on a method breaks the principle of least surprise.",
+      "range": {
+        "startLine": 148,
+        "startChar": 5,
+        "endLine": 148,
+        "endChar": 34
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f012bc71_25c30a89",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-16T11:14:58Z",
+      "side": 1,
+      "message": "This constructor can be generated with the @AllArgsConstructor lombok annotation. Or probably better, the fields can be declared as `final` and this automatically generate this constructor: the @Data annotation will generate a constructor for all mandatory fields (all `final` fields). See https://projectlombok.org/features/Data and https://projectlombok.org/features/constructor for more details.",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31f442c7_185fa7a1",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomDataSerializer.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-16T11:14:58Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure that Gson already knows how to serialize a Set, so it probably only needs a custom serializer for CustomData (to be confirmed, I haven\u0027t actually tested it - and no, this isn\u0027t a Knuth reference).",
+      "range": {
+        "startLine": 17,
+        "startChar": 60,
+        "endLine": 17,
+        "endChar": 63
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46def1ce_9746c817",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomDataSerializer.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-16T11:14:58Z",
+      "side": 1,
+      "message": "You probably don\u0027t want to create a parser inside of a parser. Instead the `serialize()` method should directly create the appropriate JSON elements:\n\n    public JsonElement serialize(CustomData src, Type typeOfSrc, JsonSerializationContext context) {\n        JsonObject jsonCustomData \u003d new JsonObject();\n\n        JsonObject properties \u003d new JsonObject();\n        properties.addProperty(\"data_type\", src.getType().toString());\n        properties.addProperty(\"value\", src.getValue());\n\n        jsonCustomData.add(src.getName(), properties);\n        return jsonCustomData;\n    }",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
