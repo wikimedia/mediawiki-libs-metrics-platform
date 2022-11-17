@@ -24,6 +24,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb1f639d_91ec83a5",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-17T23:19:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ccb22ccf_3e13aedf",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 5
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b7a8421f_ca544f26",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-11-16T11:14:58Z",
       "side": 1,
       "message": "Since we now have a CustomData class, I would use it here for the paramter (`Set\u003cCustomData customData`) instead of asking the client to use a loosely defined Map.",
+      "range": {
+        "startLine": 126,
+        "startChar": 38,
+        "endLine": 126,
+        "endChar": 68
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33ba9c14_f6e09ea8",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-17T23:19:13Z",
+      "side": 1,
+      "message": "AIUI we want client code to be able to dispatch custom data in the form they capture it and the Metrics Platform client will take care of formatting it per schema constraints. \n\n@Phuedx is/will be including this in the MP documentation",
+      "parentUuid": "b7a8421f_ca544f26",
       "range": {
         "startLine": 126,
         "startChar": 38,
@@ -70,6 +118,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afd90ff4_2f21ce11",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-17T23:19:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b14ef6b8_207081ee",
+      "range": {
+        "startLine": 148,
+        "startChar": 5,
+        "endLine": 148,
+        "endChar": 34
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f012bc71_25c30a89",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-11-16T11:14:58Z",
       "side": 1,
       "message": "This constructor can be generated with the @AllArgsConstructor lombok annotation. Or probably better, the fields can be declared as `final` and this automatically generate this constructor: the @Data annotation will generate a constructor for all mandatory fields (all `final` fields). See https://projectlombok.org/features/Data and https://projectlombok.org/features/constructor for more details.",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2365d72_8fd8ddf4",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-17T23:19:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f012bc71_25c30a89",
       "range": {
         "startLine": 14,
         "startChar": 11,
@@ -116,6 +212,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ec27f15_d3593cfe",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomDataSerializer.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-17T23:19:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "31f442c7_185fa7a1",
+      "range": {
+        "startLine": 17,
+        "startChar": 60,
+        "endLine": 17,
+        "endChar": 63
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46def1ce_9746c817",
@@ -129,6 +249,30 @@
       "writtenOn": "2022-11-16T11:14:58Z",
       "side": 1,
       "message": "You probably don\u0027t want to create a parser inside of a parser. Instead the `serialize()` method should directly create the appropriate JSON elements:\n\n    public JsonElement serialize(CustomData src, Type typeOfSrc, JsonSerializationContext context) {\n        JsonObject jsonCustomData \u003d new JsonObject();\n\n        JsonObject properties \u003d new JsonObject();\n        properties.addProperty(\"data_type\", src.getType().toString());\n        properties.addProperty(\"value\", src.getValue());\n\n        jsonCustomData.add(src.getName(), properties);\n        return jsonCustomData;\n    }",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "205e067a_025db486",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomDataSerializer.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-17T23:19:13Z",
+      "side": 1,
+      "message": "thanks - works like a charm \\o/",
+      "parentUuid": "46def1ce_9746c817",
       "range": {
         "startLine": 34,
         "startChar": 19,
