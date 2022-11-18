@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "49a7080e_90c9de14",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-18T12:33:02Z",
+      "side": 1,
+      "message": "I would propose to at least give the client the choice to use a typesafe method. For example:\n\n\n    public void dispatch(String eventName, Map\u003cString, Object\u003e customData) {\n        dispatch(eventName, toCustomData(customData));\n    }\n\n    public void dispatch(String eventName, Set\u003cCustomData\u003e customData) {\n        Set\u003cString\u003e streamNames \u003d getStreamNamesForEvent(eventName);\n        // Loop through stream configs to add event to pending events.\n        if (streamNames !\u003d null) {\n            for (String streamName : streamNames) {\n                if (shouldProcessEventsForStream(streamName)) {\n                    Event event \u003d new Event(METRICS_PLATFORM_SCHEMA, streamName, eventName);\n                    // Format custom data: data_type + value and append to event.\n                    Set\u003cCustomData\u003e customDataSet \u003d customData;\n                    event.setCustomData(customDataSet);\n                    submit(event);\n                }\n            }\n        }\n    }\n\n    public static Set\u003cCustomData\u003e toCustomData(Map\u003cString, Object\u003e customData) {\n        return customData.entrySet().stream()\n                .map(e -\u003e formatKeyValue(e.getKey(), e.getValue()))\n                .collect(Collectors.toSet());\n    }",
+      "parentUuid": "33ba9c14_f6e09ea8",
+      "range": {
+        "startLine": 126,
+        "startChar": 38,
+        "endLine": 126,
+        "endChar": 68
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b14ef6b8_207081ee",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 18
