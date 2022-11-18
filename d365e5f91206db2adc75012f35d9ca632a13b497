@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "63ce154a_9615f123",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-18T14:31:47Z",
+      "side": 1,
+      "message": "Note that we could further refactor this by moving the `toCustomData()` method as a static creator method on the `CustomData` class.",
+      "parentUuid": "49a7080e_90c9de14",
+      "range": {
+        "startLine": 126,
+        "startChar": 38,
+        "endLine": 126,
+        "endChar": 68
+      },
+      "revId": "d365e5f91206db2adc75012f35d9ca632a13b497",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b14ef6b8_207081ee",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 18

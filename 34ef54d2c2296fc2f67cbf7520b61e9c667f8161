@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a26da65_352ae238",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-18T14:31:47Z",
+      "side": 1,
+      "message": "I\u0027ve added a bunch of comments inline. Those are all about fairly minor things and can be ignored as needed. Done is better than perfect!",
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef6273b5_1d086ed6",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-18T14:31:47Z",
+      "side": 1,
+      "message": "Instead of using String representation of the classes, we can use the type system in our favour:\n\n        if (value instanceof Number) {\n            formattedType \u003d CustomDataType.NUMBER;\n        } else if (value instanceof String) {\n            formattedType \u003d CustomDataType.STRING;\n        } else if (value instanceof Boolean) {\n            formattedType \u003d CustomDataType.BOOLEAN;\n            formattedValue \u003d parseBoolean(formattedValue) ? \"true\" : \"false\";\n        } else {\n            formattedType \u003d CustomDataType.NULL;\n        }\n\n\nNote that that use `instanceof Number` will also match `Integer`, `BigInteger` and potentially other types of numbers.",
+      "range": {
+        "startLine": 150,
+        "startChar": 25,
+        "endLine": 150,
+        "endChar": 57
+      },
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ca8a0d7_ee21d3bc",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-18T14:31:47Z",
+      "side": 1,
+      "message": "Since we are checking on line 148 that the value is never `null`, this represents an \"unknown\" type, and not a \"null\" type. I haven\u0027t checked if the json schema supports unknown types. If not, \"string\" seems like a better mapping and \"null\".",
+      "range": {
+        "startLine": 171,
+        "startChar": 32,
+        "endLine": 171,
+        "endChar": 51
+      },
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d25bf29_c731875a",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-18T14:31:47Z",
+      "side": 1,
+      "message": "if this method is visible only for testing, it probably makes more sense to have it package protected instead of public (provided that the test that needs access is declared in the same package).",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 10
+      },
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc8093c5_4d3193b8",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-18T14:31:47Z",
+      "side": 1,
+      "message": "nit: we try to standardize our assertions on assertj. See https://assertj.github.io/doc/",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 18
+      },
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa78996a_7fba083a",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-18T14:31:47Z",
+      "side": 1,
+      "message": "nit: static import?",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b0defb7_ed3543c2",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-18T14:31:47Z",
+      "side": 1,
+      "message": "nit: We try to standardize our assertions on assertj, and not hamcrest.\n\nNote that there are extension to assertj that can facilitate asserting json (in this specific case, it\u0027s probably overkill, but might come handy at some point).\n\nSee:\n* https://www.mediawiki.org/wiki/Manual:Coding_conventions/Java\n* https://assertj.github.io/doc/\n* https://github.com/revinate/assertj-json",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
