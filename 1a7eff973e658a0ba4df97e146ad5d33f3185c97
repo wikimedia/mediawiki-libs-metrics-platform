@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f6222ea7_af8d928b",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-21T10:20:28Z",
+      "side": 1,
+      "message": "This method is called every time we dispatch an event. As such, it should be simple and fast. At the moment, it is recreating a new data structure representing the full streamConfigs each time it is called. This indicates that streamConfigs isn\u0027t using the appropriate data structure. We should load the config and process is at the start of the application (or everytime we reload the config) and not do additional processing at runtime.\n\nNote that this might well be outside of the scope of this CR.",
+      "range": {
+        "startLine": 141,
+        "startChar": 37,
+        "endLine": 141,
+        "endChar": 65
+      },
+      "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a59f738d_e2c6323a",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-21T10:20:28Z",
+      "side": 1,
+      "message": "nit: (this comment is me being borderline pedantic and shows some of my OCD, feel free to ignore)\n\nI think that the CustomData class should be about single instances, not about collections of customData. So I would keep the stream-\u003emap-\u003ecollect where it was previously, and only implement a creator method.\n\nSide note, one of the common naming convention is to name creator methods as `of()`. So in this case, probably `of(String key, Object value)` or even `of(Map.Entry\u003cString, Object\u003e entry)` (or both).",
+      "range": {
+        "startLine": 21,
+        "startChar": 34,
+        "endLine": 21,
+        "endChar": 56
+      },
+      "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5e64d7dd_ff178421",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
         "patchSetId": 21
@@ -14,6 +60,70 @@
       "writtenOn": "2022-11-21T04:59:28Z",
       "side": 1,
       "message": "I left this commented out because I expect this assertion to be false but the actual value is true. If dispatch() is called, MetricsClient.pendingEvents should have at least 1 event.\n\nI also want to fix the other ToDos on this file - so more updates incoming",
+      "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "028d29b0_cde4d339",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-21T10:20:28Z",
+      "side": 1,
+      "message": "The way we are processing events at the moment is convoluted and makes testing non trivial. We should clean that up at some point, which should allow for much more streamlined tests. (obviously, that refactoring should not be part of this CR). I have a few ideas of how we could simplify all this, ping me if you want to chat about those ideas.",
+      "parentUuid": "5e64d7dd_ff178421",
+      "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3053bcdd_a39e5940",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-21T10:20:28Z",
+      "side": 1,
+      "message": "This looks very much like a parameterized test (we are testing 3 different CustomData and checking that they are all serialized correctly). See https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests\n\n(feel free to ignore, parameterized tests would add readability and point more directly to the failure if the test fails, but they do add some complexity for people not familiar with JUnit).",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 57
+      },
+      "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b95c343_b2df8d34",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-21T10:20:28Z",
+      "side": 1,
+      "message": "nit: use spaces instead of tabs",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
       "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }

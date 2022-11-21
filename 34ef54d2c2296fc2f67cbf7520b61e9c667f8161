@@ -273,6 +273,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b80f4dc9_c2de028c",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-21T10:20:28Z",
+      "side": 1,
+      "message": "Sorry, my comment wasn\u0027t clear. I was actually proposing to use static imports. In the case of collectors, it is usually clear enough that we don\u0027t need a class name.\n\n`.collect(toList())` is perfectly clear. `.collect(Collectors.toList())` seems redundant to me, and doesn\u0027t flow as well when reading it.\n\nThere are other cases where just a method name is ambiguous, and adding the class name is necessary to resolve that ambiguity. I can\u0027t think of a good example right now :(\n\n(this is still a detail, feel free to ignore).",
+      "parentUuid": "2057dec1_72bab2db",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0b0defb7_ed3543c2",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
         "patchSetId": 19
