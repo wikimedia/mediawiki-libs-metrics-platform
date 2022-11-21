@@ -24,6 +24,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62166e48_1a78119d",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-21T15:51:33Z",
+      "side": 1,
+      "message": "makes sense - incorporated",
+      "parentUuid": "f6222ea7_af8d928b",
+      "range": {
+        "startLine": 141,
+        "startChar": 37,
+        "endLine": 141,
+        "endChar": 65
+      },
+      "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a59f738d_e2c6323a",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-11-21T10:20:28Z",
       "side": 1,
       "message": "nit: (this comment is me being borderline pedantic and shows some of my OCD, feel free to ignore)\n\nI think that the CustomData class should be about single instances, not about collections of customData. So I would keep the stream-\u003emap-\u003ecollect where it was previously, and only implement a creator method.\n\nSide note, one of the common naming convention is to name creator methods as `of()`. So in this case, probably `of(String key, Object value)` or even `of(Map.Entry\u003cString, Object\u003e entry)` (or both).",
+      "range": {
+        "startLine": 21,
+        "startChar": 34,
+        "endLine": 21,
+        "endChar": 56
+      },
+      "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de1653a4_e479f865",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-21T15:51:33Z",
+      "side": 1,
+      "message": "Per our pairing session, this makes sense to me and I incorporated your suggested edits.",
+      "parentUuid": "a59f738d_e2c6323a",
       "range": {
         "startLine": 21,
         "startChar": 34,
@@ -84,6 +132,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7f400d1e_9f45d2fc",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-21T15:51:33Z",
+      "side": 1,
+      "message": "I will follow up on this with a ping/invite",
+      "parentUuid": "028d29b0_cde4d339",
+      "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3053bcdd_a39e5940",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
         "patchSetId": 21
@@ -107,6 +173,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bfb8f686_11c84194",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-21T15:51:33Z",
+      "side": 1,
+      "message": "i will look into this some more and follow up accordingly",
+      "parentUuid": "3053bcdd_a39e5940",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 57
+      },
+      "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0b95c343_b2df8d34",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
         "patchSetId": 21
@@ -118,6 +208,30 @@
       "writtenOn": "2022-11-21T10:20:28Z",
       "side": 1,
       "message": "nit: use spaces instead of tabs",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79fae541_331f19b7",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-21T15:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b95c343_b2df8d34",
       "range": {
         "startLine": 22,
         "startChar": 0,
