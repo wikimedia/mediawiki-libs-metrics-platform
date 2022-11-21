@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e64d7dd_ff178421",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-21T04:59:28Z",
+      "side": 1,
+      "message": "I left this commented out because I expect this assertion to be false but the actual value is true. If dispatch() is called, MetricsClient.pendingEvents should have at least 1 event.\n\nI also want to fix the other ToDos on this file - so more updates incoming",
+      "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
