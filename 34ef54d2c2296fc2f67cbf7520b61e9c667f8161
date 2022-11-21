@@ -200,6 +200,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4a3502c_3dfc229a",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-21T04:32:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dc8093c5_4d3193b8",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 18
+      },
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa78996a_7fba083a",
