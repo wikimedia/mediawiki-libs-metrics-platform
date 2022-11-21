@@ -18,6 +18,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17b14a5f_34a27736",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-21T04:16:42Z",
+      "side": 1,
+      "message": "thank you!",
+      "parentUuid": "5a26da65_352ae238",
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef6273b5_1d086ed6",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-11-18T14:31:47Z",
       "side": 1,
       "message": "Instead of using String representation of the classes, we can use the type system in our favour:\n\n        if (value instanceof Number) {\n            formattedType \u003d CustomDataType.NUMBER;\n        } else if (value instanceof String) {\n            formattedType \u003d CustomDataType.STRING;\n        } else if (value instanceof Boolean) {\n            formattedType \u003d CustomDataType.BOOLEAN;\n            formattedValue \u003d parseBoolean(formattedValue) ? \"true\" : \"false\";\n        } else {\n            formattedType \u003d CustomDataType.NULL;\n        }\n\n\nNote that that use `instanceof Number` will also match `Integer`, `BigInteger` and potentially other types of numbers.",
+      "range": {
+        "startLine": 150,
+        "startChar": 25,
+        "endLine": 150,
+        "endChar": 57
+      },
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd8e53b6_0bf77d2b",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-21T04:16:42Z",
+      "side": 1,
+      "message": "nice - incorporated",
+      "parentUuid": "ef6273b5_1d086ed6",
       "range": {
         "startLine": 150,
         "startChar": 25,
@@ -66,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "14638b2c_b5ea0dd9",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-21T04:16:42Z",
+      "side": 1,
+      "message": "good point - I will see if we can add \"unknown\" as an option for one of the enum values for data_type\n\nI\u0027ll set default to STRING for the time being",
+      "parentUuid": "9ca8a0d7_ee21d3bc",
+      "range": {
+        "startLine": 171,
+        "startChar": 32,
+        "endLine": 171,
+        "endChar": 51
+      },
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8d25bf29_c731875a",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 19
@@ -77,6 +143,30 @@
       "writtenOn": "2022-11-18T14:31:47Z",
       "side": 1,
       "message": "if this method is visible only for testing, it probably makes more sense to have it package protected instead of public (provided that the test that needs access is declared in the same package).",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 10
+      },
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56941f97_f52b042e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-21T04:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d25bf29_c731875a",
       "range": {
         "startLine": 321,
         "startChar": 4,
@@ -133,6 +223,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2057dec1_72bab2db",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-21T04:16:42Z",
+      "side": 1,
+      "message": "removed static import in latest ps",
+      "parentUuid": "fa78996a_7fba083a",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b0defb7_ed3543c2",
@@ -146,6 +260,30 @@
       "writtenOn": "2022-11-18T14:31:47Z",
       "side": 1,
       "message": "nit: We try to standardize our assertions on assertj, and not hamcrest.\n\nNote that there are extension to assertj that can facilitate asserting json (in this specific case, it\u0027s probably overkill, but might come handy at some point).\n\nSee:\n* https://www.mediawiki.org/wiki/Manual:Coding_conventions/Java\n* https://assertj.github.io/doc/\n* https://github.com/revinate/assertj-json",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "34ef54d2c2296fc2f67cbf7520b61e9c667f8161",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd40ce38_068279fd",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-21T04:16:42Z",
+      "side": 1,
+      "message": "gtk! removed hamcrest, added assertj import",
+      "parentUuid": "0b0defb7_ed3543c2",
       "range": {
         "startLine": 62,
         "startChar": 8,
