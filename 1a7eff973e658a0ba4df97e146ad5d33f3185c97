@@ -150,6 +150,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b67ba022_abca612d",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-24T16:53:28Z",
+      "side": 1,
+      "message": "per standup, I will follow up with more test assertions (there are a few that still need fleshing out) after the stream config fetcher functionality is in place",
+      "parentUuid": "7f400d1e_9f45d2fc",
+      "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3053bcdd_a39e5940",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
         "patchSetId": 21
@@ -185,6 +203,30 @@
       "side": 1,
       "message": "i will look into this some more and follow up accordingly",
       "parentUuid": "3053bcdd_a39e5940",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 57
+      },
+      "revId": "1a7eff973e658a0ba4df97e146ad5d33f3185c97",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59225bf6_17c203a8",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/CustomDataTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-11-24T16:53:28Z",
+      "side": 1,
+      "message": "if it\u0027s ok, i\u0027d like to incorporate parameterized tests in a follow up ps",
+      "parentUuid": "bfb8f686_11c84194",
       "range": {
         "startLine": 20,
         "startChar": 16,
