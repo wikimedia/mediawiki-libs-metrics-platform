@@ -1,6 +1,69 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a619512d_b9030aa0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-24T19:07:54Z",
+      "side": 1,
+      "message": "This is looking good!\n\n-1 per the blocking comment inline.",
+      "revId": "386387bc39671371de5ae5836acbe441491d52f1",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b2bea99_e7e1267b",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/DestinationEventService.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-24T19:07:54Z",
+      "side": 1,
+      "message": "Non-blocking: This is inconsistent with the ANALYTICS and ERROR_LOGGING fields above.",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "386387bc39671371de5ae5836acbe441491d52f1",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa20fa3a_86fd1f08",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-24T19:07:54Z",
+      "side": 1,
+      "message": "Non-blocking: If you wrote this as\n\n return eventStreamsMap.getOrDefault( eventName, ava.util.Collections.emptySet() );\n\nthen you can remove the null check on L147 above.",
+      "range": {
+        "startLine": 190,
+        "startChar": 8,
+        "endLine": 190,
+        "endChar": 47
+      },
+      "revId": "386387bc39671371de5ae5836acbe441491d52f1",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c0eea33_206f9e5d",
@@ -19,6 +82,29 @@
         "startChar": 8,
         "endLine": 223,
         "endChar": 105
+      },
+      "revId": "386387bc39671371de5ae5836acbe441491d52f1",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9156de1d_f5b43c39",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-24T19:07:54Z",
+      "side": 1,
+      "message": "Question: Should you use the streamConfigsReference parameter here? Is there a chance that the two class properties could become out of sync?",
+      "range": {
+        "startLine": 223,
+        "startChar": 69,
+        "endLine": 223,
+        "endChar": 102
       },
       "revId": "386387bc39671371de5ae5836acbe441491d52f1",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
@@ -49,6 +135,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e20dece6_415a104e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/StreamConfig.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-24T19:07:54Z",
+      "side": 1,
+      "message": "Blocking: Following on from the above, this should be\n\n Set\u003cString\u003e events;",
+      "parentUuid": "1ab8bd16_2d107443",
+      "range": {
+        "startLine": 92,
+        "startChar": 34,
+        "endLine": 92,
+        "endChar": 51
+      },
+      "revId": "386387bc39671371de5ae5836acbe441491d52f1",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "463b3016_445a430c",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
         "patchSetId": 25
@@ -62,6 +172,29 @@
       "message": "We already have a @ParametersAreNonnullByDefault annotation that is documenting that those parameters should not be null. I\u0027m not convinced that there is a lot of value in adding this check, that will still throw a NullPointerException (with a slightly better message).\n\nWe could have an hour long discussion on null checks and null-safe design :)",
       "range": {
         "startLine": 34,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "386387bc39671371de5ae5836acbe441491d52f1",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfad0c06_8c776353",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-24T19:07:54Z",
+      "side": 1,
+      "message": "Non-blocking: value can be null",
+      "range": {
+        "startLine": 35,
         "startChar": 8,
         "endLine": 35,
         "endChar": 64
