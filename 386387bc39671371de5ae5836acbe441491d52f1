@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c0eea33_206f9e5d",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-24T17:50:02Z",
+      "side": 1,
+      "message": "nit: technically, those 2 variables should be coherent. In this case, I don\u0027t think there is any major issues if they are desynchronized, so feel free to ignore all this.\n\nI think that this indicates the need to have a Configuration object that encapsulate those 2 variables and represents how we interact with configuration. This is probably out of the scope of this CR.\n\nThread safety is hard! This might be the occasion to talk about it in more details if you are up to it.",
+      "range": {
+        "startLine": 222,
+        "startChar": 8,
+        "endLine": 223,
+        "endChar": 105
+      },
+      "revId": "386387bc39671371de5ae5836acbe441491d52f1",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ab8bd16_2d107443",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/StreamConfig.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-24T17:50:02Z",
+      "side": 1,
+      "message": "I\u0027m a bit surprised to see Events as part of the configuration. I\u0027m thinking about events as short lived objects, not as configuration. As such, an inline comment explaining why we keep a set of events here would be welcomed.\n\nI\u0027m also not sure where we add events to this set.",
+      "range": {
+        "startLine": 92,
+        "startChar": 34,
+        "endLine": 92,
+        "endChar": 51
+      },
+      "revId": "386387bc39671371de5ae5836acbe441491d52f1",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "463b3016_445a430c",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-24T17:50:02Z",
+      "side": 1,
+      "message": "We already have a @ParametersAreNonnullByDefault annotation that is documenting that those parameters should not be null. I\u0027m not convinced that there is a lot of value in adding this check, that will still throw a NullPointerException (with a slightly better message).\n\nWe could have an hour long discussion on null checks and null-safe design :)",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "386387bc39671371de5ae5836acbe441491d52f1",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
