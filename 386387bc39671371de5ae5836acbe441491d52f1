@@ -136,6 +136,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a77d22b3_833f85d8",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-25T07:51:20Z",
+      "side": 1,
+      "message": "Note that there is probably also a scenario where the config is reloaded concurrently and things get messed up even more. But that\u0027s probably a very low probability: config is reloaded from a single thread (TimerThread), and is unlikely to happen at a high enough frequency to matter anyway.\n\nStill, this generally points in the direction that validating that this very simple method actually works as expected requires reading a lot of semi related code.\n\nRefactoring how configuration is exposed and reloaded would help improve the guarantees that the code is correct. But that should probably not happen in this CR.\n\nYes, concurrency is hard!\n\nIf you want to get into the details of the Java Memory Model and see why your understanding of concurrency (and mine too!) is probably wrong, Aleksey Shipilëv has some very good writing: https://shipilev.net/blog/2016/close-encounters-of-jmm-kind/. While this is all very JVM centric, a lot of the principles apply to other concurrent languages as well.",
+      "parentUuid": "a9da948a_db993dd5",
+      "range": {
+        "startLine": 223,
+        "startChar": 69,
+        "endLine": 223,
+        "endChar": 102
+      },
+      "revId": "386387bc39671371de5ae5836acbe441491d52f1",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1ab8bd16_2d107443",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/StreamConfig.java",
         "patchSetId": 25
