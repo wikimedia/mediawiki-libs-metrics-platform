@@ -88,6 +88,6 @@ class StreamConfigFactoryTest extends TestCase {
 
 		$factory = $this->getFactory( false );
 
-		$this->assertEmpty( $factory->getStreamNamesForEvent( 'foo' ) );
+		$this->assertSame( [], $factory->getStreamNamesForEvent( 'foo' ) );
 	}
 }

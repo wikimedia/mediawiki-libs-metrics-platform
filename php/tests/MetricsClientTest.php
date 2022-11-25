@@ -180,7 +180,7 @@ class MetricsClientTest extends TestCase {
 		$client = new MetricsClient( $this->integration, $this->config, $logger );
 
 		$this->assertFalse( $client->submit( 'test.event', [] ) );
-		$this->assertEmpty( $this->integration->getSentEvents() );
+		$this->assertSame( [], $this->integration->getSentEvents() );
 	}
 
 	public function testSubmitLogsInvalidStreamConfig() {
@@ -214,7 +214,7 @@ class MetricsClientTest extends TestCase {
 		] );
 
 		$this->assertFalse( $result );
-		$this->assertEmpty( $this->integration->getSentEvents() );
+		$this->assertSame( [], $this->integration->getSentEvents() );
 	}
 
 	public function testSubmitDoesNotSendWhenEventIsNotCurated() {
@@ -243,7 +243,7 @@ class MetricsClientTest extends TestCase {
 		$client = new MetricsClient( $this->integration, $this->config, null, $context, $curation );
 
 		$this->assertFalse( $client->submit( $stream, $event ) );
-		$this->assertEmpty( $this->integration->getSentEvents() );
+		$this->assertSame( [], $this->integration->getSentEvents() );
 	}
 
 	public function provideDispatch(): Generator {
