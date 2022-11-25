@@ -112,6 +112,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a9da948a_db993dd5",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-11-25T07:41:04Z",
+      "side": 1,
+      "message": "The issue is not as much using the parameter or the instance variable. It is that processing the events happens in a different thread. So when the streamConfigs are set, that other thread might see the streamConfigsReference updated but not the eventsStreamConfigsMap (or the other way round, order isn\u0027t guaranteed).\n\nThere is a similar issue on L145 and L149: we `getStreamNamesForEvent()` on L145, which depends on `eventsStreamConfigsMap` and then we `shouldProcessEventsForStream()` on L149, which depends on `streamConfigsReference`. We could end up with only the changes to one of those variables visible. Which means that we might either discard events for which we now have a valid configuration (probably not a big deal, had those events be generated earlier, they would have been discarded anyway) or we might let events pass, but not have the appropriate configuration when processing them (I haven\u0027t checked the code thoroughly, but I suspect it is robust to that).",
+      "parentUuid": "9156de1d_f5b43c39",
+      "range": {
+        "startLine": 223,
+        "startChar": 69,
+        "endLine": 223,
+        "endChar": 102
+      },
+      "revId": "386387bc39671371de5ae5836acbe441491d52f1",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1ab8bd16_2d107443",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/StreamConfig.java",
         "patchSetId": 25
