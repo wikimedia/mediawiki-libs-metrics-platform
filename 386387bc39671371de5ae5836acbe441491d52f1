@@ -349,6 +349,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11da05dc_79be67f0",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/StreamConfig.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-29T13:53:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "548591cb_7277c4c1",
+      "range": {
+        "startLine": 92,
+        "startChar": 34,
+        "endLine": 92,
+        "endChar": 51
+      },
+      "revId": "386387bc39671371de5ae5836acbe441491d52f1",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "463b3016_445a430c",
@@ -411,6 +435,30 @@
       "parentUuid": "463b3016_445a430c",
       "range": {
         "startLine": 34,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "386387bc39671371de5ae5836acbe441491d52f1",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15318bb8_fc2dedc5",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-29T13:53:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfad0c06_8c776353",
+      "range": {
+        "startLine": 35,
         "startChar": 8,
         "endLine": 35,
         "endChar": 64

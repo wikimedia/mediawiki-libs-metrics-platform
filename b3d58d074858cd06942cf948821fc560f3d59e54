@@ -633,6 +633,30 @@
       },
       "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f385f647_74edc06a",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/CustomData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-11-29T13:53:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70755e31_1e8637ee",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "b3d58d074858cd06942cf948821fc560f3d59e54",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
