@@ -36,7 +36,7 @@ public class CurationFilterTest {
                 .isLoggedIn(true).editCountBucket("1000+ edits").build();
         DeviceData deviceData = DeviceData.builder().pixelRatio(2.0f).build();
 
-        Event event = new Event("test/event", "test.event");
+        Event event = new Event("test/event", "test.event", "testEvent");
         event.setPageData(pageData);
         event.setUserData(userData);
         event.setDeviceData(deviceData);

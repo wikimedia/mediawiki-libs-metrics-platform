@@ -21,6 +21,7 @@ public class StreamConfigTest {
                 new StreamConfig.ProducerConfig(new StreamConfig.MetricsPlatformClientConfig(
                         samplingConfig,
                         null,
+                        null,
                         null
                 ))
         );

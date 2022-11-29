@@ -16,7 +16,7 @@ public class EventTest {
 
     @Test
     public void testEvent() {
-        Event event = new Event("test/event/1.0.0", "test.event");
+        Event event = new Event("test/event/1.0.0", "test.event", "testEvent");
         String timestamp = DATE_FORMAT.format(Instant.EPOCH);
         event.setAppInstallId("foo");
         event.setAppSessionId("bar");
@@ -29,7 +29,7 @@ public class EventTest {
     @Test
     public void testEventSerialization() {
         String uuid = UUID.randomUUID().toString();
-        Event event = new Event("test/event/1.0.0", "test.event");
+        Event event = new Event("test/event/1.0.0", "test.event", "testEvent");
         event.setAppInstallId(uuid);
         event.setAppSessionId(uuid);
         event.setTimestamp("2021-08-27T12:00:00Z");
@@ -40,6 +40,7 @@ public class EventTest {
 
         assertThat(event.getStream(), is("test.event"));
         assertThat(event.getSchema(), is("test/event/1.0.0"));
+        assertThat(event.getName(), is("testEvent"));
         assertThat(event.getAppInstallId(), is(uuid));
         assertThat(event.getAppSessionId(), is(uuid));
         assertThat(event.getTimestamp(), is("2021-08-27T12:00:00Z"));
@@ -54,6 +55,7 @@ public class EventTest {
                 "{" +
                             "\"$schema\":\"test/event/1.0.0\"," +
                             "\"meta\":{\"stream\":\"test.event\"}," +
+                            "\"name\":\"testEvent\"," +
                             "\"dt\":\"2021-08-27T12:00:00Z\"," +
                             "\"app_install_id\":\"%s\"," +
                             "\"app_session_id\":\"%s\"," +

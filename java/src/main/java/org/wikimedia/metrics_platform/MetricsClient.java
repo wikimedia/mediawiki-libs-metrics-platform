@@ -3,14 +3,18 @@ package org.wikimedia.metrics_platform;
 import static java.time.Instant.now;
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toSet;
 
 import java.io.IOException;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.BlockingQueue;
@@ -19,8 +23,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.wikimedia.metrics_platform.context.ContextController;
+import org.wikimedia.metrics_platform.context.CustomData;
 import org.wikimedia.metrics_platform.curation.CurationController;
 
 public final class MetricsClient {
@@ -37,6 +43,8 @@ public final class MetricsClient {
      * Stream configs to be fetched on startup and stored for the duration of the app lifecycle.
      */
     private final AtomicReference<Map<String, StreamConfig>> streamConfigsReference = new AtomicReference<>(emptyMap());
+
+    private final AtomicReference<Map<String, Set<String>>> eventsStreamConfigsMap = new AtomicReference<>(emptyMap());
 
     private static final int STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL = 30000; // 30 seconds
 
@@ -72,6 +80,8 @@ public final class MetricsClient {
 
     private static final int SEND_INTERVAL = 30000; // 30 seconds
 
+    private static final String METRICS_PLATFORM_SCHEMA = "/analytics/mediawiki/client/metrics_event/1.1.0";
+
 
     static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter
             .ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
@@ -98,10 +108,98 @@ public final class MetricsClient {
     }
 
     /**
+     * Construct and submits a Metrics Platform Event from the event name and custom data for each
+     * stream that is interested in those events.
+     * <p>
+     * The Metrics Platform Event for a stream (S) is constructed by: first initializing the minimum
+     * valid event (E) that can be submitted to S; and, second mixing the context attributes requested
+     * in the configuration for S into E.
+     * <p>
+     * The Metrics Platform Event is submitted to a stream (S) if: 1) S is in sample; and 2) the event
+     * is filtered due to the filtering rules for S.
+     * <p>
+     * This particular dispatch method accepts unformatted custom data and calls the following dispatch
+     * method with the custom data properly formatted.
+     * <p>
+     * @see <a href="https://wikitech.wikimedia.org/wiki/Metrics_Platform">Metrics Platform</a>
+     *
+     * @param eventName event name
+     * @param customData custom data
+     */
+    public void dispatch(String eventName, Map<String, Object> customData) {
+        Set<CustomData> customDataSetFormatted = customData.entrySet().stream()
+            .map(CustomData::of)
+            .collect(toSet());
+        dispatch(eventName, customDataSetFormatted);
+    }
+
+    /**
+     * See doc comment for above dispatch method.
+     * <p>
+     * This particular dispatch method accepts formatted custom data and submits the event.
+     *
+     * @param eventName event name
+     * @param customData custom data
+     */
+    public void dispatch(String eventName, Set<CustomData> customData) {
+        Set<String> streamNames = getStreamNamesForEvent(eventName);
+        // Loop through stream configs to add event to pending events.
+        if (streamNames != null) {
+            for (String streamName : streamNames) {
+                if (shouldProcessEventsForStream(streamName)) {
+                    Event event = new Event(METRICS_PLATFORM_SCHEMA, streamName, eventName);
+                    event.setCustomData(customData);
+                    submit(event);
+                }
+            }
+        }
+    }
+
+    /**
+     * Return the event name to associated stream names map.
+     *
+     * @param streamConfigs stream configs
+     * @return the event name to stream names map
+     */
+    private Map<String, Set<String>> getEventNameToStreamNamesMap(Map<String, StreamConfig> streamConfigs) {
+        Map<String, Set<String>> eventsMap = new HashMap<>();
+        for (Map.Entry<String, StreamConfig> entry : streamConfigs.entrySet()) {
+            String streamName = entry.getValue().getStreamName();
+            StreamConfig streamConfig = entry.getValue();
+            if (!streamConfig.hasEvents()) {
+                continue;
+            }
+            Set<String> events = streamConfig.getEvents();
+            for (String event : events) {
+                Set<String> streamNamesSet = eventsMap.get(event);
+                if (streamNamesSet != null) {
+                    streamNamesSet.add(streamName);
+                } else {
+                    Set<String> streamNames = new HashSet<>();
+                    streamNames.add(streamName);
+                    eventsMap.put(event, streamNames);
+                }
+            }
+        }
+        return eventsMap;
+    }
+
+    /**
+     * Return the stream names for an event name.
+     *
+     * @param eventName event name
+     * @return the collection of stream names for an event
+     */
+    private Set<String> getStreamNamesForEvent(String eventName) {
+        Map<String, Set<String>> eventsStreamsMap = this.eventsStreamConfigsMap.get();
+        return eventsStreamsMap.get(eventName);
+    }
+
+    /**
      * Convenience method to be called when
      * <a href="https://developer.android.com/guide/components/activities/activity-lifecycle#onpause">
      * the onPause() activity lifecycle callback</a> is called.
-     *
+     * <p>
      * Touches the session so that we can determine whether it session has expired if and when the
      * application is resumed.
      */
@@ -127,6 +225,7 @@ public final class MetricsClient {
      */
     void setStreamConfigs(@Nonnull Map<String, StreamConfig> streamConfigsReference) {
         this.streamConfigsReference.set(streamConfigsReference);
+        this.eventsStreamConfigsMap.set(getEventNameToStreamNamesMap(this.streamConfigsReference.get()));
     }
 
     /**
@@ -214,10 +313,13 @@ public final class MetricsClient {
         }
     }
 
+    // @VisibleForTesting
+    boolean isPendingEventsEmpty() {
+        return pendingEvents.isEmpty();
+    }
+
     /**
      * MetricsClient Constructor.
-     *
-     * @param ClientMetadata clientMetadata implementation
      */
     MetricsClient(ClientMetadata clientMetadata,
                   StreamConfigsFetcher streamConfigsFetcher,
@@ -287,8 +389,8 @@ public final class MetricsClient {
             SamplingController samplingController,
             ContextController contextController,
             CurationController curationController,
-            TimerTask fetchStreamConfigsTask,
-            TimerTask eventSubmissionTask,
+            @Nullable TimerTask fetchStreamConfigsTask,
+            @Nullable TimerTask eventSubmissionTask,
             int capacity) {
         this.clientMetadata = clientMetadata;
         this.sessionController = sessionController;

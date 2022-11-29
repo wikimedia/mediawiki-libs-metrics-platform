@@ -13,4 +13,10 @@ public class DestinationEventServiceTest {
         assertThat(loggingService.getBaseUri(), is("https://intake-logging.wikimedia.org"));
     }
 
+    @Test
+    public void testDestinationEventServiceLocal() {
+        DestinationEventService loggingService = DestinationEventService.LOCAL;
+        assertThat(loggingService.getBaseUri(), is("http://localhost:8192/v1/events"));
+    }
+
 }
