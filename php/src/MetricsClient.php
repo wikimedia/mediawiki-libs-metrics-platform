@@ -2,13 +2,16 @@
 
 namespace Wikimedia\MetricsPlatform;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfig;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigException;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
 
-class MetricsClient {
+class MetricsClient implements LoggerAwareInterface {
+	use LoggerAwareTrait;
 
 	/**
 	 * The ID of v1.0.0 of the mediawiki/client/metrics_event schema in the schemas/event/secondary
@@ -30,9 +33,6 @@ class MetricsClient {
 	/** @var StreamConfigFactory */
 	private $streamConfigFactory;
 
-	/** @var LoggerInterface */
-	private $logger;
-
 	/**
 	 * MetricsClient constructor.
 	 *
@@ -51,7 +51,7 @@ class MetricsClient {
 	) {
 		$this->integration = $integration;
 		$this->streamConfigFactory = $streamConfigFactory;
-		$this->logger = $logger ?? new NullLogger();
+		$this->setLogger( $logger ?? new NullLogger() );
 		$this->contextController = $contextController ?? new ContextController( $integration );
 		$this->curationController = $curationController ?? new CurationController();
 	}
