@@ -135,6 +135,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "81751863_7e2b8b9c",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-02T08:27:54Z",
+      "side": 1,
+      "message": "Here, we are already using a BufferedReader (which by default provides an 8k buffer), so manually buffering again with this char[] is not needed.\n\nEven more, materializing this content as a String isn\u0027t needed as JsonParser is perfectly happy to work with a Reader. That way, we don\u0027t need to load the full json document in memory, we just let JsonParser process it on the go.\n\nWe could have a conversation on all the ways to process InputStreams in Java if you\u0027d like (it looks like a mess, but there are some very good - and some less good - reasons for it).",
+      "range": {
+        "startLine": 120,
+        "startChar": 10,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b17e5743_95e9dc5d",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFactory.java",
         "patchSetId": 2
