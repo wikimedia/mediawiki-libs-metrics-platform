@@ -296,6 +296,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "257fa8f8_9f014ad2",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:55:23Z",
+      "side": 1,
+      "message": "sounds good - i was overwhelmed by all the diff ways to do this trying to discern which would be the best way",
+      "parentUuid": "81751863_7e2b8b9c",
+      "range": {
+        "startLine": 120,
+        "startChar": 10,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b17e5743_95e9dc5d",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFactory.java",
         "patchSetId": 2
