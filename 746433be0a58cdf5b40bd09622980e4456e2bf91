@@ -18,6 +18,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68a9ec2b_9dac0af4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:50:06Z",
+      "side": 1,
+      "message": "thanks @Gehel \\o/ \nthis PR is a mess but I appreciate the initial feedback - will for sure trouble you for advice",
+      "parentUuid": "7d1b6fbd_97946c7a",
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d907bbdc_8b145668",
@@ -64,6 +82,54 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0faf952_8e07ea2a",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74989096_87e7635a",
+      "range": {
+        "startLine": 19,
+        "startChar": 44,
+        "endLine": 19,
+        "endChar": 65
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a642ebb_f6ecb1f5",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:50:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d907bbdc_8b145668",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae7e55ca_bbeda39b",
@@ -77,6 +143,30 @@
       "writtenOn": "2022-12-02T08:13:16Z",
       "side": 1,
       "message": "We need to have a look together at your IDE configuration. There should be a way to configure it to always use spaces. Ping me!",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 1
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8c6b345_e68174d9",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:50:06Z",
+      "side": 1,
+      "message": "yes please - this is driving me mad",
+      "parentUuid": "ae7e55ca_bbeda39b",
       "range": {
         "startLine": 23,
         "startChar": 0,
@@ -110,6 +200,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0769f37e_5d88094b",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:50:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51ef8b15_9ea216f7",
+      "range": {
+        "startLine": 50,
+        "startChar": 18,
+        "endLine": 50,
+        "endChar": 29
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3650cdd1_0f1d2918",
@@ -123,6 +237,30 @@
       "writtenOn": "2022-12-02T08:13:16Z",
       "side": 1,
       "message": "Do we need a custom deserializer? Or could we have classes that map the json directly? This might need a bit of discussion.",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2390389_b82aadd1",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:50:06Z",
+      "side": 1,
+      "message": "you\u0027re right - i will futz with the class so json can map w/o custom deserializer",
+      "parentUuid": "3650cdd1_0f1d2918",
       "range": {
         "startLine": 71,
         "startChar": 22,
@@ -181,6 +319,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "82a02e72_7180b8b2",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:50:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b17e5743_95e9dc5d",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 21
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "53c95f74_35082fb4",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFactory.java",
         "patchSetId": 2
@@ -192,6 +354,30 @@
       "writtenOn": "2022-12-02T08:13:16Z",
       "side": 1,
       "message": "This is a classic case where using a null-object would simplify the code. If `getEvents()` returns an empty set, this check can be removed. In case the set is empty, the for loop at L160 would just do nothing.",
+      "range": {
+        "startLine": 155,
+        "startChar": 3,
+        "endLine": 157,
+        "endChar": 4
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70ad6a5d_06432745",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53c95f74_35082fb4",
       "range": {
         "startLine": 155,
         "startChar": 3,
@@ -215,6 +401,30 @@
       "writtenOn": "2022-12-02T08:13:16Z",
       "side": 1,
       "message": "This interface can probably be removed, see comment in StreamConfigFactory",
+      "range": {
+        "startLine": 6,
+        "startChar": 17,
+        "endLine": 6,
+        "endChar": 38
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9108f049_c14bf2e5",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigInterface.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:50:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2142c94_020f55f4",
       "range": {
         "startLine": 6,
         "startChar": 17,
@@ -250,6 +460,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c8640765_3524b2b7",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:50:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e8a1209d_eac96180",
+      "range": {
+        "startLine": 68,
+        "startChar": 31,
+        "endLine": 72,
+        "endChar": 65
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "33e9bc92_80f6a747",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
         "patchSetId": 2
@@ -261,6 +495,30 @@
       "writtenOn": "2022-12-02T08:13:16Z",
       "side": 1,
       "message": "This logger is probably not what you think it is :)  (hint: looks at L3)",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 14
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44d95e28_2365a2ab",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:50:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "33e9bc92_80f6a747",
       "range": {
         "startLine": 84,
         "startChar": 8,
@@ -296,6 +554,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9c5f9356_a610abf9",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:50:06Z",
+      "side": 1,
+      "message": "i will sign up!",
+      "parentUuid": "e26fd646_e20a3314",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 5
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2e659690_d15f8335",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
         "patchSetId": 2
@@ -307,6 +589,30 @@
       "writtenOn": "2022-12-02T08:13:16Z",
       "side": 1,
       "message": "Since `mockStreamConfigFactory` is a mock, there is no behaviour associated to `setStreamConfig()`. So this is probably not doing what you think it does. Spies can help mock some behaviours while having others backed by a real object (see https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#13). In this context, it might make sense to think a bit at how we could use real objects and reduce our use of Mockito as much as possible.",
+      "range": {
+        "startLine": 124,
+        "startChar": 26,
+        "endLine": 124,
+        "endChar": 41
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ee84534_23e277f6",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-02T10:50:06Z",
+      "side": 1,
+      "message": "duly noted - need to fix all the tests",
+      "parentUuid": "2e659690_d15f8335",
       "range": {
         "startLine": 124,
         "startChar": 26,
