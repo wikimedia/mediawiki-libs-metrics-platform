@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
  * https://wikitech.wikimedia.org/wiki/Event_Platform/EventGate#EventGate_clusters
  */
 @Getter @RequiredArgsConstructor(access = PRIVATE)
-enum DestinationEventService {
+public enum DestinationEventService {
 
     @SerializedName("eventgate-analytics-external")
     ANALYTICS("https://intake-analytics.wikimedia.org"),

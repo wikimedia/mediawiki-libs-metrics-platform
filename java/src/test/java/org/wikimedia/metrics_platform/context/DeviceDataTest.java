@@ -1,7 +1,6 @@
 package org.wikimedia.metrics_platform.context;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,13 +16,13 @@ public class DeviceDataTest {
                 .maxTouchPoints(1)
                 .build();
 
-        assertThat(deviceData.getPixelRatio(), is(1.0f));
-        assertThat(deviceData.getHardwareConcurrency(), is(1));
-        assertThat(deviceData.getMaxTouchPoints(), is(1));
+        assertThat(deviceData.getPixelRatio()).isEqualTo(1.0f);
+        assertThat(deviceData.getHardwareConcurrency()).isEqualTo(1);
+        assertThat(deviceData.getMaxTouchPoints()).isEqualTo(1);
 
         Gson gson = new Gson();
         String json = gson.toJson(deviceData);
-        assertThat(json, is("{\"pixel_ratio\":1.0,\"hardware_concurrency\":1,\"max_touch_points\":1}"));
+        assertThat(json).isEqualTo("{\"pixel_ratio\":1.0,\"hardware_concurrency\":1,\"max_touch_points\":1}");
     }
 
 }

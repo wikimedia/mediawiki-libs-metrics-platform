@@ -1,7 +1,6 @@
 package org.wikimedia.metrics_platform;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.wikimedia.metrics_platform.MetricsClient.DATE_FORMAT;
 
 import java.time.Instant;
@@ -22,8 +21,8 @@ public class EventTest {
         event.setAppSessionId("bar");
         event.setTimestamp(timestamp);
 
-        assertThat(event.getStream(), is("test.event"));
-        assertThat(event.getTimestamp(), is("1970-01-01T00:00:00Z"));
+        assertThat(event.getStream()).isEqualTo("test.event");
+        assertThat(event.getTimestamp()).isEqualTo("1970-01-01T00:00:00Z");
     }
 
     @Test
@@ -38,20 +37,20 @@ public class EventTest {
         event.setPlatformFamily("app");
         event.setIsProduction(true);
 
-        assertThat(event.getStream(), is("test.event"));
-        assertThat(event.getSchema(), is("test/event/1.0.0"));
-        assertThat(event.getName(), is("testEvent"));
-        assertThat(event.getAppInstallId(), is(uuid));
-        assertThat(event.getAppSessionId(), is(uuid));
-        assertThat(event.getTimestamp(), is("2021-08-27T12:00:00Z"));
-        assertThat(event.getAccessMethod(), is("mobile app"));
-        assertThat(event.getPlatform(), is("android"));
-        assertThat(event.getPlatformFamily(), is("app"));
-        assertThat(event.getIsProduction(), is(true));
+        assertThat(event.getStream()).isEqualTo("test.event");
+        assertThat(event.getSchema()).isEqualTo("test/event/1.0.0");
+        assertThat(event.getName()).isEqualTo("testEvent");
+        assertThat(event.getAppInstallId()).isEqualTo(uuid);
+        assertThat(event.getAppSessionId()).isEqualTo(uuid);
+        assertThat(event.getTimestamp()).isEqualTo("2021-08-27T12:00:00Z");
+        assertThat(event.getAccessMethod()).isEqualTo("mobile app");
+        assertThat(event.getPlatform()).isEqualTo("android");
+        assertThat(event.getPlatformFamily()).isEqualTo("app");
+        assertThat(event.getIsProduction()).isEqualTo(true);
 
         Gson gson = new Gson();
         String json = gson.toJson(event);
-        assertThat(json, is(String.format(Locale.ROOT,
+        assertThat(json).isEqualTo(String.format(Locale.ROOT,
                 "{" +
                             "\"$schema\":\"test/event/1.0.0\"," +
                             "\"meta\":{\"stream\":\"test.event\"}," +
@@ -66,7 +65,7 @@ public class EventTest {
                             ",\"platform\":\"android\"," +
                             "\"platform_family\":\"app\"," +
                             "\"is_production\":true" +
-                        "}", uuid, uuid)));
+                        "}", uuid, uuid));
     }
 
 }

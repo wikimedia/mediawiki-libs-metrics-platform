@@ -1,7 +1,6 @@
 package org.wikimedia.metrics_platform.context;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
 
@@ -27,24 +26,24 @@ public class UserDataTest {
                 .languageVariant("zh-tw")
                 .build();
 
-        assertThat(userData.getId(), is(1));
-        assertThat(userData.getName(), is("TestUser"));
-        assertThat(userData.getGroups(), is(Collections.singletonList("*")));
-        assertThat(userData.getIsLoggedIn(), is(true));
-        assertThat(userData.getIsBot(), is(false));
-        assertThat(userData.getCanProbablyEditPage(), is(true));
-        assertThat(userData.getEditCount(), is(10));
-        assertThat(userData.getEditCountBucket(), is("5-99 edits"));
-        assertThat(userData.getRegistrationTimestamp(), is(1427224089000L));
-        assertThat(userData.getLanguage(), is("zh"));
-        assertThat(userData.getLanguageVariant(), is("zh-tw"));
+        assertThat(userData.getId()).isEqualTo(1);
+        assertThat(userData.getName()).isEqualTo("TestUser");
+        assertThat(userData.getGroups()).isEqualTo(Collections.singletonList("*"));
+        assertThat(userData.getIsLoggedIn()).isEqualTo(true);
+        assertThat(userData.getIsBot()).isEqualTo(false);
+        assertThat(userData.getCanProbablyEditPage()).isEqualTo(true);
+        assertThat(userData.getEditCount()).isEqualTo(10);
+        assertThat(userData.getEditCountBucket()).isEqualTo("5-99 edits");
+        assertThat(userData.getRegistrationTimestamp()).isEqualTo(1427224089000L);
+        assertThat(userData.getLanguage()).isEqualTo("zh");
+        assertThat(userData.getLanguageVariant()).isEqualTo("zh-tw");
 
         Gson gson = new Gson();
         String json = gson.toJson(userData);
-        assertThat(json, is("{\"id\":1,\"name\":\"TestUser\",\"groups\":[\"*\"],\"is_logged_in\":true," +
+        assertThat(json).isEqualTo("{\"id\":1,\"name\":\"TestUser\",\"groups\":[\"*\"],\"is_logged_in\":true," +
                 "\"is_bot\":false,\"can_probably_edit_page\":true,\"edit_count\":10," +
                 "\"edit_count_bucket\":\"5-99 edits\",\"registration_timestamp\":1427224089000," +
-                "\"language\":\"zh\",\"language_variant\":\"zh-tw\"}"));
+                "\"language\":\"zh\",\"language_variant\":\"zh-tw\"}");
     }
 
 }

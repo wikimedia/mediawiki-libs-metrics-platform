@@ -4,7 +4,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.wikimedia.metrics_platform.Event;
-import org.wikimedia.metrics_platform.StreamConfig;
+import org.wikimedia.metrics_platform.config.StreamConfig;
 
 @ThreadSafe
 @ParametersAreNonnullByDefault

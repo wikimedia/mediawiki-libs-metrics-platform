@@ -1,8 +1,11 @@
 package org.wikimedia.metrics_platform;
 
+import javax.annotation.concurrent.ThreadSafe;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.concurrent.ThreadSafe;
+
+import org.wikimedia.metrics_platform.config.SampleConfig;
+import org.wikimedia.metrics_platform.config.StreamConfig;
 
 /**
  * SamplingController: computes various sampling functions on the client
@@ -28,24 +31,24 @@ class SamplingController {
      * @return true if in sample or false otherwise
      */
     boolean isInSample(StreamConfig streamConfig) {
-        if (!streamConfig.hasSamplingConfig()) {
+        if (!streamConfig.hasSampleConfig()) {
             return true;
         }
-        SamplingConfig samplingConfig = streamConfig.getProducerConfig().getMetricsPlatformClientConfig().getSamplingConfig();
-        if (samplingConfig.getRate() == 1.0) {
+        SampleConfig sampleConfig = streamConfig.getSampleConfig();
+        if (sampleConfig.getRate() == 1.0) {
             return true;
         }
-        if (samplingConfig.getRate() == 0.0) {
+        if (sampleConfig.getRate() == 0.0) {
             return false;
         }
-        return getSamplingValue(samplingConfig.getIdentifier()) < samplingConfig.getRate();
+        return getSamplingValue(sampleConfig.getIdentifier()) < sampleConfig.getRate();
     }
 
     /**
      * @param identifier identifier type from sampling config
      * @return a floating point value between 0.0 and 1.0 (inclusive)
      */
-    double getSamplingValue(SamplingConfig.Identifier identifier) {
+    double getSamplingValue(SampleConfig.Identifier identifier) {
         String token = getSamplingId(identifier).substring(0, 8);
         return (double) Long.parseLong(token, 16) / (double) 0xFFFFFFFFL;
     }
@@ -58,11 +61,11 @@ class SamplingController {
      * @return the requested ID string
      */
     @Nonnull
-    String getSamplingId(SamplingConfig.Identifier identifier) {
-        if (identifier == SamplingConfig.Identifier.SESSION) {
+    String getSamplingId(SampleConfig.Identifier identifier) {
+        if (identifier == SampleConfig.Identifier.SESSION) {
             return sessionController.getSessionId();
         }
-        if (identifier == SamplingConfig.Identifier.DEVICE) {
+        if (identifier == SampleConfig.Identifier.DEVICE) {
             return clientMetadata.getAppInstallId();
         }
         throw new RuntimeException("Bad identifier type");

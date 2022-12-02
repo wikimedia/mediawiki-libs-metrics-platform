@@ -1,7 +1,6 @@
 package org.wikimedia.metrics_platform.curation;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,63 +44,63 @@ public class CurationFilterTest {
 
     @Test
     public void testEventPasses() {
-        assertThat(curationFilter.apply(getBaseEvent()), is(true));
+        assertThat(curationFilter.apply(getBaseEvent())).isEqualTo(true);
     }
 
     @Test
     public void testEventFailsWrongPageId() {
         Event event = getBaseEvent();
         event.getPageData().setId(42);
-        assertThat(curationFilter.apply(event), is(false));
+        assertThat(curationFilter.apply(event)).isEqualTo(false);
     }
 
     @Test
     public void testEventFailsWrongPageNamespaceText() {
         Event event = getBaseEvent();
         event.getPageData().setNamespaceText("User");
-        assertThat(curationFilter.apply(event), is(false));
+        assertThat(curationFilter.apply(event)).isEqualTo(false);
     }
 
     @Test
     public void testEventFailsWrongUserGroups() {
         Event event = getBaseEvent();
         event.getUserData().setGroups(Arrays.asList("user", "autoconfirmed", "sysop"));
-        assertThat(curationFilter.apply(event), is(false));
+        assertThat(curationFilter.apply(event)).isEqualTo(false);
     }
 
     @Test
     public void testEventFailsNoUserGroups() {
         Event event = getBaseEvent();
         event.getUserData().setGroups(Collections.emptyList());
-        assertThat(curationFilter.apply(event), is(false));
+        assertThat(curationFilter.apply(event)).isEqualTo(false);
     }
 
     @Test
     public void testEventFailsNotLoggedIn() {
         Event event = getBaseEvent();
         event.getUserData().setIsLoggedIn(false);
-        assertThat(curationFilter.apply(event), is(false));
+        assertThat(curationFilter.apply(event)).isEqualTo(false);
     }
 
     @Test
     public void testEventFailsWrongUserEditCountBucket() {
         Event event = getBaseEvent();
         event.getUserData().setEditCountBucket("5-99 edits");
-        assertThat(curationFilter.apply(event), is(false));
+        assertThat(curationFilter.apply(event)).isEqualTo(false);
     }
 
     @Test
     public void testEventFailsDevicePixelRatioTooHigh() {
         Event event = getBaseEvent();
         event.getDeviceData().setPixelRatio(1.0f);
-        assertThat(curationFilter.apply(event), is(false));
+        assertThat(curationFilter.apply(event)).isEqualTo(false);
     }
 
     @Test
     public void testEventFailsDevicePixelRatioTooLow() {
         Event event = getBaseEvent();
         event.getDeviceData().setPixelRatio(3.0f);
-        assertThat(curationFilter.apply(event), is(false));
+        assertThat(curationFilter.apply(event)).isEqualTo(false);
     }
 
 }

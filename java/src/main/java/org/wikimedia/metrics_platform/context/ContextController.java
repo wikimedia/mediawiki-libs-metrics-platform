@@ -38,7 +38,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import org.wikimedia.metrics_platform.Event;
 import org.wikimedia.metrics_platform.ClientMetadata;
-import org.wikimedia.metrics_platform.StreamConfig;
+import org.wikimedia.metrics_platform.config.StreamConfig;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
