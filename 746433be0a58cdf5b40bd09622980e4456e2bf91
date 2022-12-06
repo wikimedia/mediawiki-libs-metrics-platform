@@ -626,6 +626,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d09901e4_e8461ee0",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-06T14:34:17Z",
+      "side": 1,
+      "message": "signed up for your workshop \\o/",
+      "parentUuid": "bc5d2141_b021ebbb",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 5
+      },
+      "revId": "746433be0a58cdf5b40bd09622980e4456e2bf91",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2e659690_d15f8335",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
         "patchSetId": 2
