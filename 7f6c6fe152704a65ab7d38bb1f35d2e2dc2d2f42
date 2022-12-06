@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2eb2eac3_ce46ef1d",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-06T06:18:27Z",
+      "side": 1,
+      "message": "i was compelled by my IDE to do this but it seems like there should be a better way to do this w/o copying vars",
+      "revId": "7f6c6fe152704a65ab7d38bb1f35d2e2dc2d2f42",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
