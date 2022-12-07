@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74448e4c_be8778ee",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-07T09:33:16Z",
+      "side": 1,
+      "message": "Now that there are StreamConfigFetcher and Config as separate classes from MetricsClient, I need to figure out how to invoke fetching the latest stream configs on the MetricsClient.",
+      "revId": "a890e5deb8e282ca11b3dd03b0ddba6615896e82",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e631fa0b_438acd0b",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-07T09:33:16Z",
+      "side": 1,
+      "message": "this test is failing - assertFalse is returning true - need to dig into this",
+      "revId": "a890e5deb8e282ca11b3dd03b0ddba6615896e82",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "777df234_7113631c",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-07T09:33:16Z",
+      "side": 1,
+      "message": "this test is failing - by decoupling Config from StreamConfigFetcher and MetricsClient classes, I\u0027m unsure how to re-fetch stream configs with the FetchStreamConfigTask subclass (of MetricsClient) in its current incarnation.",
+      "revId": "a890e5deb8e282ca11b3dd03b0ddba6615896e82",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
