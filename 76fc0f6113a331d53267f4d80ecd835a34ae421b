@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80258ca3_2aa4644e",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-07T23:42:25Z",
+      "side": 1,
+      "message": "so in this particular test, I wasn\u0027t sure how to intercept the streamConfigFetcher to use mock data -- the actual api endpoint does contain some MP streams in prod that I use here to test FetchStreamConfigTask -- so it passes but this probably should be run with mock data rather than real data?",
+      "revId": "76fc0f6113a331d53267f4d80ecd835a34ae421b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fc806c8_1200a3a4",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-07T23:42:25Z",
+      "side": 1,
+      "message": "ditto using an event prefix and MP stream that\u0027s already been deployed",
+      "revId": "76fc0f6113a331d53267f4d80ecd835a34ae421b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
