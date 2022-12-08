@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd5446a1_2c2fc5db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-08T01:12:31Z",
+      "side": 1,
+      "message": "@Phuedx I still need to incorporate the part about being able to accept local/remote config. \n\nMy initial inclination is creating some kind of adapter class for MetricsClient to read JSON regardless of source - may spin that off into its own ticket.",
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
