@@ -16,6 +16,621 @@
       "message": "@Phuedx I still need to incorporate the part about being able to accept local/remote config. \n\nMy initial inclination is creating some kind of adapter class for MetricsClient to read JSON regardless of source - may spin that off into its own ticket.",
       "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2118c414_17cdc531",
+        "filename": "java/pom.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "I don\u0027t think this dependency is used anymore.",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 21
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a694596_71887122",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "This field (and streamConfig below) seem to be package-private as they are used for testing. If this requirement cannot be removed, there should at least be a comment to make clear that the added visibility should not be used outside of testing.",
+      "range": {
+        "startLine": 52,
+        "startChar": 30,
+        "endLine": 52,
+        "endChar": 49
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34bb98d8_dac8f154",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "Since this field is written from multiple threads, we need to synchronize access to it. Either by using a synchronized block or using an AtomicReference.",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45793f0c_ca622e93",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "streamNames cannot be null.",
+      "range": {
+        "startLine": 147,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 34
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "288f6b09_8759e2b9",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "nit: static import?",
+      "range": {
+        "startLine": 227,
+        "startChar": 109,
+        "endLine": 227,
+        "endChar": 128
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa1e4b59_46a685a8",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "Not related to this CR, but we probably have way too many contructors in this class.",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 259,
+        "endChar": 17
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12bf83d9_82567fc4",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/SourceConfig.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "We want this class to be immutable, so those fields should be final (which is going to be an issue with the setStreamConfigs() method, so a bit of refactoring is needed).",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 43
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8f58e25_6ef66ea5",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/SourceConfig.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "To ensure that this class is immutable, we should ensure that those collections are immutable. One easy way to do this is to wrap them in Collections.unmodifiableMap() / Collections.unmodifiableSet(). Unmodifiable isn\u0027t strictly immutable, but it\u0027s good enough for our purpose.",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 67
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf37b213_74ebb37f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/SourceConfig.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "Creating a new HashSet isn\u0027t necessary, but wrapping the result in unmodifiableSet() is required.",
+      "range": {
+        "startLine": 22,
+        "startChar": 15,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df5baa79_cb606c3a",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/SourceConfig.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "We could use streams for a more compact (and IMHO more readable) code:\n\n        return sourceConfigs.stream()\n                .filter(streamConfig -\u003e streamConfig.getEvents().contains(eventName))\n                .map(streamConfig -\u003e streamConfig.getStreamName())\n                .collect(toSet());",
+      "range": {
+        "startLine": 53,
+        "startChar": 23,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6ff3317_1e71e712",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/SourceConfig.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "clearing the map before disgarding it (by assigning a new value to this reference) isn\u0027t necessary.\n\nThis method should probably also reset the sourceConfigs instance variable.\n\nNote that this whole method is problematic since it conflicts with the immutability requirements of this class.",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 29
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca827d1a_c4a3da5a",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFetcher.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "We should probably split the fetching of the configuration and the parsing of the configuration. This would allow having a test of the parsing, which would be super useful.",
+      "range": {
+        "startLine": 47,
+        "startChar": 37,
+        "endLine": 47,
+        "endChar": 55
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6517d5d4_5a1fc2e7",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFetcher.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "There is probably an easier way to get at the stream name. Probably JsonElement.getAsString() (but I haven\u0027t tested it).",
+      "range": {
+        "startLine": 57,
+        "startChar": 44,
+        "endLine": 57,
+        "endChar": 91
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e6f0b8c_2a3d762c",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFetcher.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "This could be `METRICS_PLATFORM_SCHEMA_TITLE.equals(streamNameScrubbed)`\n\nObjects.equals() handles the case where both objects can be null, which we don\u0027t need in this case.",
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "571876f0_679fadd4",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFetcher.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "We should probably just let this exception bubble up. If there was an IOException while reading the config, the config is most likely invalid, or not entirely loaded. Returning an invalid (or empty) config without a way for the client code to check if that config is valid is problematic.",
+      "range": {
+        "startLine": 63,
+        "startChar": 10,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4043e26_cfc53a87",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFetcher.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "nit: StreamConfigJsonDeserializer seems more natural to me (but English isn\u0027t my first language)",
+      "range": {
+        "startLine": 72,
+        "startChar": 24,
+        "endLine": 72,
+        "endChar": 52
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7acd4a5_5bb5f7a6",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfigFetcher.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "This can probably be simplified as:\n\n        return StreamSupport.stream(jsonArray.spliterator(), false)\n                .map(e -\u003e e.getAsString())\n                .collect(toSet());",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 19
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e577ab2_85bff25b",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "Instead of parsing from Json, we could directly instantiate the required curationFilter (or better, move it to a fixture class).",
+      "range": {
+        "startLine": 63,
+        "startChar": 15,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "199c8e0c_4d195472",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/config/SampleConfigTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "This test is trivial enough that it can probably be removed. The deserialization test exercises the same code path.",
+      "range": {
+        "startLine": 13,
+        "startChar": 16,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6641d0a0_85a8ceb8",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/config/SampleConfigTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "nit: We try to standardize on AssertJ instead of Hamcrest.",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 18
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3d88c1f_ad89de0b",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/config/SourceConfigTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "SourceConfig should not need to know anything about StreamConfigFetcher, so the test should not rely on StreamConfigFetcher, but probably on a set of test fixtures.",
+      "range": {
+        "startLine": 13,
+        "startChar": 72,
+        "endLine": 13,
+        "endChar": 95
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fb81aef_2553e6a1",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/config/SourceConfigTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "Collections.singleton() would return a Set directly.",
+      "range": {
+        "startLine": 20,
+        "startChar": 34,
+        "endLine": 20,
+        "endChar": 89
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd0ff02b_6e5a61f9",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/config/SourceConfigTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "We try to standardize on AssertJ for assertions. In particular, assertEquals() makes it unclear what is the expected value vs the actual.",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20a6a35a_74ba2961",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/config/StreamConfigFetcherTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "These test fixtures should be moved to their own class.",
+      "range": {
+        "startLine": 25,
+        "startChar": 50,
+        "endLine": 25,
+        "endChar": 76
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef0ec88d_8fbcf82d",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/config/StreamConfigTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "Testing getters and setters isn\u0027t adding much value. We should probably delete this test.",
+      "range": {
+        "startLine": 30,
+        "startChar": 16,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edb49d78_474a9d90",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/config/StreamConfigTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "We try to standardize on AssertJ instead of Hamcrest for assertions.",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 18
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f66cf275_8f6cc1aa",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/config/StreamConfigTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-08T10:22:23Z",
+      "side": 1,
+      "message": "This is a test of Apache HTTP Client, which is very good way to do TDD and explore the capabilites of that library, but should probably be removed before merging (especially since we\u0027re now using URL directly and not using Apache HC).",
+      "range": {
+        "startLine": 68,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 28
+      },
+      "revId": "fec2010a8c10b146986b5961c9787bd513e41585",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
