@@ -39,6 +39,30 @@
       },
       "revId": "01da67b44d644da5fda3f98ccc4b7082f1fd0f8d",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "742fa4bc_4845d758",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-09T23:34:52Z",
+      "side": 1,
+      "message": "gtk \\o/ \n\nwill update in the follow up patch for events sending refactor (hoping to push up here imminently)",
+      "parentUuid": "1fa9cd70_81443d65",
+      "range": {
+        "startLine": 161,
+        "startChar": 22,
+        "endLine": 161,
+        "endChar": 25
+      },
+      "revId": "01da67b44d644da5fda3f98ccc4b7082f1fd0f8d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
