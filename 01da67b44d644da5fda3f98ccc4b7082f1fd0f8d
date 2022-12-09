@@ -16,6 +16,29 @@
       "message": "LGTM",
       "revId": "01da67b44d644da5fda3f98ccc4b7082f1fd0f8d",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fa9cd70_81443d65",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-09T22:59:52Z",
+      "side": 1,
+      "message": "Not related to this CR, but needs to be addressed eventually:\n\nWe should use pendingEvents.offer() and not pendingEvents.add(). The difference is that add() will throw an IllegalStateException if the queue is full, but offer() with return false if the queue is full and the element could not be added. We probably don\u0027t want our clients to have to care about events that are dropped, so offer() is a better choice.\n\nNote that in case of overload, the newest events are dropped, not the oldest.\n\nSee: https://docs.oracle.com/javase/6/docs/api/java/util/concurrent/BlockingQueue.html",
+      "range": {
+        "startLine": 161,
+        "startChar": 22,
+        "endLine": 161,
+        "endChar": 25
+      },
+      "revId": "01da67b44d644da5fda3f98ccc4b7082f1fd0f8d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
