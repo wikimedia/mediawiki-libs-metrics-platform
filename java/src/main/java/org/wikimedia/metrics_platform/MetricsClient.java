@@ -2,10 +2,10 @@ package org.wikimedia.metrics_platform;
 
 import static java.time.Instant.now;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.WARNING;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
+import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.ANALYTICS_API_ENDPOINT;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -13,13 +13,11 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
@@ -39,23 +37,22 @@ import lombok.extern.java.Log;
 @Log
 public final class MetricsClient {
 
-    private final BlockingQueue<Event> pendingEvents;
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter
+            .ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
+            .withZone(ZoneId.of("UTC"));
 
     private static final Duration STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL = Duration.ofSeconds(30);
 
     private static final Duration SEND_INTERVAL = Duration.ofSeconds(30);
+
+    private static final String METRICS_PLATFORM_SCHEMA = "/analytics/mediawiki/client/metrics_event";
 
     /**
      * Integration layer exposing hosting application functionality to the client library.
      */
     private final ClientMetadata clientMetadata;
 
-    /**
-     * Visibility for testing purposed only.
-     */
-    final AtomicReference<SourceConfig> sourceConfig = new AtomicReference<>();
-
-    private final EventSender eventSender;
+    private final AtomicReference<SourceConfig> sourceConfig;
 
     /**
      * Handles logging session management. A new session begins (and a new session ID is created)
@@ -68,59 +65,53 @@ public final class MetricsClient {
      */
     private final SamplingController samplingController;
 
-    /**
-     * Enriches event data with context data requested in the stream configuration.
-     */
-    private final ContextController contextController;
+    private final BlockingQueue<Event> eventQueue;
 
     /**
-     * Applies stream data curation rules specified in the stream configuration.
+     * MetricsClient constructor.
      */
-    private final CurationController curationController;
-
-
-    private static final String METRICS_PLATFORM_SCHEMA = "/analytics/mediawiki/client/metrics_event";
-
-
-    static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter
-            .ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
-            .withZone(ZoneId.of("UTC"));
-
     public MetricsClient(
             ClientMetadata clientMetadata,
-            EventSender eventSender,
             SessionController sessionController,
             SamplingController samplingController,
-            ContextController contextController,
-            CurationController curationController,
-            SourceConfig sourceConfig, int capacity
+            AtomicReference<SourceConfig> sourceConfig,
+            BlockingQueue<Event> eventQueue
     ) {
         this.clientMetadata = clientMetadata;
         this.sessionController = sessionController;
         this.samplingController = samplingController;
-        this.contextController = contextController;
-        this.curationController = curationController;
-        this.pendingEvents = new LinkedBlockingQueue<>(capacity);
-        this.eventSender = eventSender;
-        this.sourceConfig.set(sourceConfig);
+        this.sourceConfig = sourceConfig;
+        this.eventQueue = eventQueue;
     }
 
-    public static MetricsClient createMetricsClient(ClientMetadata clientMetadata, EventSender eventSender) throws MalformedURLException {
-
-        StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(StreamConfigFetcher.ANALYTICS_API_ENDPOINT));
+    public static MetricsClient createMetricsClient(
+        ClientMetadata clientMetadata,
+        EventSender eventSender,
+        int capacity
+    ) throws MalformedURLException {
+        StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT));
         SessionController sessionController = new SessionController();
         SamplingController samplingController = new SamplingController(clientMetadata, sessionController);
         ContextController contextController = new ContextController(clientMetadata);
         CurationController curationController = new CurationController();
 
-        MetricsClient metricsClient = new MetricsClient(
-                clientMetadata,
-                eventSender,
-                sessionController,
-                samplingController,
+        AtomicReference<SourceConfig> sourceConfigRef = new AtomicReference<>();
+        BlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>(capacity);
+
+        EventProcessor eventProcessor = new EventProcessor(
                 contextController,
                 curationController,
-                null, 100
+                sourceConfigRef,
+                eventSender,
+                eventQueue
+        );
+
+        MetricsClient metricsClient = new MetricsClient(
+                clientMetadata,
+                sessionController,
+                samplingController,
+                sourceConfigRef,
+                eventQueue
         );
 
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1, new SimpleThreadFactory());
@@ -128,7 +119,8 @@ public final class MetricsClient {
         executorService.scheduleAtFixedRate(
             () -> {
                 try {
-                    metricsClient.setSourceConfig(streamConfigFetcher.fetchStreamConfigs());
+                    SourceConfig sourceConfig = streamConfigFetcher.fetchStreamConfigs();
+                    sourceConfigRef.set(sourceConfig);
                 } catch (IOException e) {
                     log.log(WARNING, "Could not fetch configuration.", e);
                 }
@@ -136,7 +128,7 @@ public final class MetricsClient {
             0, STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL.toMillis(), MILLISECONDS);
 
         executorService.scheduleAtFixedRate(
-                () -> metricsClient.sendEnqueuedEvents(),
+                eventProcessor::sendEnqueuedEvents,
                 1, SEND_INTERVAL.toMillis(), MILLISECONDS);
 
         return metricsClient;
@@ -158,7 +150,9 @@ public final class MetricsClient {
      */
     public void submit(Event event) {
         addRequiredMetadata(event);
-        pendingEvents.add(event);
+        if (!eventQueue.offer(event)) {
+            log.log(FINE, "Event dropped, event queue is full");
+        }
     }
 
     /**
@@ -237,21 +231,6 @@ public final class MetricsClient {
     }
 
     /**
-     * Returns true if the specified stream is configured and in sample.
-     * <p>
-     * Visible for testing.
-     *
-     * @param stream stream name
-     * @param sourceConfig
-     * @return boolean
-     */
-    // Todo: include condition in filter when sendingEnqueuedEvents
-    boolean shouldProcessEventsForStream(String stream, SourceConfig sourceConfig) {
-        StreamConfig streamConfig = sourceConfig.getStreamConfigByName(stream);
-        return streamConfig != null && samplingController.isInSample(streamConfig);
-    }
-
-    /**
      * Supplement the outgoing event with additional metadata.
      * These include:
      * - app_install_id: app install ID
@@ -267,58 +246,11 @@ public final class MetricsClient {
     }
 
     /**
-     * Send all events currently in the output buffer.
-     * <p>
-     * A shallow clone of the output buffer is created and passed to the integration layer for
-     * submission by the client. If the event submission succeeds, the events are removed from the
-     * output buffer. (Note that the shallow copy created by clone() retains pointers to the original
-     * Event objects.) If the event submission fails, a client error is produced, and the events remain
-     * in buffer to be retried on the next submission attempt.
+     * Returns true if the specified stream is configured and in sample.
      */
-    public void sendEnqueuedEvents() {
-        SourceConfig sourceConfig = this.sourceConfig.get();
-        if (sourceConfig == null) {
-            log.log(Level.FINE, "Configuration is missing, enqueued events are not sent.");
-            return;
-        }
-
-        ArrayList<Event> pending = new ArrayList<>();
-        this.pendingEvents.drainTo(pending);
-
-        Map<String, StreamConfig> streamConfigsMap = sourceConfig.getStreamConfigsMap();
-
-        pending.stream()
-            .filter(event -> eventPassesCurationRules(event, streamConfigsMap))
-            .collect(groupingBy(event -> destinationEventService(event, streamConfigsMap), toList()))
-            .forEach(this::sendEventsToDestination);
-    }
-
-    private boolean eventPassesCurationRules(Event event, Map<String, StreamConfig> streamConfigMap) {
-        StreamConfig streamConfig = streamConfigMap.get(event.getStream());
-        contextController.addRequestedValues(event, streamConfig);
-        return curationController.eventPassesCurationRules(event, streamConfig);
-    }
-
-    private DestinationEventService destinationEventService(Event event, Map<String, StreamConfig> streamConfigMap) {
-        StreamConfig streamConfig = streamConfigMap.get(event.getStream());
-        return streamConfig.getDestinationEventService();
-    }
-
-    private void sendEventsToDestination(DestinationEventService destinationEventService, List<Event> pendingValidEvents) {
-        try {
-            eventSender.sendEvents(destinationEventService.getBaseUri(), pendingValidEvents);
-        } catch (IOException ignore) {
-            MetricsClient.this.pendingEvents.addAll(pendingValidEvents);
-        }
-    }
-
-    // Visible for testing
-    boolean hasPendingEvents() {
-        return !pendingEvents.isEmpty();
-    }
-
-    public void setSourceConfig(SourceConfig sourceConfig) {
-        this.sourceConfig.set(sourceConfig);
+    private boolean shouldProcessEventsForStream(String streamName, SourceConfig sourceConfig) {
+        StreamConfig streamConfig = sourceConfig.getStreamConfigByName(streamName);
+        return streamConfig != null && samplingController.isInSample(streamConfig);
     }
 
     private static class SimpleThreadFactory implements ThreadFactory {

@@ -1,46 +1,49 @@
 package org.wikimedia.metrics_platform;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyCollection;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.METRICS_PLATFORM_SCHEMA_TITLE;
+import static org.wikimedia.metrics_platform.context.ContextValue.IS_PRODUCTION;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_TITLE;
+import static org.wikimedia.metrics_platform.context.ContextValue.PLATFORM;
+import static org.wikimedia.metrics_platform.context.ContextValue.PLATFORM_FAMILY;
 
-import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.wikimedia.metrics_platform.config.SampleConfig;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
-import org.wikimedia.metrics_platform.config.StreamConfigFetcher;
-import org.wikimedia.metrics_platform.context.ContextController;
-import org.wikimedia.metrics_platform.curation.CurationController;
+import org.wikimedia.metrics_platform.context.CustomData;
 import org.wikimedia.metrics_platform.curation.CurationFilter;
 
 import com.google.gson.Gson;
 
+@ExtendWith(MockitoExtension.class)
 public class MetricsClientTest {
 
-    private final ClientMetadata mockClientMetadata = mock(ClientMetadata.class);
-    private final EventSender mockEventSender = mock(EventSender.class);
-    private final SessionController mockSessionController = mock(SessionController.class);
-    private final SamplingController mockSamplingController = mock(SamplingController.class);
-    private final ContextController mockContextController = mock(ContextController.class);
-    private final CurationController mockCurationController = new AlwaysAcceptCurationController();
+    @Mock private ClientMetadata mockClientMetadata;
+    @Mock private SessionController mockSessionController;
+    @Mock private SamplingController mockSamplingController;
     private MetricsClient client;
     private static CurationFilter curationFilter;
+    private BlockingQueue<Event> eventQueue;
+    private AtomicReference<SourceConfig> sourceConfig;
 
     @BeforeAll
     static void setUp() {
@@ -54,21 +57,56 @@ public class MetricsClientTest {
     }
 
     @BeforeEach
-    public void resetClient() {
-        reset(mockClientMetadata, mockSessionController, mockSamplingController, mockContextController);
-    }
+    public void createEventProcessorMetricsClient() {
+        eventQueue = new LinkedBlockingQueue<>(10);
+        sourceConfig = new AtomicReference<>(getTestSourceConfig());
 
-    @BeforeEach
-    public void createMetricsClient() {
         client =  new MetricsClient(
                 mockClientMetadata,
-                mockEventSender,
                 mockSessionController,
                 mockSamplingController,
-                mockContextController,
-                mockCurationController,
-                null, 10
+                sourceConfig,
+                eventQueue
         );
+    }
+
+    @Test
+    public void testSubmit() {
+        Event event = new Event(METRICS_PLATFORM_SCHEMA_TITLE, "test_stream", "test_event");
+        client.submit(event);
+
+        assertThat(eventQueue).contains(event);
+    }
+
+    @Test
+    public void testDispatch() throws InterruptedException {
+        when(mockSamplingController.isInSample(getTestStreamConfig())).thenReturn(true);
+
+        Map<String, Object> customDataMap = getTestCustomData();
+        client.dispatch("test_event", customDataMap);
+
+        assertThat(eventQueue).isNotEmpty();
+
+        Event take = eventQueue.take();
+
+        assertThat(take.getName()).isEqualTo("test_event");
+        assertThat(take.getCustomData()).containsExactlyInAnyOrder(
+                CustomData.of("is_editor", TRUE),
+                CustomData.of("action", "click"),
+                CustomData.of("screen_size", 1080)
+        );
+    }
+
+    @Test
+    public void testSubmitWhenEventQueueIsFull() {
+        for (int i = 1; i <= 10; i++) {
+            Event event = new Event("test_schema" + i, "test_stream" + i, "test_event" + i);
+            eventQueue.add(event);
+        }
+        Event event11 = new Event("schema", "stream", "event");
+        client.dispatch(event11.getName(), getTestCustomData());
+
+        assertThat(eventQueue).doesNotContain(event11);
     }
 
     @Test
@@ -84,9 +122,7 @@ public class MetricsClientTest {
     }
 
     @Test
-    public void testAddEventMetadata() throws IOException {
-        when(mockSamplingController.isInSample(getTestStreamConfig())).thenReturn(true);
-
+    public void testAddRequiredMetadata() {
         Event event = new Event("test/event/1.0.0", "test_event", "testEvent");
         client.submit(event);
 
@@ -94,81 +130,22 @@ public class MetricsClientTest {
         verify(mockSessionController).getSessionId();
     }
 
-    @Test
-    public void testDispatchEvent() {
-        client.setSourceConfig(getTestSourceConfig());
-        when(mockSamplingController.isInSample(getTestStreamConfig())).thenReturn(true);
-
-        Map<String, Object> customDataMap = getTestCustomData();
-        client.dispatch("test_event", customDataMap);
-
-        assertThat(client.hasPendingEvents()).isTrue();
-
-        client.sendEnqueuedEvents();
-        assertThat(client.hasPendingEvents()).isFalse();
-    }
-
-    @Test
-    public void eventsNotSentWhenFetchStreamConfigFails() throws Exception {
-        client.setSourceConfig(null);
-        client.submit(new Event("stream", "stream", "event"));
-        verify(mockEventSender, never()).sendEvents(anyString(), anyCollection());
-    }
-
-    @Test
-    public void testEventSubmissionTaskSendsEnqueuedEvents() throws Exception {
-        client.setSourceConfig(getTestSourceConfig());
-
-        Event event = new Event("test_schema", "test_stream", "test_event");
-        client.submit(event);
-        client.sendEnqueuedEvents();
-
-        verify(mockEventSender, times(1)).sendEvents(anyString(), anyCollection());
-    }
-
-    @Test
-    public void testEventsRemovedFromOutputBufferOnSuccess() throws IOException {
-        client.setSourceConfig(getTestSourceConfig());
-
-        Event event = new Event("test_schema", "test_stream", "test_event");
-        client.submit(event);
-        client.sendEnqueuedEvents();
-
-        assertThat(client.hasPendingEvents()).isFalse();
-    }
-
-    @Test
-    public void testEventsRemainInOutputBufferOnFailure() throws IOException {
-        Event event = new Event("fake_schema", "fake_stream", "fake_event");
-        client.submit(event);
-
-        assertThat(client.hasPendingEvents()).isTrue();
-    }
-
-    private static class AlwaysAcceptCurationController extends CurationController {
-        @Override
-        public boolean eventPassesCurationRules(Event event, StreamConfig streamConfig) {
-            return true;
-        }
-    }
-
     /**
      * Convenience method for getting stream config.
      */
     private static StreamConfig getTestStreamConfig() {
         String[] provideValues = {
-            "agent_client_platform",
-            "agent_client_platform_family",
-            "mediawiki_database",
-            "mediawiki_is_production"
+            PLATFORM,
+            PLATFORM_FAMILY,
+            PAGE_TITLE,
+            IS_PRODUCTION
         };
-        Set<String> events = new HashSet<>();
-        events.add("test_event");
+        Set<String> events = Collections.singleton("test_event");
         SampleConfig sampleConfig = new SampleConfig(1.0f, SampleConfig.Identifier.UNIT, "pageview");
 
         return new StreamConfig(
             "test_stream",
-            StreamConfigFetcher.METRICS_PLATFORM_SCHEMA_TITLE,
+            METRICS_PLATFORM_SCHEMA_TITLE,
             DestinationEventService.LOCAL,
             new StreamConfig.ProducerConfig(
                 new StreamConfig.MetricsPlatformClientConfig(
@@ -184,7 +161,7 @@ public class MetricsClientTest {
     /**
      * Convenience method for getting a stream config map.
      */
-    private static Map<String, StreamConfig> getTestStreamConfigMap() {
+    public static Map<String, StreamConfig> getTestStreamConfigMap() {
         StreamConfig streamConfig = getTestStreamConfig();
         return singletonMap(streamConfig.getStreamName(), streamConfig);
     }
@@ -192,7 +169,7 @@ public class MetricsClientTest {
     /**
      * Convenience method for getting source config.
      */
-    private static SourceConfig getTestSourceConfig() {
+    public static SourceConfig getTestSourceConfig() {
         return new SourceConfig(getTestStreamConfigMap());
     }
 
