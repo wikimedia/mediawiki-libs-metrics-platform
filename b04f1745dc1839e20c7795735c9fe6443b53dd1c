@@ -16,6 +16,24 @@
       "message": "With the setting SourceConfig as an atomic reference in MetricsClient, I can\u0027t get 3 tests to pass which rely on setting SourceConfig to dispatch/submit events.\n\n@Gehel here\u0027s to hoping our upcoming pair session will shed light",
       "revId": "b04f1745dc1839e20c7795735c9fe6443b53dd1c",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a682e5c_313fea37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-09T00:13:32Z",
+      "side": 1,
+      "message": "@Gehel for agenda: there are a number of comments from your last round of feedback that are unresolved - namely around SourceConfig in MetricsClient and test fixtures.",
+      "parentUuid": "a2396023_21b17b27",
+      "revId": "b04f1745dc1839e20c7795735c9fe6443b53dd1c",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
