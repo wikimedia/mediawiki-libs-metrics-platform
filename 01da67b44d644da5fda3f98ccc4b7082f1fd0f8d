@@ -18,6 +18,23 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37c7f447_6b2a0b35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-12-10T18:06:41Z",
+      "side": 1,
+      "message": "This LGTM.\n\nI\u0027ve spotted a bug (see inline) but I think that it can be fixed in a follow-on patch.\n\nI also wanted to note that the assertion style changes in the test files could have been done in either another patch (either before or after this one). That would have made reviewing this one a little less daunting!\n\nNevertheless, congratulations! 🎉",
+      "revId": "01da67b44d644da5fda3f98ccc4b7082f1fd0f8d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fa9cd70_81443d65",
@@ -60,6 +77,29 @@
         "startChar": 22,
         "endLine": 161,
         "endChar": 25
+      },
+      "revId": "01da67b44d644da5fda3f98ccc4b7082f1fd0f8d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e09643ab_3ec9953f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/SourceConfig.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2022-12-10T18:06:41Z",
+      "side": 1,
+      "message": "Note well that we also prefix match against eventName, e.g. \"eas.dt.init\" is matched by \"eas.\".",
+      "range": {
+        "startLine": 58,
+        "startChar": 24,
+        "endLine": 58,
+        "endChar": 84
       },
       "revId": "01da67b44d644da5fda3f98ccc4b7082f1fd0f8d",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
