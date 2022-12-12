@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b25d264_10916b49",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-12T20:26:58Z",
+      "side": 1,
+      "message": "I was going to rename EventSender to Integration to maintain some parity with the JS + PHP clients but err\u0027d on the side of not because EventSender as the name of the class seems more intuitive imho than Integration but happy to rename if that\u0027s the consensus.\n\nAlso seems TestEventSender is no longer necessary - will remove in follow up if reviewers concur",
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
