@@ -16,6 +16,207 @@
       "message": "I was going to rename EventSender to Integration to maintain some parity with the JS + PHP clients but err\u0027d on the side of not because EventSender as the name of the class seems more intuitive imho than Integration but happy to rename if that\u0027s the consensus.\n\nAlso seems TestEventSender is no longer necessary - will remove in follow up if reviewers concur",
       "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5823192d_f12b1aae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-12T21:50:45Z",
+      "side": 1,
+      "message": "That looks good! Way easier to understand when not everything is in MetricsClient.\n\nI have a few mostly minor comments inline. As always, ping me if you want to discuss those in more details.",
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a775ebae_f09d9d3d",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-12T21:50:45Z",
+      "side": 1,
+      "message": "Should be \"private final\".",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f6ab2b2_c68fd604",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-12T21:50:45Z",
+      "side": 1,
+      "message": "still some issues of tabs vs spaces. We really need to spend some time fixing your IDE.",
+      "range": {
+        "startLine": 56,
+        "startChar": 1,
+        "endLine": 56,
+        "endChar": 2
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fa41d53_e5e33980",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-12T21:50:45Z",
+      "side": 1,
+      "message": "Queue capacity should probably be configurable.",
+      "range": {
+        "startLine": 67,
+        "startChar": 55,
+        "endLine": 67,
+        "endChar": 58
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99cb43a6_bda33603",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-12T21:50:45Z",
+      "side": 1,
+      "message": "This method is only ever used from MetricsClient. That seems to be an indication that it either should be moved to MetricsClient or that we have a lack of cohesion and we need to move more of the processing of events on the EventProcessor.",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 40
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddb484ed_7f05447a",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-12T21:50:45Z",
+      "side": 1,
+      "message": "Should be private",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7b41c2e_06370366",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-12T21:50:45Z",
+      "side": 1,
+      "message": "should be private (this will need some minor refactoring of the tests)",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad70104b_c095b781",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-12T21:50:45Z",
+      "side": 1,
+      "message": "The EventProcessor should be passed to the constructor. That way, MetricsClient doesn\u0027t need to know about any of the implementation details, like the various *Controllers that are used only by the EventProcessor. This way, we can completely cut a few dependencies! (Dependency Inversion)",
+      "range": {
+        "startLine": 97,
+        "startChar": 34,
+        "endLine": 97,
+        "endChar": 48
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "678ced42_d83095cb",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EventProcessorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-12T21:50:45Z",
+      "side": 1,
+      "message": "The EventProcessor has no dependency on MetricsClient (which is the main point of extracting it). So we should be able to write those tests without relying on MetricsClient.",
+      "range": {
+        "startLine": 25,
+        "startChar": 45,
+        "endLine": 25,
+        "endChar": 58
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
