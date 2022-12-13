@@ -178,6 +178,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8b64b038_2d719648",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-13T08:27:19Z",
+      "side": 1,
+      "message": "Sorry, I wasn\u0027t clear here. I don\u0027t necessarily mean that we should have a configuration file for the size of the queue. What I mean by \"configurable\" in this context is that the size of that queue should not be hardcoded in the constructor, but it should be a parameter of the constructor. This would make it easier to write a test about what happens when the queue is full.\n\nIn a next step, we might (or might not) want to expose that configuration to client code (either through a config file, or just through exposing it as a parameter on MetricsClient.createMetricsClient().",
+      "parentUuid": "b4057402_0788c6c4",
+      "range": {
+        "startLine": 67,
+        "startChar": 55,
+        "endLine": 67,
+        "endChar": 58
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "99cb43a6_bda33603",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
         "patchSetId": 3

@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe8862ab_ab9e7e21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-13T08:27:19Z",
+      "side": 1,
+      "message": "Nice work! I especially like the separation of concern between MetricsClient and EventProcessor. It splits right where it makes the most sense!",
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "218e1c6f_7b7d452b",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-13T08:27:19Z",
+      "side": 1,
+      "message": "I very much like the split of responsibilities between MetricsClient and EventProcessor. We now have everything about the pre-processing of events in MetricsClient and EventProcessor is only about processing the queue. This is a very natural way to think about the separation. Nice work!\n\nWe could increase the separation even more by having MetricsClient and EventProcessor share a BlockingQueue, but not know anything about each other. (This probably sound a bit gibberish, ping me for a more detailed explanation if needed).",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "095248d2_cb53943e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-13T08:27:19Z",
+      "side": 1,
+      "message": "We don\u0027t need to create a new EventProcessor each time the sourceConfig changes. We only need to set its configuration. This will allow MetricsClient.eventProcessor to be final (always a good thing to have references to collaborators of a class to be final). Note that there is another comment about completely removing the dependency from MetricsClient to EventProcessor, which would be even better.\n\nNote that since MetricsClient and EventProcessor both need to be notified of changes to SourceConfig, we could externalize this by having them share an AtomicReference\u003cSourceConfig\u003e instance.\n\n\nThe example below is not working code, but might help to point you in the right direction (treat it as pseudo code):\n\n\n        StreamConfigFetcher streamConfigFetcher \u003d new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT));\n        SessionController sessionController \u003d new SessionController();\n        SamplingController samplingController \u003d new SamplingController(clientMetadata, sessionController);\n        ContextController contextController \u003d new ContextController(clientMetadata);\n\n        AtomicReference\u003cSourceConfig\u003e sourceConfigRef \u003d new AtomicReference\u003c\u003e();\n\n        BlockingQueue\u003cEvent\u003e eventQueue \u003d new LinkedBlockingQueue\u003c\u003e(128);\n        \n        EventProcessor eventProcessor \u003d new EventProcessor(\n                contextController,\n                samplingController,\n                sourceConfigRef,\n                eventQueue\n        );\n        \n        MetricsClient metricsClient \u003d new MetricsClient(\n                clientMetadata,\n                sessionController,\n                samplingController,\n                contextController,\n                sourceConfigRef,\n                eventQueue\n        );\n\n        ScheduledExecutorService executorService \u003d Executors.newScheduledThreadPool(1, new SimpleThreadFactory());\n\n        executorService.scheduleAtFixedRate(\n            () -\u003e {\n                try {\n                    SourceConfig sourceConfig \u003d streamConfigFetcher.fetchStreamConfigs();\n                    sourceConfigRef.set(sourceConfig);\n                } catch (IOException e) {\n                    log.log(WARNING, \"Could not fetch configuration.\", e);\n                }\n            },\n            0, STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL.toMillis(), MILLISECONDS);\n\n        executorService.scheduleAtFixedRate(\n                metricsClient.eventProcessor::sendEnqueuedEvents,\n                1, SEND_INTERVAL.toMillis(), MILLISECONDS);\n\n        return metricsClient;",
+      "range": {
+        "startLine": 116,
+        "startChar": 56,
+        "endLine": 116,
+        "endChar": 70
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c77383bb_4e1e8ea7",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-13T08:27:19Z",
+      "side": 1,
+      "message": "This method could be removed and the test code modified to assert directly on the EventProcessor.",
+      "range": {
+        "startLine": 232,
+        "startChar": 19,
+        "endLine": 232,
+        "endChar": 35
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55fefe82_1366a94b",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-13T08:27:19Z",
+      "side": 1,
+      "message": "nit: useless comment, just rename the parameter to \"streamName\" instead.",
+      "range": {
+        "startLine": 254,
+        "startChar": 14,
+        "endLine": 254,
+        "endChar": 32
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85630ddf_8da65707",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-13T08:27:19Z",
+      "side": 1,
+      "message": "nit: useless documentation, it doesn\u0027t add any knowledge that isn\u0027t already in the code.",
+      "range": {
+        "startLine": 255,
+        "startChar": 6,
+        "endLine": 257,
+        "endChar": 0
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "078abb31_7e499926",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-13T08:27:19Z",
+      "side": 1,
+      "message": "we should add a test to document what happens when we submit an event, but the queue is full.",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdac08e6_cd649ce6",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-13T08:27:19Z",
+      "side": 1,
+      "message": "There is temporal coupling between createMetricsClient() and createEventProcessor() (createEventProcessor must be called first, since createMetricsClient() relies on MetricsClientTest.eventProcessor). I don\u0027t think that JUnit enforces a specific order to run all those @BeforeEach methods, and even if it does, it isn\u0027t obvious. So we should merge those 2 methods.\n\nNote that if we remove the coupling between MetricsClient and EventProcessor (as proposed in another comment), all this becomes a bit simpler.",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 35
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
