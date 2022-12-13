@@ -58,6 +58,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa707a8d_bd8037e7",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T04:52:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a775ebae_f09d9d3d",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f6ab2b2_c68fd604",
@@ -71,6 +95,30 @@
       "writtenOn": "2022-12-12T21:50:45Z",
       "side": 1,
       "message": "still some issues of tabs vs spaces. We really need to spend some time fixing your IDE.",
+      "range": {
+        "startLine": 56,
+        "startChar": 1,
+        "endLine": 56,
+        "endChar": 2
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6083b0d3_32ed48aa",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T04:52:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f6ab2b2_c68fd604",
       "range": {
         "startLine": 56,
         "startChar": 1,
@@ -104,6 +152,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4057402_0788c6c4",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T04:52:17Z",
+      "side": 1,
+      "message": "Created a ticket for this to do as a follow up\nhttps://phabricator.wikimedia.org/T325040",
+      "parentUuid": "8fa41d53_e5e33980",
+      "range": {
+        "startLine": 67,
+        "startChar": 55,
+        "endLine": 67,
+        "endChar": 58
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99cb43a6_bda33603",
@@ -127,6 +199,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c68769e_d8f701a7",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T04:52:17Z",
+      "side": 1,
+      "message": "moved it back into the MetricsClient.",
+      "parentUuid": "99cb43a6_bda33603",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 40
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ddb484ed_7f05447a",
@@ -140,6 +236,30 @@
       "writtenOn": "2022-12-12T21:50:45Z",
       "side": 1,
       "message": "Should be private",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3d1f632_955cf513",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T04:52:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddb484ed_7f05447a",
       "range": {
         "startLine": 47,
         "startChar": 4,
@@ -175,6 +295,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c2ca857e_474e3fe9",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T04:52:17Z",
+      "side": 1,
+      "message": "Made it private.\n\nBut when I passed the eventProcessor into the MetricsClient constructor, I couldn\u0027t get tests to pass without making eventProcessor not final in latest ps.",
+      "parentUuid": "e7b41c2e_06370366",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ad70104b_c095b781",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 3
@@ -198,6 +342,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6226fcab_2eaba7a6",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T04:52:17Z",
+      "side": 1,
+      "message": "I\u0027m having a bit of chicken/egg with this -- the executorService needs an instance of the MetricsClient in order to set the SourceConfig while eventProcessor also requires SourceConfig and eventProcessor is required in the MetricsClient constructor.\n\nLatest ps attempts to deal with this by making eventProcessor a private member of MetricsClient that can be set along with SourceConfig upon which it relies.",
+      "parentUuid": "ad70104b_c095b781",
+      "range": {
+        "startLine": 97,
+        "startChar": 34,
+        "endLine": 97,
+        "endChar": 48
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "678ced42_d83095cb",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/EventProcessorTest.java",
         "patchSetId": 3
@@ -209,6 +377,30 @@
       "writtenOn": "2022-12-12T21:50:45Z",
       "side": 1,
       "message": "The EventProcessor has no dependency on MetricsClient (which is the main point of extracting it). So we should be able to write those tests without relying on MetricsClient.",
+      "range": {
+        "startLine": 25,
+        "startChar": 45,
+        "endLine": 25,
+        "endChar": 58
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4adeb988_f8c2e8a1",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EventProcessorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T04:52:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "678ced42_d83095cb",
       "range": {
         "startLine": 25,
         "startChar": 45,
