@@ -18,6 +18,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c291f2c_e89e4484",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T23:07:45Z",
+      "side": 1,
+      "message": "ha! all the flowers/attribution goes to you -- original inspo from https://gerrit.wikimedia.org/r/c/mediawiki/libs/metrics-platform/+/820530/2\n\nthanks for being a patient, generous mentor \\o/",
+      "parentUuid": "fe8862ab_ab9e7e21",
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "218e1c6f_7b7d452b",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-12-13T08:27:19Z",
       "side": 1,
       "message": "I very much like the split of responsibilities between MetricsClient and EventProcessor. We now have everything about the pre-processing of events in MetricsClient and EventProcessor is only about processing the queue. This is a very natural way to think about the separation. Nice work!\n\nWe could increase the separation even more by having MetricsClient and EventProcessor share a BlockingQueue, but not know anything about each other. (This probably sound a bit gibberish, ping me for a more detailed explanation if needed).",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c4dc7af_dddd839c",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T23:07:45Z",
+      "side": 1,
+      "message": "sent invite for more deets",
+      "parentUuid": "218e1c6f_7b7d452b",
       "range": {
         "startLine": 54,
         "startChar": 11,
@@ -66,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "14fb845d_b815fcf8",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T23:07:45Z",
+      "side": 1,
+      "message": "thanks - latest ps hopefully gets closer to what you\u0027re suggesting",
+      "parentUuid": "095248d2_cb53943e",
+      "range": {
+        "startLine": 116,
+        "startChar": 56,
+        "endLine": 116,
+        "endChar": 70
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c77383bb_4e1e8ea7",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 6
@@ -77,6 +143,30 @@
       "writtenOn": "2022-12-13T08:27:19Z",
       "side": 1,
       "message": "This method could be removed and the test code modified to assert directly on the EventProcessor.",
+      "range": {
+        "startLine": 232,
+        "startChar": 19,
+        "endLine": 232,
+        "endChar": 35
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10d0c88e_8c155042",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T23:07:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c77383bb_4e1e8ea7",
       "range": {
         "startLine": 232,
         "startChar": 19,
@@ -110,6 +200,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5139a78_73820d8b",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T23:07:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55fefe82_1366a94b",
+      "range": {
+        "startLine": 254,
+        "startChar": 14,
+        "endLine": 254,
+        "endChar": 32
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85630ddf_8da65707",
@@ -123,6 +237,30 @@
       "writtenOn": "2022-12-13T08:27:19Z",
       "side": 1,
       "message": "nit: useless documentation, it doesn\u0027t add any knowledge that isn\u0027t already in the code.",
+      "range": {
+        "startLine": 255,
+        "startChar": 6,
+        "endLine": 257,
+        "endChar": 0
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e64de82_6fefac48",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T23:07:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85630ddf_8da65707",
       "range": {
         "startLine": 255,
         "startChar": 6,
@@ -156,6 +294,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c09039d_4ee116c6",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T23:07:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "078abb31_7e499926",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bdac08e6_cd649ce6",
@@ -169,6 +331,30 @@
       "writtenOn": "2022-12-13T08:27:19Z",
       "side": 1,
       "message": "There is temporal coupling between createMetricsClient() and createEventProcessor() (createEventProcessor must be called first, since createMetricsClient() relies on MetricsClientTest.eventProcessor). I don\u0027t think that JUnit enforces a specific order to run all those @BeforeEach methods, and even if it does, it isn\u0027t obvious. So we should merge those 2 methods.\n\nNote that if we remove the coupling between MetricsClient and EventProcessor (as proposed in another comment), all this becomes a bit simpler.",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 35
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc2a8988_eff96604",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T23:07:45Z",
+      "side": 1,
+      "message": "merged methods - not sure latest ps decouples MetricsClient + EventProcessor as much as you\u0027re proposing",
+      "parentUuid": "bdac08e6_cd649ce6",
       "range": {
         "startLine": 59,
         "startChar": 16,

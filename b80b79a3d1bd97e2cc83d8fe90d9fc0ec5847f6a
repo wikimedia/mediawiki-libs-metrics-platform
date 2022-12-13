@@ -202,6 +202,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0ddc2601_709533c2",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-13T23:07:45Z",
+      "side": 1,
+      "message": "ok - added parameter to MetricsClient.createMetricsClient()",
+      "parentUuid": "8b64b038_2d719648",
+      "range": {
+        "startLine": 67,
+        "startChar": 55,
+        "endLine": 67,
+        "endChar": 58
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "99cb43a6_bda33603",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
         "patchSetId": 3
