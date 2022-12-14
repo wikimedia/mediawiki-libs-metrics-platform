@@ -83,6 +83,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7b4e359_44b9a1ce",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-14T14:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c4dc7af_dddd839c",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "095248d2_cb53943e",
@@ -120,6 +144,30 @@
       "side": 1,
       "message": "thanks - latest ps hopefully gets closer to what you\u0027re suggesting",
       "parentUuid": "095248d2_cb53943e",
+      "range": {
+        "startLine": 116,
+        "startChar": 56,
+        "endLine": 116,
+        "endChar": 70
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b8c6810_6d017800",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-14T14:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14fb845d_b815fcf8",
       "range": {
         "startLine": 116,
         "startChar": 56,
@@ -355,6 +403,30 @@
       "side": 1,
       "message": "merged methods - not sure latest ps decouples MetricsClient + EventProcessor as much as you\u0027re proposing",
       "parentUuid": "bdac08e6_cd649ce6",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 35
+      },
+      "revId": "e20c00219291213f967a90acd7b3bdd91f7a8a70",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f936c97_95113a2f",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-14T14:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc2a8988_eff96604",
       "range": {
         "startLine": 59,
         "startChar": 16,

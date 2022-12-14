@@ -35,6 +35,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93ecd1c5_3fc6b2a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-14T14:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b25d264_10916b49",
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a775ebae_f09d9d3d",
@@ -224,6 +242,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5946833f_6d16cc00",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-14T14:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ddc2601_709533c2",
+      "range": {
+        "startLine": 67,
+        "startChar": 55,
+        "endLine": 67,
+        "endChar": 58
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99cb43a6_bda33603",
@@ -365,6 +407,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59a0c47a_3ab04ab7",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-14T14:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2ca857e_474e3fe9",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad70104b_c095b781",
@@ -402,6 +468,30 @@
       "side": 1,
       "message": "I\u0027m having a bit of chicken/egg with this -- the executorService needs an instance of the MetricsClient in order to set the SourceConfig while eventProcessor also requires SourceConfig and eventProcessor is required in the MetricsClient constructor.\n\nLatest ps attempts to deal with this by making eventProcessor a private member of MetricsClient that can be set along with SourceConfig upon which it relies.",
       "parentUuid": "ad70104b_c095b781",
+      "range": {
+        "startLine": 97,
+        "startChar": 34,
+        "endLine": 97,
+        "endChar": 48
+      },
+      "revId": "b80b79a3d1bd97e2cc83d8fe90d9fc0ec5847f6a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eee403a2_da4fd131",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-14T14:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6226fcab_2eaba7a6",
       "range": {
         "startLine": 97,
         "startChar": 34,
