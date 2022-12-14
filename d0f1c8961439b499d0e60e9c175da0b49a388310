@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "466170f0_3da11cdb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2022-12-14T13:42:50Z",
+      "side": 1,
+      "message": "thanks @Gehel once again for sharing your time + knowledgeable expertise",
+      "revId": "d0f1c8961439b499d0e60e9c175da0b49a388310",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
