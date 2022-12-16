@@ -62,13 +62,14 @@ class SamplingController {
      */
     @Nonnull
     String getSamplingId(SampleConfig.Identifier identifier) {
-        if (identifier == SampleConfig.Identifier.SESSION) {
-            return sessionController.getSessionId();
+        switch (identifier) {
+            case SESSION:
+                return sessionController.getSessionId();
+            case DEVICE:
+                return clientMetadata.getAppInstallId();
+            default:
+                throw new IllegalArgumentException("Bad identifier type: " + identifier);
         }
-        if (identifier == SampleConfig.Identifier.DEVICE) {
-            return clientMetadata.getAppInstallId();
-        }
-        throw new RuntimeException("Bad identifier type");
     }
 
 }

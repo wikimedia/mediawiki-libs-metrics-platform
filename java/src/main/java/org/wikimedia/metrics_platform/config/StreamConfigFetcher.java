@@ -109,11 +109,11 @@ public class StreamConfigFetcher {
                 sampleConfig
             );
         }
-    }
 
-    private static Set<String> convertToSet(JsonElement element) {
-        return StreamSupport.stream(element.getAsJsonArray().spliterator(), false)
-                .map(JsonElement::getAsString)
-                .collect(toSet());
+        private static Set<String> convertToSet(JsonElement element) {
+            return StreamSupport.stream(element.getAsJsonArray().spliterator(), false)
+                    .map(JsonElement::getAsString)
+                    .collect(toSet());
+        }
     }
 }
