@@ -4,16 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class DestinationEventServiceTest {
+class DestinationEventServiceTest {
 
-    @Test
-    public void testDestinationEventService() {
+    @Test void testDestinationEventService() {
         DestinationEventService loggingService = DestinationEventService.ERROR_LOGGING;
         assertThat(loggingService.getBaseUri()).isEqualTo("https://intake-logging.wikimedia.org");
     }
 
-    @Test
-    public void testDestinationEventServiceLocal() {
+    @Test void testDestinationEventServiceLocal() {
         DestinationEventService loggingService = DestinationEventService.LOCAL;
         assertThat(loggingService.getBaseUri()).isEqualTo("http://localhost:8192/v1/events");
     }

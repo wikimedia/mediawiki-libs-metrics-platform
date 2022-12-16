@@ -1,138 +1,125 @@
 package org.wikimedia.metrics_platform.curation.rules;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
-public class CollectionCurationRulesTest {
+class CollectionCurationRulesTest {
 
-    @Test
-    public void testIntegerCollectionContains() {
+    @Test void testIntegerCollectionContains() {
         CollectionCurationRules<Integer> rules = CollectionCurationRules.<Integer>builder()
                 .contains(1)
                 .build();
-        assertThat(rules.apply(Arrays.asList(1, 2, 3))).isEqualTo(true);
-        assertThat(rules.apply(Arrays.asList(3, 4, 5))).isEqualTo(false);
-        assertThat(rules.apply(Collections.emptyList())).isEqualTo(false);
+        assertThat(rules.apply(Arrays.asList(1, 2, 3))).isTrue();
+        assertThat(rules.apply(Arrays.asList(3, 4, 5))).isFalse();
+        assertThat(rules.apply(emptyList())).isFalse();
     }
 
-    @Test
-    public void testFloatCollectionContains() {
+    @Test void testFloatCollectionContains() {
         CollectionCurationRules<Float> rules = CollectionCurationRules.<Float>builder()
                 .contains(1.0f)
                 .build();
-        assertThat(rules.apply(Arrays.asList(1.0f, 2.0f, 3.0f))).isEqualTo(true);
-        assertThat(rules.apply(Arrays.asList(3.0f, 4.0f, 5.0f))).isEqualTo(false);
-        assertThat(rules.apply(Collections.emptyList())).isEqualTo(false);
+        assertThat(rules.apply(Arrays.asList(1.0f, 2.0f, 3.0f))).isTrue();
+        assertThat(rules.apply(Arrays.asList(3.0f, 4.0f, 5.0f))).isFalse();
+        assertThat(rules.apply(emptyList())).isFalse();
     }
 
-    @Test
-    public void testStringCollectionContains() {
+    @Test void testStringCollectionContains() {
         CollectionCurationRules<String> rules = CollectionCurationRules.<String>builder()
                 .contains("a")
                 .build();
-        assertThat(rules.apply(Arrays.asList("a", "b", "c"))).isEqualTo(true);
-        assertThat(rules.apply(Arrays.asList("c", "d", "e"))).isEqualTo(false);
-        assertThat(rules.apply(Collections.emptyList())).isEqualTo(false);
+        assertThat(rules.apply(Arrays.asList("a", "b", "c"))).isTrue();
+        assertThat(rules.apply(Arrays.asList("c", "d", "e"))).isFalse();
+        assertThat(rules.apply(emptyList())).isFalse();
     }
 
-    @Test
-    public void testIntegerCollectionDoesNotContain() {
+    @Test void testIntegerCollectionDoesNotContain() {
         CollectionCurationRules<Integer> rules = CollectionCurationRules.<Integer>builder()
                 .doesNotContain(1)
                 .build();
-        assertThat(rules.apply(Arrays.asList(1, 2, 3))).isEqualTo(false);
-        assertThat(rules.apply(Arrays.asList(3, 4, 5))).isEqualTo(true);
-        assertThat(rules.apply(Collections.emptyList())).isEqualTo(true);
+        assertThat(rules.apply(Arrays.asList(1, 2, 3))).isFalse();
+        assertThat(rules.apply(Arrays.asList(3, 4, 5))).isTrue();
+        assertThat(rules.apply(emptyList())).isTrue();
     }
 
-    @Test
-    public void testFloatCollectionDoesNotContain() {
+    @Test void testFloatCollectionDoesNotContain() {
         CollectionCurationRules<Float> rules = CollectionCurationRules.<Float>builder()
                 .doesNotContain(1.0f)
                 .build();
-        assertThat(rules.apply(Arrays.asList(1.0f, 2.0f, 3.0f))).isEqualTo(false);
-        assertThat(rules.apply(Arrays.asList(3.0f, 4.0f, 5.0f))).isEqualTo(true);
-        assertThat(rules.apply(Collections.emptyList())).isEqualTo(true);
+        assertThat(rules.apply(Arrays.asList(1.0f, 2.0f, 3.0f))).isFalse();
+        assertThat(rules.apply(Arrays.asList(3.0f, 4.0f, 5.0f))).isTrue();
+        assertThat(rules.apply(emptyList())).isTrue();
     }
 
-    @Test
-    public void testStringCollectionDoesNotContain() {
+    @Test void testStringCollectionDoesNotContain() {
         CollectionCurationRules<String> rules = CollectionCurationRules.<String>builder()
                 .doesNotContain("a")
                 .build();
-        assertThat(rules.apply(Arrays.asList("a", "b", "c"))).isEqualTo(false);
-        assertThat(rules.apply(Arrays.asList("c", "d", "e"))).isEqualTo(true);
-        assertThat(rules.apply(Collections.emptyList())).isEqualTo(true);
+        assertThat(rules.apply(Arrays.asList("a", "b", "c"))).isFalse();
+        assertThat(rules.apply(Arrays.asList("c", "d", "e"))).isTrue();
+        assertThat(rules.apply(emptyList())).isTrue();
     }
 
-    @Test
-    public void testIntegerCollectionContainsAll() {
+    @Test void testIntegerCollectionContainsAll() {
         CollectionCurationRules<Integer> rules = CollectionCurationRules.<Integer>builder()
                 .containsAll(Arrays.asList(1, 2, 3))
                 .build();
-        assertThat(rules.apply(Arrays.asList(1, 2, 3))).isEqualTo(true);
-        assertThat(rules.apply(Arrays.asList(3, 4, 5))).isEqualTo(false);
-        assertThat(rules.apply(Arrays.asList(4, 5, 6))).isEqualTo(false);
-        assertThat(rules.apply(Collections.emptyList())).isEqualTo(false);
+        assertThat(rules.apply(Arrays.asList(1, 2, 3))).isTrue();
+        assertThat(rules.apply(Arrays.asList(3, 4, 5))).isFalse();
+        assertThat(rules.apply(Arrays.asList(4, 5, 6))).isFalse();
+        assertThat(rules.apply(emptyList())).isFalse();
     }
 
-    @Test
-    public void testFloatCollectionContainsAll() {
+    @Test void testFloatCollectionContainsAll() {
         CollectionCurationRules<Float> rules = CollectionCurationRules.<Float>builder()
                 .containsAll(Arrays.asList(1.0f, 2.0f, 3.0f))
                 .build();
-        assertThat(rules.apply(Arrays.asList(1.0f, 2.0f, 3.0f))).isEqualTo(true);
-        assertThat(rules.apply(Arrays.asList(3.0f, 4.0f, 5.0f))).isEqualTo(false);
-        assertThat(rules.apply(Arrays.asList(4.0f, 5.0f, 6.0f))).isEqualTo(false);
-        assertThat(rules.apply(Collections.emptyList())).isEqualTo(false);
+        assertThat(rules.apply(Arrays.asList(1.0f, 2.0f, 3.0f))).isTrue();
+        assertThat(rules.apply(Arrays.asList(3.0f, 4.0f, 5.0f))).isFalse();
+        assertThat(rules.apply(Arrays.asList(4.0f, 5.0f, 6.0f))).isFalse();
+        assertThat(rules.apply(emptyList())).isFalse();
     }
 
-    @Test
-    public void testStringCollectionContainsAll() {
+    @Test void testStringCollectionContainsAll() {
         CollectionCurationRules<String> rules = CollectionCurationRules.<String>builder()
                 .containsAll(Arrays.asList("a", "b", "c"))
                 .build();
-        assertThat(rules.apply(Arrays.asList("a", "b", "c"))).isEqualTo(true);
-        assertThat(rules.apply(Arrays.asList("c", "d", "e"))).isEqualTo(false);
-        assertThat(rules.apply(Arrays.asList("d", "e", "f"))).isEqualTo(false);
-        assertThat(rules.apply(Collections.emptyList())).isEqualTo(false);
+        assertThat(rules.apply(Arrays.asList("a", "b", "c"))).isTrue();
+        assertThat(rules.apply(Arrays.asList("c", "d", "e"))).isFalse();
+        assertThat(rules.apply(Arrays.asList("d", "e", "f"))).isFalse();
+        assertThat(rules.apply(emptyList())).isFalse();
     }
 
-    @Test
-    public void testIntegerCollectionContainsAny() {
+    @Test void testIntegerCollectionContainsAny() {
         CollectionCurationRules<Integer> rules = CollectionCurationRules.<Integer>builder()
                 .containsAny(Arrays.asList(1, 2, 3))
                 .build();
-        assertThat(rules.apply(Arrays.asList(1, 2, 3))).isEqualTo(true);
-        assertThat(rules.apply(Arrays.asList(3, 4, 5))).isEqualTo(true);
-        assertThat(rules.apply(Arrays.asList(4, 5, 6))).isEqualTo(false);
-        assertThat(rules.apply(Collections.emptyList())).isEqualTo(false);
+        assertThat(rules.apply(Arrays.asList(1, 2, 3))).isTrue();
+        assertThat(rules.apply(Arrays.asList(3, 4, 5))).isTrue();
+        assertThat(rules.apply(Arrays.asList(4, 5, 6))).isFalse();
+        assertThat(rules.apply(emptyList())).isFalse();
     }
 
-    @Test
-    public void testFloatCollectionContainsAny() {
+    @Test void testFloatCollectionContainsAny() {
         CollectionCurationRules<Float> rules = CollectionCurationRules.<Float>builder()
                 .containsAny(Arrays.asList(1.0f, 2.0f, 3.0f))
                 .build();
-        assertThat(rules.apply(Arrays.asList(1.0f, 2.0f, 3.0f))).isEqualTo(true);
-        assertThat(rules.apply(Arrays.asList(3.0f, 4.0f, 5.0f))).isEqualTo(true);
-        assertThat(rules.apply(Arrays.asList(4.0f, 5.0f, 6.0f))).isEqualTo(false);
-        assertThat(rules.apply(Collections.emptyList())).isEqualTo(false);
+        assertThat(rules.apply(Arrays.asList(1.0f, 2.0f, 3.0f))).isTrue();
+        assertThat(rules.apply(Arrays.asList(3.0f, 4.0f, 5.0f))).isTrue();
+        assertThat(rules.apply(Arrays.asList(4.0f, 5.0f, 6.0f))).isFalse();
+        assertThat(rules.apply(emptyList())).isFalse();
     }
 
-    @Test
-    public void testStringCollectionContainsAny() {
+    @Test void testStringCollectionContainsAny() {
         CollectionCurationRules<String> rules = CollectionCurationRules.<String>builder()
                 .containsAny(Arrays.asList("a", "b", "c"))
                 .build();
-        assertThat(rules.apply(Arrays.asList("a", "b", "c"))).isEqualTo(true);
-        assertThat(rules.apply(Arrays.asList("c", "d", "e"))).isEqualTo(true);
-        assertThat(rules.apply(Arrays.asList("d", "e", "f"))).isEqualTo(false);
-        assertThat(rules.apply(Collections.emptyList())).isEqualTo(false);
+        assertThat(rules.apply(Arrays.asList("a", "b", "c"))).isTrue();
+        assertThat(rules.apply(Arrays.asList("c", "d", "e"))).isTrue();
+        assertThat(rules.apply(Arrays.asList("d", "e", "f"))).isFalse();
+        assertThat(rules.apply(emptyList())).isFalse();
     }
-
 }

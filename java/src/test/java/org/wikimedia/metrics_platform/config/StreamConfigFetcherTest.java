@@ -11,7 +11,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-public class StreamConfigFetcherTest {
+class StreamConfigFetcherTest {
 
     @Test void ParsingConfigFromJsonWorks() throws IOException {
         try (InputStreamReader in = readConfigFile()) {
@@ -31,6 +31,4 @@ public class StreamConfigFetcherTest {
                 UTF_8
         );
     }
-
-
 }

@@ -35,7 +35,7 @@ import org.wikimedia.metrics_platform.curation.CurationFilter;
 import com.google.gson.Gson;
 
 @ExtendWith(MockitoExtension.class)
-public class MetricsClientTest {
+class MetricsClientTest {
 
     @Mock private ClientMetadata mockClientMetadata;
     @Mock private SessionController mockSessionController;
@@ -56,8 +56,7 @@ public class MetricsClientTest {
         curationFilter = gson.fromJson(curationFilterJson, CurationFilter.class);
     }
 
-    @BeforeEach
-    public void createEventProcessorMetricsClient() {
+    @BeforeEach void createEventProcessorMetricsClient() {
         eventQueue = new LinkedBlockingQueue<>(10);
         sourceConfig = new AtomicReference<>(getTestSourceConfig());
 
@@ -70,16 +69,14 @@ public class MetricsClientTest {
         );
     }
 
-    @Test
-    public void testSubmit() {
+    @Test void testSubmit() {
         Event event = new Event(METRICS_PLATFORM_SCHEMA_TITLE, "test_stream", "test_event");
         client.submit(event);
 
         assertThat(eventQueue).contains(event);
     }
 
-    @Test
-    public void testDispatch() throws InterruptedException {
+    @Test void testDispatch() throws InterruptedException {
         when(mockSamplingController.isInSample(getTestStreamConfig())).thenReturn(true);
 
         Map<String, Object> customDataMap = getTestCustomData();
@@ -97,8 +94,7 @@ public class MetricsClientTest {
         );
     }
 
-    @Test
-    public void testSubmitWhenEventQueueIsFull() {
+    @Test void testSubmitWhenEventQueueIsFull() {
         for (int i = 1; i <= 10; i++) {
             Event event = new Event("test_schema" + i, "test_stream" + i, "test_event" + i);
             eventQueue.add(event);
@@ -109,20 +105,17 @@ public class MetricsClientTest {
         assertThat(eventQueue).doesNotContain(event11);
     }
 
-    @Test
-    public void testTouchSessionOnApplicationPause() {
+    @Test void testTouchSessionOnApplicationPause() {
         client.onApplicationPause();
         verify(mockSessionController).touchSession();
     }
 
-    @Test
-    public void testResumeSessionOnApplicationResume() {
+    @Test void testResumeSessionOnApplicationResume() {
         client.onApplicationResume();
         verify(mockSessionController).touchSession();
     }
 
-    @Test
-    public void testAddRequiredMetadata() {
+    @Test void testAddRequiredMetadata() {
         Event event = new Event("test/event/1.0.0", "test_event", "testEvent");
         client.submit(event);
 

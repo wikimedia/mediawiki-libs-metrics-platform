@@ -6,10 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
 
-public class DeviceDataTest {
+class DeviceDataTest {
 
-    @Test
-    public void testDeviceData() {
+    @Test void testDeviceData() {
         DeviceData deviceData = DeviceData.builder()
                 .pixelRatio(1.0f)
                 .hardwareConcurrency(1)

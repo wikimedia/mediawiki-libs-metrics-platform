@@ -27,7 +27,7 @@ import org.wikimedia.metrics_platform.context.ContextController;
 import org.wikimedia.metrics_platform.curation.CurationController;
 
 @ExtendWith(MockitoExtension.class)
-public class EventProcessorTest {
+class EventProcessorTest {
 
     private ContextController mockContextController = new ContextController(new TestClientMetadata());
     @Mock private EventSender mockEventSender;
@@ -36,8 +36,7 @@ public class EventProcessorTest {
     private BlockingQueue<Event> eventQueue;
     private EventProcessor eventProcessor;
 
-    @BeforeEach
-    public void createEventProcessor() {
+    @BeforeEach void createEventProcessor() {
         sourceConfig = new AtomicReference<>(getTestSourceConfig());
         eventQueue = new LinkedBlockingQueue<>(10);
 
@@ -50,8 +49,7 @@ public class EventProcessorTest {
         );
     }
 
-    @Test
-    public void testSendEnqueuedEvents() throws IOException {
+    @Test void testSendEnqueuedEvents() throws IOException {
         doReturn(true).when(mockCurationController).eventPassesCurationRules(any(), any());
 
         Event event = new Event("test_schema", "test_stream", "test_event");
@@ -61,8 +59,7 @@ public class EventProcessorTest {
         verify(mockEventSender).sendEvents(anyString(), anyCollection());
     }
 
-    @Test
-    public void testEventsRemovedFromOutputBufferOnSuccess() {
+    @Test void testEventsRemovedFromOutputBufferOnSuccess() {
         doReturn(true).when(mockCurationController).eventPassesCurationRules(any(), any());
 
         Event event = new Event(StreamConfigFetcher.METRICS_PLATFORM_SCHEMA_TITLE, "test_stream", "test_event");
@@ -72,8 +69,7 @@ public class EventProcessorTest {
         assertThat(eventQueue).isEmpty();
     }
 
-    @Test
-    public void testEventsRemainInOutputBufferOnFailure() throws IOException {
+    @Test void testEventsRemainInOutputBufferOnFailure() throws IOException {
         doReturn(true).when(mockCurationController).eventPassesCurationRules(any(), any());
         doThrow(IOException.class).when(mockEventSender).sendEvents(anyString(), anyCollection());
         Event event = new Event("test_schema", "test_stream", "test_event");
@@ -84,8 +80,7 @@ public class EventProcessorTest {
         assertThat(eventQueue).isNotEmpty();
     }
 
-    @Test
-    public void eventsAreEnrichedBeforeBeingSent() throws IOException {
+    @Test void eventsAreEnrichedBeforeBeingSent() throws IOException {
         doReturn(true).when(mockCurationController).eventPassesCurationRules(any(), any());
         ArgumentCaptor<Collection<Event>> eventCaptor = ArgumentCaptor.forClass(Collection.class);
 
@@ -100,8 +95,7 @@ public class EventProcessorTest {
         assertThat(sentEvent.getPageData().getTitle()).isEqualTo("Test");
     }
 
-    @Test
-    public void eventsNotSentWhenFetchStreamConfigFails() throws Exception {
+    @Test void eventsNotSentWhenFetchStreamConfigFails() throws Exception {
         sourceConfig.set(null);
         eventQueue.offer(new Event("stream", "stream", "event"));
 
@@ -109,5 +103,4 @@ public class EventProcessorTest {
 
         assertThat(eventQueue).isNotEmpty();
     }
-
 }
