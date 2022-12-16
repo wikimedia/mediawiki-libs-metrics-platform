@@ -8,10 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
 
-public class PageDataTest {
+class PageDataTest {
 
-    @Test
-    public void testPageData() {
+    @Test void testPageData() {
         PageData pageData = PageData.builder()
                 .id(1)
                 .namespaceId(0)
@@ -27,14 +26,14 @@ public class PageDataTest {
 
         assertThat(pageData.getId()).isEqualTo(1);
         assertThat(pageData.getNamespaceId()).isEqualTo(0);
-        assertThat(pageData.getNamespaceText()).isEqualTo("");
+        assertThat(pageData.getNamespaceText()).isEmpty();
         assertThat(pageData.getTitle()).isEqualTo("Test");
-        assertThat(pageData.getIsRedirect()).isEqualTo(false);
+        assertThat(pageData.getIsRedirect()).isFalse();
         assertThat(pageData.getRevisionId()).isEqualTo(1);
         assertThat(pageData.getWikidataItemId()).isEqualTo("Q1");
         assertThat(pageData.getContentLanguage()).isEqualTo("zh");
-        assertThat(pageData.getGroupsAllowedToEdit()).isEqualTo(Collections.emptyList());
-        assertThat(pageData.getGroupsAllowedToMove()).isEqualTo(Collections.emptyList());
+        assertThat(pageData.getGroupsAllowedToEdit()).isEmpty();
+        assertThat(pageData.getGroupsAllowedToMove()).isEmpty();
 
         Gson gson = new Gson();
         String json = gson.toJson(pageData);

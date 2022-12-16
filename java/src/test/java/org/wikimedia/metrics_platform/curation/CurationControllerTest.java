@@ -13,52 +13,47 @@ import org.wikimedia.metrics_platform.config.SourceConfigFixtures;
 import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.context.UserData;
 
-public class CurationControllerTest {
+class CurationControllerTest {
 
     private final StreamConfig streamConfig = SourceConfigFixtures.STREAM_CONFIGS_WITH_EVENTS.get("test.stream");
     private final CurationController curationController = new CurationController();
 
     private Event event;
 
-    @BeforeEach
-    public void resetEvent() {
+    @BeforeEach void resetEvent() {
         event = new Event("test/event", "test.stream", "test.event");
     }
 
-    @Test
-    public void testEventPassesCurationFilters() {
+    @Test void testEventPassesCurationFilters() {
         UserData userData = new UserData();
         userData.setGroups(Collections.singleton("steward"));
         event.getPageData().setTitle("Test");
         event.setUserData(userData);
-        assertThat(curationController.eventPassesCurationRules(event, streamConfig)).isEqualTo(true);
+        assertThat(curationController.eventPassesCurationRules(event, streamConfig)).isTrue();
     }
 
-    @Test
-    public void testEventFailsEqualsRule() {
+    @Test void testEventFailsEqualsRule() {
         event.getPageData().setTitle("Not Test");
         UserData userData = new UserData();
         userData.setGroups(Collections.singleton("steward"));
         event.setUserData(userData);
-        assertThat(curationController.eventPassesCurationRules(event, streamConfig)).isEqualTo(false);
+        assertThat(curationController.eventPassesCurationRules(event, streamConfig)).isFalse();
     }
 
-    @Test
-    public void testEventFailsCollectionContainsAnyRule() {
+    @Test void testEventFailsCollectionContainsAnyRule() {
         UserData userData = new UserData();
         userData.setGroups(Collections.singleton("*"));
         event.getPageData().setTitle("Test");
         event.setUserData(userData);
-        assertThat(curationController.eventPassesCurationRules(event, streamConfig)).isEqualTo(false);
+        assertThat(curationController.eventPassesCurationRules(event, streamConfig)).isFalse();
     }
 
-    @Test
-    public void testEventFailsCollectionDoesNotContainRule() {
+    @Test void testEventFailsCollectionDoesNotContainRule() {
         UserData userData = new UserData();
         userData.setGroups(new HashSet<>(Arrays.asList("steward", "sysop")));
         event.getPageData().setTitle("Test");
         event.setUserData(userData);
-        assertThat(curationController.eventPassesCurationRules(event, streamConfig)).isEqualTo(false);
+        assertThat(curationController.eventPassesCurationRules(event, streamConfig)).isFalse();
     }
 
 }

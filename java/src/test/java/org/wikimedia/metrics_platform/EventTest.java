@@ -11,10 +11,9 @@ import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
 
-public class EventTest {
+class EventTest {
 
-    @Test
-    public void testEvent() {
+    @Test void testEvent() {
         Event event = new Event("test/event/1.0.0", "test.event", "testEvent");
         String timestamp = DATE_FORMAT.format(Instant.EPOCH);
         event.setAppInstallId("foo");
@@ -25,8 +24,7 @@ public class EventTest {
         assertThat(event.getTimestamp()).isEqualTo("1970-01-01T00:00:00Z");
     }
 
-    @Test
-    public void testEventSerialization() {
+    @Test void testEventSerialization() {
         String uuid = UUID.randomUUID().toString();
         Event event = new Event("test/event/1.0.0", "test.event", "testEvent");
         event.setAppInstallId(uuid);
@@ -46,7 +44,7 @@ public class EventTest {
         assertThat(event.getAccessMethod()).isEqualTo("mobile app");
         assertThat(event.getPlatform()).isEqualTo("android");
         assertThat(event.getPlatformFamily()).isEqualTo("app");
-        assertThat(event.getIsProduction()).isEqualTo(true);
+        assertThat(event.getIsProduction()).isTrue();
 
         Gson gson = new Gson();
         String json = gson.toJson(event);

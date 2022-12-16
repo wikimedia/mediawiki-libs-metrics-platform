@@ -7,22 +7,20 @@ import java.time.Instant;
 
 import org.junit.jupiter.api.Test;
 
-public class SessionControllerTest {
+class SessionControllerTest {
 
-    @Test
-    public void testSessionExpiry() {
+    @Test void testSessionExpiry() {
         Instant oneHourAgo = Instant.now().minus(1, HOURS);
         SessionController sessionController = new SessionController(oneHourAgo);
-        assertThat(sessionController.sessionExpired()).isEqualTo(true);
+        assertThat(sessionController.sessionExpired()).isTrue();
     }
 
-    @Test
-    public void testTouchSession() {
+    @Test void testTouchSession() {
         Instant oneHourAgo = Instant.now().minus(1, HOURS);
         SessionController sessionController = new SessionController(oneHourAgo);
         String sessionId1 = sessionController.getSessionId();
         sessionController.touchSession();
-        assertThat(sessionController.sessionExpired()).isEqualTo(false);
+        assertThat(sessionController.sessionExpired()).isFalse();
 
         String sessionId2 = sessionController.getSessionId();
 

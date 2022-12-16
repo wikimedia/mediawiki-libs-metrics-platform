@@ -4,86 +4,77 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class ComparableCurationRulesTest {
+class ComparableCurationRulesTest {
 
-    @Test
-    public void testIntegerGreaterThan() {
+    @Test void testIntegerGreaterThan() {
         ComparableCurationRules<Integer> rules = ComparableCurationRules.<Integer>builder()
                 .greaterThan(0)
                 .build();
-        assertThat(rules.apply(1)).isEqualTo(true);
-        assertThat(rules.apply(0)).isEqualTo(false);
-        assertThat(rules.apply(-1)).isEqualTo(false);
+        assertThat(rules.apply(1)).isTrue();
+        assertThat(rules.apply(0)).isFalse();
+        assertThat(rules.apply(-1)).isFalse();
     }
 
-    @Test
-    public void testFloatGreaterThan() {
+    @Test void testFloatGreaterThan() {
         ComparableCurationRules<Float> rules = ComparableCurationRules.<Float>builder()
                 .greaterThan(0.0f)
                 .build();
-        assertThat(rules.apply(1.0f)).isEqualTo(true);
-        assertThat(rules.apply(0.0f)).isEqualTo(false);
-        assertThat(rules.apply(-1.0f)).isEqualTo(false);
+        assertThat(rules.apply(1.0f)).isTrue();
+        assertThat(rules.apply(0.0f)).isFalse();
+        assertThat(rules.apply(-1.0f)).isFalse();
     }
 
-    @Test
-    public void testIntegerLessThan() {
+    @Test void testIntegerLessThan() {
         ComparableCurationRules<Integer> rules = ComparableCurationRules.<Integer>builder()
                 .lessThan(0)
                 .build();
-        assertThat(rules.apply(1)).isEqualTo(false);
-        assertThat(rules.apply(0)).isEqualTo(false);
-        assertThat(rules.apply(-1)).isEqualTo(true);
+        assertThat(rules.apply(1)).isFalse();
+        assertThat(rules.apply(0)).isFalse();
+        assertThat(rules.apply(-1)).isTrue();
     }
 
-    @Test
-    public void testFloatLessThan() {
+    @Test void testFloatLessThan() {
         ComparableCurationRules<Float> rules = ComparableCurationRules.<Float>builder()
                 .lessThan(0.0f)
                 .build();
-        assertThat(rules.apply(1.0f)).isEqualTo(false);
-        assertThat(rules.apply(0.0f)).isEqualTo(false);
-        assertThat(rules.apply(-1.0f)).isEqualTo(true);
+        assertThat(rules.apply(1.0f)).isFalse();
+        assertThat(rules.apply(0.0f)).isFalse();
+        assertThat(rules.apply(-1.0f)).isTrue();
     }
 
-    @Test
-    public void testIntegerGreaterThanOrEquals() {
+    @Test void testIntegerGreaterThanOrEquals() {
         ComparableCurationRules<Integer> rules = ComparableCurationRules.<Integer>builder()
                 .greaterThanOrEquals(0)
                 .build();
-        assertThat(rules.apply(1)).isEqualTo(true);
-        assertThat(rules.apply(0)).isEqualTo(true);
-        assertThat(rules.apply(-1)).isEqualTo(false);
+        assertThat(rules.apply(1)).isTrue();
+        assertThat(rules.apply(0)).isTrue();
+        assertThat(rules.apply(-1)).isFalse();
     }
 
-    @Test
-    public void testFloatGreaterThanOrEquals() {
+    @Test void testFloatGreaterThanOrEquals() {
         ComparableCurationRules<Float> rules = ComparableCurationRules.<Float>builder()
                 .greaterThanOrEquals(0.0f)
                 .build();
-        assertThat(rules.apply(1.0f)).isEqualTo(true);
-        assertThat(rules.apply(0.0f)).isEqualTo(true);
-        assertThat(rules.apply(-1.0f)).isEqualTo(false);
+        assertThat(rules.apply(1.0f)).isTrue();
+        assertThat(rules.apply(0.0f)).isTrue();
+        assertThat(rules.apply(-1.0f)).isFalse();
     }
 
-    @Test
-    public void testIntegerLessThanOrEquals() {
+    @Test void testIntegerLessThanOrEquals() {
         ComparableCurationRules<Integer> rules = ComparableCurationRules.<Integer>builder()
                 .lessThanOrEquals(0)
                 .build();
-        assertThat(rules.apply(1)).isEqualTo(false);
-        assertThat(rules.apply(0)).isEqualTo(true);
-        assertThat(rules.apply(-1)).isEqualTo(true);
+        assertThat(rules.apply(1)).isFalse();
+        assertThat(rules.apply(0)).isTrue();
+        assertThat(rules.apply(-1)).isTrue();
     }
 
-    @Test
-    public void testFloatLessThanOrEquals() {
+    @Test void testFloatLessThanOrEquals() {
         ComparableCurationRules<Float> rules = ComparableCurationRules.<Float>builder()
                 .lessThanOrEquals(0.0f)
                 .build();
-        assertThat(rules.apply(1.0f)).isEqualTo(false);
-        assertThat(rules.apply(0.0f)).isEqualTo(true);
-        assertThat(rules.apply(-1.0f)).isEqualTo(true);
+        assertThat(rules.apply(1.0f)).isFalse();
+        assertThat(rules.apply(0.0f)).isTrue();
+        assertThat(rules.apply(-1.0f)).isTrue();
     }
-
 }

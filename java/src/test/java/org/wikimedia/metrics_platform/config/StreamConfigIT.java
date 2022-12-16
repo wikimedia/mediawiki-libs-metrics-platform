@@ -15,7 +15,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 
 @WireMockTest
-public class StreamConfigIT {
+class StreamConfigIT {
 
     @Test void canLoadConfigOverHTTP(WireMockRuntimeInfo wmRuntimeInfo) throws IOException {
         stubFor(get("/streamConfig").willReturn(

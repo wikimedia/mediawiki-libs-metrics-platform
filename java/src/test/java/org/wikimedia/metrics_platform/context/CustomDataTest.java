@@ -14,10 +14,9 @@ import org.junit.jupiter.api.Test;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class CustomDataTest {
+class CustomDataTest {
 
-    @Test
-    public void testFormatCustomDataByCustomSerialization() {
+    @Test void testFormatCustomDataByCustomSerialization() {
         Set<CustomData> customDataSet = getTestCustomData();
         // Sort the customDataSet for test assertions.
         List<CustomData> sortedCustomDataList = customDataSet.stream()

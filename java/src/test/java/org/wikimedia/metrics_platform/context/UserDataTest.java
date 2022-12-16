@@ -8,10 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
 
-public class UserDataTest {
+class UserDataTest {
 
-    @Test
-    public void testUserData() {
+    @Test void testUserData() {
         UserData userData = UserData.builder()
                 .id(1)
                 .name("TestUser")
@@ -29,9 +28,9 @@ public class UserDataTest {
         assertThat(userData.getId()).isEqualTo(1);
         assertThat(userData.getName()).isEqualTo("TestUser");
         assertThat(userData.getGroups()).isEqualTo(Collections.singletonList("*"));
-        assertThat(userData.getIsLoggedIn()).isEqualTo(true);
-        assertThat(userData.getIsBot()).isEqualTo(false);
-        assertThat(userData.getCanProbablyEditPage()).isEqualTo(true);
+        assertThat(userData.getIsLoggedIn()).isTrue();
+        assertThat(userData.getIsBot()).isFalse();
+        assertThat(userData.getCanProbablyEditPage()).isTrue();
         assertThat(userData.getEditCount()).isEqualTo(10);
         assertThat(userData.getEditCountBucket()).isEqualTo("5-99 edits");
         assertThat(userData.getRegistrationTimestamp()).isEqualTo(1427224089000L);

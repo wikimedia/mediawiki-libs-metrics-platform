@@ -14,12 +14,11 @@ import org.wikimedia.metrics_platform.context.UserData;
 
 import com.google.gson.Gson;
 
-public class CurationFilterTest {
+class CurationFilterTest {
 
     private static CurationFilter curationFilter;
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeAll static void setUp() {
         Gson gson = new Gson();
         String curationFilterJson = "{\"page_id\":{\"less_than\":500,\"not_equals\":42},\"page_namespace_text\":" +
                 "{\"equals\":\"Talk\"},\"user_is_logged_in\":{\"equals\":true},\"user_edit_count_bucket\":" +
@@ -42,65 +41,56 @@ public class CurationFilterTest {
         return event;
     }
 
-    @Test
-    public void testEventPasses() {
-        assertThat(curationFilter.apply(getBaseEvent())).isEqualTo(true);
+    @Test void testEventPasses() {
+        assertThat(curationFilter.apply(getBaseEvent())).isTrue();
     }
 
-    @Test
-    public void testEventFailsWrongPageId() {
+    @Test void testEventFailsWrongPageId() {
         Event event = getBaseEvent();
         event.getPageData().setId(42);
-        assertThat(curationFilter.apply(event)).isEqualTo(false);
+        assertThat(curationFilter.apply(event)).isFalse();
     }
 
-    @Test
-    public void testEventFailsWrongPageNamespaceText() {
+    @Test void testEventFailsWrongPageNamespaceText() {
         Event event = getBaseEvent();
         event.getPageData().setNamespaceText("User");
-        assertThat(curationFilter.apply(event)).isEqualTo(false);
+        assertThat(curationFilter.apply(event)).isFalse();
     }
 
-    @Test
-    public void testEventFailsWrongUserGroups() {
+    @Test void testEventFailsWrongUserGroups() {
         Event event = getBaseEvent();
         event.getUserData().setGroups(Arrays.asList("user", "autoconfirmed", "sysop"));
-        assertThat(curationFilter.apply(event)).isEqualTo(false);
+        assertThat(curationFilter.apply(event)).isFalse();
     }
 
-    @Test
-    public void testEventFailsNoUserGroups() {
+    @Test void testEventFailsNoUserGroups() {
         Event event = getBaseEvent();
         event.getUserData().setGroups(Collections.emptyList());
-        assertThat(curationFilter.apply(event)).isEqualTo(false);
+        assertThat(curationFilter.apply(event)).isFalse();
     }
 
-    @Test
-    public void testEventFailsNotLoggedIn() {
+    @Test void testEventFailsNotLoggedIn() {
         Event event = getBaseEvent();
         event.getUserData().setIsLoggedIn(false);
-        assertThat(curationFilter.apply(event)).isEqualTo(false);
+        assertThat(curationFilter.apply(event)).isFalse();
     }
 
-    @Test
-    public void testEventFailsWrongUserEditCountBucket() {
+    @Test void testEventFailsWrongUserEditCountBucket() {
         Event event = getBaseEvent();
         event.getUserData().setEditCountBucket("5-99 edits");
-        assertThat(curationFilter.apply(event)).isEqualTo(false);
+        assertThat(curationFilter.apply(event)).isFalse();
     }
 
-    @Test
-    public void testEventFailsDevicePixelRatioTooHigh() {
+    @Test void testEventFailsDevicePixelRatioTooHigh() {
         Event event = getBaseEvent();
         event.getDeviceData().setPixelRatio(1.0f);
-        assertThat(curationFilter.apply(event)).isEqualTo(false);
+        assertThat(curationFilter.apply(event)).isFalse();
     }
 
-    @Test
-    public void testEventFailsDevicePixelRatioTooLow() {
+    @Test void testEventFailsDevicePixelRatioTooLow() {
         Event event = getBaseEvent();
         event.getDeviceData().setPixelRatio(3.0f);
-        assertThat(curationFilter.apply(event)).isEqualTo(false);
+        assertThat(curationFilter.apply(event)).isFalse();
     }
 
 }

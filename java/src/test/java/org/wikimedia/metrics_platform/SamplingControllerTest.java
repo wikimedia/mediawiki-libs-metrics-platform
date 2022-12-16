@@ -8,33 +8,29 @@ import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.config.SampleConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
 
-public class SamplingControllerTest {
+class SamplingControllerTest {
 
     private final SamplingController samplingController = new SamplingController(
             new TestClientMetadata(),
             new SessionController()
     );
 
-    @Test
-    public void testGetSamplingValue() {
+    @Test void testGetSamplingValue() {
         double deviceVal = samplingController.getSamplingValue(DEVICE);
         assertThat(deviceVal).isBetween(0.0, 1.0);
     }
 
-    @Test
-    public void testGetSamplingId() {
+    @Test void testGetSamplingId() {
         assertThat(samplingController.getSamplingId(DEVICE)).isNotNull();
         assertThat(samplingController.getSamplingId(SESSION)).isNotNull();
     }
 
-    @Test
-    public void testNoSamplingConfig() {
+    @Test void testNoSamplingConfig() {
         StreamConfig noSamplingConfig = new StreamConfig("foo", "bar", null, null, null);
-        assertThat(samplingController.isInSample(noSamplingConfig)).isEqualTo(true);
+        assertThat(samplingController.isInSample(noSamplingConfig)).isTrue();
     }
 
-    @Test
-    public void testAlwaysInSample() {
+    @Test void testAlwaysInSample() {
         StreamConfig alwaysInSample = new StreamConfig("foo", "bar", null,
                 new StreamConfig.ProducerConfig(new StreamConfig.MetricsPlatformClientConfig(
                         null,
@@ -43,11 +39,10 @@ public class SamplingControllerTest {
                 )),
                 null
         );
-        assertThat(samplingController.isInSample(alwaysInSample)).isEqualTo(true);
+        assertThat(samplingController.isInSample(alwaysInSample)).isTrue();
     }
 
-    @Test
-    public void testNeverInSample() {
+    @Test void testNeverInSample() {
         StreamConfig neverInSample = new StreamConfig("foo", "bar", null,
                 new StreamConfig.ProducerConfig(new StreamConfig.MetricsPlatformClientConfig(
                         null,
@@ -56,7 +51,7 @@ public class SamplingControllerTest {
                 )),
                 new SampleConfig(0.0, SESSION, null)
         );
-        assertThat(samplingController.isInSample(neverInSample)).isEqualTo(false);
+        assertThat(samplingController.isInSample(neverInSample)).isFalse();
     }
 
 }
