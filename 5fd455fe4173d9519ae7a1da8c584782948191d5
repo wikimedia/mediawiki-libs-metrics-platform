@@ -16,6 +16,23 @@
       "message": "Not that this will need to be rechecked when the new release of our parent pom is available on Maven central https://repo1.maven.org/maven2/org/wikimedia/discovery/discovery-parent-pom/1.67/",
       "revId": "5fd455fe4173d9519ae7a1da8c584782948191d5",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92de6789_a87208f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2022-12-20T14:26:13Z",
+      "side": 1,
+      "message": "recheck",
+      "revId": "5fd455fe4173d9519ae7a1da8c584782948191d5",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
