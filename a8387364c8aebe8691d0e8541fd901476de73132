@@ -16,6 +16,69 @@
       "message": "Per discussion with @Gehel, I err\u0027d on the side of putting the Java consistency test within the Java project file structure rather than introducing a new Java project in /test/consistency/ just to run the test.",
       "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c534a2e7_3de14022",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-05T19:14:51Z",
+      "side": 1,
+      "message": "The test harness itself looks great but I don\u0027t think it tests whether the resulting event is consistent with any others.",
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcd8531a_2d410ed7",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-05T19:14:51Z",
+      "side": 1,
+      "message": "Honestly, the class names are descriptive enough so as to make these descriptions redundant 😊",
+      "range": {
+        "startLine": 45,
+        "startChar": 33,
+        "endLine": 45,
+        "endChar": 52
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd9b7321_716717b4",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-05T19:14:51Z",
+      "side": 1,
+      "message": "Let\u0027s change the other consistency tests so that all of them (including the Swift one) use the same file. Happy to collaborate on this.",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 87
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
