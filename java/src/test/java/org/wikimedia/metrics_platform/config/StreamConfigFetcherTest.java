@@ -17,9 +17,10 @@ class StreamConfigFetcherTest {
         try (InputStreamReader in = readConfigFile()) {
             StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT));
             Map<String, StreamConfig> config = streamConfigFetcher.parseConfig(in);
-            assertThat(config).containsKey("analytics/mediawiki/client/metrics_event");
-
-            StreamConfig streamConfig = config.get("analytics/mediawiki/client/metrics_event");
+            assertThat(config).containsKey("mediawiki.visual_editor_feature_use");
+            StreamConfig streamConfig = config.get("mediawiki.visual_editor_feature_use");
+            String schemaTitle = streamConfig.getSchemaTitle();
+            assertThat(schemaTitle).isEqualTo("analytics/mediawiki/client/metrics_event");
             assertThat(streamConfig.getStreamName()).isEqualTo("mediawiki.visual_editor_feature_use");
         }
     }

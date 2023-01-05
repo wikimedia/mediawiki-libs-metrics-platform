@@ -49,7 +49,7 @@ class SamplingControllerTest {
                         null,
                         null
                 )),
-                new SampleConfig(0.0, SESSION, null)
+                new SampleConfig(0.0, SESSION)
         );
         assertThat(samplingController.isInSample(neverInSample)).isFalse();
     }

@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.StreamSupport;
@@ -50,18 +51,18 @@ public class StreamConfigFetcher {
     }
 
     // Visible For Testing
-    Map<String, StreamConfig> parseConfig(InputStreamReader inputStreamReader) {
+    public Map<String, StreamConfig> parseConfig(InputStreamReader inputStreamReader) {
         Map<String, StreamConfig> streamConfigs = new HashMap<>();
         JsonElement rootObject = JsonParser.parseReader(new JsonReader(inputStreamReader));
         JsonObject streamsRoot = rootObject.getAsJsonObject();
         JsonObject streams = streamsRoot.get("streams").getAsJsonObject();
         for (Map.Entry<String, JsonElement> entry : streams.entrySet()) {
             JsonObject currentStream = entry.getValue().getAsJsonObject();
-            JsonElement streamName = currentStream.get("schema_title");
-            String streamNameScrubbed = streamName.getAsString();
-            if (METRICS_PLATFORM_SCHEMA_TITLE.equals(streamNameScrubbed)) {
+            String streamName = currentStream.get("stream").getAsString();
+            String schemaTitle = currentStream.get("schema_title").getAsString();
+            if (METRICS_PLATFORM_SCHEMA_TITLE.equals(schemaTitle)) {
                 StreamConfig streamConfig = gson.fromJson(currentStream, StreamConfig.class);
-                streamConfigs.put(streamNameScrubbed, streamConfig);
+                streamConfigs.put(streamName, streamConfig);
             }
         }
         return streamConfigs;
@@ -91,9 +92,9 @@ public class StreamConfigFetcher {
             Set<String> provideValues = convertToSet(provideValuesJson);
 
             JsonObject sample = streamConfigJson.get("sample").getAsJsonObject();
-            String unit = sample.get("unit").getAsString();
-            int rate = sample.get("rate").getAsInt();
-            SampleConfig sampleConfig = new SampleConfig(rate, SampleConfig.Identifier.UNIT, unit);
+            SampleConfig.Identifier unit = SampleConfig.Identifier.valueOf(sample.get("unit").getAsString().toUpperCase(Locale.ROOT));
+            double rate = sample.get("rate").getAsDouble();
+            SampleConfig sampleConfig = new SampleConfig(rate, unit);
             StreamConfig.MetricsPlatformClientConfig mpcConfig = new StreamConfig.MetricsPlatformClientConfig(
                 events,
                 provideValues,

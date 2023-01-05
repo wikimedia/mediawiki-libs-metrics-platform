@@ -8,15 +8,15 @@ import java.util.List;
 
 public class TestClientMetadata implements ClientMetadata {
     @Override
-    public String getAppInstallId() {
+    public String getAgentAppInstallId() {
         return "6f31a4fa-0a77-4c65-9994-f242fa58ce94";
     }
     @Override
-    public String getClientPlatform() {
+    public String getAgentClientPlatform() {
         return "android";
     }
     @Override
-    public String getClientPlatformFamily() {
+    public String getAgentClientPlatformFamily() {
         return "app";
     }
     @Override
@@ -53,12 +53,12 @@ public class TestClientMetadata implements ClientMetadata {
     }
 
     @Override
-    public Integer getPageNamespaceId() {
+    public Integer getPageNamespace() {
         return 0;
     }
 
     @Override
-    public String getPageNamespaceText() {
+    public String getPageNamespaceName() {
         return "";
     }
 
@@ -88,12 +88,12 @@ public class TestClientMetadata implements ClientMetadata {
     }
 
     @Override
-    public Collection<String> getPageGroupsAllowedToEdit() {
+    public Collection<String> getPageUserGroupsAllowedToEdit() {
         return Collections.emptySet();
     }
 
     @Override
-    public Collection<String> getPageGroupsAllowedToMove() {
+    public Collection<String> getPageUserGroupsAllowedToMove() {
         return Collections.emptySet();
     }
 
@@ -105,6 +105,21 @@ public class TestClientMetadata implements ClientMetadata {
     }
 
     @Override
+    public String getPerformerName() {
+        return "TestUser";
+    }
+
+    @Override
+    public String getPerformerSessionId() {
+        return "TestUser";
+    }
+
+    @Override
+    public String getPerformerPageviewId() {
+        return "TestUser";
+    }
+
+    @Override
     public Boolean getPerformerIsLoggedIn() {
         return true;
     }
@@ -112,11 +127,6 @@ public class TestClientMetadata implements ClientMetadata {
     @Override
     public Boolean getPerformerIsBot() {
         return false;
-    }
-
-    @Override
-    public String getPerformerName() {
-        return "TestUser";
     }
 
     @Override
@@ -154,20 +164,8 @@ public class TestClientMetadata implements ClientMetadata {
         return "zh-tw";
     }
 
-    // Device
-
     @Override
-    public Float getDevicePixelRatio() {
-        return 1.0f;
-    }
-
-    @Override
-    public Integer getDeviceHardwareConcurrency() {
-        return 1;
-    }
-
-    @Override
-    public Integer getDeviceMaxTouchPoints() {
-        return 1;
+    public String getDomain() {
+        return "en.wikipedia.org";
     }
 }

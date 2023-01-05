@@ -16,7 +16,7 @@ import org.wikimedia.metrics_platform.config.StreamConfig;
  */
 @ThreadSafe
 @ParametersAreNonnullByDefault
-class SamplingController {
+public class SamplingController {
 
     private final ClientMetadata clientMetadata;
     private final SessionController sessionController;
@@ -66,7 +66,9 @@ class SamplingController {
             case SESSION:
                 return sessionController.getSessionId();
             case DEVICE:
-                return clientMetadata.getAppInstallId();
+                return clientMetadata.getAgentAppInstallId();
+            case PAGEVIEW:
+                return clientMetadata.getPerformerPageviewId();
             default:
                 throw new IllegalArgumentException("Bad identifier type: " + identifier);
         }

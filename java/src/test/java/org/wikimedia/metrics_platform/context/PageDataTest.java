@@ -44,8 +44,8 @@ class PageDataTest {
                 "\"wikidata_id\":\"Q1\"," +
                 "\"content_language\":\"zh\"," +
                 "\"is_redirect\":false," +
-                "\"user_groups_allowed_to_edit\":[]," +
-                "\"user_groups_allowed_to_move\":[]}");
+                "\"user_groups_allowed_to_move\":[]," +
+                "\"user_groups_allowed_to_edit\":[]}");
     }
 
 }

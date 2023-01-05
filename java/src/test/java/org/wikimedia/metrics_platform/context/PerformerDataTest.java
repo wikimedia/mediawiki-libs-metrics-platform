@@ -15,6 +15,8 @@ class PerformerDataTest {
                 .id(1)
                 .name("TestPerformer")
                 .isLoggedIn(true)
+                .sessionId("eeeeeeeeeeeeeeeeeeee")
+                .pageviewId("eeeeeeeeeeeeeeeeeeee")
                 .groups(Collections.singletonList("*"))
                 .isBot(false)
                 .language("zh")
@@ -39,12 +41,19 @@ class PerformerDataTest {
 
         Gson gson = new Gson();
         String json = gson.toJson(performerData);
-        assertThat(json).isEqualTo("{\"id\":1,\"name\":\"TestPerformer\"," +
+        assertThat(json).isEqualTo("{\"name\":\"TestPerformer\"," +
                 "\"is_logged_in\":true," +
-                "\"groups\":[\"*\"],\"is_bot\":false," +
-                "\"language\":\"zh\",\"language_variant\":\"zh-tw\"," +
-                "\"can_probably_edit_page\":true,\"edit_count\":10," +
-                "\"edit_count_bucket\":\"5-99 edits\",\"registration_dt\":1427224089000}");
+                "\"id\":1," +
+                "\"session_id\":\"eeeeeeeeeeeeeeeeeeee\"," +
+                "\"pageview_id\":\"eeeeeeeeeeeeeeeeeeee\"," +
+                "\"groups\":[\"*\"]," +
+                "\"is_bot\":false," +
+                "\"language\":\"zh\"," +
+                "\"language_variant\":\"zh-tw\"," +
+                "\"can_probably_edit_page\":true," +
+                "\"edit_count\":10," +
+                "\"edit_count_bucket\":\"5-99 edits\"," +
+                "\"registration_dt\":1427224089000}");
     }
 
 }

@@ -23,9 +23,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @ParametersAreNullableByDefault
 public class PerformerData {
-    private Integer id;
     @SerializedName("name") private String name;
     @SerializedName("is_logged_in") private Boolean isLoggedIn;
+    private Integer id;
     @SerializedName("session_id") private String sessionId;
     @SerializedName("pageview_id") private String pageviewId;
     @SerializedName("groups") private Collection<String> groups;

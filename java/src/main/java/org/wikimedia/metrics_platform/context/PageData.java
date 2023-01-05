@@ -28,6 +28,6 @@ public class PageData {
     @SerializedName("wikidata_id") private String wikidataItemId;
     @SerializedName("content_language") private String contentLanguage;
     @SerializedName("is_redirect") private Boolean isRedirect;
-    @SerializedName("user_groups_allowed_to_edit") private Collection<String> groupsAllowedToEdit;
     @SerializedName("user_groups_allowed_to_move") private Collection<String> groupsAllowedToMove;
+    @SerializedName("user_groups_allowed_to_edit") private Collection<String> groupsAllowedToEdit;
 }

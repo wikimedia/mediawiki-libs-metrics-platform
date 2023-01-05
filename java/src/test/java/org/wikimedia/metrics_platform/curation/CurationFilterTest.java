@@ -8,7 +8,6 @@ import java.util.Collections;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.Event;
-import org.wikimedia.metrics_platform.context.DeviceData;
 import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.PerformerData;
 
@@ -32,12 +31,10 @@ class CurationFilterTest {
         PageData pageData = PageData.builder().id(1).namespaceName("Talk").build();
         PerformerData performerData = PerformerData.builder().groups(Arrays.asList("user", "autoconfirmed", "steward"))
                 .isLoggedIn(true).editCountBucket("1000+ edits").build();
-        DeviceData deviceData = DeviceData.builder().pixelRatio(2.0f).build();
 
         Event event = new Event("test/event", "test.event", "testEvent");
         event.setPageData(pageData);
         event.setPerformerData(performerData);
-        event.setDeviceData(deviceData);
         return event;
     }
 
@@ -80,17 +77,4 @@ class CurationFilterTest {
         event.getPerformerData().setEditCountBucket("5-99 edits");
         assertThat(curationFilter.apply(event)).isFalse();
     }
-
-    @Test void testEventFailsDevicePixelRatioTooHigh() {
-        Event event = getBaseEvent();
-        event.getDeviceData().setPixelRatio(1.0f);
-        assertThat(curationFilter.apply(event)).isFalse();
-    }
-
-    @Test void testEventFailsDevicePixelRatioTooLow() {
-        Event event = getBaseEvent();
-        event.getDeviceData().setPixelRatio(3.0f);
-        assertThat(curationFilter.apply(event)).isFalse();
-    }
-
 }

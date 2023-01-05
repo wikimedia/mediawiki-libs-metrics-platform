@@ -28,7 +28,6 @@ class EventTest {
         Event event = new Event("test/event/1.0.0", "test.event", "testEvent");
 
         event.setTimestamp("2021-08-27T12:00:00Z");
-        event.setAccessMethod("mobile app");
 
         event.getAgentData().setAppInstallId(uuid);
         event.getAgentData().setClientPlatform("android");
@@ -47,7 +46,6 @@ class EventTest {
         assertThat(event.getName()).isEqualTo("testEvent");
         assertThat(event.getAgentData().getAppInstallId()).isEqualTo(uuid);
         assertThat(event.getTimestamp()).isEqualTo("2021-08-27T12:00:00Z");
-        assertThat(event.getAccessMethod()).isEqualTo("mobile app");
         assertThat(event.getAgentData().getClientPlatform()).isEqualTo("android");
         assertThat(event.getAgentData().getClientPlatformFamily()).isEqualTo("app");
 
@@ -56,12 +54,13 @@ class EventTest {
         assertThat(json).isEqualTo(String.format(Locale.ROOT,
                 "{" +
                             "\"$schema\":\"test/event/1.0.0\"," +
-                            "\"meta\":{\"stream\":\"test.event\"}," +
                             "\"name\":\"testEvent\"," +
                             "\"dt\":\"2021-08-27T12:00:00Z\"," +
+                            "\"meta\":{\"stream\":\"test.event\"}," +
                             "\"agent\":{\"app_install_id\":\"%s\"," +
                             "\"client_platform\":\"android\"," +
                             "\"client_platform_family\":\"app\"}," +
+                            "\"page\":{}," +
                             "\"mediawiki\":{\"skin\":\"vector\"," +
                             "\"version\":\"1.40.0-wmf.19\"," +
                             "\"is_production\":true," +
@@ -69,10 +68,7 @@ class EventTest {
                             "\"database\":\"enwiki\"," +
                             "\"site_content_language\":\"en\"," +
                             "\"site_content_language_variant\":\"en-zh\"}," +
-                            "\"page\":{}," +
-                            "\"performer\":{}," +
-                            "\"device\":{}," +
-                            "\"access_method\":\"mobile app\"" +
+                            "\"performer\":{}" +
                         "}", uuid, uuid));
     }
 

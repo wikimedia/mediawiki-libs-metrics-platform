@@ -46,6 +46,8 @@ public class CurationFilter {
 
     @SerializedName("performer_id") private ComparableCurationRules<Integer> performerIdRules;
     @SerializedName("performer_name") private CurationRules<String> performerNameRules;
+    @SerializedName("performer_session_id") private CurationRules<String> performerSessionIdRules;
+    @SerializedName("performer_pageview_id") private CurationRules<String> performerPageviewIdRules;
     @SerializedName("performer_groups") private CollectionCurationRules<String> performerGroupsRules;
     @SerializedName("performer_is_logged_in") private CurationRules<Boolean> performerIsLoggedInRules;
     @SerializedName("performer_is_bot") private CurationRules<Boolean> performerIsBotRules;
@@ -55,13 +57,6 @@ public class CurationFilter {
     @SerializedName("performer_registration_dt") private ComparableCurationRules<Long> performerRegistrationDtRules;
     @SerializedName("performer_language") private CurationRules<String> performerLanguageRules;
     @SerializedName("performer_language_variant") private CurationRules<String> performerLanguageVariantRules;
-
-    @SerializedName("device_pixel_ratio") private ComparableCurationRules<Float> devicePixelRatioRules;
-    @SerializedName("device_hardware_concurrency")
-    private ComparableCurationRules<Integer> deviceHardwareConcurrencyRules;
-    @SerializedName("device_max_touch_points") private ComparableCurationRules<Integer> deviceMaxTouchPointsRules;
-
-    @SerializedName("access_method") private CurationRules<String> accessMethodRules;
 
     @SuppressFBWarnings(value = "CC_CYCLOMATIC_COMPLEXITY", justification = "TODO: needs to be refactored!")
     @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity"})
@@ -261,6 +256,22 @@ public class CurationFilter {
                 return false;
             }
         }
+        if (performerSessionIdRules != null) {
+            if (event.getPerformerData().getSessionId() == null) {
+                return false;
+            }
+            if (!performerSessionIdRules.apply(event.getPerformerData().getSessionId())) {
+                return false;
+            }
+        }
+        if (performerPageviewIdRules != null) {
+            if (event.getPerformerData().getPageviewId() == null) {
+                return false;
+            }
+            if (!performerPageviewIdRules.apply(event.getPerformerData().getPageviewId())) {
+                return false;
+            }
+        }
         if (performerGroupsRules != null) {
             if (event.getPerformerData().getGroups() == null) {
                 return false;
@@ -330,44 +341,6 @@ public class CurationFilter {
                 return false;
             }
             if (!performerLanguageVariantRules.apply(event.getPerformerData().getLanguageVariant())) {
-                return false;
-            }
-        }
-
-        // Device
-
-        if (devicePixelRatioRules != null) {
-            if (event.getDeviceData().getPixelRatio() == null) {
-                return false;
-            }
-            if (!devicePixelRatioRules.apply(event.getDeviceData().getPixelRatio())) {
-                return false;
-            }
-        }
-        if (deviceHardwareConcurrencyRules != null) {
-            if (event.getDeviceData().getHardwareConcurrency() == null) {
-                return false;
-            }
-            if (!deviceHardwareConcurrencyRules.apply(event.getDeviceData().getHardwareConcurrency())) {
-                return false;
-            }
-        }
-        if (deviceMaxTouchPointsRules != null) {
-            if (event.getDeviceData().getMaxTouchPoints() == null) {
-                return false;
-            }
-            if (!deviceMaxTouchPointsRules.apply(event.getDeviceData().getMaxTouchPoints())) {
-                return false;
-            }
-        }
-
-        // Misc
-
-        if (accessMethodRules != null) {
-            if (event.getAccessMethod() == null) {
-                return false;
-            }
-            if (!accessMethodRules.apply(event.getAccessMethod())) {
                 return false;
             }
         }

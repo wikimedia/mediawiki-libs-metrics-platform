@@ -45,7 +45,7 @@ public final class MetricsClient {
 
     private static final Duration SEND_INTERVAL = Duration.ofSeconds(30);
 
-    private static final String METRICS_PLATFORM_SCHEMA = "/analytics/mediawiki/client/metrics_event";
+    private static final String METRICS_PLATFORM_SCHEMA = "/analytics/mediawiki/client/metrics_event/1.1.0";
 
     /**
      * Integration layer exposing hosting application functionality to the client library.
@@ -250,12 +250,14 @@ public final class MetricsClient {
      * - app_install_id: app install ID
      * - app_session_id: the current session ID
      * - dt: ISO 8601 timestamp
+     * - domain: the
      *
      * @param event event
      */
     private void addRequiredMetadata(Event event) {
-        event.getAgentData().setAppInstallId(clientMetadata.getAppInstallId());
+        event.getAgentData().setAppInstallId(clientMetadata.getAgentAppInstallId());
         event.getPerformerData().setSessionId(sessionController.getSessionId());
+        event.setDomain(clientMetadata.getDomain());
         event.setTimestamp(DATE_FORMAT.format(now()));
     }
 

@@ -1,6 +1,5 @@
 package org.wikimedia.metrics_platform;
 
-import static java.lang.Boolean.TRUE;
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -28,7 +27,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.wikimedia.metrics_platform.config.SampleConfig;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
-import org.wikimedia.metrics_platform.context.CustomData;
 import org.wikimedia.metrics_platform.curation.CurationFilter;
 
 import com.google.gson.Gson;
@@ -86,11 +84,16 @@ class MetricsClientTest {
         Event take = eventQueue.take();
 
         assertThat(take.getName()).isEqualTo("test_event");
-        assertThat(take.getCustomData()).containsExactlyInAnyOrder(
-                CustomData.of("is_editor", TRUE),
-                CustomData.of("action", "click"),
-                CustomData.of("screen_size", 1080)
-        );
+        Map<String, Object> customData = take.getCustomData();
+        Map<String, String> isEditor = (Map<String, String>) customData.get("is_editor");
+        assertThat(isEditor.get("data_type")).isEqualTo("boolean");
+        assertThat(isEditor.get("value")).isEqualTo("true");
+        Map<String, String> action = (Map<String, String>) customData.get("action");
+        assertThat(action.get("data_type")).isEqualTo("string");
+        assertThat(action.get("value")).isEqualTo("click");
+        Map<String, String> screenSize = (Map<String, String>) customData.get("screen_size");
+        assertThat(screenSize.get("data_type")).isEqualTo("number");
+        assertThat(screenSize.get("value")).isEqualTo("1080");
     }
 
     @Test void testSubmitWhenEventQueueIsFull() {
@@ -128,7 +131,7 @@ class MetricsClientTest {
         Event event = new Event("test/event/1.0.0", "test_event", "testEvent");
         client.submit(event);
 
-        verify(mockClientMetadata).getAppInstallId();
+        verify(mockClientMetadata).getAgentAppInstallId();
         verify(mockSessionController).getSessionId();
     }
 
@@ -142,7 +145,7 @@ class MetricsClientTest {
             PAGE_TITLE
         };
         Set<String> events = Collections.singleton("test_event");
-        SampleConfig sampleConfig = new SampleConfig(1.0f, SampleConfig.Identifier.UNIT, "pageview");
+        SampleConfig sampleConfig = new SampleConfig(1.0f, SampleConfig.Identifier.PAGEVIEW);
 
         return new StreamConfig(
             "test_stream",

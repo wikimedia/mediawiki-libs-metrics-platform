@@ -1,5 +1,7 @@
 package org.wikimedia.metrics_platform.context;
 
+import java.util.Locale;
+
 public enum CustomDataType {
     NUMBER("number"),
     STRING("string"),
@@ -14,6 +16,6 @@ public enum CustomDataType {
 
     @Override
     public String toString() {
-        return name;
+        return name.toLowerCase(Locale.ROOT);
     }
 }

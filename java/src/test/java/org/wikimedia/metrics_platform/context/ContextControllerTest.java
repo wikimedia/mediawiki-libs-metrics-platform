@@ -20,7 +20,6 @@ class ContextControllerTest {
         MediawikiData mediawikiData = event.getMediawikiData();
         PageData pageData = event.getPageData();
         PerformerData performerData = event.getPerformerData();
-        DeviceData deviceData = event.getDeviceData();
 
         assertThat(agentData.getAppInstallId()).isEqualTo("6f31a4fa-0a77-4c65-9994-f242fa58ce94");
         assertThat(agentData.getClientPlatform()).isEqualTo("android");
@@ -56,11 +55,5 @@ class ContextControllerTest {
         assertThat(performerData.getLanguageVariant()).isEqualTo("zh-tw");
         assertThat(performerData.getIsBot()).isFalse();
         assertThat(performerData.getCanProbablyEditPage()).isTrue();
-
-        assertThat(deviceData.getPixelRatio()).isEqualTo(1.0f);
-        assertThat(deviceData.getHardwareConcurrency()).isEqualTo(1);
-        assertThat(deviceData.getMaxTouchPoints()).isEqualTo(1);
-
-        assertThat(event.getAccessMethod()).isEqualTo("mobile app");
     }
 }

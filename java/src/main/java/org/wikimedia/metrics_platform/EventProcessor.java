@@ -41,10 +41,7 @@ public class EventProcessor {
 
 
     /**
-     * @param contextController  context controller
-     * @param curationController
-     * @param sourceConfig       source config
-     * @param eventSender        event sender
+     * EventProcessor constructor.
      */
     public EventProcessor(
             ContextController contextController,
@@ -87,7 +84,7 @@ public class EventProcessor {
                 .forEach(this::sendEventsToDestination);
     }
 
-    private boolean eventPassesCurationRules(Event event, Map<String, StreamConfig> streamConfigMap) {
+    protected boolean eventPassesCurationRules(Event event, Map<String, StreamConfig> streamConfigMap) {
         StreamConfig streamConfig = streamConfigMap.get(event.getStream());
         contextController.addRequestedValues(event, streamConfig);
         return curationController.eventPassesCurationRules(event, streamConfig);

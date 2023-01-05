@@ -11,7 +11,7 @@ public class SampleConfig {
     public enum Identifier {
         @SerializedName("session") SESSION,
         @SerializedName("device") DEVICE,
-        @SerializedName("unit") UNIT
+        @SerializedName("pageview") PAGEVIEW
     }
 
     /** Sampling rate. **/
@@ -19,6 +19,4 @@ public class SampleConfig {
 
     /** ID type to use for sampling. */
     @NonNull Identifier identifier;
-
-    String unitValue;
 }

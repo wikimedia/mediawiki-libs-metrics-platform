@@ -7,6 +7,7 @@ public final class ContextValue {
     public static final String AGENT_APP_INSTALL_ID = "agent_app_install_id";
     public static final String AGENT_CLIENT_PLATFORM = "agent_client_platform";
     public static final String AGENT_CLIENT_PLATFORM_FAMILY = "agent_client_platform_family";
+
     public static final String MEDIAWIKI_SKIN = "mediawiki_skin";
     public static final String MEDIAWIKI_VERSION = "mediawiki_version";
     public static final String MEDIAWIKI_IS_PRODUCTION = "mediawiki_is_production";
@@ -14,6 +15,7 @@ public final class ContextValue {
     public static final String MEDIAWIKI_DATABASE = "mediawiki_database";
     public static final String MEDIAWIKI_SITE_CONTENT_LANGUAGE = "mediawiki_site_content_language";
     public static final String MEDIAWIKI_SITE_CONTENT_LANGUAGE_VARIANT = "mediawiki_site_content_language_variant";
+
     public static final String PAGE_ID = "page_id";
     public static final String PAGE_TITLE = "page_title";
     public static final String PAGE_NAMESPACE = "page_namespace";
@@ -34,11 +36,11 @@ public final class ContextValue {
     public static final String PERFORMER_IS_BOT = "performer_is_bot";
     public static final String PERFORMER_LANGUAGE = "performer_language";
     public static final String PERFORMER_LANGUAGE_VARIANT = "performer_language_variant";
-
     public static final String PERFORMER_CAN_PROBABLY_EDIT_PAGE = "performer_can_probably_edit_page";
     public static final String PERFORMER_EDIT_COUNT = "performer_edit_count";
     public static final String PERFORMER_EDIT_COUNT_BUCKET = "performer_edit_count_bucket";
     public static final String PERFORMER_REGISTRATION_DT = "performer_registration_dt";
+
     public static final String DEVICE_PIXEL_RATIO = "device_pixel_ratio";
     public static final String DEVICE_HARDWARE_CONCURRENCY = "device_hardware_concurrency";
     public static final String DEVICE_MAX_TOUCH_POINTS = "device_max_touch_points";

@@ -1,12 +1,8 @@
 package org.wikimedia.metrics_platform.context;
 
-import static org.wikimedia.metrics_platform.context.ContextValue.ACCESS_METHOD;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_INSTALL_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM_FAMILY;
-import static org.wikimedia.metrics_platform.context.ContextValue.DEVICE_HARDWARE_CONCURRENCY;
-import static org.wikimedia.metrics_platform.context.ContextValue.DEVICE_MAX_TOUCH_POINTS;
-import static org.wikimedia.metrics_platform.context.ContextValue.DEVICE_PIXEL_RATIO;
 import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_SKIN;
 import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_VERSION;
 import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_IS_PRODUCTION;
@@ -27,6 +23,8 @@ import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_USER_GROU
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_NAME;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_IS_LOGGED_IN;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_SESSION_ID;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_PAGEVIEW_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_GROUPS;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_IS_BOT;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_LANGUAGE;
@@ -72,13 +70,13 @@ public class ContextController {
             switch (value) {
                 // Agent
                 case AGENT_APP_INSTALL_ID:
-                    event.getAgentData().setAppInstallId(clientMetadata.getAppInstallId());
+                    event.getAgentData().setAppInstallId(clientMetadata.getAgentAppInstallId());
                     break;
                 case AGENT_CLIENT_PLATFORM:
-                    event.getAgentData().setClientPlatform(clientMetadata.getClientPlatform());
+                    event.getAgentData().setClientPlatform(clientMetadata.getAgentClientPlatform());
                     break;
                 case AGENT_CLIENT_PLATFORM_FAMILY:
-                    event.getAgentData().setClientPlatformFamily(clientMetadata.getClientPlatformFamily());
+                    event.getAgentData().setClientPlatformFamily(clientMetadata.getAgentClientPlatformFamily());
                     break;
 
                 // Mediawiki
@@ -112,10 +110,10 @@ public class ContextController {
                     event.getPageData().setTitle(clientMetadata.getPageTitle());
                     break;
                 case PAGE_NAMESPACE:
-                    event.getPageData().setNamespace(clientMetadata.getPageNamespaceId());
+                    event.getPageData().setNamespace(clientMetadata.getPageNamespace());
                     break;
                 case PAGE_NAMESPACE_NAME:
-                    event.getPageData().setNamespaceName(clientMetadata.getPageNamespaceText());
+                    event.getPageData().setNamespaceName(clientMetadata.getPageNamespaceName());
                     break;
                 case PAGE_REVISION_ID:
                     event.getPageData().setRevisionId(clientMetadata.getPageRevisionId());
@@ -130,27 +128,39 @@ public class ContextController {
                     event.getPageData().setIsRedirect(clientMetadata.getPageIsRedirect());
                     break;
                 case PAGE_USER_GROUPS_ALLOWED_TO_EDIT:
-                    event.getPageData().setGroupsAllowedToEdit(clientMetadata.getPageGroupsAllowedToEdit());
+                    event.getPageData().setGroupsAllowedToEdit(clientMetadata.getPageUserGroupsAllowedToEdit());
                     break;
                 case PAGE_USER_GROUPS_ALLOWED_TO_MOVE:
-                    event.getPageData().setGroupsAllowedToMove(clientMetadata.getPageGroupsAllowedToMove());
+                    event.getPageData().setGroupsAllowedToMove(clientMetadata.getPageUserGroupsAllowedToMove());
                     break;
 
-                // User
+                // Performer
                 case PERFORMER_ID:
                     event.getPerformerData().setId(clientMetadata.getPerformerId());
-                    break;
-                case PERFORMER_IS_LOGGED_IN:
-                    event.getPerformerData().setIsLoggedIn(clientMetadata.getPerformerIsLoggedIn());
-                    break;
-                case PERFORMER_IS_BOT:
-                    event.getPerformerData().setIsBot(clientMetadata.getPerformerIsBot());
                     break;
                 case PERFORMER_NAME:
                     event.getPerformerData().setName(clientMetadata.getPerformerName());
                     break;
+                case PERFORMER_IS_LOGGED_IN:
+                    event.getPerformerData().setIsLoggedIn(clientMetadata.getPerformerIsLoggedIn());
+                    break;
+                case PERFORMER_SESSION_ID:
+                    event.getPerformerData().setSessionId(clientMetadata.getPerformerSessionId());
+                    break;
+                case PERFORMER_PAGEVIEW_ID:
+                    event.getPerformerData().setPageviewId(clientMetadata.getPerformerPageviewId());
+                    break;
                 case PERFORMER_GROUPS:
                     event.getPerformerData().setGroups(clientMetadata.getPerformerGroups());
+                    break;
+                case PERFORMER_IS_BOT:
+                    event.getPerformerData().setIsBot(clientMetadata.getPerformerIsBot());
+                    break;
+                case PERFORMER_LANGUAGE:
+                    event.getPerformerData().setLanguage(clientMetadata.getPerformerLanguage());
+                    break;
+                case PERFORMER_LANGUAGE_VARIANT:
+                    event.getPerformerData().setLanguageVariant(clientMetadata.getPerformerLanguageVariant());
                     break;
                 case PERFORMER_CAN_PROBABLY_EDIT_PAGE:
                     event.getPerformerData().setCanProbablyEditPage(clientMetadata.getPerformerCanProbablyEditPage());
@@ -164,28 +174,7 @@ public class ContextController {
                 case PERFORMER_REGISTRATION_DT:
                     event.getPerformerData().setRegistrationDt(clientMetadata.getPerformerRegistrationDt());
                     break;
-                case PERFORMER_LANGUAGE:
-                    event.getPerformerData().setLanguage(clientMetadata.getPerformerLanguage());
-                    break;
-                case PERFORMER_LANGUAGE_VARIANT:
-                    event.getPerformerData().setLanguageVariant(clientMetadata.getPerformerLanguageVariant());
-                    break;
 
-                // Device
-                case DEVICE_PIXEL_RATIO:
-                    event.getDeviceData().setPixelRatio(clientMetadata.getDevicePixelRatio());
-                    break;
-                case DEVICE_HARDWARE_CONCURRENCY:
-                    event.getDeviceData().setHardwareConcurrency(clientMetadata.getDeviceHardwareConcurrency());
-                    break;
-                case DEVICE_MAX_TOUCH_POINTS:
-                    event.getDeviceData().setMaxTouchPoints(clientMetadata.getDeviceMaxTouchPoints());
-                    break;
-
-                // Other
-                case ACCESS_METHOD:
-                    event.setAccessMethod("mobile app");
-                    break;
                 default:
                     throw new IllegalArgumentException(String.format(Locale.ROOT, "Unknown property %s", value));
             }

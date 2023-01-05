@@ -51,6 +51,8 @@ public final class SourceConfigFixtures {
             "performer_id",
             "performer_is_logged_in",
             "performer_name",
+            "performer_session_id",
+            "performer_pageview_id",
             "performer_groups",
             "performer_edit_count",
             "performer_edit_count_bucket",
@@ -58,13 +60,9 @@ public final class SourceConfigFixtures {
             "performer_language",
             "performer_language_variant",
             "performer_is_bot",
-            "performer_can_probably_edit_page",
-            "device_pixel_ratio",
-            "device_hardware_concurrency",
-            "device_max_touch_points",
-            "access_method"
+            "performer_can_probably_edit_page"
         ));
-        SampleConfig sampleConfig = new SampleConfig(1.0, SampleConfig.Identifier.UNIT, "pageview");
+        SampleConfig sampleConfig = new SampleConfig(1.0, SampleConfig.Identifier.PAGEVIEW);
 
         return new StreamConfig(
             "test.stream",

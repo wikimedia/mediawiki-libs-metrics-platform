@@ -8,9 +8,9 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 @ParametersAreNonnullByDefault
 public interface ClientMetadata {
-    String getAppInstallId();
-    String getClientPlatform();
-    String getClientPlatformFamily();
+    String getAgentAppInstallId();
+    String getAgentClientPlatform();
+    String getAgentClientPlatformFamily();
     String getMediawikiSkin();
     String getMediawikiVersion();
     Boolean getMediawikiIsProduction();
@@ -19,21 +19,23 @@ public interface ClientMetadata {
     String getMediawikiSiteContentLanguage();
     String getMediawikiSiteContentLanguageVariant();
     Integer getPageId();
-    Integer getPageNamespaceId();
-    String getPageNamespaceText();
+    Integer getPageNamespace();
+    String getPageNamespaceName();
     String getPageTitle();
     Boolean getPageIsRedirect();
     Integer getPageRevisionId();
     String getPageWikidataItemId();
     String getPageContentLanguage();
-    Collection<String> getPageGroupsAllowedToEdit();
-    Collection<String> getPageGroupsAllowedToMove();
+    Collection<String> getPageUserGroupsAllowedToEdit();
+    Collection<String> getPageUserGroupsAllowedToMove();
 
     Integer getPerformerId();
-    Boolean getPerformerIsLoggedIn();
-    Boolean getPerformerIsBot();
     String getPerformerName();
+    String getPerformerSessionId();
+    String getPerformerPageviewId();
+    Boolean getPerformerIsLoggedIn();
     Collection<String> getPerformerGroups();
+    Boolean getPerformerIsBot();
     Boolean getPerformerCanProbablyEditPage();
     Integer getPerformerEditCount();
     String getPerformerEditCountBucket();
@@ -41,7 +43,5 @@ public interface ClientMetadata {
     String getPerformerLanguage();
     String getPerformerLanguageVariant();
 
-    Float getDevicePixelRatio();
-    Integer getDeviceHardwareConcurrency();
-    Integer getDeviceMaxTouchPoints();
+    String getDomain();
 }

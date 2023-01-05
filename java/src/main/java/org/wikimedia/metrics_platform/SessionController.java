@@ -17,7 +17,7 @@ import javax.annotation.concurrent.ThreadSafe;
  */
 @ThreadSafe
 @ParametersAreNonnullByDefault
-class SessionController {
+public class SessionController {
 
     private static final Duration SESSION_LENGTH = Duration.ofMinutes(30);
     @GuardedBy("this")
