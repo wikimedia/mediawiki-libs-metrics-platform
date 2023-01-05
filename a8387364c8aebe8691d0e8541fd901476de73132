@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea8f502b_a887e2d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-05T18:59:20Z",
+      "side": 1,
+      "message": "Per discussion with @Gehel, I err\u0027d on the side of putting the Java consistency test within the Java project file structure rather than introducing a new Java project in /test/consistency/ just to run the test.",
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
