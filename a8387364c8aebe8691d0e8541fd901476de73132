@@ -60,6 +60,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8ced2400_a796a73c",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-01-06T09:35:36Z",
+      "side": 1,
+      "message": "This looks more like an integration test than a unit test. As such, it should be named `ConsistencyIT`.\n\nThis differentiation between unit tests and integration tests helps navigate tests and better understand the intent of those tests. Our build also treats them slightly differently: for example we measure test coverage only on UT.",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71b8d465_7f03ba75",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-01-06T09:35:36Z",
+      "side": 1,
+      "message": "This method is fairly long, which makes it non trivial to understand what it is testing. We could extract a few methods for the construction of the various supporting objects that would help bring more clarity.",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fd9b7321_716717b4",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
         "patchSetId": 1
@@ -76,6 +122,161 @@
         "startChar": 12,
         "endLine": 38,
         "endChar": 87
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d37fd04a_d4778c61",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-01-06T09:35:36Z",
+      "side": 1,
+      "message": "This should be declared of type `ClientMetadata` (the more generic, but sufficient type).",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 41
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e77bf123_745c0f2d",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-01-06T09:35:36Z",
+      "side": 1,
+      "message": "nit: static import?",
+      "range": {
+        "startLine": 92,
+        "startChar": 32,
+        "endLine": 92,
+        "endChar": 44
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b54eefb9_2b40699a",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-01-06T09:35:36Z",
+      "side": 1,
+      "message": "It looks like we don\u0027t do any assertions in this test. While there is value in a pure smoke test, in this case we could probably ensure that events are processed appropriately.",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 5
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1c53975_34bf302c",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-01-06T09:35:36Z",
+      "side": 1,
+      "message": "It looks like we have no assertions in this test. While there is value in a smoke test, in this case we can probably ensure that events are dispatched correctly.\n\nIf we at some future point include an implementation of the MetricsSender",
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d217617_0410d545",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTestClientMetadata.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-01-06T09:35:36Z",
+      "side": 1,
+      "message": "nit: usually the order of class members is:\n\n* constants\n* class variables\n* instance variables\n* constructors\n* methods\n\nChapter 5 of \"Clean Code\" (Robert Martin) has a few good reflections on Vertical Formatting that is worth reading (as is the whole book).",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 27
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "176d2b7b_64e91254",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTestClientMetadata.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-01-06T09:35:36Z",
+      "side": 1,
+      "message": "nit: I would prefer keeping all work outside the constructor (Dependency Inversion). Probably introducing a static method to create an instance, with that static method responsible for reading the json file and parsing it.",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 58
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a79affee_e8cca0fa",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTestClientMetadata.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-01-06T09:35:36Z",
+      "side": 1,
+      "message": "nit: maybe use streams? I find them slightly more readable (and compact), but feel free to disagree:\n\n        StreamSupport.stream(array.spliterator(), false)\n                .map(e -\u003e e.getAsString())\n                .collect(toList());",
+      "range": {
+        "startLine": 177,
+        "startChar": 8,
+        "endLine": 181,
+        "endChar": 20
       },
       "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
