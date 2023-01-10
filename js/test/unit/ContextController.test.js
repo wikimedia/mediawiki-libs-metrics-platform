@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
-var ContextController = require( '../src/ContextController.js' );
+var ContextController = require( './../../src/ContextController.js' );
 
 var integration = new TestMetricsClientIntegration();
 var contextController = new ContextController( integration );

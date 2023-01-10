@@ -1,4 +1,4 @@
-var DefaultIntegration = require( '../src/DefaultIntegration.js' );
+var DefaultIntegration = require( './../../src/DefaultIntegration.js' );
 
 QUnit.module( 'DefaultIntegration' );
 

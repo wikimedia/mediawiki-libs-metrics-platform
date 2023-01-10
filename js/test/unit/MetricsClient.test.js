@@ -2,7 +2,7 @@
 var sinon = require( 'sinon' );
 
 var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
-var MetricsClient = require( './../src/MetricsClient.js' );
+var MetricsClient = require( './../../src/MetricsClient.js' );
 
 /** @type StreamConfigs */
 var streamConfigs = {

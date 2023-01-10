@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-var curationController = new ( require( '../src/CurationController.js' ) )();
+var curationController = new ( require( './../../src/CurationController.js' ) )();
 
 QUnit.module( 'CurationController', function () {
 
