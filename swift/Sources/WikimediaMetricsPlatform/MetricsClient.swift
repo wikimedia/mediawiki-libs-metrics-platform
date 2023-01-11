@@ -329,7 +329,7 @@ public class MetricsClient {
      * This method is called by the application delegate in
      * `applicationWillResignActive()` and disables event logging.
      */
-    public func appInBackground() {
+    public func onAppPause() {
         sessionController.touchSession()
     }
 
@@ -340,7 +340,7 @@ public class MetricsClient {
      * If it has been more than 15 minutes since the app entered background state,
      * a new session is started.
      */
-    public func appInForeground() {
+    public func onAppResume() {
         if sessionController.sessionExpired() {
             sessionController.beginNewSession()
         } else {
@@ -351,7 +351,7 @@ public class MetricsClient {
     /**
      * Called when user toggles logging permissions in Settings
      */
-    public func reset() {
+    public func resetSession() {
         sessionController.beginNewSession()
     }
 
@@ -363,7 +363,7 @@ public class MetricsClient {
      * session ends when the user (or the OS) has closed the app or when 15
      * minutes of inactivity have passed.
      */
-    public func appWillClose() {
+    public func onAppClose() {
         // Placeholder for any onTerminate logic
         /// TODO: Dump the output queue one last time? Will the async HTTP POST complete before the app terminates?
     }
