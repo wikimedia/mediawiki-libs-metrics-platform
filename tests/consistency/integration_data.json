@@ -28,8 +28,8 @@
 	"performer": {
 		"is_logged_in": false,
 		"id": 0,
-		"session_id": "ffffffffffffffffffff",
-		"pageview_id": "ffffffffffffffffffff",
+		"session_id": "eeeeeeeeeeeeeeeeeeee",
+		"pageview_id": "eeeeeeeeeeeeeeeeeeee",
 		"groups": [ "*" ],
 		"is_bot": false,
 		"language": "en",

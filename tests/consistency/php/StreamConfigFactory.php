@@ -9,6 +9,6 @@ class StreamConfigFactory extends BaseStreamConfigFactory {
 		$rawContents = file_get_contents( $filename );
 		$contents = json_decode( $rawContents, true );
 
-		parent::__construct( $contents );
+		parent::__construct( $contents["streams"] );
 	}
 }

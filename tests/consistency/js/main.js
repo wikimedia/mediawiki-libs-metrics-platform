@@ -1,4 +1,4 @@
-const STREAM_CONFIGS = require( '../stream_configs.json' );
+const STREAM_CONFIGS = require( '../stream_configs.json' ).streams;
 
 const Integration = require( './Integration' );
 const MetricsClient = require( '../../../js/src/MetricsClient' );
