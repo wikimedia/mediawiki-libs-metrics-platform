@@ -53,6 +53,16 @@ class SessionController {
         sessionTouched = Instant.now();
     }
 
+    synchronized void beginSession() {
+        sessionId = generateSessionId();
+        sessionTouched = Instant.now();
+    }
+
+    synchronized void closeSession() {
+        // @ToDo Determine how to close the session.
+        sessionTouched = Instant.now();
+    }
+
     synchronized boolean sessionExpired() {
         return Duration.between(sessionTouched, Instant.now()).compareTo(SESSION_LENGTH) >= 0;
     }

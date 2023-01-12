@@ -215,7 +215,7 @@ public final class MetricsClient {
      * Touches the session so that we can determine whether it's session has expired if and when the
      * application is resumed.
      */
-    public void onApplicationPause() {
+    public void onAppPause() {
         sessionController.touchSession();
     }
 
@@ -226,8 +226,22 @@ public final class MetricsClient {
      * <p>
      * Touches the session so that we can determine whether it has expired.
      */
-    public void onApplicationResume() {
+    public void onAppResume() {
         sessionController.touchSession();
+    }
+
+    /**
+     * Closes the session.
+     */
+    public void onAppClose() {
+        sessionController.closeSession();
+    }
+
+    /**
+     * Begins a new session and touches the session.
+     */
+    public void resetSession() {
+        sessionController.beginSession();
     }
 
     /**

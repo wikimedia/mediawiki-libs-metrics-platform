@@ -105,14 +105,24 @@ class MetricsClientTest {
         assertThat(eventQueue).doesNotContain(event11);
     }
 
-    @Test void testTouchSessionOnApplicationPause() {
-        client.onApplicationPause();
+    @Test void testTouchSessionOnAppPause() {
+        client.onAppPause();
         verify(mockSessionController).touchSession();
     }
 
-    @Test void testResumeSessionOnApplicationResume() {
-        client.onApplicationResume();
+    @Test void testResumeSessionOnAppResume() {
+        client.onAppResume();
         verify(mockSessionController).touchSession();
+    }
+
+    @Test void testResetSession() {
+        client.resetSession();
+        verify(mockSessionController).beginSession();
+    }
+
+    @Test void testCloseSessionOnAppClose() {
+        client.onAppClose();
+        verify(mockSessionController).closeSession();
     }
 
     @Test void testAddRequiredMetadata() {
