@@ -35,6 +35,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e839a2b_bcf603ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T02:00:09Z",
+      "side": 1,
+      "message": "added assertions - hope these suffice",
+      "parentUuid": "c534a2e7_3de14022",
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dcd8531a_2d410ed7",
@@ -48,6 +66,30 @@
       "writtenOn": "2023-01-05T19:14:51Z",
       "side": 1,
       "message": "Honestly, the class names are descriptive enough so as to make these descriptions redundant 😊",
+      "range": {
+        "startLine": 45,
+        "startChar": 33,
+        "endLine": 45,
+        "endChar": 52
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3aab34ab_6cec8d03",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T02:00:09Z",
+      "side": 1,
+      "message": "ya - removed",
+      "parentUuid": "dcd8531a_2d410ed7",
       "range": {
         "startLine": 45,
         "startChar": 33,
@@ -83,6 +125,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "55cafcfe_6a7c8573",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T02:00:09Z",
+      "side": 1,
+      "message": "i will follow up with another patch to make this an IT test",
+      "parentUuid": "8ced2400_a796a73c",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "71b8d465_7f03ba75",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
         "patchSetId": 1
@@ -94,6 +160,30 @@
       "writtenOn": "2023-01-06T09:35:36Z",
       "side": 1,
       "message": "This method is fairly long, which makes it non trivial to understand what it is testing. We could extract a few methods for the construction of the various supporting objects that would help bring more clarity.",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e404a729_db497f14",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T02:00:09Z",
+      "side": 1,
+      "message": "extracted set up vars into private static methods -- not sure if this is what you had in mind",
+      "parentUuid": "71b8d465_7f03ba75",
       "range": {
         "startLine": 30,
         "startChar": 15,
@@ -129,6 +219,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "69509527_10d823a5",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T02:00:09Z",
+      "side": 1,
+      "message": "per convo -- dependent patch updates json\nhttps://gerrit.wikimedia.org/r/c/mediawiki/libs/metrics-platform/+/879164",
+      "parentUuid": "fd9b7321_716717b4",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 87
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d37fd04a_d4778c61",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
         "patchSetId": 1
@@ -140,6 +254,30 @@
       "writtenOn": "2023-01-06T09:35:36Z",
       "side": 1,
       "message": "This should be declared of type `ClientMetadata` (the more generic, but sufficient type).",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 41
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e1cdb30_9fa1a34d",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T02:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d37fd04a_d4778c61",
       "range": {
         "startLine": 78,
         "startChar": 12,
@@ -175,6 +313,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e8599491_c1da246f",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T02:00:09Z",
+      "side": 1,
+      "message": "\u003e import static java.util.Collections.singletonMap;\nis ^ what you mean?",
+      "parentUuid": "e77bf123_745c0f2d",
+      "range": {
+        "startLine": 92,
+        "startChar": 32,
+        "endLine": 92,
+        "endChar": 44
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b54eefb9_2b40699a",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
         "patchSetId": 1
@@ -186,6 +348,30 @@
       "writtenOn": "2023-01-06T09:35:36Z",
       "side": 1,
       "message": "It looks like we don\u0027t do any assertions in this test. While there is value in a pure smoke test, in this case we could probably ensure that events are processed appropriately.",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 5
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3060dc72_b8936072",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T02:00:09Z",
+      "side": 1,
+      "message": "added assertions",
+      "parentUuid": "b54eefb9_2b40699a",
       "range": {
         "startLine": 95,
         "startChar": 4,
@@ -213,6 +399,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c17cf08_5d9e1bf0",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T02:00:09Z",
+      "side": 1,
+      "message": "added assertions",
+      "parentUuid": "b1c53975_34bf302c",
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d217617_0410d545",
@@ -226,6 +430,30 @@
       "writtenOn": "2023-01-06T09:35:36Z",
       "side": 1,
       "message": "nit: usually the order of class members is:\n\n* constants\n* class variables\n* instance variables\n* constructors\n* methods\n\nChapter 5 of \"Clean Code\" (Robert Martin) has a few good reflections on Vertical Formatting that is worth reading (as is the whole book).",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 27
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "304896d1_72071410",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTestClientMetadata.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T02:00:09Z",
+      "side": 1,
+      "message": "ordered! thx",
+      "parentUuid": "8d217617_0410d545",
       "range": {
         "startLine": 150,
         "startChar": 4,
@@ -259,6 +487,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8599004a_ca14c114",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTestClientMetadata.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T02:00:09Z",
+      "side": 1,
+      "message": "added static method to create instance",
+      "parentUuid": "176d2b7b_64e91254",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 58
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a79affee_e8cca0fa",
@@ -272,6 +524,30 @@
       "writtenOn": "2023-01-06T09:35:36Z",
       "side": 1,
       "message": "nit: maybe use streams? I find them slightly more readable (and compact), but feel free to disagree:\n\n        StreamSupport.stream(array.spliterator(), false)\n                .map(e -\u003e e.getAsString())\n                .collect(toList());",
+      "range": {
+        "startLine": 177,
+        "startChar": 8,
+        "endLine": 181,
+        "endChar": 20
+      },
+      "revId": "a8387364c8aebe8691d0e8541fd901476de73132",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08780d61_68216849",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTestClientMetadata.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T02:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a79affee_e8cca0fa",
       "range": {
         "startLine": 177,
         "startChar": 8,
