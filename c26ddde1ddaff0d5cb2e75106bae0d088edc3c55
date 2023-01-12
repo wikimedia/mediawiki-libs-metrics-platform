@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5405a7bb_b86d8ee5",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T02:16:18Z",
+      "side": 1,
+      "message": "@Gehel I wasn\u0027t sure if this part makes sense -- basically StreamConfigFetcher::parseConfig() requires an InputStreamReader so I thought to convert the BufferedReader to InputStreamReader in order to parse the test json\n\nwould it be better to read the file as an InputStream directly? i read somewhere that BufferedReader has better performance -- will defer to more knowledgeable/experienced opinions",
+      "revId": "c26ddde1ddaff0d5cb2e75106bae0d088edc3c55",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
