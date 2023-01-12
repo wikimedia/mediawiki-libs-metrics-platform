@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f9323d7_b5590456",
+        "filename": "tests/consistency/js/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-12T01:45:57Z",
+      "side": 1,
+      "message": "is this ok? not sure what ESLint wants here",
+      "revId": "ce6c9d51282e58d11dc72fb52143980763c4d73a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
