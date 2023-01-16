@@ -34,6 +34,24 @@
       "parentUuid": "5f9323d7_b5590456",
       "revId": "ce6c9d51282e58d11dc72fb52143980763c4d73a",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a52ac67_aed1e8bd",
+        "filename": "tests/consistency/js/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-16T12:47:37Z",
+      "side": 1,
+      "message": "PS4 removes this line as it doesn\u0027t seem to fix a problem. Maybe we could take 10 minutes and you could show me what\u0027s triggering the error that needs fixing?\n\n---\n\nThe issue was that performer.session_id in integration_data.json was invalid.\n\nYour patch improves the consistency test by using a real-world stream configuration, which includes a sampling rate (100% of all sessions). Unfortunately for me, the contrived session ID that I\u0027d set in integration_data.json was invalid and was causing SamplingController.streamInSample() to return false. I\u0027ve updated the session ID.",
+      "parentUuid": "5cf0b6c8_27bd6d49",
+      "revId": "ce6c9d51282e58d11dc72fb52143980763c4d73a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
