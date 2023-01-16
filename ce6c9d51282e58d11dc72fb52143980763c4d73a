@@ -52,6 +52,24 @@
       "parentUuid": "5cf0b6c8_27bd6d49",
       "revId": "ce6c9d51282e58d11dc72fb52143980763c4d73a",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a4e4546_46749354",
+        "filename": "tests/consistency/js/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-16T12:49:17Z",
+      "side": 1,
+      "message": "Oh! Also, you can run the consistency test suite by running the following command in the project\u0027s root directory:\n\n composer test-consistency",
+      "parentUuid": "2a52ac67_aed1e8bd",
+      "revId": "ce6c9d51282e58d11dc72fb52143980763c4d73a",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
