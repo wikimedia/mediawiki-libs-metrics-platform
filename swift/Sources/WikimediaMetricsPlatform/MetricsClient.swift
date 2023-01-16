@@ -33,7 +33,11 @@
  *     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 import Foundation
-import FoundationNetworking
+
+/// Support macOS and Linux. See https://github.com/tensorflow/swift/issues/486#issuecomment-646083111
+#if canImport(FoundationNetworking)
+    import FoundationNetworking
+#endif
 
 /**
  * Wikimedia Metrics Client - Swift
@@ -186,9 +190,9 @@ public class MetricsClient {
                 NSLog("MetricsClient: Stream '\(stream)' is not in sample")
                 return
             }
-            if config.destination == DestinationEventService.analytics {
+            if config.destinationEventService == DestinationEventService.analytics {
                 self.validatedEvents.append(event)
-            } else if config.destination == DestinationEventService.errorLogging {
+            } else if config.destinationEventService == DestinationEventService.errorLogging {
                 self.validatedErrors.append(event)
             } else {
                 // TODO: Unknown destination service; Log a client error
@@ -203,9 +207,8 @@ public class MetricsClient {
      * - `app_session_id`: app session ID
      */
     private func addEventMetadata(event: Event) {
-        event.appInstallId = self.integration.appInstallId()
-        event.appSessionId = self.sessionController.sessionId()
-        event.dt = dateFormatter.string(from: Date())
+        event.agent.appInstallId = self.integration.appInstallId()
+        event.performer?.sessionId = self.sessionController.sessionId()
     }
 
     /**
@@ -231,7 +234,7 @@ public class MetricsClient {
     private func fetchStreamConfigs(retries: Int, retryDelay: Double) {
         NSLog("MetricsClient: Fetching stream configs")
         integration.httpGet(self.streamConfigsURI) { (data, response, error) in
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data else {
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
                 NSLog("MetricsClient: Error fetching stream configs")
                 if retries > 0 {
                     DispatchQueue.main.asyncAfter(deadline: .now() + retryDelay) {
@@ -273,9 +276,9 @@ public class MetricsClient {
                 guard samplingController.inSample(stream: event.meta.stream, config: config) else {
                     continue
                 }
-                if config.destination == DestinationEventService.analytics {
+                if config.destinationEventService == DestinationEventService.analytics {
                     self.validatedEvents.append(event)
-                } else if config.destination == DestinationEventService.errorLogging {
+                } else if config.destinationEventService == DestinationEventService.errorLogging {
                     self.validatedErrors.append(event)
                 } else {
                     // TODO: Unknown destination service; Log a client error

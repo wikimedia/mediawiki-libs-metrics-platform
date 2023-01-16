@@ -1,9 +1,17 @@
 import Foundation
-import FoundationNetworking
+
+/// Support macOS and Linux. See https://github.com/tensorflow/swift/issues/486#issuecomment-646083111
+#if canImport(FoundationNetworking)
+    import FoundationNetworking
+#endif
+
 @testable import WikimediaMetricsPlatform
 
 class TestMetricsClientIntegration: MetricsClientIntegration {
-
+    func getUserRegistrationTimestamp() -> Date? {
+        return Date()
+    }
+    
     func loggingEnabled() -> Bool {
         return true
     }
@@ -94,10 +102,6 @@ class TestMetricsClientIntegration: MetricsClientIntegration {
 
     func getUserEditCountBucket() -> String? {
         return "5-99 edits"
-    }
-
-    func getUserRegistrationTimestamp() -> Int? {
-        return 1427224089000
     }
 
     func getUserLanguage() -> String? {

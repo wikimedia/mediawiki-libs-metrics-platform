@@ -20,89 +20,14 @@ struct CurationFilter: Decodable {
     let userCanProbablyEditPageRules: EquatableCurationRules<Bool>?
     let userEditCountRules: ComparableCurationRules<Int>?
     let userEditCountBucketRules: EquatableCurationRules<String>?
-    let userRegistrationTimestampRules: ComparableCurationRules<Int>?
+    let userRegistrationTimestampRules: ComparableCurationRules<Date>?
     let userLanguageRules: EquatableCurationRules<String>?
     let userLanguageVariantRules: EquatableCurationRules<String>?
-
-    let devicePixelRatioRules: ComparableCurationRules<Float>?
-    let deviceHardwareConcurrencyRules: ComparableCurationRules<Int>?
-    let deviceMaxTouchPointsRules: ComparableCurationRules<Int>?
-
-    let accessMethodRules: EquatableCurationRules<String>?
-    let platformRules: EquatableCurationRules<String>?
-    let platformFamilyRules: EquatableCurationRules<String>?
-    let isProductionRules: EquatableCurationRules<Bool>?
-
-    init(
-        pageIdRules: ComparableCurationRules<Int>? = nil,
-        pageNamespaceIdRules: ComparableCurationRules<Int>? = nil,
-        pageNamespaceTextRules: EquatableCurationRules<String>? = nil,
-        pageTitleRules: EquatableCurationRules<String>? = nil,
-        pageRevisionIdRules: ComparableCurationRules<Int>? = nil,
-        pageWikidataIdRules: EquatableCurationRules<String>? = nil,
-        pageIsRedirectRules: EquatableCurationRules<Bool>? = nil,
-        pageContentLanguageRules: EquatableCurationRules<String>? = nil,
-        pageUserGroupsAllowedToEditRules: CollectionCurationRules<String>? = nil,
-        pageUserGroupsAllowedToMoveRules: CollectionCurationRules<String>? = nil,
-
-        userIdRules: ComparableCurationRules<Int>? = nil,
-        userNameRules: EquatableCurationRules<String>? = nil,
-        userGroupsRules: CollectionCurationRules<String>? = nil,
-        userIsLoggedInRules: EquatableCurationRules<Bool>? = nil,
-        userIsBotRules: EquatableCurationRules<Bool>? = nil,
-        userCanProbablyEditPageRules: EquatableCurationRules<Bool>? = nil,
-        userEditCountRules: ComparableCurationRules<Int>? = nil,
-        userEditCountBucketRules: EquatableCurationRules<String>? = nil,
-        userRegistrationTimestampRules: ComparableCurationRules<Int>? = nil,
-        userLanguageRules: EquatableCurationRules<String>? = nil,
-        userLanguageVariantRules: EquatableCurationRules<String>? = nil,
-
-        devicePixelRatioRules: ComparableCurationRules<Float>? = nil,
-        deviceHardwareConcurrencyRules: ComparableCurationRules<Int>? = nil,
-        deviceMaxTouchPointsRules: ComparableCurationRules<Int>? = nil,
-
-        accessMethodRules: EquatableCurationRules<String>? = nil,
-        platformRules: EquatableCurationRules<String>? = nil,
-        platformFamilyRules: EquatableCurationRules<String>? = nil,
-        isProductionRules: EquatableCurationRules<Bool>? = nil
-    ) {
-        self.pageIdRules = pageIdRules
-        self.pageNamespaceIdRules = pageNamespaceIdRules
-        self.pageNamespaceTextRules = pageNamespaceTextRules
-        self.pageTitleRules = pageTitleRules
-        self.pageRevisionIdRules = pageRevisionIdRules
-        self.pageWikidataIdRules = pageWikidataIdRules
-        self.pageIsRedirectRules = pageIsRedirectRules
-        self.pageContentLanguageRules = pageContentLanguageRules
-        self.pageUserGroupsAllowedToEditRules = pageUserGroupsAllowedToEditRules
-        self.pageUserGroupsAllowedToMoveRules = pageUserGroupsAllowedToMoveRules
-
-        self.userIdRules = userIdRules
-        self.userNameRules = userNameRules
-        self.userGroupsRules = userGroupsRules
-        self.userIsLoggedInRules = userIsLoggedInRules
-        self.userIsBotRules = userIsBotRules
-        self.userCanProbablyEditPageRules = userCanProbablyEditPageRules
-        self.userEditCountRules = userEditCountRules
-        self.userEditCountBucketRules = userEditCountBucketRules
-        self.userRegistrationTimestampRules = userRegistrationTimestampRules
-        self.userLanguageRules = userLanguageRules
-        self.userLanguageVariantRules = userLanguageVariantRules
-
-        self.devicePixelRatioRules = devicePixelRatioRules
-        self.deviceHardwareConcurrencyRules = deviceHardwareConcurrencyRules
-        self.deviceMaxTouchPointsRules = deviceMaxTouchPointsRules
-
-        self.accessMethodRules = accessMethodRules
-        self.platformRules = platformRules
-        self.platformFamilyRules = platformFamilyRules
-        self.isProductionRules = isProductionRules
-    }
 
     func apply(to event: Event) -> Bool {
         // Page
         if pageIdRules != nil {
-            guard let pageId = event.pageData?.id else {
+            guard let pageId = event.page?.id else {
                 return false
             }
             if !pageIdRules!.apply(to: pageId) {
@@ -110,23 +35,23 @@ struct CurationFilter: Decodable {
             }
         }
         if pageNamespaceIdRules != nil {
-            guard let pageNamespaceId = event.pageData?.namespaceId else {
+            guard let pageNamespace = event.page?.namespace else {
                 return false
             }
-            if !pageNamespaceIdRules!.apply(to: pageNamespaceId) {
+            if !pageNamespaceIdRules!.apply(to: pageNamespace) {
                 return false
             }
         }
         if pageNamespaceTextRules != nil {
-            guard let pageNamespaceText = event.pageData?.namespaceText else {
+            guard let pageNamespaceName = event.page?.namespaceName else {
                 return false
             }
-            if !pageNamespaceTextRules!.apply(to: pageNamespaceText) {
+            if !pageNamespaceTextRules!.apply(to: pageNamespaceName) {
                 return false
             }
         }
         if pageTitleRules != nil {
-            guard let pageTitle = event.pageData?.title else {
+            guard let pageTitle = event.page?.title else {
                 return false
             }
             if !pageTitleRules!.apply(to: pageTitle) {
@@ -134,7 +59,7 @@ struct CurationFilter: Decodable {
             }
         }
         if pageRevisionIdRules != nil {
-            guard let pageRevisionId = event.pageData?.revisionId else {
+            guard let pageRevisionId = event.page?.revisionId else {
                 return false
             }
             if !pageRevisionIdRules!.apply(to: pageRevisionId) {
@@ -142,7 +67,7 @@ struct CurationFilter: Decodable {
             }
         }
         if pageWikidataIdRules != nil {
-            guard let pageWikidataId = event.pageData?.wikidataId else {
+            guard let pageWikidataId = event.page?.wikidataId else {
                 return false
             }
             if !pageWikidataIdRules!.apply(to: pageWikidataId) {
@@ -150,7 +75,7 @@ struct CurationFilter: Decodable {
             }
         }
         if pageIsRedirectRules != nil {
-            guard let pageIsRedirect = event.pageData?.isRedirect else {
+            guard let pageIsRedirect = event.page?.isRedirect else {
                 return false
             }
             if !pageIsRedirectRules!.apply(to: pageIsRedirect) {
@@ -158,7 +83,7 @@ struct CurationFilter: Decodable {
             }
         }
         if pageContentLanguageRules != nil {
-            guard let pageContentLanguage = event.pageData?.contentLanguage else {
+            guard let pageContentLanguage = event.page?.contentLanguage else {
                 return false
             }
             if !pageContentLanguageRules!.apply(to: pageContentLanguage) {
@@ -166,7 +91,7 @@ struct CurationFilter: Decodable {
             }
         }
         if pageUserGroupsAllowedToEditRules != nil {
-            guard let pageUserGroupsAllowedToEdit = event.pageData?.userGroupsAllowedToEdit else {
+            guard let pageUserGroupsAllowedToEdit = event.page?.userGroupsAllowedToEdit else {
                 return false
             }
             if !pageUserGroupsAllowedToEditRules!.apply(to: pageUserGroupsAllowedToEdit) {
@@ -174,7 +99,7 @@ struct CurationFilter: Decodable {
             }
         }
         if pageUserGroupsAllowedToMoveRules != nil {
-            guard let pageUserGroupsAllowedToMove = event.pageData?.userGroupsAllowedToMove else {
+            guard let pageUserGroupsAllowedToMove = event.page?.userGroupsAllowedToMove else {
                 return false
             }
             if !pageUserGroupsAllowedToMoveRules!.apply(to: pageUserGroupsAllowedToMove) {
@@ -184,7 +109,7 @@ struct CurationFilter: Decodable {
 
         // User
         if userIdRules != nil {
-            guard let userId = event.userData?.id else {
+            guard let userId = event.performer?.id else {
                 return false
             }
             if !userIdRules!.apply(to: userId) {
@@ -192,7 +117,7 @@ struct CurationFilter: Decodable {
             }
         }
         if userNameRules != nil {
-            guard let userName = event.userData?.name else {
+            guard let userName = event.performer?.name else {
                 return false
             }
             if !userNameRules!.apply(to: userName) {
@@ -200,7 +125,7 @@ struct CurationFilter: Decodable {
             }
         }
         if userGroupsRules != nil {
-            guard let userGroups = event.userData?.groups else {
+            guard let userGroups = event.performer?.groups else {
                 return false
             }
             if !userGroupsRules!.apply(to: userGroups) {
@@ -208,7 +133,7 @@ struct CurationFilter: Decodable {
             }
         }
         if userIsLoggedInRules != nil {
-            guard let userIsLoggedIn = event.userData?.isLoggedIn else {
+            guard let userIsLoggedIn = event.performer?.isLoggedIn else {
                 return false
             }
             if !userIsLoggedInRules!.apply(to: userIsLoggedIn) {
@@ -216,7 +141,7 @@ struct CurationFilter: Decodable {
             }
         }
         if userIsBotRules != nil {
-            guard let userIsBot = event.userData?.isBot else {
+            guard let userIsBot = event.performer?.isBot else {
                 return false
             }
             if !userIsBotRules!.apply(to: userIsBot) {
@@ -224,7 +149,7 @@ struct CurationFilter: Decodable {
             }
         }
         if userCanProbablyEditPageRules != nil {
-            guard let userCanProbablyEditPage = event.userData?.canProbablyEditPage else {
+            guard let userCanProbablyEditPage = event.performer?.canProbablyEditPage else {
                 return false
             }
             if !userCanProbablyEditPageRules!.apply(to: userCanProbablyEditPage) {
@@ -232,7 +157,7 @@ struct CurationFilter: Decodable {
             }
         }
         if userEditCountRules != nil {
-            guard let userEditCount = event.userData?.editCount else {
+            guard let userEditCount = event.performer?.editCount else {
                 return false
             }
             if !userEditCountRules!.apply(to: userEditCount) {
@@ -240,7 +165,7 @@ struct CurationFilter: Decodable {
             }
         }
         if userEditCountBucketRules != nil {
-            guard let userEditCountBucket = event.userData?.editCountBucket else {
+            guard let userEditCountBucket = event.performer?.editCountBucket else {
                 return false
             }
             if !userEditCountBucketRules!.apply(to: userEditCountBucket) {
@@ -248,15 +173,15 @@ struct CurationFilter: Decodable {
             }
         }
         if userRegistrationTimestampRules != nil {
-            guard let userRegistrationTimestamp = event.userData?.registrationTimestamp else {
+            guard let userRegistrationDt = event.performer?.registrationDt else {
                 return false
             }
-            if !userRegistrationTimestampRules!.apply(to: userRegistrationTimestamp) {
+            if !userRegistrationTimestampRules!.apply(to: userRegistrationDt) {
                 return false
             }
         }
         if userLanguageRules != nil {
-            guard let userLanguage = event.userData?.language else {
+            guard let userLanguage = event.performer?.language else {
                 return false
             }
             if !userLanguageRules!.apply(to: userLanguage) {
@@ -264,70 +189,10 @@ struct CurationFilter: Decodable {
             }
         }
         if userLanguageVariantRules != nil {
-            guard let userLanguageVariant = event.userData?.languageVariant else {
+            guard let userLanguageVariant = event.performer?.languageVariant else {
                 return false
             }
             if !userLanguageVariantRules!.apply(to: userLanguageVariant) {
-                return false
-            }
-        }
-
-        // Device
-        if devicePixelRatioRules != nil {
-            guard let devicePixelRatio = event.deviceData?.pixelRatio else {
-                return false
-            }
-            if !devicePixelRatioRules!.apply(to: devicePixelRatio) {
-                return false
-            }
-        }
-        if deviceHardwareConcurrencyRules != nil {
-            guard let deviceHardwareConcurrency = event.deviceData?.hardwareConcurrency else {
-                return false
-            }
-            if !deviceHardwareConcurrencyRules!.apply(to: deviceHardwareConcurrency) {
-                return false
-            }
-        }
-        if deviceMaxTouchPointsRules != nil {
-            guard let deviceMaxTouchPoints = event.deviceData?.maxTouchPoints else {
-                return false
-            }
-            if !deviceMaxTouchPointsRules!.apply(to: deviceMaxTouchPoints) {
-                return false
-            }
-        }
-
-        // Misc
-        if accessMethodRules != nil {
-            guard let accessMethod = event.accessMethod else {
-                return false
-            }
-            if !accessMethodRules!.apply(to: accessMethod) {
-                return false
-            }
-        }
-        if platformRules != nil {
-            guard let platform = event.platform else {
-                return false
-            }
-            if !platformRules!.apply(to: platform) {
-                return false
-            }
-        }
-        if platformFamilyRules != nil {
-            guard let platformFamily = event.platformFamily else {
-                return false
-            }
-            if !platformFamilyRules!.apply(to: platformFamily) {
-                return false
-            }
-        }
-        if isProductionRules != nil {
-            guard let isProduction = event.isProduction else {
-                return false
-            }
-            if !isProductionRules!.apply(to: isProduction) {
                 return false
             }
         }
@@ -358,14 +223,5 @@ struct CurationFilter: Decodable {
         case userRegistrationTimestampRules = "user_registration_timestamp"
         case userLanguageRules = "user_language"
         case userLanguageVariantRules = "user_language_variant"
-
-        case devicePixelRatioRules = "device_pixel_ratio"
-        case deviceHardwareConcurrencyRules = "device_hardware_concurrency"
-        case deviceMaxTouchPointsRules = "device_max_touch_points"
-
-        case accessMethodRules = "access_method"
-        case platformRules = "platform"
-        case platformFamilyRules = "platform_family"
-        case isProductionRules = "is_production"
     }
 }

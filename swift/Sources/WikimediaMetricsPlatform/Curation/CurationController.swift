@@ -8,9 +8,10 @@ class CurationController {
     }
 
     func eventPassesCurationRules(_ event: Event, streamConfig: StreamConfig) -> Bool {
-        guard let curationFilter = streamConfig.producerConfig?.clientConfig?.curationFilter else {
+        guard let curationRules = streamConfig.getCurationRules() else {
             return true
         }
-        return curationFilter.apply(to: event)
+        
+        return curationRules.apply(to: event)
     }
 }
