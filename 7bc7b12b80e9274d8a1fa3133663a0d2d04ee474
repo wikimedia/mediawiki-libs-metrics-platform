@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5db341a_578d2c73",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-17T10:13:33Z",
+      "side": 1,
+      "message": "If you\u0027re happy with the modifications to the patch, then please do feel free to +2.",
+      "revId": "7bc7b12b80e9274d8a1fa3133663a0d2d04ee474",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
