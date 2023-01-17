@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4dc51607_9fa9a2a0",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-17T14:39:50Z",
+      "side": 1,
+      "message": "Does an instance of Event serialize to a JSON object that conforms to the /analytics/mediawiki/client/metrics_event schema?",
+      "revId": "72c3e9b1325947b29f632d11b6e12805b88cb5bb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6193a1aa_bbe802ad",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/ContextValue.java",
         "patchSetId": 4
