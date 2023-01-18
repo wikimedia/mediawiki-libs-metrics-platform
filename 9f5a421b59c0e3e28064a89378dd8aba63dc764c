@@ -16,6 +16,23 @@
       "message": "Trying again…",
       "revId": "9f5a421b59c0e3e28064a89378dd8aba63dc764c",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69756ea9_0069c459",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 24
+      },
+      "writtenOn": "2023-01-18T17:55:31Z",
+      "side": 1,
+      "message": "recheck after CI config change https://gerrit.wikimedia.org/r/c/integration/config/+/881457",
+      "revId": "9f5a421b59c0e3e28064a89378dd8aba63dc764c",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
