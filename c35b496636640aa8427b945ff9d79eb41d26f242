@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58c16f22_b0409291",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-19T09:28:12Z",
+      "side": 1,
+      "message": "ran tests on relation chain:\nhttps://phabricator.wikimedia.org/F36319349 - lgtm\n\nsome Qs inline in the dependent patches\n\nfuzzy on how to get events submitted to local eventgate",
+      "revId": "c35b496636640aa8427b945ff9d79eb41d26f242",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
