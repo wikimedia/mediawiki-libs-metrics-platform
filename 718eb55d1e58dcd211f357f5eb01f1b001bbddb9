@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af01dc95_51e7cc02",
+        "filename": "js/src/MetricsClient.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-19T09:27:14Z",
+      "side": 1,
+      "message": "out of curiosity, why is this assignment needed? \nis \"this\" not accessible in the anonymous function?",
+      "revId": "718eb55d1e58dcd211f357f5eb01f1b001bbddb9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6299f149_eeff586f",
+        "filename": "js/src/MetricsClient.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-19T09:27:14Z",
+      "side": 1,
+      "message": "should dropped calls be logged somewhere?\n\nso no retrying calls if the threshold is maxed?\niirc swift client tries to re-submit calls?",
+      "revId": "718eb55d1e58dcd211f357f5eb01f1b001bbddb9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
