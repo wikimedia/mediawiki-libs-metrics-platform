@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e2da4d6_4b964ae8",
+        "filename": "js/src/DefaultIntegration.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-19T09:27:21Z",
+      "side": 1,
+      "message": "is this body supposed to be empty?",
+      "revId": "def4d41a808987b295b74cd5625fa36e3fbee477",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
