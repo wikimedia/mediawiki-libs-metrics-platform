@@ -18,6 +18,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5a257f8_2eeaefdb",
+        "filename": "js/src/MetricsClient.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-19T11:46:32Z",
+      "side": 1,
+      "message": "It isn\u0027t.\n\nThe callback that that is passed to Promise.then() on L50 is called with this set to the instance of Promise (not to the instance of MetricsClient).\n\nIf we were able to use arrow functions, which inherit the this of the enclosing lexical scope, then this (hah!) wouldn\u0027t be needed.",
+      "parentUuid": "af01dc95_51e7cc02",
+      "revId": "718eb55d1e58dcd211f357f5eb01f1b001bbddb9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6299f149_eeff586f",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-01-19T09:27:14Z",
       "side": 1,
       "message": "should dropped calls be logged somewhere?\n\nso no retrying calls if the threshold is maxed?\niirc swift client tries to re-submit calls?",
+      "revId": "718eb55d1e58dcd211f357f5eb01f1b001bbddb9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa34e029_bb7af9b1",
+        "filename": "js/src/MetricsClient.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-19T11:46:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6299f149_eeff586f",
       "revId": "718eb55d1e58dcd211f357f5eb01f1b001bbddb9",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
