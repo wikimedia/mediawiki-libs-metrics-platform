@@ -16,6 +16,24 @@
       "message": "ran tests on relation chain:\nhttps://phabricator.wikimedia.org/F36319349 - lgtm\n\nsome Qs inline in the dependent patches\n\nfuzzy on how to get events submitted to local eventgate",
       "revId": "c35b496636640aa8427b945ff9d79eb41d26f242",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "897874cb_5bf0d0af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-19T11:51:11Z",
+      "side": 1,
+      "message": "\u003e fuzzy on how to get events submitted to local eventgate\n\nI\u0027ve updated js/README.md. LMK if the instructions are understandable and (more importantly) work.",
+      "parentUuid": "58c16f22_b0409291",
+      "revId": "c35b496636640aa8427b945ff9d79eb41d26f242",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
