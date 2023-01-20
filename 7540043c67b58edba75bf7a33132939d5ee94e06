@@ -16,6 +16,23 @@
       "message": "Recheck",
       "revId": "7540043c67b58edba75bf7a33132939d5ee94e06",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a64e6e8c_98a7c2c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-20T05:35:02Z",
+      "side": 1,
+      "message": "i guess once CI is fixed, all the patches in this relation chain can be merged?",
+      "revId": "7540043c67b58edba75bf7a33132939d5ee94e06",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }

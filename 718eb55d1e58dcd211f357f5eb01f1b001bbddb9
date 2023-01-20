@@ -36,6 +36,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29b44ea4_7ec168ca",
+        "filename": "js/src/MetricsClient.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-20T05:35:02Z",
+      "side": 1,
+      "message": "got it - thanks for explaining that - i thought it had to do with promises",
+      "parentUuid": "b5a257f8_2eeaefdb",
+      "revId": "718eb55d1e58dcd211f357f5eb01f1b001bbddb9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6299f149_eeff586f",
