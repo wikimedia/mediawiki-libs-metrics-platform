@@ -4,6 +4,11 @@
 interface Integration {
 
 	/**
+	 * Fetches stream configs from some source, remote or local.
+	 */
+	fetchStreamConfigs: () => Promise<StreamConfigs>;
+
+	/**
 	 * Enqueues the event to be submitted to the event ingestion service.
 	 */
 	enqueueEvent: ( eventData: EventData ) => void;
@@ -19,8 +24,8 @@ interface Integration {
 	getHostname: () => string;
 
 	/**
-	 * Logs the warning to whatever logging backend that the execution environment, e.g. the
-	 * console.
+	 * Logs the warning to whatever logging backend that the execution environment provides, e.g.
+	 * the console.
 	 */
 	logWarning: ( message: string ) => void;
 
