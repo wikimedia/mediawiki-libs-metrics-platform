@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84875aa5_1ba08178",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-20T05:37:34Z",
+      "side": 1,
+      "message": "got this working and seeing the integration test events submitting to my local eventgate \\o/\nhttps://phabricator.wikimedia.org/F36319349#4029\n\nonce CI is working again, I can +2 all the patches in this relation chain",
+      "revId": "158d567d66ca3d3f6f1ae02b88bb2bb3859dd86d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}

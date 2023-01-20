@@ -34,6 +34,24 @@
       "parentUuid": "58c16f22_b0409291",
       "revId": "c35b496636640aa8427b945ff9d79eb41d26f242",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "993f7461_12f4ab32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-20T05:37:34Z",
+      "side": 1,
+      "message": "Instructions seem straightforward -- thanks for adding\n\nOne thing that might be helpful is to add a note about node version? \nJS client\u0027s package.json specifies ^18.11.18. \nOnce I installed v18.13.0 (latest LTS), I got events loading:\nhttps://phabricator.wikimedia.org/F36319349#4029",
+      "parentUuid": "897874cb_5bf0d0af",
+      "revId": "c35b496636640aa8427b945ff9d79eb41d26f242",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
