@@ -1,5 +1,5 @@
 var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' ),
-	SamplingController = require( '../src/SamplingController.js' ),
+	SamplingController = require( './../../src/SamplingController.js' ),
 
 	integration = new TestMetricsClientIntegration(),
 	samplingController = new SamplingController( integration );

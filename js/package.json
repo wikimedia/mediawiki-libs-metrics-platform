@@ -4,10 +4,10 @@
 	"description": "Client libraries for Wikimedia analytics instrumentation",
 	"main": "src/MetricsClient.js",
 	"scripts": {
-		"test": "qunit && npm run lint",
+		"test": "qunit ./test/unit/ && npm run lint",
 		"lint": "eslint --cache . && tsc",
 		"doc": "jsdoc -c jsdoc.json",
-		"coverage": "nyc qunit"
+		"coverage": "nyc qunit ./test/unit/"
 	},
 	"repository": {
 		"type": "git",
@@ -20,6 +20,7 @@
 	],
 	"license": "GPL-2.0+",
 	"devDependencies": {
+		"@types/node": "^18.11.18",
 		"@types/qunit": "^2.11.3",
 		"@types/sinon": "^10.0.11",
 		"eslint-config-wikimedia": "0.21.0",
