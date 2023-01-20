@@ -33,6 +33,23 @@
       "message": "i guess once CI is fixed, all the patches in this relation chain can be merged?",
       "revId": "7540043c67b58edba75bf7a33132939d5ee94e06",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d1aff65_f99b6df3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 24
+      },
+      "writtenOn": "2023-01-20T06:21:28Z",
+      "side": 1,
+      "message": "recheck after CI change https://gerrit.wikimedia.org/r/c/integration/config/+/881665",
+      "revId": "7540043c67b58edba75bf7a33132939d5ee94e06",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
