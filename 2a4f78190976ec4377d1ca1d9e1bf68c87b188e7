@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f3fcb6f_4c2fa498",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-20T05:35:20Z",
+      "side": 1,
+      "message": "i guess once CI is fixed, all the patches in this relation chain can be merged?",
+      "revId": "2a4f78190976ec4377d1ca1d9e1bf68c87b188e7",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
