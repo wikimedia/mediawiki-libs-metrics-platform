@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bac0e31_7fb25922",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-23T11:28:00Z",
+      "side": 1,
+      "message": "These changes are really great and very thoughtfully implemented but I\u0027m not sure that they\u0027re the right place to implement them.\n\nThe test harness itself (see tests/consistency/ConsistencyTest.php) unsets certain parameters and asserts that the events have the same shape. We could update the test harness to read the expected event data and compare the implementations to that. What do you think?",
+      "revId": "2c9ef5ddab6efb5c0515da8d6ac34577a433db85",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
