@@ -4,7 +4,14 @@ import XCTest
 final class SamplingConfigTests: XCTestCase {
 
     func testDecodeSamplingConfig() {
-        let json = "{\"unit\":\"session\",\"rate\":0.75}"
+        let json =
+            """
+            {
+                "unit": "session",
+                "rate": 0.75
+            }
+            """
+
         guard let data = json.data(using: .utf8) else {
             XCTFail()
             return

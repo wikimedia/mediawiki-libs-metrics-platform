@@ -94,34 +94,16 @@ public class MetricsClient {
      * Serialize and deserialize events and stream configs to and from JSON strings.
      */
     private let encoder = JSONEncoder()
-    private let decoder = JSONDecoder()
 
     private let dateFormatter = ISO8601DateFormatter()
 
-    /**
-     * MediaWiki API endpoint which returns stream configurations as JSON
-     *
-     * Streams are configured via [mediawiki-config/wmf-config/InitialiseSettings.php](https://gerrit.wikimedia.org/g/operations/mediawiki-config/+/master/wmf-config/InitialiseSettings.php)
-     * and made available for external consumption via MediaWiki API via [Extension:EventStreamConfig](https://gerrit.wikimedia.org/g/mediawiki/extensions/EventStreamConfig/)
-     */
-    private let streamConfigsURI = URL(string: "https://meta.wikimedia.org/w/api.php?action=streamconfigs&format=json")!
-
-    /**
-     * Dictionary of stream configurations keyed by stream name.
-     */
     private var streamConfigs: [String: StreamConfig]? {
         get {
-            queue.sync {
-                return _streamConfigurations
-            }
-        }
-        set {
-            queue.async {
-                self._streamConfigurations = newValue
-            }
+            self.streamConfigsFetcher.getStreamConfigs()
         }
     }
-    private var _streamConfigurations: [String: StreamConfig]? = nil
+
+    private var streamConfigsFetcher: StreamConfigsFetcher
 
     // MARK: Initializer
 
@@ -130,16 +112,22 @@ public class MetricsClient {
             sessionController: SessionController? = nil,
             samplingController: SamplingController? = nil
     ) {
+        let sessionController = sessionController ?? SessionController(date: Date())
+        let samplingController = samplingController ?? SamplingController(
+            integration: integration,
+            sessionController: sessionController
+        )
+
         self.integration = integration
-        self.sessionController = sessionController ?? SessionController(date: Date())
-        self.samplingController = samplingController ?? SamplingController(integration: integration, sessionController: sessionController!)
+        self.sessionController = sessionController
+        self.samplingController = samplingController
+
+        self.streamConfigsFetcher = StreamConfigsFetcher(integration: integration)
 
         self.encoder.dateEncodingStrategy = .iso8601
         #if DEBUG
         self.encoder.outputFormatting = .prettyPrinted
         #endif
-
-        self.fetchStreamConfigs(retries: 10, retryDelay: 30)
     }
 
     // MARK: Instance methods
@@ -209,59 +197,6 @@ public class MetricsClient {
     private func addEventMetadata(event: Event) {
         event.agent.appInstallId = self.integration.appInstallId()
         event.performer?.sessionId = self.sessionController.sessionId()
-    }
-
-    /**
-     * Fetch stream configuration from stream configuration service
-     * - Parameters:
-     *   - retries: number of retries remaining
-     *   - retryDelay: seconds between each attempt, increasing by 50% after every failed attempt
-     *
-     * Example of a retrieved config response:
-     * ``` js
-     * {
-     *   "streams": {
-     *     "test.instrumentation.sampled": {
-     *       "sampling": {
-     *         "rate":0.1
-     *       }
-     *     },
-     *     "test.instrumentation": {},
-     *   }
-     * }
-     * ```
-     */
-    private func fetchStreamConfigs(retries: Int, retryDelay: Double) {
-        NSLog("MetricsClient: Fetching stream configs")
-        integration.httpGet(self.streamConfigsURI) { (data, response, error) in
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200, let data = data else {
-                NSLog("MetricsClient: Error fetching stream configs")
-                if retries > 0 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + retryDelay) {
-                        NSLog("MetricsClient: Retrying stream config fetch")
-                        self.fetchStreamConfigs(retries: retries - 1, retryDelay: retryDelay * 1.5)
-                    }
-                } else {
-                    NSLog("MetricsClient: Ran out of retries when attempting to download stream configs")
-                }
-                return
-            }
-            #if DEBUG
-            if let raw = String(data: data, encoding: String.Encoding.utf8) {
-                NSLog("MetricsClient: Downloaded stream configs (raw): \(raw)")
-            }
-            #endif
-            do {
-                let json = try self.decoder.decode(StreamConfigsJSON.self, from: data)
-                self.streamConfigs = json.streams.reduce(into: [:], { (result, kv) in
-                    result?[kv.key] = kv.value
-                })
-            } catch {
-                NSLog("MetricsClient: Problem processing JSON payload from response: \(error)")
-            }
-
-            self.processUnvalidatedEvents()
-        }
     }
 
     /**

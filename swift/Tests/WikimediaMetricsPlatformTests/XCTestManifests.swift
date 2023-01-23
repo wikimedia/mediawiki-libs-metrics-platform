@@ -9,6 +9,7 @@ public func allTests() -> [XCTestCaseEntry] {
         testCase(SamplingControllerTests.allTests),
         testCase(SessionControllerTests.allTests),
         testCase(StreamConfigTests.allTests),
+        testCase(StreamConfigsFetcherTests.allTests),
         testCase(ContextControllerTests.allTests),
         testCase(CurationFilterTests.allTests),
         testCase(EqualsTests.allTests),
