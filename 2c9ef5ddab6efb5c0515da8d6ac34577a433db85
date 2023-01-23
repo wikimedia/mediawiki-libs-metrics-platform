@@ -18,6 +18,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70db0c33_a5d8bb4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-23T18:42:22Z",
+      "side": 1,
+      "message": "righteo -- altho i was barking up the wrong tree, it was a really useful exercise to dig into the separate dispatch methods -- helped me grok the js + php clients better (and hence better inform the java client)\n\nso as per usual, i made it way more complicated than needed -- hopefully latest ps is better/simpler",
+      "parentUuid": "2bac0e31_7fb25922",
+      "revId": "2c9ef5ddab6efb5c0515da8d6ac34577a433db85",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "78721b4f_a224c180",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-01-23T11:28:59Z",
       "side": 1,
       "message": "Since this is expected event data, should that be reflected in the filename, e.g. expected_event.json or expected_event_data.json?",
+      "revId": "2c9ef5ddab6efb5c0515da8d6ac34577a433db85",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f79aaab7_02761deb",
+        "filename": "tests/consistency/output_data.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-23T18:42:22Z",
+      "side": 1,
+      "message": "yes -- naming things!",
+      "parentUuid": "78721b4f_a224c180",
       "revId": "2c9ef5ddab6efb5c0515da8d6ac34577a433db85",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
