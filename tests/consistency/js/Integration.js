@@ -18,7 +18,7 @@ class Integration {
 	}
 
 	clone( obj ) {
-		return Object.assign( {}, obj )
+		return Object.assign( {}, obj );
 	}
 
 	getContextAttributes() {

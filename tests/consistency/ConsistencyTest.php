@@ -42,19 +42,17 @@ class ConsistencyTest extends TestCase {
 	}
 
 	public function testConsistency() {
-		$impls = self::getImplementations();
+		// Check the dispatched data against the expected data.
+		$expectedEventRaw = file_get_contents( __DIR__ . '/expected_event.json' );
+		$expectedEvent = json_decode( $expectedEventRaw, true  );
 
-		$refImpl = $impls[0];
-		$refOutput = $this->dispatch( $refImpl );
-
-		for ( $i = 1; $i < count( $impls ); ++$i ) {
-			$impl = $impls[$i];
+		foreach ( self::getImplementations() as $impl ) {
 			$output = $this->dispatch( $impl );
 
 			$this->assertEquals(
-				$refOutput,
+				$expectedEvent,
 				$output,
-				"The {$impl} and {$refImpl} implementations should be consistent."
+				"The {$impl} implementation should match expected event data."
 			);
 		}
 	}

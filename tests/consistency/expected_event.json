@@ -1,0 +1,51 @@
+{
+	"$schema": "/analytics/mediawiki/client/metrics_event/1.1.0",
+	"name": "test_consistency_event",
+	"custom_data": {
+		"test": {
+			"data_type": "string",
+			"value": "consistency"
+		}
+	},
+	"meta": {
+		"stream": "test.consistency",
+		"domain": "en.wikipedia.org"
+	},
+	"agent": {
+		"app_install_id": "ffffffff-ffff-ffff-ffff-ffffffffffff",
+		"client_platform": "mediawiki_js",
+		"client_platform_family": "desktop_browser"
+	},
+	"page": {
+		"id": 30715282,
+		"title": "Dark_Souls",
+		"namespace": 0,
+		"namespace_name": "",
+		"revision_id": 1084793259,
+		"wikidata_id": "Q1166232",
+		"content_language": "en",
+		"is_redirect": false,
+		"user_groups_allowed_to_move": [],
+		"user_groups_allowed_to_edit": []
+	},
+	"mediawiki": {
+		"skin": "vector",
+		"version": "1.39.0-wmf.8",
+		"is_production": true,
+		"is_debug_mode": false,
+		"database": "enwiki",
+		"site_content_language": "en"
+	},
+	"performer": {
+		"is_logged_in": false,
+		"id": 0,
+		"session_id": "eeeeeeeeeeeeeeeeeeee",
+		"pageview_id": "eeeeeeeeeeeeeeeeeeee",
+		"groups": [
+			"*"
+		],
+		"is_bot": false,
+		"language": "en",
+		"can_probably_edit_page": true
+	}
+}
