@@ -4,6 +4,9 @@ import javax.annotation.concurrent.ThreadSafe;
 
 @ThreadSafe
 public final class ContextValue {
+    public static final String AGENT_APP_INSTALL_ID = "agent_app_install_id";
+    public static final String AGENT_CLIENT_PLATFORM = "agent_client_platform";
+    public static final String AGENT_CLIENT_PLATFORM_FAMILY = "agent_client_platform_family";
     public static final String PAGE_ID = "page_id";
     public static final String PAGE_NAMESPACE_ID = "page_namespace_id";
     public static final String PAGE_NAMESPACE_TEXT = "page_namespace_text";
@@ -34,8 +37,6 @@ public final class ContextValue {
     public static final String DEVICE_MAX_TOUCH_POINTS = "device_max_touch_points";
 
     public static final String ACCESS_METHOD = "access_method";
-    public static final String PLATFORM = "platform";
-    public static final String PLATFORM_FAMILY = "platform_family";
     public static final String IS_PRODUCTION = "is_production";
 
     private ContextValue() {

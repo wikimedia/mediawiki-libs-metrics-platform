@@ -5,11 +5,11 @@ import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM;
+import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM_FAMILY;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.METRICS_PLATFORM_SCHEMA_TITLE;
 import static org.wikimedia.metrics_platform.context.ContextValue.IS_PRODUCTION;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_TITLE;
-import static org.wikimedia.metrics_platform.context.ContextValue.PLATFORM;
-import static org.wikimedia.metrics_platform.context.ContextValue.PLATFORM_FAMILY;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -138,8 +138,8 @@ class MetricsClientTest {
      */
     private static StreamConfig getTestStreamConfig() {
         String[] provideValues = {
-            PLATFORM,
-            PLATFORM_FAMILY,
+            AGENT_CLIENT_PLATFORM,
+            AGENT_CLIENT_PLATFORM_FAMILY,
             PAGE_TITLE,
             IS_PRODUCTION
         };

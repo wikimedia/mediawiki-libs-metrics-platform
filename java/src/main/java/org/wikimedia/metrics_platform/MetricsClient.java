@@ -254,8 +254,8 @@ public final class MetricsClient {
      * @param event event
      */
     private void addRequiredMetadata(Event event) {
-        event.setAppInstallId(clientMetadata.getAppInstallId());
-        event.setAppSessionId(sessionController.getSessionId());
+        event.getAgentData().setAppInstallId(clientMetadata.getAppInstallId());
+        event.getPerformerData().setSessionId(sessionController.getSessionId());
         event.setTimestamp(DATE_FORMAT.format(now()));
     }
 

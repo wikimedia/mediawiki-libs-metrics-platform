@@ -16,9 +16,14 @@ class ContextControllerTest {
         StreamConfig streamConfig = SourceConfigFixtures.STREAM_CONFIGS_WITH_EVENTS.get("test.stream");
         contextController.addRequestedValues(event, streamConfig);
 
+        AgentData agentData = event.getAgentData();
         PageData pageData = event.getPageData();
         PerformerData performerData = event.getPerformerData();
         DeviceData deviceData = event.getDeviceData();
+
+        assertThat(agentData.getAppInstallId()).isEqualTo("6f31a4fa-0a77-4c65-9994-f242fa58ce94");
+        assertThat(agentData.getClientPlatform()).isEqualTo("android");
+        assertThat(agentData.getClientPlatformFamily()).isEqualTo("app");
 
         assertThat(pageData.getId()).isEqualTo(1);
         assertThat(pageData.getNamespaceId()).isEqualTo(0);
@@ -48,8 +53,6 @@ class ContextControllerTest {
         assertThat(deviceData.getMaxTouchPoints()).isEqualTo(1);
 
         assertThat(event.getAccessMethod()).isEqualTo("mobile app");
-        assertThat(event.getPlatform()).isEqualTo("android");
-        assertThat(event.getPlatformFamily()).isEqualTo("app");
         assertThat(event.getIsProduction()).isTrue();
     }
 }
