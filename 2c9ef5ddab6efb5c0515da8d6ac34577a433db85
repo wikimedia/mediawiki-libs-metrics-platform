@@ -16,6 +16,23 @@
       "message": "These changes are really great and very thoughtfully implemented but I\u0027m not sure that they\u0027re the right place to implement them.\n\nThe test harness itself (see tests/consistency/ConsistencyTest.php) unsets certain parameters and asserts that the events have the same shape. We could update the test harness to read the expected event data and compare the implementations to that. What do you think?",
       "revId": "2c9ef5ddab6efb5c0515da8d6ac34577a433db85",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78721b4f_a224c180",
+        "filename": "tests/consistency/output_data.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-23T11:28:59Z",
+      "side": 1,
+      "message": "Since this is expected event data, should that be reflected in the filename, e.g. expected_event.json or expected_event_data.json?",
+      "revId": "2c9ef5ddab6efb5c0515da8d6ac34577a433db85",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
