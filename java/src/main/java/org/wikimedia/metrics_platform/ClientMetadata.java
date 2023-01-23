@@ -19,17 +19,17 @@ public interface ClientMetadata {
     Collection<String> getPageGroupsAllowedToEdit();
     Collection<String> getPageGroupsAllowedToMove();
 
-    Integer getUserId();
-    Boolean getUserIsLoggedIn();
-    Boolean getUserIsBot();
-    String getUserName();
-    Collection<String> getUserGroups();
-    Boolean getUserCanProbablyEditPage();
-    Integer getUserEditCount();
-    String getUserEditCountBucket();
-    Long getUserRegistrationTimestamp();
-    String getUserLanguage();
-    String getUserLanguageVariant();
+    Integer getPerformerId();
+    Boolean getPerformerIsLoggedIn();
+    Boolean getPerformerIsBot();
+    String getPerformerName();
+    Collection<String> getPerformerGroups();
+    Boolean getPerformerCanProbablyEditPage();
+    Integer getPerformerEditCount();
+    String getPerformerEditCountBucket();
+    Long getPerformerRegistrationDt();
+    String getPerformerLanguage();
+    String getPerformerLanguageVariant();
 
     Float getDevicePixelRatio();
     Integer getDeviceHardwareConcurrency();

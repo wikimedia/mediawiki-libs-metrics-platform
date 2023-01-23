@@ -12,22 +12,22 @@ import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_NAMESPACE
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_NAMESPACE_TEXT;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_REVISION_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_TITLE;
-import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_USER_GROUPS_ALLOWED_TO_EDIT;
-import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_USER_GROUPS_ALLOWED_TO_MOVE;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_PERFORMER_GROUPS_ALLOWED_TO_EDIT;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_PERFORMER_GROUPS_ALLOWED_TO_MOVE;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_WIKIDATA_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PLATFORM;
 import static org.wikimedia.metrics_platform.context.ContextValue.PLATFORM_FAMILY;
-import static org.wikimedia.metrics_platform.context.ContextValue.USER_CAN_PROBABLY_EDIT_PAGE;
-import static org.wikimedia.metrics_platform.context.ContextValue.USER_EDIT_COUNT;
-import static org.wikimedia.metrics_platform.context.ContextValue.USER_EDIT_COUNT_BUCKET;
-import static org.wikimedia.metrics_platform.context.ContextValue.USER_GROUPS;
-import static org.wikimedia.metrics_platform.context.ContextValue.USER_ID;
-import static org.wikimedia.metrics_platform.context.ContextValue.USER_IS_BOT;
-import static org.wikimedia.metrics_platform.context.ContextValue.USER_IS_LOGGED_IN;
-import static org.wikimedia.metrics_platform.context.ContextValue.USER_LANGUAGE;
-import static org.wikimedia.metrics_platform.context.ContextValue.USER_LANGUAGE_VARIANT;
-import static org.wikimedia.metrics_platform.context.ContextValue.USER_NAME;
-import static org.wikimedia.metrics_platform.context.ContextValue.USER_REGISTRATION_TIMESTAMP;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_ID;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_NAME;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_IS_LOGGED_IN;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_GROUPS;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_IS_BOT;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_LANGUAGE;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_LANGUAGE_VARIANT;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_CAN_PROBABLY_EDIT_PAGE;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_EDIT_COUNT;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_EDIT_COUNT_BUCKET;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_REGISTRATION_DT;
 
 import java.util.Collection;
 import java.util.Locale;
@@ -88,46 +88,46 @@ public class ContextController {
                 case PAGE_CONTENT_LANGUAGE:
                     event.getPageData().setContentLanguage(clientMetadata.getPageContentLanguage());
                     break;
-                case PAGE_USER_GROUPS_ALLOWED_TO_EDIT:
+                case PAGE_PERFORMER_GROUPS_ALLOWED_TO_EDIT:
                     event.getPageData().setGroupsAllowedToEdit(clientMetadata.getPageGroupsAllowedToEdit());
                     break;
-                case PAGE_USER_GROUPS_ALLOWED_TO_MOVE:
+                case PAGE_PERFORMER_GROUPS_ALLOWED_TO_MOVE:
                     event.getPageData().setGroupsAllowedToMove(clientMetadata.getPageGroupsAllowedToMove());
                     break;
 
                 // User
-                case USER_ID:
-                    event.getUserData().setId(clientMetadata.getUserId());
+                case PERFORMER_ID:
+                    event.getPerformerData().setId(clientMetadata.getPerformerId());
                     break;
-                case USER_IS_LOGGED_IN:
-                    event.getUserData().setIsLoggedIn(clientMetadata.getUserIsLoggedIn());
+                case PERFORMER_IS_LOGGED_IN:
+                    event.getPerformerData().setIsLoggedIn(clientMetadata.getPerformerIsLoggedIn());
                     break;
-                case USER_IS_BOT:
-                    event.getUserData().setIsBot(clientMetadata.getUserIsBot());
+                case PERFORMER_IS_BOT:
+                    event.getPerformerData().setIsBot(clientMetadata.getPerformerIsBot());
                     break;
-                case USER_NAME:
-                    event.getUserData().setName(clientMetadata.getUserName());
+                case PERFORMER_NAME:
+                    event.getPerformerData().setName(clientMetadata.getPerformerName());
                     break;
-                case USER_GROUPS:
-                    event.getUserData().setGroups(clientMetadata.getUserGroups());
+                case PERFORMER_GROUPS:
+                    event.getPerformerData().setGroups(clientMetadata.getPerformerGroups());
                     break;
-                case USER_CAN_PROBABLY_EDIT_PAGE:
-                    event.getUserData().setCanProbablyEditPage(clientMetadata.getUserCanProbablyEditPage());
+                case PERFORMER_CAN_PROBABLY_EDIT_PAGE:
+                    event.getPerformerData().setCanProbablyEditPage(clientMetadata.getPerformerCanProbablyEditPage());
                     break;
-                case USER_EDIT_COUNT:
-                    event.getUserData().setEditCount(clientMetadata.getUserEditCount());
+                case PERFORMER_EDIT_COUNT:
+                    event.getPerformerData().setEditCount(clientMetadata.getPerformerEditCount());
                     break;
-                case USER_EDIT_COUNT_BUCKET:
-                    event.getUserData().setEditCountBucket(clientMetadata.getUserEditCountBucket());
+                case PERFORMER_EDIT_COUNT_BUCKET:
+                    event.getPerformerData().setEditCountBucket(clientMetadata.getPerformerEditCountBucket());
                     break;
-                case USER_REGISTRATION_TIMESTAMP:
-                    event.getUserData().setRegistrationTimestamp(clientMetadata.getUserRegistrationTimestamp());
+                case PERFORMER_REGISTRATION_DT:
+                    event.getPerformerData().setRegistrationDt(clientMetadata.getPerformerRegistrationDt());
                     break;
-                case USER_LANGUAGE:
-                    event.getUserData().setLanguage(clientMetadata.getUserLanguage());
+                case PERFORMER_LANGUAGE:
+                    event.getPerformerData().setLanguage(clientMetadata.getPerformerLanguage());
                     break;
-                case USER_LANGUAGE_VARIANT:
-                    event.getUserData().setLanguageVariant(clientMetadata.getUserLanguageVariant());
+                case PERFORMER_LANGUAGE_VARIANT:
+                    event.getPerformerData().setLanguageVariant(clientMetadata.getPerformerLanguageVariant());
                     break;
 
                 // Device
