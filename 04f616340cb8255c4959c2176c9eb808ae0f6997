@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6925037_f35a6330",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-24T16:03:54Z",
+      "side": 1,
+      "message": "-1 because, as written, the test skips an implementation.",
+      "revId": "04f616340cb8255c4959c2176c9eb808ae0f6997",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1559215e_df7affd0",
+        "filename": "tests/consistency/ConsistencyTest.php",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-24T16:03:54Z",
+      "side": 1,
+      "message": "This can be removed and the for loop below can be turned into a foreach loop, e.g.\n\n foreach ( self::getImplementations() as $impl ) {\n   $output \u003d $this-\u003edispatch( $impl );\n\n   // …\n }",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "04f616340cb8255c4959c2176c9eb808ae0f6997",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
