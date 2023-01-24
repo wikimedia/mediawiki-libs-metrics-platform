@@ -39,6 +39,30 @@
       },
       "revId": "04f616340cb8255c4959c2176c9eb808ae0f6997",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60feceec_587aed93",
+        "filename": "tests/consistency/ConsistencyTest.php",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-24T16:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1559215e_df7affd0",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "04f616340cb8255c4959c2176c9eb808ae0f6997",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
