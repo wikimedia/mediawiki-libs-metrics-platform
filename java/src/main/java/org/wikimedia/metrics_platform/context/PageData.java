@@ -21,13 +21,13 @@ import lombok.NoArgsConstructor;
 @ParametersAreNullableByDefault
 public class PageData {
     private Integer id;
-    @SerializedName("namespace_id") private Integer namespaceId;
-    @SerializedName("namespace_text") private String namespaceText;
     private String title;
-    @SerializedName("is_redirect") private Boolean isRedirect;
+    @SerializedName("namespace") private Integer namespace;
+    @SerializedName("namespace_name") private String namespaceName;
     @SerializedName("revision_id") private Integer revisionId;
     @SerializedName("wikidata_id") private String wikidataItemId;
     @SerializedName("content_language") private String contentLanguage;
+    @SerializedName("is_redirect") private Boolean isRedirect;
     @SerializedName("user_groups_allowed_to_edit") private Collection<String> groupsAllowedToEdit;
     @SerializedName("user_groups_allowed_to_move") private Collection<String> groupsAllowedToMove;
 }
