@@ -7,6 +7,13 @@ public final class ContextValue {
     public static final String AGENT_APP_INSTALL_ID = "agent_app_install_id";
     public static final String AGENT_CLIENT_PLATFORM = "agent_client_platform";
     public static final String AGENT_CLIENT_PLATFORM_FAMILY = "agent_client_platform_family";
+    public static final String MEDIAWIKI_SKIN = "mediawiki_skin";
+    public static final String MEDIAWIKI_VERSION = "mediawiki_version";
+    public static final String MEDIAWIKI_IS_PRODUCTION = "mediawiki_is_production";
+    public static final String MEDIAWIKI_IS_DEBUG_MODE = "mediawiki_is_debug_mode";
+    public static final String MEDIAWIKI_DATABASE = "mediawiki_database";
+    public static final String MEDIAWIKI_SITE_CONTENT_LANGUAGE = "mediawiki_site_content_language";
+    public static final String MEDIAWIKI_SITE_CONTENT_LANGUAGE_VARIANT = "mediawiki_site_content_language_variant";
     public static final String PAGE_ID = "page_id";
     public static final String PAGE_NAMESPACE_ID = "page_namespace_id";
     public static final String PAGE_NAMESPACE_TEXT = "page_namespace_text";
@@ -35,9 +42,7 @@ public final class ContextValue {
     public static final String DEVICE_PIXEL_RATIO = "device_pixel_ratio";
     public static final String DEVICE_HARDWARE_CONCURRENCY = "device_hardware_concurrency";
     public static final String DEVICE_MAX_TOUCH_POINTS = "device_max_touch_points";
-
     public static final String ACCESS_METHOD = "access_method";
-    public static final String IS_PRODUCTION = "is_production";
 
     private ContextValue() {
         // utility class should never be constructed

@@ -11,6 +11,13 @@ public interface ClientMetadata {
     String getAppInstallId();
     String getClientPlatform();
     String getClientPlatformFamily();
+    String getMediawikiSkin();
+    String getMediawikiVersion();
+    Boolean getMediawikiIsProduction();
+    Boolean getMediawikiIsDebugMode();
+    String getMediawikiDatabase();
+    String getMediawikiSiteContentLanguage();
+    String getMediawikiSiteContentLanguageVariant();
     Integer getPageId();
     Integer getPageNamespaceId();
     String getPageNamespaceText();
@@ -37,6 +44,4 @@ public interface ClientMetadata {
     Float getDevicePixelRatio();
     Integer getDeviceHardwareConcurrency();
     Integer getDeviceMaxTouchPoints();
-
-    Boolean isProduction();
 }

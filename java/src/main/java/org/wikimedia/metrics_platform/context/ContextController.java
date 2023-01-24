@@ -7,7 +7,13 @@ import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_P
 import static org.wikimedia.metrics_platform.context.ContextValue.DEVICE_HARDWARE_CONCURRENCY;
 import static org.wikimedia.metrics_platform.context.ContextValue.DEVICE_MAX_TOUCH_POINTS;
 import static org.wikimedia.metrics_platform.context.ContextValue.DEVICE_PIXEL_RATIO;
-import static org.wikimedia.metrics_platform.context.ContextValue.IS_PRODUCTION;
+import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_SKIN;
+import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_VERSION;
+import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_IS_PRODUCTION;
+import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_IS_DEBUG_MODE;
+import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_DATABASE;
+import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_SITE_CONTENT_LANGUAGE;
+import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_SITE_CONTENT_LANGUAGE_VARIANT;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_CONTENT_LANGUAGE;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_IS_REDIRECT;
@@ -73,6 +79,29 @@ public class ContextController {
                     break;
                 case AGENT_CLIENT_PLATFORM_FAMILY:
                     event.getAgentData().setClientPlatformFamily(clientMetadata.getClientPlatformFamily());
+                    break;
+
+                // Mediawiki
+                case MEDIAWIKI_SKIN:
+                    event.getMediawikiData().setSkin(clientMetadata.getMediawikiSkin());
+                    break;
+                case MEDIAWIKI_VERSION:
+                    event.getMediawikiData().setVersion(clientMetadata.getMediawikiVersion());
+                    break;
+                case MEDIAWIKI_IS_PRODUCTION:
+                    event.getMediawikiData().setIsProduction(clientMetadata.getMediawikiIsProduction());
+                    break;
+                case MEDIAWIKI_IS_DEBUG_MODE:
+                    event.getMediawikiData().setIsDebugMode(clientMetadata.getMediawikiIsDebugMode());
+                    break;
+                case MEDIAWIKI_DATABASE:
+                    event.getMediawikiData().setDatabase(clientMetadata.getMediawikiDatabase());
+                    break;
+                case MEDIAWIKI_SITE_CONTENT_LANGUAGE:
+                    event.getMediawikiData().setSiteContentLanguage(clientMetadata.getMediawikiSiteContentLanguage());
+                    break;
+                case MEDIAWIKI_SITE_CONTENT_LANGUAGE_VARIANT:
+                    event.getMediawikiData().setSiteContentLanguageVariant(clientMetadata.getMediawikiSiteContentLanguageVariant());
                     break;
 
                 // Page
@@ -156,9 +185,6 @@ public class ContextController {
                 // Other
                 case ACCESS_METHOD:
                     event.setAccessMethod("mobile app");
-                    break;
-                case IS_PRODUCTION:
-                    event.setIsProduction(clientMetadata.isProduction());
                     break;
                 default:
                     throw new IllegalArgumentException(String.format(Locale.ROOT, "Unknown property %s", value));
