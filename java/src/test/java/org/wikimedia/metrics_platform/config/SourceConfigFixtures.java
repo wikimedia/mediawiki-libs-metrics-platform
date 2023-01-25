@@ -31,6 +31,13 @@ public final class SourceConfigFixtures {
             "agent_app_install_id",
             "agent_client_platform",
             "agent_client_platform_family",
+            "mediawiki_skin",
+            "mediawiki_version",
+            "mediawiki_is_production",
+            "mediawiki_is_debug_mode",
+            "mediawiki_database",
+            "mediawiki_site_content_language",
+            "mediawiki_site_content_language_variant",
             "page_id",
             "page_namespace_id",
             "page_namespace_text",
@@ -55,8 +62,7 @@ public final class SourceConfigFixtures {
             "device_pixel_ratio",
             "device_hardware_concurrency",
             "device_max_touch_points",
-            "access_method",
-            "is_production"
+            "access_method"
         ));
         SampleConfig sampleConfig = new SampleConfig(1.0, SampleConfig.Identifier.UNIT, "pageview");
 

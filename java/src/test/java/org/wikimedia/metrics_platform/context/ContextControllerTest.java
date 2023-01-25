@@ -17,6 +17,7 @@ class ContextControllerTest {
         contextController.addRequestedValues(event, streamConfig);
 
         AgentData agentData = event.getAgentData();
+        MediawikiData mediawikiData = event.getMediawikiData();
         PageData pageData = event.getPageData();
         PerformerData performerData = event.getPerformerData();
         DeviceData deviceData = event.getDeviceData();
@@ -24,6 +25,14 @@ class ContextControllerTest {
         assertThat(agentData.getAppInstallId()).isEqualTo("6f31a4fa-0a77-4c65-9994-f242fa58ce94");
         assertThat(agentData.getClientPlatform()).isEqualTo("android");
         assertThat(agentData.getClientPlatformFamily()).isEqualTo("app");
+
+        assertThat(mediawikiData.getSkin()).isEqualTo("vector");
+        assertThat(mediawikiData.getVersion()).isEqualTo("1.40.0-wmf.19");
+        assertThat(mediawikiData.getIsProduction()).isEqualTo(true);
+        assertThat(mediawikiData.getIsDebugMode()).isEqualTo(false);
+        assertThat(mediawikiData.getDatabase()).isEqualTo("enwiki");
+        assertThat(mediawikiData.getSiteContentLanguage()).isEqualTo("en");
+        assertThat(mediawikiData.getSiteContentLanguageVariant()).isEqualTo("en-zh");
 
         assertThat(pageData.getId()).isEqualTo(1);
         assertThat(pageData.getNamespaceId()).isEqualTo(0);
@@ -53,6 +62,5 @@ class ContextControllerTest {
         assertThat(deviceData.getMaxTouchPoints()).isEqualTo(1);
 
         assertThat(event.getAccessMethod()).isEqualTo("mobile app");
-        assertThat(event.getIsProduction()).isTrue();
     }
 }

@@ -7,6 +7,7 @@ import javax.annotation.ParametersAreNullableByDefault;
 import org.wikimedia.metrics_platform.context.AgentData;
 import org.wikimedia.metrics_platform.context.CustomData;
 import org.wikimedia.metrics_platform.context.DeviceData;
+import org.wikimedia.metrics_platform.context.MediawikiData;
 import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.PerformerData;
 
@@ -24,13 +25,13 @@ public class Event {
     @SerializedName("name") private final String name;
     @SerializedName("dt") private String timestamp;
     @SerializedName("agent") @NonNull private AgentData agentData = new AgentData();
+    @SerializedName("mediawiki") @NonNull private MediawikiData mediawikiData = new MediawikiData();
     @SerializedName("page") @NonNull private PageData pageData = new PageData();
     @SerializedName("performer") @NonNull private PerformerData performerData = new PerformerData();
     @SerializedName("device") @NonNull private DeviceData deviceData = new DeviceData();
     @SerializedName("custom_data") private Set<CustomData> customData;
 
     @SerializedName("access_method") private String accessMethod;
-    @SerializedName("is_production") private Boolean isProduction;
 
     public Event(String schema, String stream, String name) {
         this.schema = schema;

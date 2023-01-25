@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM_FAMILY;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.METRICS_PLATFORM_SCHEMA_TITLE;
-import static org.wikimedia.metrics_platform.context.ContextValue.IS_PRODUCTION;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_TITLE;
 
 import java.util.Arrays;
@@ -140,8 +139,7 @@ class MetricsClientTest {
         String[] provideValues = {
             AGENT_CLIENT_PLATFORM,
             AGENT_CLIENT_PLATFORM_FAMILY,
-            PAGE_TITLE,
-            IS_PRODUCTION
+            PAGE_TITLE
         };
         Set<String> events = Collections.singleton("test_event");
         SampleConfig sampleConfig = new SampleConfig(1.0f, SampleConfig.Identifier.UNIT, "pageview");

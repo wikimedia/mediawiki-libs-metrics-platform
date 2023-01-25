@@ -19,9 +19,18 @@ import lombok.ToString;
 @Builder @AllArgsConstructor @EqualsAndHashCode @ToString
 @ParametersAreNullableByDefault
 public class CurationFilter {
-    @SerializedName("app_install_id") private CurationRules<String> appInstallIdRules;
-    @SerializedName("client_platform") private CurationRules<String> clientPlatformRules;
-    @SerializedName("client_platform_family") private CurationRules<String> clientPlatformFamilyRules;
+    @SerializedName("agent_app_install_id") private CurationRules<String> agentAppInstallIdRules;
+    @SerializedName("agent_client_platform") private CurationRules<String> agentClientPlatformRules;
+    @SerializedName("agent_client_platform_family") private CurationRules<String> agentClientPlatformFamilyRules;
+
+    @SerializedName("mediawiki_skin") private CurationRules<String> mediawikiSkin;
+    @SerializedName("mediawiki_version") private CurationRules<String> mediawikiVersion;
+    @SerializedName("mediawiki_is_production") private CurationRules<Boolean> mediawikiIsProduction;
+    @SerializedName("mediawiki_is_debug_mode") private CurationRules<Boolean> mediawikiIsDebugMode;
+    @SerializedName("mediawiki_database") private CurationRules<String> mediawikiDatabase;
+    @SerializedName("mediawiki_site_content_language") private CurationRules<String> mediawikiSiteContentLanguage;
+    @SerializedName("mediawiki_site_content_language_variant") private CurationRules<String> mediawikiSiteContentLanguageVariant;
+
     @SerializedName("page_id") private ComparableCurationRules<Integer> pageIdRules;
     @SerializedName("page_namespace_id") private ComparableCurationRules<Integer> pageNamespaceIdRules;
     @SerializedName("page_namespace_text") private CurationRules<String> pageNamespaceTextRules;
@@ -53,39 +62,103 @@ public class CurationFilter {
     @SerializedName("device_max_touch_points") private ComparableCurationRules<Integer> deviceMaxTouchPointsRules;
 
     @SerializedName("access_method") private CurationRules<String> accessMethodRules;
-    private CurationRules<String> platformRules;
-    @SerializedName("is_production") private CurationRules<Boolean> isProductionRules;
 
     @SuppressFBWarnings(value = "CC_CYCLOMATIC_COMPLEXITY", justification = "TODO: needs to be refactored!")
     @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity"})
     public boolean apply(@Nonnull Event event) {
         // Agent
 
-        if (appInstallIdRules != null) {
+        if (agentAppInstallIdRules != null) {
             if (event.getAgentData().getAppInstallId() == null) {
                 return false;
             }
-            if (!appInstallIdRules.apply(event.getAgentData().getAppInstallId())) {
+            if (!agentAppInstallIdRules.apply(event.getAgentData().getAppInstallId())) {
                 return false;
             }
         }
-        if (clientPlatformRules != null) {
+        if (agentClientPlatformRules != null) {
             if (event.getAgentData().getClientPlatform() == null) {
                 return false;
             }
-            if (!clientPlatformRules.apply(event.getAgentData().getClientPlatform())) {
+            if (!agentClientPlatformRules.apply(event.getAgentData().getClientPlatform())) {
                 return false;
             }
         }
-        if (clientPlatformFamilyRules != null) {
+        if (agentClientPlatformFamilyRules != null) {
             if (event.getAgentData().getClientPlatformFamily() == null) {
                 return false;
             }
-            if (!clientPlatformFamilyRules.apply(event.getAgentData().getClientPlatformFamily())) {
+            if (!agentClientPlatformFamilyRules.apply(event.getAgentData().getClientPlatformFamily())) {
                 return false;
             }
         }
 
+        // Mediawiki
+
+        if (mediawikiSkin != null) {
+            if (event.getMediawikiData().getSkin() == null) {
+                return false;
+            }
+            if (!mediawikiSkin.apply(event.getMediawikiData().getSkin())) {
+                return false;
+            }
+        }
+        if (mediawikiVersion != null) {
+            if (event.getMediawikiData().getVersion() == null) {
+                return false;
+            }
+            if (!mediawikiVersion.apply(event.getMediawikiData().getVersion())) {
+                return false;
+            }
+        }
+        if (mediawikiIsProduction != null) {
+            if (event.getMediawikiData().getIsProduction() == null) {
+                return false;
+            }
+            if (!mediawikiIsProduction.apply(event.getMediawikiData().getIsProduction())) {
+                return false;
+            }
+        }
+        if (mediawikiIsDebugMode != null) {
+            if (event.getMediawikiData().getIsProduction() == null) {
+                return false;
+            }
+            if (!mediawikiIsDebugMode.apply(event.getMediawikiData().getIsDebugMode())) {
+                return false;
+            }
+        }
+        if (mediawikiVersion != null) {
+            if (event.getMediawikiData().getVersion() == null) {
+                return false;
+            }
+            if (!mediawikiVersion.apply(event.getMediawikiData().getVersion())) {
+                return false;
+            }
+        }
+        if (mediawikiDatabase != null) {
+            if (event.getMediawikiData().getDatabase() == null) {
+                return false;
+            }
+            if (!mediawikiDatabase.apply(event.getMediawikiData().getDatabase())) {
+                return false;
+            }
+        }
+        if (mediawikiSiteContentLanguage != null) {
+            if (event.getMediawikiData().getSiteContentLanguage() == null) {
+                return false;
+            }
+            if (!mediawikiSiteContentLanguage.apply(event.getMediawikiData().getSiteContentLanguage())) {
+                return false;
+            }
+        }
+        if (mediawikiSiteContentLanguageVariant != null) {
+            if (event.getMediawikiData().getSiteContentLanguageVariant() == null) {
+                return false;
+            }
+            if (!mediawikiSiteContentLanguageVariant.apply(event.getMediawikiData().getSiteContentLanguageVariant())) {
+                return false;
+            }
+        }
 
         // Page
 
@@ -298,14 +371,7 @@ public class CurationFilter {
                 return false;
             }
         }
-        if (isProductionRules != null) {
-            if (event.getIsProduction() == null) {
-                return false;
-            }
-            if (!isProductionRules.apply(event.getIsProduction())) {
-                return false;
-            }
-        }
+
         return true;
     }
 }

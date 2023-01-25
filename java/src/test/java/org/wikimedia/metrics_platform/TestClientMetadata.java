@@ -19,7 +19,34 @@ public class TestClientMetadata implements ClientMetadata {
     public String getClientPlatformFamily() {
         return "app";
     }
-
+    @Override
+    public String getMediawikiSkin() {
+        return "vector";
+    };
+    @Override
+    public String getMediawikiVersion() {
+        return "1.40.0-wmf.19";
+    };
+    @Override
+    public Boolean getMediawikiIsProduction() {
+        return true;
+    };
+    @Override
+    public Boolean getMediawikiIsDebugMode() {
+        return false;
+    };
+    @Override
+    public String getMediawikiDatabase() {
+        return "enwiki";
+    };
+    @Override
+    public String getMediawikiSiteContentLanguage() {
+        return "en";
+    };
+    @Override
+    public String getMediawikiSiteContentLanguageVariant() {
+        return "en-zh";
+    };
     @Override
     public Integer getPageId() {
         return 1;
@@ -142,10 +169,5 @@ public class TestClientMetadata implements ClientMetadata {
     @Override
     public Integer getDeviceMaxTouchPoints() {
         return 1;
-    }
-
-    @Override
-    public Boolean isProduction() {
-        return true;
     }
 }

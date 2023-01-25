@@ -26,12 +26,21 @@ class EventTest {
     @Test void testEventSerialization() {
         String uuid = UUID.randomUUID().toString();
         Event event = new Event("test/event/1.0.0", "test.event", "testEvent");
-        event.getAgentData().setAppInstallId(uuid);
+
         event.setTimestamp("2021-08-27T12:00:00Z");
         event.setAccessMethod("mobile app");
+
+        event.getAgentData().setAppInstallId(uuid);
         event.getAgentData().setClientPlatform("android");
         event.getAgentData().setClientPlatformFamily("app");
-        event.setIsProduction(true);
+
+        event.getMediawikiData().setSkin("vector");
+        event.getMediawikiData().setVersion("1.40.0-wmf.19");
+        event.getMediawikiData().setIsProduction(true);
+        event.getMediawikiData().setIsDebugMode(false);
+        event.getMediawikiData().setDatabase("enwiki");
+        event.getMediawikiData().setSiteContentLanguage("en");
+        event.getMediawikiData().setSiteContentLanguageVariant("en-zh");
 
         assertThat(event.getStream()).isEqualTo("test.event");
         assertThat(event.getSchema()).isEqualTo("test/event/1.0.0");
@@ -41,7 +50,6 @@ class EventTest {
         assertThat(event.getAccessMethod()).isEqualTo("mobile app");
         assertThat(event.getAgentData().getClientPlatform()).isEqualTo("android");
         assertThat(event.getAgentData().getClientPlatformFamily()).isEqualTo("app");
-        assertThat(event.getIsProduction()).isTrue();
 
         Gson gson = new Gson();
         String json = gson.toJson(event);
@@ -54,11 +62,17 @@ class EventTest {
                             "\"agent\":{\"app_install_id\":\"%s\"," +
                             "\"client_platform\":\"android\"," +
                             "\"client_platform_family\":\"app\"}," +
+                            "\"mediawiki\":{\"skin\":\"vector\"," +
+                            "\"version\":\"1.40.0-wmf.19\"," +
+                            "\"is_production\":true," +
+                            "\"is_debug_mode\":false," +
+                            "\"database\":\"enwiki\"," +
+                            "\"site_content_language\":\"en\"," +
+                            "\"site_content_language_variant\":\"en-zh\"}," +
                             "\"page\":{}," +
                             "\"performer\":{}," +
                             "\"device\":{}," +
-                            "\"access_method\":\"mobile app\"," +
-                            "\"is_production\":true" +
+                            "\"access_method\":\"mobile app\"" +
                         "}", uuid, uuid));
     }
 
