@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "230c89be_a56480bc",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EventTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-25T10:45:02Z",
+      "side": 1,
+      "message": "This will need to be revisited as we should only send data when it\u0027s absolutely necessary (remembering that these properties are optional in the metrics_event schema).",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 61,
+        "endChar": 46
+      },
+      "revId": "d15dd9187be653eeeab24d9a193f2d5da673f48c",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
