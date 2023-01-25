@@ -31,7 +31,7 @@ class ConsistencyTest extends TestCase {
 
 		$this->assertIsArray( $output, "The {$impl} should output valid JSON." );
 
-		// Only the Metrics Platform Client adds the http property to the event.
+		// Only the PHP Event Platform Client adds the http property of the event.
 		unset( $output['http'] );
 
 		// TODO: Test whether all Metrics Platform Clients are adding timestamps in the form

@@ -15,14 +15,6 @@ class ConsistencyTestIntegration implements Integration {
 		$this->data = json_decode( $rawContents, true );
 	}
 
-	public function getHostName(): string {
-		return $this->data['hostname'];
-	}
-
-	public function send( array $event ): void {
-		echo json_encode( $event );
-	}
-
     public function getContextAttribute( string $name ) {
         list( $primaryKey, $secondaryKey ) = explode( '_', $name, 2 );
 

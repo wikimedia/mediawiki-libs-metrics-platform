@@ -7,9 +7,6 @@ use Wikimedia\MetricsPlatform\Integration;
 class TestIntegration implements Integration {
 
 	/** @var array */
-	private $sentEvents = [];
-
-	/** @var array */
 	private $contextAttributes = [
 		'agent_app_install_id' => null,
 		'agent_client_platform' => 'mediawiki_php',
@@ -46,23 +43,6 @@ class TestIntegration implements Integration {
 		'page_user_groups_allowed_to_edit' => [],
 		'page_user_groups_allowed_to_move' => [],
 	];
-
-	/** @inheritDoc */
-	public function getHostName(): string {
-		return 'www.example.org';
-	}
-
-	/** @inheritDoc */
-	public function send( array $event ): void {
-		$this->sentEvents[] = $event;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getSentEvents(): array {
-		return $this->sentEvents;
-	}
 
 	/**
 	 * @param string $name
