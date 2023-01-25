@@ -7,7 +7,7 @@ import javax.annotation.ParametersAreNullableByDefault;
 import org.wikimedia.metrics_platform.context.CustomData;
 import org.wikimedia.metrics_platform.context.DeviceData;
 import org.wikimedia.metrics_platform.context.PageData;
-import org.wikimedia.metrics_platform.context.UserData;
+import org.wikimedia.metrics_platform.context.PerformerData;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -26,7 +26,7 @@ public class Event {
     @SerializedName("app_session_id") private String appSessionId;
 
     @SerializedName("page") @NonNull private PageData pageData = new PageData();
-    @SerializedName("user") @NonNull private UserData userData = new UserData();
+    @SerializedName("performer") @NonNull private PerformerData performerData = new PerformerData();
     @SerializedName("device") @NonNull private DeviceData deviceData = new DeviceData();
     @SerializedName("custom_data") private Set<CustomData> customData;
 

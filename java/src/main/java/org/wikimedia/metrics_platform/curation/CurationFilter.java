@@ -27,22 +27,22 @@ public class CurationFilter {
     @SerializedName("page_wikidata_id") private CurationRules<String> pageWikidataIdRules;
     @SerializedName("page_is_redirect") private CurationRules<Boolean> pageIsRedirectRules;
     @SerializedName("page_content_language") private CurationRules<String> pageContentLanguageRules;
-    @SerializedName("page_user_groups_allowed_to_edit")
+    @SerializedName("page_performer_groups_allowed_to_edit")
     private CollectionCurationRules<String> pageUserGroupsAllowedToEditRules;
-    @SerializedName("page_user_groups_allowed_to_move")
+    @SerializedName("page_performer_groups_allowed_to_move")
     private CollectionCurationRules<String> pageUserGroupsAllowedToMoveRules;
 
-    @SerializedName("user_id") private ComparableCurationRules<Integer> userIdRules;
-    @SerializedName("user_name") private CurationRules<String> userNameRules;
-    @SerializedName("user_groups") private CollectionCurationRules<String> userGroupsRules;
-    @SerializedName("user_is_logged_in") private CurationRules<Boolean> userIsLoggedInRules;
-    @SerializedName("user_is_bot") private CurationRules<Boolean> userIsBotRules;
-    @SerializedName("user_can_probably_edit_page") private CurationRules<Boolean> userCanProbablyEditPageRules;
-    @SerializedName("user_edit_count") private ComparableCurationRules<Integer> userEditCountRules;
-    @SerializedName("user_edit_count_bucket") private CurationRules<String> userEditCountBucketRules;
-    @SerializedName("user_registration_timestamp") private ComparableCurationRules<Long> userRegistrationTimestampRules;
-    @SerializedName("user_language") private CurationRules<String> userLanguageRules;
-    @SerializedName("user_language_variant") private CurationRules<String> userLanguageVariantRules;
+    @SerializedName("performer_id") private ComparableCurationRules<Integer> performerIdRules;
+    @SerializedName("performer_name") private CurationRules<String> performerNameRules;
+    @SerializedName("performer_groups") private CollectionCurationRules<String> performerGroupsRules;
+    @SerializedName("performer_is_logged_in") private CurationRules<Boolean> performerIsLoggedInRules;
+    @SerializedName("performer_is_bot") private CurationRules<Boolean> performerIsBotRules;
+    @SerializedName("performer_can_probably_edit_page") private CurationRules<Boolean> performerCanProbablyEditPageRules;
+    @SerializedName("performer_edit_count") private ComparableCurationRules<Integer> performerEditCountRules;
+    @SerializedName("performer_edit_count_bucket") private CurationRules<String> performerEditCountBucketRules;
+    @SerializedName("performer_registration_dt") private ComparableCurationRules<Long> performerRegistrationDtRules;
+    @SerializedName("performer_language") private CurationRules<String> performerLanguageRules;
+    @SerializedName("performer_language_variant") private CurationRules<String> performerLanguageVariantRules;
 
     @SerializedName("device_pixel_ratio") private ComparableCurationRules<Float> devicePixelRatioRules;
     @SerializedName("device_hardware_concurrency")
@@ -142,91 +142,91 @@ public class CurationFilter {
 
         // User
 
-        if (userIdRules != null) {
-            if (event.getUserData().getId() == null) {
+        if (performerIdRules != null) {
+            if (event.getPerformerData().getId() == null) {
                 return false;
             }
-            if (!userIdRules.apply(event.getUserData().getId())) {
-                return false;
-            }
-        }
-        if (userNameRules != null) {
-            if (event.getUserData().getName() == null) {
-                return false;
-            }
-            if (!userNameRules.apply(event.getUserData().getName())) {
+            if (!performerIdRules.apply(event.getPerformerData().getId())) {
                 return false;
             }
         }
-        if (userGroupsRules != null) {
-            if (event.getUserData().getGroups() == null) {
+        if (performerNameRules != null) {
+            if (event.getPerformerData().getName() == null) {
                 return false;
             }
-            if (!userGroupsRules.apply(event.getUserData().getGroups())) {
-                return false;
-            }
-        }
-        if (userIsLoggedInRules != null) {
-            if (event.getUserData().getIsLoggedIn() == null) {
-                return false;
-            }
-            if (!userIsLoggedInRules.apply(event.getUserData().getIsLoggedIn())) {
+            if (!performerNameRules.apply(event.getPerformerData().getName())) {
                 return false;
             }
         }
-        if (userIsBotRules != null) {
-            if (event.getUserData().getIsBot() == null) {
+        if (performerGroupsRules != null) {
+            if (event.getPerformerData().getGroups() == null) {
                 return false;
             }
-            if (!userIsBotRules.apply(event.getUserData().getIsBot())) {
-                return false;
-            }
-        }
-        if (userCanProbablyEditPageRules != null) {
-            if (event.getUserData().getCanProbablyEditPage() == null) {
-                return false;
-            }
-            if (!userCanProbablyEditPageRules.apply(event.getUserData().getCanProbablyEditPage())) {
+            if (!performerGroupsRules.apply(event.getPerformerData().getGroups())) {
                 return false;
             }
         }
-        if (userEditCountRules != null) {
-            if (event.getUserData().getEditCount() == null) {
+        if (performerIsLoggedInRules != null) {
+            if (event.getPerformerData().getIsLoggedIn() == null) {
                 return false;
             }
-            if (!userEditCountRules.apply(event.getUserData().getEditCount())) {
-                return false;
-            }
-        }
-        if (userEditCountBucketRules != null) {
-            if (event.getUserData().getEditCountBucket() == null) {
-                return false;
-            }
-            if (!userEditCountBucketRules.apply(event.getUserData().getEditCountBucket())) {
+            if (!performerIsLoggedInRules.apply(event.getPerformerData().getIsLoggedIn())) {
                 return false;
             }
         }
-        if (userRegistrationTimestampRules != null) {
-            if (event.getUserData().getRegistrationTimestamp() == null) {
+        if (performerIsBotRules != null) {
+            if (event.getPerformerData().getIsBot() == null) {
                 return false;
             }
-            if (!userRegistrationTimestampRules.apply(event.getUserData().getRegistrationTimestamp())) {
-                return false;
-            }
-        }
-        if (userLanguageRules != null) {
-            if (event.getUserData().getLanguage() == null) {
-                return false;
-            }
-            if (!userLanguageRules.apply(event.getUserData().getLanguage())) {
+            if (!performerIsBotRules.apply(event.getPerformerData().getIsBot())) {
                 return false;
             }
         }
-        if (userLanguageVariantRules != null) {
-            if (event.getUserData().getLanguageVariant() == null) {
+        if (performerCanProbablyEditPageRules != null) {
+            if (event.getPerformerData().getCanProbablyEditPage() == null) {
                 return false;
             }
-            if (!userLanguageVariantRules.apply(event.getUserData().getLanguageVariant())) {
+            if (!performerCanProbablyEditPageRules.apply(event.getPerformerData().getCanProbablyEditPage())) {
+                return false;
+            }
+        }
+        if (performerEditCountRules != null) {
+            if (event.getPerformerData().getEditCount() == null) {
+                return false;
+            }
+            if (!performerEditCountRules.apply(event.getPerformerData().getEditCount())) {
+                return false;
+            }
+        }
+        if (performerEditCountBucketRules != null) {
+            if (event.getPerformerData().getEditCountBucket() == null) {
+                return false;
+            }
+            if (!performerEditCountBucketRules.apply(event.getPerformerData().getEditCountBucket())) {
+                return false;
+            }
+        }
+        if (performerRegistrationDtRules != null) {
+            if (event.getPerformerData().getRegistrationDt() == null) {
+                return false;
+            }
+            if (!performerRegistrationDtRules.apply(event.getPerformerData().getRegistrationDt())) {
+                return false;
+            }
+        }
+        if (performerLanguageRules != null) {
+            if (event.getPerformerData().getLanguage() == null) {
+                return false;
+            }
+            if (!performerLanguageRules.apply(event.getPerformerData().getLanguage())) {
+                return false;
+            }
+        }
+        if (performerLanguageVariantRules != null) {
+            if (event.getPerformerData().getLanguageVariant() == null) {
+                return false;
+            }
+            if (!performerLanguageVariantRules.apply(event.getPerformerData().getLanguageVariant())) {
                 return false;
             }
         }

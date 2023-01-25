@@ -38,17 +38,17 @@ public final class SourceConfigFixtures {
             "page_wikidata_id",
             "page_user_groups_allowed_to_edit",
             "page_user_groups_allowed_to_move",
-            "user_id",
-            "user_is_logged_in",
-            "user_name",
-            "user_groups",
-            "user_edit_count",
-            "user_edit_count_bucket",
-            "user_registration_timestamp",
-            "user_language",
-            "user_language_variant",
-            "user_is_bot",
-            "user_can_probably_edit_page",
+            "performer_id",
+            "performer_is_logged_in",
+            "performer_name",
+            "performer_groups",
+            "performer_edit_count",
+            "performer_edit_count_bucket",
+            "performer_registration_dt",
+            "performer_language",
+            "performer_language_variant",
+            "performer_is_bot",
+            "performer_can_probably_edit_page",
             "device_pixel_ratio",
             "device_hardware_concurrency",
             "device_max_touch_points",
@@ -69,7 +69,7 @@ public final class SourceConfigFixtures {
                     requestedValuesSet,
                     CurationFilter.builder()
                         .pageTitleRules(CurationRules.<String>builder().isEquals("Test").build())
-                        .userGroupsRules(
+                        .performerGroupsRules(
                             CollectionCurationRules.<String>builder()
                                 .doesNotContain("sysop")
                                 .containsAny(Arrays.asList("steward", "bureaucrat"))

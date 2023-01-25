@@ -57,10 +57,10 @@ class EventTest {
                             "\"app_install_id\":\"%s\"," +
                             "\"app_session_id\":\"%s\"," +
                             "\"page\":{}," +
-                            "\"user\":{}," +
+                            "\"performer\":{}," +
                             "\"device\":{}," +
-                            "\"access_method\":\"mobile app\"" +
-                            ",\"platform\":\"android\"," +
+                            "\"access_method\":\"mobile app\"," +
+                            "\"platform\":\"android\"," +
                             "\"platform_family\":\"app\"," +
                             "\"is_production\":true" +
                         "}", uuid, uuid));

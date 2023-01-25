@@ -17,7 +17,7 @@ class ContextControllerTest {
         contextController.addRequestedValues(event, streamConfig);
 
         PageData pageData = event.getPageData();
-        UserData userData = event.getUserData();
+        PerformerData performerData = event.getPerformerData();
         DeviceData deviceData = event.getDeviceData();
 
         assertThat(pageData.getId()).isEqualTo(1);
@@ -31,17 +31,17 @@ class ContextControllerTest {
         assertThat(pageData.getGroupsAllowedToEdit()).isEmpty();
         assertThat(pageData.getGroupsAllowedToMove()).isEmpty();
 
-        assertThat(userData.getId()).isEqualTo(1);
-        assertThat(userData.getIsLoggedIn()).isTrue();
-        assertThat(userData.getName()).isEqualTo("TestUser");
-        assertThat(userData.getGroups()).containsExactly("*");
-        assertThat(userData.getEditCount()).isEqualTo(10);
-        assertThat(userData.getEditCountBucket()).isEqualTo("5-99 edits");
-        assertThat(userData.getRegistrationTimestamp()).isEqualTo(1427224089000L);
-        assertThat(userData.getLanguage()).isEqualTo("zh");
-        assertThat(userData.getLanguageVariant()).isEqualTo("zh-tw");
-        assertThat(userData.getIsBot()).isFalse();
-        assertThat(userData.getCanProbablyEditPage()).isTrue();
+        assertThat(performerData.getId()).isEqualTo(1);
+        assertThat(performerData.getIsLoggedIn()).isTrue();
+        assertThat(performerData.getName()).isEqualTo("TestUser");
+        assertThat(performerData.getGroups()).containsExactly("*");
+        assertThat(performerData.getEditCount()).isEqualTo(10);
+        assertThat(performerData.getEditCountBucket()).isEqualTo("5-99 edits");
+        assertThat(performerData.getRegistrationDt()).isEqualTo(1427224089000L);
+        assertThat(performerData.getLanguage()).isEqualTo("zh");
+        assertThat(performerData.getLanguageVariant()).isEqualTo("zh-tw");
+        assertThat(performerData.getIsBot()).isFalse();
+        assertThat(performerData.getCanProbablyEditPage()).isTrue();
 
         assertThat(deviceData.getPixelRatio()).isEqualTo(1.0f);
         assertThat(deviceData.getHardwareConcurrency()).isEqualTo(1);

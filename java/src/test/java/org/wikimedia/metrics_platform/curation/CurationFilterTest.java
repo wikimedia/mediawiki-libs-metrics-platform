@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.Event;
 import org.wikimedia.metrics_platform.context.DeviceData;
 import org.wikimedia.metrics_platform.context.PageData;
-import org.wikimedia.metrics_platform.context.UserData;
+import org.wikimedia.metrics_platform.context.PerformerData;
 
 import com.google.gson.Gson;
 
@@ -21,8 +21,8 @@ class CurationFilterTest {
     @BeforeAll static void setUp() {
         Gson gson = new Gson();
         String curationFilterJson = "{\"page_id\":{\"less_than\":500,\"not_equals\":42},\"page_namespace_text\":" +
-                "{\"equals\":\"Talk\"},\"user_is_logged_in\":{\"equals\":true},\"user_edit_count_bucket\":" +
-                "{\"in\":[\"100-999 edits\",\"1000+ edits\"]},\"user_groups\":{\"contains_all\":" +
+                "{\"equals\":\"Talk\"},\"performer_is_logged_in\":{\"equals\":true},\"performer_edit_count_bucket\":" +
+                "{\"in\":[\"100-999 edits\",\"1000+ edits\"]},\"performer_groups\":{\"contains_all\":" +
                 "[\"user\",\"autoconfirmed\"],\"does_not_contain\":\"sysop\"},\"device_pixel_ratio\":" +
                 "{\"greater_than_or_equals\":1.5,\"less_than_or_equals\":2.5}}";
         curationFilter = gson.fromJson(curationFilterJson, CurationFilter.class);
@@ -30,13 +30,13 @@ class CurationFilterTest {
 
     private static Event getBaseEvent() {
         PageData pageData = PageData.builder().id(1).namespaceText("Talk").build();
-        UserData userData = UserData.builder().groups(Arrays.asList("user", "autoconfirmed", "steward"))
+        PerformerData performerData = PerformerData.builder().groups(Arrays.asList("user", "autoconfirmed", "steward"))
                 .isLoggedIn(true).editCountBucket("1000+ edits").build();
         DeviceData deviceData = DeviceData.builder().pixelRatio(2.0f).build();
 
         Event event = new Event("test/event", "test.event", "testEvent");
         event.setPageData(pageData);
-        event.setUserData(userData);
+        event.setPerformerData(performerData);
         event.setDeviceData(deviceData);
         return event;
     }
@@ -59,25 +59,25 @@ class CurationFilterTest {
 
     @Test void testEventFailsWrongUserGroups() {
         Event event = getBaseEvent();
-        event.getUserData().setGroups(Arrays.asList("user", "autoconfirmed", "sysop"));
+        event.getPerformerData().setGroups(Arrays.asList("user", "autoconfirmed", "sysop"));
         assertThat(curationFilter.apply(event)).isFalse();
     }
 
     @Test void testEventFailsNoUserGroups() {
         Event event = getBaseEvent();
-        event.getUserData().setGroups(Collections.emptyList());
+        event.getPerformerData().setGroups(Collections.emptyList());
         assertThat(curationFilter.apply(event)).isFalse();
     }
 
     @Test void testEventFailsNotLoggedIn() {
         Event event = getBaseEvent();
-        event.getUserData().setIsLoggedIn(false);
+        event.getPerformerData().setIsLoggedIn(false);
         assertThat(curationFilter.apply(event)).isFalse();
     }
 
     @Test void testEventFailsWrongUserEditCountBucket() {
         Event event = getBaseEvent();
-        event.getUserData().setEditCountBucket("5-99 edits");
+        event.getPerformerData().setEditCountBucket("5-99 edits");
         assertThat(curationFilter.apply(event)).isFalse();
     }
 

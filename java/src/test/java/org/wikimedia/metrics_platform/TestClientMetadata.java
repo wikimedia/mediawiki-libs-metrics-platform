@@ -61,57 +61,57 @@ public class TestClientMetadata implements ClientMetadata {
     // User
 
     @Override
-    public Integer getUserId() {
+    public Integer getPerformerId() {
         return 1;
     }
 
     @Override
-    public Boolean getUserIsLoggedIn() {
+    public Boolean getPerformerIsLoggedIn() {
         return true;
     }
 
     @Override
-    public Boolean getUserIsBot() {
+    public Boolean getPerformerIsBot() {
         return false;
     }
 
     @Override
-    public String getUserName() {
+    public String getPerformerName() {
         return "TestUser";
     }
 
     @Override
-    public List<String> getUserGroups() {
+    public List<String> getPerformerGroups() {
         return singletonList("*");
     }
 
     @Override
-    public Boolean getUserCanProbablyEditPage() {
+    public Boolean getPerformerCanProbablyEditPage() {
         return true;
     }
 
     @Override
-    public Integer getUserEditCount() {
+    public Integer getPerformerEditCount() {
         return 10;
     }
 
     @Override
-    public String getUserEditCountBucket() {
+    public String getPerformerEditCountBucket() {
         return "5-99 edits";
     }
 
     @Override
-    public Long getUserRegistrationTimestamp() {
+    public Long getPerformerRegistrationDt() {
         return 1427224089000L;
     }
 
     @Override
-    public String getUserLanguage() {
+    public String getPerformerLanguage() {
         return "zh";
     }
 
     @Override
-    public String getUserLanguageVariant() {
+    public String getPerformerLanguageVariant() {
         return "zh-tw";
     }
 
