@@ -32,8 +32,8 @@ public class CurationFilter {
     @SerializedName("mediawiki_site_content_language_variant") private CurationRules<String> mediawikiSiteContentLanguageVariant;
 
     @SerializedName("page_id") private ComparableCurationRules<Integer> pageIdRules;
-    @SerializedName("page_namespace_id") private ComparableCurationRules<Integer> pageNamespaceIdRules;
-    @SerializedName("page_namespace_text") private CurationRules<String> pageNamespaceTextRules;
+    @SerializedName("page_namespace") private ComparableCurationRules<Integer> pageNamespaceRules;
+    @SerializedName("page_namespace_name") private CurationRules<String> pageNamespaceNameRules;
     @SerializedName("page_title") private CurationRules<String> pageTitleRules;
     @SerializedName("page_revision_id") private ComparableCurationRules<Integer> pageRevisionIdRules;
     @SerializedName("page_wikidata_id") private CurationRules<String> pageWikidataIdRules;
@@ -170,19 +170,19 @@ public class CurationFilter {
                 return false;
             }
         }
-        if (pageNamespaceIdRules != null) {
-            if (event.getPageData().getNamespaceId() == null) {
+        if (pageNamespaceRules != null) {
+            if (event.getPageData().getNamespace() == null) {
                 return false;
             }
-            if (!pageNamespaceIdRules.apply(event.getPageData().getNamespaceId())) {
+            if (!pageNamespaceRules.apply(event.getPageData().getNamespace())) {
                 return false;
             }
         }
-        if (pageNamespaceTextRules != null) {
-            if (event.getPageData().getNamespaceText() == null) {
+        if (pageNamespaceNameRules != null) {
+            if (event.getPageData().getNamespaceName() == null) {
                 return false;
             }
-            if (!pageNamespaceTextRules.apply(event.getPageData().getNamespaceText())) {
+            if (!pageNamespaceNameRules.apply(event.getPageData().getNamespaceName())) {
                 return false;
             }
         }

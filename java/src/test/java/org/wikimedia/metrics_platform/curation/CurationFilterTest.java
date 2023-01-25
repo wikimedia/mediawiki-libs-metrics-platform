@@ -20,7 +20,7 @@ class CurationFilterTest {
 
     @BeforeAll static void setUp() {
         Gson gson = new Gson();
-        String curationFilterJson = "{\"page_id\":{\"less_than\":500,\"not_equals\":42},\"page_namespace_text\":" +
+        String curationFilterJson = "{\"page_id\":{\"less_than\":500,\"not_equals\":42},\"page_namespace_name\":" +
                 "{\"equals\":\"Talk\"},\"performer_is_logged_in\":{\"equals\":true},\"performer_edit_count_bucket\":" +
                 "{\"in\":[\"100-999 edits\",\"1000+ edits\"]},\"performer_groups\":{\"contains_all\":" +
                 "[\"user\",\"autoconfirmed\"],\"does_not_contain\":\"sysop\"},\"device_pixel_ratio\":" +
@@ -29,7 +29,7 @@ class CurationFilterTest {
     }
 
     private static Event getBaseEvent() {
-        PageData pageData = PageData.builder().id(1).namespaceText("Talk").build();
+        PageData pageData = PageData.builder().id(1).namespaceName("Talk").build();
         PerformerData performerData = PerformerData.builder().groups(Arrays.asList("user", "autoconfirmed", "steward"))
                 .isLoggedIn(true).editCountBucket("1000+ edits").build();
         DeviceData deviceData = DeviceData.builder().pixelRatio(2.0f).build();
@@ -53,7 +53,7 @@ class CurationFilterTest {
 
     @Test void testEventFailsWrongPageNamespaceText() {
         Event event = getBaseEvent();
-        event.getPageData().setNamespaceText("User");
+        event.getPageData().setNamespaceName("User");
         assertThat(curationFilter.apply(event)).isFalse();
     }
 

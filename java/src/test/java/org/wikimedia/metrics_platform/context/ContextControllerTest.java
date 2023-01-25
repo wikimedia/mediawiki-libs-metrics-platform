@@ -35,8 +35,8 @@ class ContextControllerTest {
         assertThat(mediawikiData.getSiteContentLanguageVariant()).isEqualTo("en-zh");
 
         assertThat(pageData.getId()).isEqualTo(1);
-        assertThat(pageData.getNamespaceId()).isEqualTo(0);
-        assertThat(pageData.getNamespaceText()).isEmpty();
+        assertThat(pageData.getNamespace()).isEqualTo(0);
+        assertThat(pageData.getNamespaceName()).isEmpty();
         assertThat(pageData.getTitle()).isEqualTo("Test");
         assertThat(pageData.getIsRedirect()).isFalse();
         assertThat(pageData.getRevisionId()).isEqualTo(1);

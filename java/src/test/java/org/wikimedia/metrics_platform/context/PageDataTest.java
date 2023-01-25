@@ -13,9 +13,9 @@ class PageDataTest {
     @Test void testPageData() {
         PageData pageData = PageData.builder()
                 .id(1)
-                .namespaceId(0)
-                .namespaceText("")
                 .title("Test")
+                .namespace(0)
+                .namespaceName("")
                 .isRedirect(false)
                 .revisionId(1)
                 .wikidataItemId("Q1")
@@ -25,8 +25,8 @@ class PageDataTest {
                 .build();
 
         assertThat(pageData.getId()).isEqualTo(1);
-        assertThat(pageData.getNamespaceId()).isEqualTo(0);
-        assertThat(pageData.getNamespaceText()).isEmpty();
+        assertThat(pageData.getNamespace()).isEqualTo(0);
+        assertThat(pageData.getNamespaceName()).isEmpty();
         assertThat(pageData.getTitle()).isEqualTo("Test");
         assertThat(pageData.getIsRedirect()).isFalse();
         assertThat(pageData.getRevisionId()).isEqualTo(1);
@@ -37,9 +37,15 @@ class PageDataTest {
 
         Gson gson = new Gson();
         String json = gson.toJson(pageData);
-        assertThat(json).isEqualTo("{\"id\":1,\"namespace_id\":0,\"namespace_text\":\"\",\"title\":\"Test\"," +
-                "\"is_redirect\":false,\"revision_id\":1,\"wikidata_id\":\"Q1\",\"content_language\":\"zh\"," +
-                "\"user_groups_allowed_to_edit\":[],\"user_groups_allowed_to_move\":[]}");
+        assertThat(json).isEqualTo("{\"id\":1," +
+                "\"title\":\"Test\"," +
+                "\"namespace\":0,\"namespace_name\":\"\"," +
+                "\"revision_id\":1," +
+                "\"wikidata_id\":\"Q1\"," +
+                "\"content_language\":\"zh\"," +
+                "\"is_redirect\":false," +
+                "\"user_groups_allowed_to_edit\":[]," +
+                "\"user_groups_allowed_to_move\":[]}");
     }
 
 }
