@@ -7,6 +7,18 @@ import java.util.Collections;
 import java.util.List;
 
 public class TestClientMetadata implements ClientMetadata {
+    @Override
+    public String getAppInstallId() {
+        return "6f31a4fa-0a77-4c65-9994-f242fa58ce94";
+    }
+    @Override
+    public String getClientPlatform() {
+        return "android";
+    }
+    @Override
+    public String getClientPlatformFamily() {
+        return "app";
+    }
 
     @Override
     public Integer getPageId() {
@@ -135,10 +147,5 @@ public class TestClientMetadata implements ClientMetadata {
     @Override
     public Boolean isProduction() {
         return true;
-    }
-
-    @Override
-    public String getAppInstallId() {
-        return "6f31a4fa-0a77-4c65-9994-f242fa58ce94";
     }
 }

@@ -28,6 +28,9 @@ public final class SourceConfigFixtures {
         Set<String> testEvents = new HashSet<>(Collections.singletonList("test.event"));
         Set<String> events = hasEvents ? testEvents : emptyEvents;
         Set<String> requestedValuesSet = new HashSet<>(Arrays.asList(
+            "agent_app_install_id",
+            "agent_client_platform",
+            "agent_client_platform_family",
             "page_id",
             "page_namespace_id",
             "page_namespace_text",
@@ -53,8 +56,6 @@ public final class SourceConfigFixtures {
             "device_hardware_concurrency",
             "device_max_touch_points",
             "access_method",
-            "platform",
-            "platform_family",
             "is_production"
         ));
         SampleConfig sampleConfig = new SampleConfig(1.0, SampleConfig.Identifier.UNIT, "pageview");

@@ -1,6 +1,9 @@
 package org.wikimedia.metrics_platform.context;
 
 import static org.wikimedia.metrics_platform.context.ContextValue.ACCESS_METHOD;
+import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_INSTALL_ID;
+import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM;
+import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM_FAMILY;
 import static org.wikimedia.metrics_platform.context.ContextValue.DEVICE_HARDWARE_CONCURRENCY;
 import static org.wikimedia.metrics_platform.context.ContextValue.DEVICE_MAX_TOUCH_POINTS;
 import static org.wikimedia.metrics_platform.context.ContextValue.DEVICE_PIXEL_RATIO;
@@ -15,8 +18,6 @@ import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_TITLE;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_PERFORMER_GROUPS_ALLOWED_TO_EDIT;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_PERFORMER_GROUPS_ALLOWED_TO_MOVE;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_WIKIDATA_ID;
-import static org.wikimedia.metrics_platform.context.ContextValue.PLATFORM;
-import static org.wikimedia.metrics_platform.context.ContextValue.PLATFORM_FAMILY;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_NAME;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_IS_LOGGED_IN;
@@ -63,6 +64,17 @@ public class ContextController {
                 .getMetricsPlatformClientConfig().getRequestedValues();
         for (String value : requestedValues) {
             switch (value) {
+                // Agent
+                case AGENT_APP_INSTALL_ID:
+                    event.getAgentData().setAppInstallId(clientMetadata.getAppInstallId());
+                    break;
+                case AGENT_CLIENT_PLATFORM:
+                    event.getAgentData().setClientPlatform(clientMetadata.getClientPlatform());
+                    break;
+                case AGENT_CLIENT_PLATFORM_FAMILY:
+                    event.getAgentData().setClientPlatformFamily(clientMetadata.getClientPlatformFamily());
+                    break;
+
                 // Page
                 case PAGE_ID:
                     event.getPageData().setId(clientMetadata.getPageId());
@@ -144,12 +156,6 @@ public class ContextController {
                 // Other
                 case ACCESS_METHOD:
                     event.setAccessMethod("mobile app");
-                    break;
-                case PLATFORM:
-                    event.setPlatform("android");
-                    break;
-                case PLATFORM_FAMILY:
-                    event.setPlatformFamily("app");
                     break;
                 case IS_PRODUCTION:
                     event.setIsProduction(clientMetadata.isProduction());

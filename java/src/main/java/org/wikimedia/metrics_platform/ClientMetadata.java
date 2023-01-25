@@ -8,6 +8,9 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 @ParametersAreNonnullByDefault
 public interface ClientMetadata {
+    String getAppInstallId();
+    String getClientPlatform();
+    String getClientPlatformFamily();
     Integer getPageId();
     Integer getPageNamespaceId();
     String getPageNamespaceText();
@@ -36,6 +39,4 @@ public interface ClientMetadata {
     Integer getDeviceMaxTouchPoints();
 
     Boolean isProduction();
-
-    String getAppInstallId();
 }

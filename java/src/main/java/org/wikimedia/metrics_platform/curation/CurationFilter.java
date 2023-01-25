@@ -19,6 +19,9 @@ import lombok.ToString;
 @Builder @AllArgsConstructor @EqualsAndHashCode @ToString
 @ParametersAreNullableByDefault
 public class CurationFilter {
+    @SerializedName("app_install_id") private CurationRules<String> appInstallIdRules;
+    @SerializedName("client_platform") private CurationRules<String> clientPlatformRules;
+    @SerializedName("client_platform_family") private CurationRules<String> clientPlatformFamilyRules;
     @SerializedName("page_id") private ComparableCurationRules<Integer> pageIdRules;
     @SerializedName("page_namespace_id") private ComparableCurationRules<Integer> pageNamespaceIdRules;
     @SerializedName("page_namespace_text") private CurationRules<String> pageNamespaceTextRules;
@@ -51,12 +54,39 @@ public class CurationFilter {
 
     @SerializedName("access_method") private CurationRules<String> accessMethodRules;
     private CurationRules<String> platformRules;
-    @SerializedName("platform_family") private CurationRules<String> platformFamilyRules;
     @SerializedName("is_production") private CurationRules<Boolean> isProductionRules;
 
     @SuppressFBWarnings(value = "CC_CYCLOMATIC_COMPLEXITY", justification = "TODO: needs to be refactored!")
     @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity"})
     public boolean apply(@Nonnull Event event) {
+        // Agent
+
+        if (appInstallIdRules != null) {
+            if (event.getAgentData().getAppInstallId() == null) {
+                return false;
+            }
+            if (!appInstallIdRules.apply(event.getAgentData().getAppInstallId())) {
+                return false;
+            }
+        }
+        if (clientPlatformRules != null) {
+            if (event.getAgentData().getClientPlatform() == null) {
+                return false;
+            }
+            if (!clientPlatformRules.apply(event.getAgentData().getClientPlatform())) {
+                return false;
+            }
+        }
+        if (clientPlatformFamilyRules != null) {
+            if (event.getAgentData().getClientPlatformFamily() == null) {
+                return false;
+            }
+            if (!clientPlatformFamilyRules.apply(event.getAgentData().getClientPlatformFamily())) {
+                return false;
+            }
+        }
+
+
         // Page
 
         if (pageIdRules != null) {
@@ -140,7 +170,7 @@ public class CurationFilter {
             }
         }
 
-        // User
+        // Performer
 
         if (performerIdRules != null) {
             if (event.getPerformerData().getId() == null) {
@@ -265,22 +295,6 @@ public class CurationFilter {
                 return false;
             }
             if (!accessMethodRules.apply(event.getAccessMethod())) {
-                return false;
-            }
-        }
-        if (platformRules != null) {
-            if (event.getPlatform() == null) {
-                return false;
-            }
-            if (!platformRules.apply(event.getPlatform())) {
-                return false;
-            }
-        }
-        if (platformFamilyRules != null) {
-            if (event.getPlatformFamily() == null) {
-                return false;
-            }
-            if (!platformFamilyRules.apply(event.getPlatformFamily())) {
                 return false;
             }
         }
