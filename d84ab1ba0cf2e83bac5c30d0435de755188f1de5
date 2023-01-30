@@ -16,6 +16,23 @@
       "message": "lumping \"domain\" in with Meta -- in js, php, this property is part of the Integration class. For Java, I err\u0027d on getting the domain assignment from ClientMetadata",
       "revId": "d84ab1ba0cf2e83bac5c30d0435de755188f1de5",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "907e2a05_14a9cdcd",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyIT.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-30T19:23:43Z",
+      "side": 1,
+      "message": "Not sure if we want to add more properties to integration_data.json -- for now I removed the properties from the queuedEvent that didn\u0027t match what exists in integration_data.json",
+      "revId": "d84ab1ba0cf2e83bac5c30d0435de755188f1de5",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
