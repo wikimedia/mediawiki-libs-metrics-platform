@@ -41,11 +41,6 @@ public final class ContextValue {
     public static final String PERFORMER_EDIT_COUNT_BUCKET = "performer_edit_count_bucket";
     public static final String PERFORMER_REGISTRATION_DT = "performer_registration_dt";
 
-    public static final String DEVICE_PIXEL_RATIO = "device_pixel_ratio";
-    public static final String DEVICE_HARDWARE_CONCURRENCY = "device_hardware_concurrency";
-    public static final String DEVICE_MAX_TOUCH_POINTS = "device_max_touch_points";
-    public static final String ACCESS_METHOD = "access_method";
-
     private ContextValue() {
         // utility class should never be constructed
     }

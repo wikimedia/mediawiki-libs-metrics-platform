@@ -48,8 +48,7 @@ class MetricsClientTest {
         String curationFilterJson = "{\"page_id\":{\"less_than\":500,\"not_equals\":42},\"page_namespace_text\":" +
             "{\"equals\":\"Talk\"},\"user_is_logged_in\":{\"equals\":true},\"user_edit_count_bucket\":" +
             "{\"in\":[\"100-999 edits\",\"1000+ edits\"]},\"user_groups\":{\"contains_all\":" +
-            "[\"user\",\"autoconfirmed\"],\"does_not_contain\":\"sysop\"},\"device_pixel_ratio\":" +
-            "{\"greater_than_or_equals\":1.5,\"less_than_or_equals\":2.5}}";
+            "[\"user\",\"autoconfirmed\"],\"does_not_contain\":\"sysop\"}}";
         curationFilter = gson.fromJson(curationFilterJson, CurationFilter.class);
     }
 

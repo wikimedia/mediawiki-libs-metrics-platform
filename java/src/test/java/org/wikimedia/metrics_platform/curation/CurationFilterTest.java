@@ -22,8 +22,7 @@ class CurationFilterTest {
         String curationFilterJson = "{\"page_id\":{\"less_than\":500,\"not_equals\":42},\"page_namespace_name\":" +
                 "{\"equals\":\"Talk\"},\"performer_is_logged_in\":{\"equals\":true},\"performer_edit_count_bucket\":" +
                 "{\"in\":[\"100-999 edits\",\"1000+ edits\"]},\"performer_groups\":{\"contains_all\":" +
-                "[\"user\",\"autoconfirmed\"],\"does_not_contain\":\"sysop\"},\"device_pixel_ratio\":" +
-                "{\"greater_than_or_equals\":1.5,\"less_than_or_equals\":2.5}}";
+                "[\"user\",\"autoconfirmed\"],\"does_not_contain\":\"sysop\"}}";
         curationFilter = gson.fromJson(curationFilterJson, CurationFilter.class);
     }
 
