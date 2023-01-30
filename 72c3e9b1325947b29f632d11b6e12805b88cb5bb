@@ -18,6 +18,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "040a9da7_b0702a97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-30T19:17:31Z",
+      "side": 1,
+      "message": "stored expected event as a json file for all clients to test against",
+      "parentUuid": "a62a613a_ed3396ca",
+      "revId": "72c3e9b1325947b29f632d11b6e12805b88cb5bb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4dc51607_9fa9a2a0",
@@ -35,6 +53,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7f6d249_5e3999f3",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-30T19:17:31Z",
+      "side": 1,
+      "message": "it does now",
+      "parentUuid": "4dc51607_9fa9a2a0",
+      "revId": "72c3e9b1325947b29f632d11b6e12805b88cb5bb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6193a1aa_bbe802ad",
@@ -48,6 +84,30 @@
       "writtenOn": "2023-01-17T14:24:52Z",
       "side": 1,
       "message": "In the other implementations, we\u0027ve matched the names of these constants to the string value, e.g.\n\n AGENT_APP_INSTALL_ID: \"agent_app_install_id\"\n AGENT_CLIENT_PLATFORM: \"agent_client_platform\"\n \netc.\n\nI suggest that we do the same here to be consistent but I don\u0027t think it needs to be done _right now_.",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 64
+      },
+      "revId": "72c3e9b1325947b29f632d11b6e12805b88cb5bb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31bb0ba3_ba1433c5",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/ContextValue.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-30T19:17:31Z",
+      "side": 1,
+      "message": "Done in relation chain - https://gerrit.wikimedia.org/r/c/mediawiki/libs/metrics-platform/+/882995",
+      "parentUuid": "6193a1aa_bbe802ad",
       "range": {
         "startLine": 7,
         "startChar": 4,
