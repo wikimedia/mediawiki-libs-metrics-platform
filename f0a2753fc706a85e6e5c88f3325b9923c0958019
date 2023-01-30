@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5c9702b1_ff6c295c",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-30T19:32:29Z",
+      "side": 0,
+      "message": "https://gerrit.wikimedia.org/r/c/mediawiki/libs/metrics-platform/+/884995 as part of this relation chain",
+      "parentUuid": "fc7101b2_6befbcc5",
+      "revId": "f0a2753fc706a85e6e5c88f3325b9923c0958019",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a424e868_3a2b2a04",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
         "patchSetId": 7
