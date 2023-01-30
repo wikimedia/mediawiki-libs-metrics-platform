@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc7101b2_6befbcc5",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-30T19:22:27Z",
+      "side": 0,
+      "message": "err\u0027d on the side of removing these properties since they\u0027re not in the monoschema - will follow up with a clean up patch to remove associated classes/tests",
+      "revId": "f0a2753fc706a85e6e5c88f3325b9923c0958019",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a424e868_3a2b2a04",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-30T19:22:27Z",
+      "side": 0,
+      "message": "err\u0027d on the side of removing this property since it\u0027s not in the monoschema",
+      "revId": "f0a2753fc706a85e6e5c88f3325b9923c0958019",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23102e0d_27689e97",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EventTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-30T19:22:27Z",
+      "side": 0,
+      "message": "err\u0027d on the side of removing this property since it\u0027s not in the monoschema",
+      "revId": "f0a2753fc706a85e6e5c88f3325b9923c0958019",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}

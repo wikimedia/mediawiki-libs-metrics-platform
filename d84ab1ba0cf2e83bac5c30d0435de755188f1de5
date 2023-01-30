@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0aa61e63_a4c55cff",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-30T19:22:27Z",
+      "side": 1,
+      "message": "lumping \"domain\" in with Meta -- in js, php, this property is part of the Integration class. For Java, I err\u0027d on getting the domain assignment from ClientMetadata",
+      "revId": "d84ab1ba0cf2e83bac5c30d0435de755188f1de5",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
