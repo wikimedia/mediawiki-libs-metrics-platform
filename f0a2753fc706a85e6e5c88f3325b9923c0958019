@@ -53,6 +53,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9719d626_05797961",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-31T10:31:11Z",
+      "side": 0,
+      "message": "Good call. It\u0027s superseded by the properties in agent.",
+      "parentUuid": "a424e868_3a2b2a04",
+      "revId": "f0a2753fc706a85e6e5c88f3325b9923c0958019",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "23102e0d_27689e97",

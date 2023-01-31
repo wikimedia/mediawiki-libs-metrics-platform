@@ -1,6 +1,46 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9815949d_ad7efc0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-31T10:31:11Z",
+      "side": 1,
+      "message": "See inline for a nit and a question. Nice work!",
+      "revId": "d84ab1ba0cf2e83bac5c30d0435de755188f1de5",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8da94a78_2ce1c8ec",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-31T10:31:11Z",
+      "side": 1,
+      "message": "import?",
+      "range": {
+        "startLine": 51,
+        "startChar": 34,
+        "endLine": 51,
+        "endChar": 83
+      },
+      "revId": "d84ab1ba0cf2e83bac5c30d0435de755188f1de5",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0aa61e63_a4c55cff",
@@ -18,6 +58,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80fee66b_8981519f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-31T10:31:11Z",
+      "side": 1,
+      "message": "domain is indeed a field in event.meta. It\u0027s specified in https://gerrit.wikimedia.org/r/plugins/gitiles/schemas/event/primary/+/refs/heads/master/jsonschema/fragment/common/current.yaml#36",
+      "parentUuid": "0aa61e63_a4c55cff",
+      "revId": "d84ab1ba0cf2e83bac5c30d0435de755188f1de5",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "907e2a05_14a9cdcd",
@@ -31,6 +89,24 @@
       "writtenOn": "2023-01-30T19:23:43Z",
       "side": 1,
       "message": "Not sure if we want to add more properties to integration_data.json -- for now I removed the properties from the queuedEvent that didn\u0027t match what exists in integration_data.json",
+      "revId": "d84ab1ba0cf2e83bac5c30d0435de755188f1de5",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "454648f9_742cbe7b",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyIT.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-01-31T10:31:11Z",
+      "side": 1,
+      "message": "What does the output JSON look like if you don\u0027t remote the extra properties?\n\nThe integration_data.json was generated for a logged-out user – one that doesn\u0027t have a name, edit count (plain and bucketized), and registration timestamp. Since those context attributes aren\u0027t available, I wouldn\u0027t the corresponding fields to be set on the event.",
+      "parentUuid": "907e2a05_14a9cdcd",
       "revId": "d84ab1ba0cf2e83bac5c30d0435de755188f1de5",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
