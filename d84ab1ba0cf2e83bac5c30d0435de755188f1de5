@@ -41,6 +41,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b8a6c0d_60d00799",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/Event.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-31T16:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8da94a78_2ce1c8ec",
+      "range": {
+        "startLine": 51,
+        "startChar": 34,
+        "endLine": 51,
+        "endChar": 83
+      },
+      "revId": "d84ab1ba0cf2e83bac5c30d0435de755188f1de5",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0aa61e63_a4c55cff",
@@ -107,6 +131,24 @@
       "side": 1,
       "message": "What does the output JSON look like if you don\u0027t remote the extra properties?\n\nThe integration_data.json was generated for a logged-out user – one that doesn\u0027t have a name, edit count (plain and bucketized), and registration timestamp. Since those context attributes aren\u0027t available, I wouldn\u0027t the corresponding fields to be set on the event.",
       "parentUuid": "907e2a05_14a9cdcd",
+      "revId": "d84ab1ba0cf2e83bac5c30d0435de755188f1de5",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b289772b_20d7badb",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyIT.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-01-31T16:52:47Z",
+      "side": 1,
+      "message": "per our discussion - I created a follow up ticket for only outputting fields that have values:\nhttps://phabricator.wikimedia.org/T328458\n\nfor now, I\u0027ve added a comment about this inline",
+      "parentUuid": "454648f9_742cbe7b",
       "revId": "d84ab1ba0cf2e83bac5c30d0435de755188f1de5",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
