@@ -16,6 +16,24 @@
       "message": "when I run the consistency test locally, i get an error for php:\nhttps://phabricator.wikimedia.org/F36578103\n\nam I missing something in my set up? \nJenkins doesn\u0027t run the consistency test in the php job right?",
       "revId": "5730e493cd165e66e06995d00d833eeb8733aa53",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "001b688e_a1b7646b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-02-02T13:11:20Z",
+      "side": 1,
+      "message": "Nice catch. Fixed!",
+      "parentUuid": "7227eef0_ca978682",
+      "revId": "5730e493cd165e66e06995d00d833eeb8733aa53",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
