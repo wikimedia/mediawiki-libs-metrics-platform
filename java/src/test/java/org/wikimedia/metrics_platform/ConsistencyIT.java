@@ -1,7 +1,7 @@
 package org.wikimedia.metrics_platform;
 
 import static java.util.Collections.singletonMap;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.wikimedia.metrics_platform.ConsistencyITClientMetadata.createConsistencyTestClientMetadata;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.ANALYTICS_API_ENDPOINT;
 
@@ -27,11 +27,9 @@ import org.wikimedia.metrics_platform.context.ContextController;
 import org.wikimedia.metrics_platform.curation.CurationController;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-@SuppressWarnings("checkstyle:classfanoutcomplexity")
 class ConsistencyIT {
 
     @Test void testConsistency() throws IOException {
@@ -73,20 +71,12 @@ class ConsistencyIT {
                 JsonObject expectedEventJsonObject = JsonParser.parseReader(expectedEventReader).getAsJsonObject();
 
                 Gson gson = new Gson();
-                String expectedEventJsonString = gson.toJson(expectedEventJsonObject);
                 String queuedEventJsonStringRaw = gson.toJson(queuedEvent);
                 JsonObject queuedEventJsonObject = JsonParser.parseString(queuedEventJsonStringRaw).getAsJsonObject();
-
-                // For now we are removing properties that output empty values in order to match the expected
-                // event json. This will be addressed by https://phabricator.wikimedia.org/T328458 upon
-                // completion of which, the following line and method can be removed.
+                // Remove the timestamp properties from the queued event to match the expected event json.
                 removeExtraProperties(queuedEventJsonObject);
-                String queuedEventJsonString = gson.toJson(queuedEventJsonObject);
 
-                JsonElement expectedEventJsonElement = JsonParser.parseString(expectedEventJsonString);
-                JsonElement queuedEventJsonElement = JsonParser.parseString(queuedEventJsonString);
-
-                assertEquals(expectedEventJsonElement, queuedEventJsonElement);
+                assertThat(queuedEventJsonObject).isEqualTo(expectedEventJsonObject);
             }
         }
     }
@@ -137,13 +127,6 @@ class ConsistencyIT {
 
     private static void removeExtraProperties(JsonObject eventJsonObject) {
         eventJsonObject.remove("dt");
-        eventJsonObject
-                .getAsJsonObject("mediawiki")
-                .remove("site_content_language_variant");
-        eventJsonObject.getAsJsonObject("performer").remove("name");
-        eventJsonObject.getAsJsonObject("performer").remove("language_variant");
-        eventJsonObject.getAsJsonObject("performer").remove("edit_count");
-        eventJsonObject.getAsJsonObject("performer").remove("edit_count_bucket");
         eventJsonObject.getAsJsonObject("performer").remove("registration_dt");
     }
 }

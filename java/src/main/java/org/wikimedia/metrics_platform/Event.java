@@ -16,7 +16,6 @@ import org.wikimedia.metrics_platform.context.PerformerData;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Data;
-import lombok.NonNull;
 
 @Data
 @ParametersAreNullableByDefault
@@ -26,10 +25,10 @@ public class Event {
     @SerializedName("dt") private String timestamp;
     @SerializedName("custom_data") private Map<String, Object> customData;
     private final Meta meta;
-    @SerializedName("agent") @NonNull private AgentData agentData = new AgentData();
-    @SerializedName("page") @NonNull private PageData pageData = new PageData();
-    @SerializedName("mediawiki") @NonNull private MediawikiData mediawikiData = new MediawikiData();
-    @SerializedName("performer") @NonNull private PerformerData performerData = new PerformerData();
+    @SerializedName("agent") private AgentData agentData;
+    @SerializedName("page") private PageData pageData;
+    @SerializedName("mediawiki") private MediawikiData mediawikiData;
+    @SerializedName("performer") private PerformerData performerData;
 
     public Event(String schema, String stream, String name) {
         this.schema = schema;
@@ -43,6 +42,34 @@ public class Event {
 
     public String getDomain() {
         return meta.getDomain();
+    }
+
+    public AgentData getAgentData() {
+        if (this.agentData == null) {
+            this.agentData = new AgentData();
+        }
+        return this.agentData;
+    }
+
+    public PageData getPageData() {
+        if (this.pageData == null) {
+            this.pageData = new PageData();
+        }
+        return this.pageData;
+    }
+
+    public MediawikiData getMediawikiData() {
+        if (this.mediawikiData == null) {
+            this.mediawikiData = new MediawikiData();
+        }
+        return this.mediawikiData;
+    }
+
+    public PerformerData getPerformerData() {
+        if (this.performerData == null) {
+            this.performerData = new PerformerData();
+        }
+        return this.performerData;
     }
 
     public void setDomain(String domain) {

@@ -49,6 +49,14 @@ class EventTest {
         assertThat(event.getAgentData().getClientPlatform()).isEqualTo("android");
         assertThat(event.getAgentData().getClientPlatformFamily()).isEqualTo("app");
 
+        assertThat(event.getMediawikiData().getSkin()).isEqualTo("vector");
+        assertThat(event.getMediawikiData().getVersion()).isEqualTo("1.40.0-wmf.19");
+        assertThat(event.getMediawikiData().getIsProduction()).isTrue();
+        assertThat(event.getMediawikiData().getIsDebugMode()).isFalse();
+        assertThat(event.getMediawikiData().getDatabase()).isEqualTo("enwiki");
+        assertThat(event.getMediawikiData().getSiteContentLanguage()).isEqualTo("en");
+        assertThat(event.getMediawikiData().getSiteContentLanguageVariant()).isEqualTo("en-zh");
+
         Gson gson = new Gson();
         String json = gson.toJson(event);
         assertThat(json).isEqualTo(String.format(Locale.ROOT,
@@ -60,15 +68,13 @@ class EventTest {
                             "\"agent\":{\"app_install_id\":\"%s\"," +
                             "\"client_platform\":\"android\"," +
                             "\"client_platform_family\":\"app\"}," +
-                            "\"page\":{}," +
                             "\"mediawiki\":{\"skin\":\"vector\"," +
                             "\"version\":\"1.40.0-wmf.19\"," +
                             "\"is_production\":true," +
                             "\"is_debug_mode\":false," +
                             "\"database\":\"enwiki\"," +
                             "\"site_content_language\":\"en\"," +
-                            "\"site_content_language_variant\":\"en-zh\"}," +
-                            "\"performer\":{}" +
+                            "\"site_content_language_variant\":\"en-zh\"}" +
                         "}", uuid, uuid));
     }
 

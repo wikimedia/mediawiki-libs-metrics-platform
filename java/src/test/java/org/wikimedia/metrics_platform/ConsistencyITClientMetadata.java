@@ -146,12 +146,12 @@ public class ConsistencyITClientMetadata implements ClientMetadata {
 
     @Override
     public String getMediawikiSiteContentLanguage() {
-        return mediawiki.has("site_content_language") ? mediawiki.get("site_content_language").getAsString() : "";
+        return mediawiki.has("site_content_language") ? mediawiki.get("site_content_language").getAsString() : null;
     }
 
     @Override
     public String getMediawikiSiteContentLanguageVariant() {
-        return mediawiki.has("site_content_language_variant") ? mediawiki.get("site_content_language_variant").getAsString() : "";
+        return mediawiki.has("site_content_language_variant") ? mediawiki.get("site_content_language_variant").getAsString() : null;
     }
 
     // Performer
@@ -163,7 +163,7 @@ public class ConsistencyITClientMetadata implements ClientMetadata {
 
     @Override
     public String getPerformerName() {
-        return performer.has("name") ? performer.get("name").getAsString() : "";
+        return performer.has("name") ? performer.get("name").getAsString() : null;
     }
 
     @Override
@@ -199,7 +199,7 @@ public class ConsistencyITClientMetadata implements ClientMetadata {
 
     @Override
     public String getPerformerLanguageVariant() {
-        return performer.has("language_variant") ? performer.get("language_variant").getAsString() : "";
+        return performer.has("language_variant") ? performer.get("language_variant").getAsString() : null;
     }
 
     @Override
@@ -209,12 +209,12 @@ public class ConsistencyITClientMetadata implements ClientMetadata {
 
     @Override
     public Integer getPerformerEditCount() {
-        return performer.has("edit_count") ? performer.get("edit_count").getAsInt() : 0;
+        return performer.has("edit_count") ? performer.get("edit_count").getAsInt() : null;
     }
 
     @Override
     public String getPerformerEditCountBucket() {
-        return performer.has("edit_count_bucket") ? performer.get("edit_count_bucket").getAsString() : "";
+        return performer.has("edit_count_bucket") ? performer.get("edit_count_bucket").getAsString() : null;
     }
 
     @Override
