@@ -131,6 +131,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "91574d1c_733c0b75",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/MediawikiDataSerializer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-02-08T17:55:23Z",
+      "side": 1,
+      "message": "latest ps removes custom type adapters and relies on null values which are by default excluded",
+      "parentUuid": "9d327a2d_b23ef65f",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 63
+      },
+      "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "63bbbd08_2edb28eb",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyIT.java",
         "patchSetId": 1
