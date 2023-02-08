@@ -6,13 +6,10 @@ import static org.wikimedia.metrics_platform.ConsistencyITClientMetadata.createC
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.ANALYTICS_API_ENDPOINT;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -42,10 +39,9 @@ class ConsistencyIT {
         Path pathExpectedEvent = Paths.get("../tests/consistency/expected_event.json");
 
         try (BufferedReader reader = Files.newBufferedReader(pathStreamConfigs)) {
-            InputStreamReader targetStreamReader = convertToInputStreamReader(reader);
 
             // Init shared test config + variables for creating new metrics client + event processor.
-            Map<String, StreamConfig> testStreamConfigs = getTestStreamConfigs(targetStreamReader);
+            Map<String, StreamConfig> testStreamConfigs = getTestStreamConfigs(reader);
             SourceConfig sourceConfig = new SourceConfig(testStreamConfigs);
             AtomicReference<SourceConfig> sourceConfigRef = new AtomicReference<>();
             sourceConfigRef.set(sourceConfig);
@@ -133,21 +129,10 @@ class ConsistencyIT {
         );
     }
 
-    private static Map<String, StreamConfig> getTestStreamConfigs(InputStreamReader reader) throws MalformedURLException {
+    private static Map<String, StreamConfig> getTestStreamConfigs(Reader reader) throws MalformedURLException {
         StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT));
         return streamConfigFetcher.parseConfig(reader);
 
-    }
-
-    private static InputStreamReader convertToInputStreamReader(BufferedReader reader) throws IOException {
-        char[] charBuffer = new char[8 * 1024];
-        StringBuilder builder = new StringBuilder();
-        int numCharsRead;
-        while ((numCharsRead = reader.read(charBuffer, 0, charBuffer.length)) != -1) {
-            builder.append(charBuffer, 0, numCharsRead);
-        }
-        InputStream targetStream = new ByteArrayInputStream(builder.toString().getBytes(StandardCharsets.UTF_8));
-        return new InputStreamReader(targetStream, StandardCharsets.UTF_8);
     }
 
     private static void removeExtraProperties(JsonObject eventJsonObject) {
