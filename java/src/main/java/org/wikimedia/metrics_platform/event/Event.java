@@ -1,4 +1,4 @@
-package org.wikimedia.metrics_platform;
+package org.wikimedia.metrics_platform.event;
 
 import java.util.HashMap;
 import java.util.Locale;

@@ -23,8 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.config.StreamConfigFetcher;
-import org.wikimedia.metrics_platform.context.ContextController;
-import org.wikimedia.metrics_platform.curation.CurationController;
+import org.wikimedia.metrics_platform.event.Event;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

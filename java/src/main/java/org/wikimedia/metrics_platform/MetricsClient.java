@@ -28,9 +28,8 @@ import java.util.logging.Level;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.config.StreamConfigFetcher;
-import org.wikimedia.metrics_platform.context.ContextController;
 import org.wikimedia.metrics_platform.context.CustomData;
-import org.wikimedia.metrics_platform.curation.CurationController;
+import org.wikimedia.metrics_platform.event.Event;
 
 import lombok.extern.java.Log;
 

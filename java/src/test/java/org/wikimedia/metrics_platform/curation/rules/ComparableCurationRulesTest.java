@@ -3,6 +3,7 @@ package org.wikimedia.metrics_platform.curation.rules;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
+import org.wikimedia.metrics_platform.curation.ComparableCurationRules;
 
 class ComparableCurationRulesTest {
 

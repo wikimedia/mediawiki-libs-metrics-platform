@@ -103,11 +103,13 @@
                 <executions>
                     <execution>
                         <id>enforce-no-package-cycles</id>
-                        <!--
-                            Disable enforcer as this project has package cyclic dependencies.
-                            This needs to be re-enabled once cyclic dependencies are fixed.
-                        -->
-                        <phase>none</phase>
+                        <configuration>
+                            <rules>
+                                <NoPackageCyclesRule implementation="de.andrena.tools.nopackagecycles.NoPackageCyclesRule">
+                                    <includeTests>false</includeTests>
+                                </NoPackageCyclesRule>
+                            </rules>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

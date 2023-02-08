@@ -7,11 +7,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.wikimedia.metrics_platform.DestinationEventService;
-import org.wikimedia.metrics_platform.curation.CurationFilter;
-import org.wikimedia.metrics_platform.curation.rules.CollectionCurationRules;
-import org.wikimedia.metrics_platform.curation.rules.CurationRules;
-
 public final class SourceConfigFixtures {
 
     public static final Map<String, StreamConfig> STREAM_CONFIGS_WITH_EVENTS = new HashMap<String, StreamConfig>() {{
@@ -72,18 +67,11 @@ public final class SourceConfigFixtures {
                 new StreamConfig.MetricsPlatformClientConfig(
                     events,
                     requestedValuesSet,
-                    CurationFilter.builder()
-                        .pageTitleRules(CurationRules.<String>builder().isEquals("Test").build())
-                        .performerGroupsRules(
-                            CollectionCurationRules.<String>builder()
-                                .doesNotContain("sysop")
-                                .containsAny(Arrays.asList("steward", "bureaucrat"))
-                                .build()
-                        )
-                        .build()
+                        CurationFilterFixtures.getCurationFilter()
                 )
             ),
             sampleConfig
         );
     }
+
 }

@@ -1,12 +1,12 @@
-package org.wikimedia.metrics_platform.curation;
+package org.wikimedia.metrics_platform.config;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNullableByDefault;
 
-import org.wikimedia.metrics_platform.Event;
-import org.wikimedia.metrics_platform.curation.rules.CollectionCurationRules;
-import org.wikimedia.metrics_platform.curation.rules.ComparableCurationRules;
-import org.wikimedia.metrics_platform.curation.rules.CurationRules;
+import org.wikimedia.metrics_platform.curation.CollectionCurationRules;
+import org.wikimedia.metrics_platform.curation.ComparableCurationRules;
+import org.wikimedia.metrics_platform.curation.CurationRules;
+import org.wikimedia.metrics_platform.event.Event;
 
 import com.google.gson.annotations.SerializedName;
 

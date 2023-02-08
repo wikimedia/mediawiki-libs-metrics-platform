@@ -1,4 +1,4 @@
-package org.wikimedia.metrics_platform;
+package org.wikimedia.metrics_platform.config;
 
 import static lombok.AccessLevel.PRIVATE;
 

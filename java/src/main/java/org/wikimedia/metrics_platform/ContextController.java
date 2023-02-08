@@ -1,4 +1,4 @@
-package org.wikimedia.metrics_platform.context;
+package org.wikimedia.metrics_platform;
 
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_INSTALL_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM;
@@ -41,9 +41,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.wikimedia.metrics_platform.Event;
-import org.wikimedia.metrics_platform.ClientMetadata;
 import org.wikimedia.metrics_platform.config.StreamConfig;
+import org.wikimedia.metrics_platform.event.Event;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 

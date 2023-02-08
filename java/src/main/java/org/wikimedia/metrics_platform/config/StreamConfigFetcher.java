@@ -14,8 +14,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.StreamSupport;
 
-import org.wikimedia.metrics_platform.DestinationEventService;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;

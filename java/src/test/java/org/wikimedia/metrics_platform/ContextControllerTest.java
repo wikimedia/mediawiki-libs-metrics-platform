@@ -1,12 +1,15 @@
-package org.wikimedia.metrics_platform.context;
+package org.wikimedia.metrics_platform;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
-import org.wikimedia.metrics_platform.Event;
-import org.wikimedia.metrics_platform.TestClientMetadata;
 import org.wikimedia.metrics_platform.config.SourceConfigFixtures;
 import org.wikimedia.metrics_platform.config.StreamConfig;
+import org.wikimedia.metrics_platform.context.AgentData;
+import org.wikimedia.metrics_platform.context.MediawikiData;
+import org.wikimedia.metrics_platform.context.PageData;
+import org.wikimedia.metrics_platform.context.PerformerData;
+import org.wikimedia.metrics_platform.event.Event;
 
 class ContextControllerTest {
 

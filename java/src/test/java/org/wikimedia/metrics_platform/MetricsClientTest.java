@@ -4,9 +4,9 @@ import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.METRICS_PLATFORM_SCHEMA_TITLE;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM_FAMILY;
-import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.METRICS_PLATFORM_SCHEMA_TITLE;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_TITLE;
 
 import java.util.Arrays;
@@ -24,10 +24,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.wikimedia.metrics_platform.config.CurationFilter;
+import org.wikimedia.metrics_platform.config.DestinationEventService;
 import org.wikimedia.metrics_platform.config.SampleConfig;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
-import org.wikimedia.metrics_platform.curation.CurationFilter;
+import org.wikimedia.metrics_platform.event.Event;
 
 import com.google.gson.Gson;
 

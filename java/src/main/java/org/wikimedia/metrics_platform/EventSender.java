@@ -3,6 +3,8 @@ package org.wikimedia.metrics_platform;
 import java.io.IOException;
 import java.util.Collection;
 
+import org.wikimedia.metrics_platform.event.Event;
+
 public interface EventSender {
 
     /**

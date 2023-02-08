@@ -1,10 +1,8 @@
 package org.wikimedia.metrics_platform;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.wikimedia.metrics_platform.MetricsClientTest.getTestSourceConfig;
@@ -23,8 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfigFetcher;
-import org.wikimedia.metrics_platform.context.ContextController;
-import org.wikimedia.metrics_platform.curation.CurationController;
+import org.wikimedia.metrics_platform.event.Event;
 
 @ExtendWith(MockitoExtension.class)
 class EventProcessorTest {
@@ -50,8 +47,6 @@ class EventProcessorTest {
     }
 
     @Test void testSendEnqueuedEvents() throws IOException {
-        doReturn(true).when(mockCurationController).eventPassesCurationRules(any(), any());
-
         Event event = new Event("test_schema", "test_stream", "test_event");
         eventQueue.offer(event);
         eventProcessor.sendEnqueuedEvents();
@@ -60,8 +55,6 @@ class EventProcessorTest {
     }
 
     @Test void testEventsRemovedFromOutputBufferOnSuccess() {
-        doReturn(true).when(mockCurationController).eventPassesCurationRules(any(), any());
-
         Event event = new Event(StreamConfigFetcher.METRICS_PLATFORM_SCHEMA_TITLE, "test_stream", "test_event");
         eventQueue.offer(event);
         eventProcessor.sendEnqueuedEvents();
@@ -70,7 +63,6 @@ class EventProcessorTest {
     }
 
     @Test void testEventsRemainInOutputBufferOnFailure() throws IOException {
-        doReturn(true).when(mockCurationController).eventPassesCurationRules(any(), any());
         doThrow(IOException.class).when(mockEventSender).sendEvents(anyString(), anyCollection());
         Event event = new Event("test_schema", "test_stream", "test_event");
         eventQueue.offer(event);
@@ -81,7 +73,6 @@ class EventProcessorTest {
     }
 
     @Test void eventsAreEnrichedBeforeBeingSent() throws IOException {
-        doReturn(true).when(mockCurationController).eventPassesCurationRules(any(), any());
         ArgumentCaptor<Collection<Event>> eventCaptor = ArgumentCaptor.forClass(Collection.class);
 
         Event event = new Event("test_schema", "test_stream", "test_event");

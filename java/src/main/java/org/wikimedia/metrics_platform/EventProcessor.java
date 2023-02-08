@@ -13,13 +13,13 @@ import java.util.logging.Level;
 
 import javax.annotation.concurrent.ThreadSafe;
 
+import org.wikimedia.metrics_platform.config.CurationFilter;
+import org.wikimedia.metrics_platform.config.DestinationEventService;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
-import org.wikimedia.metrics_platform.context.ContextController;
-import org.wikimedia.metrics_platform.curation.CurationController;
+import org.wikimedia.metrics_platform.event.Event;
 
 import lombok.extern.java.Log;
-
 
 @ThreadSafe
 @Log
@@ -29,11 +29,6 @@ public class EventProcessor {
      * Enriches event data with context data requested in the stream configuration.
      */
     private final ContextController contextController;
-
-    /**
-     * Applies stream data curation rules specified in the stream configuration.
-     */
-    private final CurationController curationController;
 
     private final AtomicReference<SourceConfig> sourceConfig;
     private final BlockingQueue<Event> eventQueue;
@@ -51,7 +46,6 @@ public class EventProcessor {
             BlockingQueue<Event> eventQueue
     ) {
         this.contextController = contextController;
-        this.curationController = curationController;
         this.sourceConfig = sourceConfig;
         this.eventSender = eventSender;
         this.eventQueue = eventQueue;
@@ -87,7 +81,16 @@ public class EventProcessor {
     protected boolean eventPassesCurationRules(Event event, Map<String, StreamConfig> streamConfigMap) {
         StreamConfig streamConfig = streamConfigMap.get(event.getStream());
         contextController.addRequestedValues(event, streamConfig);
-        return curationController.eventPassesCurationRules(event, streamConfig);
+        StreamConfig.ProducerConfig producerConfig = streamConfig.getProducerConfig();
+        if (producerConfig == null) return true;
+
+        StreamConfig.MetricsPlatformClientConfig metricsPlatformClientConfig = producerConfig.getMetricsPlatformClientConfig();
+        if (metricsPlatformClientConfig == null) return true;
+
+        CurationFilter curationFilter = metricsPlatformClientConfig.getCurationFilter();
+        if (curationFilter == null) return true;
+
+        return curationFilter.apply(event);
     }
 
     private DestinationEventService destinationEventService(Event event, Map<String, StreamConfig> streamConfigMap) {

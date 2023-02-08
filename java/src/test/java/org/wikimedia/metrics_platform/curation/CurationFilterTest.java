@@ -7,7 +7,8 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.wikimedia.metrics_platform.Event;
+import org.wikimedia.metrics_platform.event.Event;
+import org.wikimedia.metrics_platform.config.CurationFilter;
 import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.PerformerData;
 

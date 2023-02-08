@@ -7,9 +7,6 @@ import java.util.Set;
 import javax.annotation.ParametersAreNullableByDefault;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.wikimedia.metrics_platform.DestinationEventService;
-import org.wikimedia.metrics_platform.curation.CurationFilter;
-
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Value;
@@ -22,7 +19,8 @@ public class StreamConfig {
 
     @SerializedName("schema_title") String schemaTitle;
 
-    @SerializedName("destination_event_service") DestinationEventService destinationEventService;
+    @SerializedName("destination_event_service")
+    DestinationEventService destinationEventService;
 
     @SerializedName("producers") ProducerConfig producerConfig;
 

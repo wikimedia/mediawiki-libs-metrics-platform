@@ -1,4 +1,4 @@
-package org.wikimedia.metrics_platform.curation.rules;
+package org.wikimedia.metrics_platform.curation;
 
 import java.util.Collection;
 

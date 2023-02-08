@@ -6,7 +6,6 @@ import static org.wikimedia.metrics_platform.config.SampleConfig.Identifier.SESS
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
-import org.wikimedia.metrics_platform.DestinationEventService;
 
 import com.google.gson.Gson;
 
