@@ -58,6 +58,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bf19d75_efbb9601",
+        "filename": "java/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-02-08T15:27:50Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "d83741a7_4aace414",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 37,
+        "endChar": 36
+      },
+      "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d409ba1_d534aaab",
@@ -71,6 +95,30 @@
       "writtenOn": "2023-02-08T11:02:39Z",
       "side": 1,
       "message": "The previous test removed those elements unconditionnally, now we are removing them only when empty. Gson **should not** serialize null values anyway (see https://github.com/google/gson/blob/master/UserGuide.md#finer-points-with-objects).\n\nI\u0027m not sure I understand the test case well enough, but this seems a bit suspicious.",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 63
+      },
+      "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d327a2d_b23ef65f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/MediawikiDataSerializer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-02-08T15:27:50Z",
+      "side": 1,
+      "message": "per our last convo - i will look into making these properties null a bit earlier",
+      "parentUuid": "8d409ba1_d534aaab",
       "range": {
         "startLine": 17,
         "startChar": 12,
@@ -104,6 +152,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de4542aa_957eecae",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-02-08T15:27:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63bbbd08_2edb28eb",
+      "range": {
+        "startLine": 90,
+        "startChar": 23,
+        "endLine": 90,
+        "endChar": 46
+      },
+      "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d9a9db6_5b4f30f2",
@@ -117,6 +189,30 @@
       "writtenOn": "2023-02-08T11:02:39Z",
       "side": 1,
       "message": "nit: we try to standardize on AssertJ assertions.",
+      "range": {
+        "startLine": 101,
+        "startChar": 16,
+        "endLine": 101,
+        "endChar": 28
+      },
+      "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "263ba0f1_a846e14b",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-02-08T15:27:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d9a9db6_5b4f30f2",
       "range": {
         "startLine": 101,
         "startChar": 16,
