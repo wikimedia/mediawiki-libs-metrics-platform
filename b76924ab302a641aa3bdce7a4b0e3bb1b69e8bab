@@ -148,6 +148,30 @@
       },
       "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2586e89_f7c7a589",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-02-08T13:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39470233_f19c9170",
+      "range": {
+        "startLine": 150,
+        "startChar": 37,
+        "endLine": 150,
+        "endChar": 63
+      },
+      "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
