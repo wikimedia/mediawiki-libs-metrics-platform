@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toSet;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.HashMap;
@@ -51,9 +52,9 @@ public class StreamConfigFetcher {
     }
 
     // Visible For Testing
-    public Map<String, StreamConfig> parseConfig(InputStreamReader inputStreamReader) {
+    public Map<String, StreamConfig> parseConfig(Reader reader) {
         Map<String, StreamConfig> streamConfigs = new HashMap<>();
-        JsonElement rootObject = JsonParser.parseReader(new JsonReader(inputStreamReader));
+        JsonElement rootObject = JsonParser.parseReader(new JsonReader(reader));
         JsonObject streamsRoot = rootObject.getAsJsonObject();
         JsonObject streams = streamsRoot.get("streams").getAsJsonObject();
         for (Map.Entry<String, JsonElement> entry : streams.entrySet()) {
