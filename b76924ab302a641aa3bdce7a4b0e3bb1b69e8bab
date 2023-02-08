@@ -16,6 +16,138 @@
       "message": "seems like there should be a simpler way to do this without having to create custom type adapters...  since we\u0027re using gson to serialize, this appeared to be the recommended way to deal with inhibiting empty fields on a class during serialization\n\nmy deep dive into optional + nullable properties was more confusing than clarifying",
       "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f32119c_aee828d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-02-08T11:02:39Z",
+      "side": 1,
+      "message": "I\u0027m adding a few questions. I\u0027m not sure I understand well what we are trying to do here.",
+      "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d83741a7_4aace414",
+        "filename": "java/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-02-08T11:02:39Z",
+      "side": 1,
+      "message": "This seems unrelated to this CR. (and having a maven plugin as a dependency is suspicious).",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 37,
+        "endChar": 36
+      },
+      "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d409ba1_d534aaab",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/MediawikiDataSerializer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-02-08T11:02:39Z",
+      "side": 1,
+      "message": "The previous test removed those elements unconditionnally, now we are removing them only when empty. Gson **should not** serialize null values anyway (see https://github.com/google/gson/blob/master/UserGuide.md#finer-points-with-objects).\n\nI\u0027m not sure I understand the test case well enough, but this seems a bit suspicious.",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 63
+      },
+      "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63bbbd08_2edb28eb",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-02-08T11:02:39Z",
+      "side": 1,
+      "message": "We do multiple serialization / deserialization. I\u0027m not sure that I understand why. Maybe this could be simplified?",
+      "range": {
+        "startLine": 90,
+        "startChar": 23,
+        "endLine": 90,
+        "endChar": 46
+      },
+      "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d9a9db6_5b4f30f2",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-02-08T11:02:39Z",
+      "side": 1,
+      "message": "nit: we try to standardize on AssertJ assertions.",
+      "range": {
+        "startLine": 101,
+        "startChar": 16,
+        "endLine": 101,
+        "endChar": 28
+      },
+      "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39470233_f19c9170",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-02-08T11:02:39Z",
+      "side": 1,
+      "message": "Unrelated to this CR: this method isn\u0027t really needed. Instead of passing InputStreamReader around, we could change StreamConfigFetcher.parseConfig() to take a Reader (which is a more generic and sufficient interface). That way, it will accept either an InputStreamReader, or a BufferedReader (or any other kind of Reader).\n\nProposed cleanup in https://gerrit.wikimedia.org/r/c/mediawiki/libs/metrics-platform/+/887742",
+      "range": {
+        "startLine": 150,
+        "startChar": 37,
+        "endLine": 150,
+        "endChar": 63
+      },
+      "revId": "b76924ab302a641aa3bdce7a4b0e3bb1b69e8bab",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
