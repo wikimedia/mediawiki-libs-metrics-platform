@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9ef9ce32_0b5fa7bc",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/CurationController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-02-09T15:35:22Z",
+      "side": 1,
+      "message": "i started down the path of removing the CurationController -- i will do it in a follow up patch since the change set will be bigger than the scope of the current patch",
+      "parentUuid": "ab4e89b8_9dd11a07",
+      "range": {
+        "startLine": 14,
+        "startChar": 19,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "ce46a3b47b1faf1049de8dad9facaf255ddb34a8",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ec5b8137_87f3d7a8",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/curation/CurationControllerTest.java",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2023-02-08T15:22:36Z",
       "side": 1,
       "message": "Since this test now only depends on MetricsPlatformClientConfig, it can be simplified (we don\u0027t need streamConfig, or producerConfig). Which was one of the goal of making the CurationFilter simpler.",
+      "range": {
+        "startLine": 33,
+        "startChar": 103,
+        "endLine": 33,
+        "endChar": 133
+      },
+      "revId": "ce46a3b47b1faf1049de8dad9facaf255ddb34a8",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "700eae85_308b7559",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/curation/CurationControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-02-09T15:35:22Z",
+      "side": 1,
+      "message": "i\u0027ll refactor these tests as well per comment above if/when I\u0027m able to get rid of the CurationController -- for this ps, does it make sense to just pass in the CurationFilter?",
+      "parentUuid": "ec5b8137_87f3d7a8",
       "range": {
         "startLine": 33,
         "startChar": 103,
