@@ -7,6 +7,8 @@ var STATE_FETCHED_STREAM_CONFIGS = 2;
 
 var CALL_QUEUE_MAX_LENGTH = 128;
 
+var SCHEMA = '/analytics/mediawiki/client/metrics_event/1.1.1';
+
 /**
  * Client for producing events to [the Event Platform](https://wikitech.wikimedia.org/wiki/Event_Platform) and
  * [the Metrics Platform](https://wikitech.wikimedia.org/wiki/Metrics_Platform).
@@ -292,7 +294,7 @@ MetricsClient.prototype.processDispatchCall = function (
 		/* eslint-disable camelcase */
 		/** @type {MetricsPlatformEventData} */
 		var eventData = {
-			$schema: '/analytics/mediawiki/client/metrics_event/1.1.0',
+			$schema: SCHEMA,
 			dt: timestamp,
 			name: eventName
 		};
@@ -485,3 +487,4 @@ MetricsClient.prototype.dispatch = function ( eventName, customData ) {
 };
 
 module.exports = MetricsClient;
+module.exports.SCHEMA = SCHEMA;
