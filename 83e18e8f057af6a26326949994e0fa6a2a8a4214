@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e05203f_72dd410a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2915
+      },
+      "writtenOn": "2023-02-10T16:34:33Z",
+      "side": 1,
+      "message": "Failed on:\n\n```\nnot ok 23 MetricsClient \u003e dispatch() - produce events correctly\n  ---\n  message: failed\n  severity: failed\n  actual  : \"/analytics/mediawiki/client/metrics_event/1.1.1\"\n  expected: \"/analytics/mediawiki/client/metrics_event/1.1.0\"\n```\n\n...so I guess a test in there has the metrics_event version hardcoded in expected output.",
+      "revId": "83e18e8f057af6a26326949994e0fa6a2a8a4214",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
