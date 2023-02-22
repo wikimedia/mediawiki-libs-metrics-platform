@@ -40,7 +40,6 @@ public class EventProcessor {
      */
     public EventProcessor(
             ContextController contextController,
-            CurationController curationController,
             AtomicReference<SourceConfig> sourceConfig,
             EventSender eventSender,
             BlockingQueue<Event> eventQueue

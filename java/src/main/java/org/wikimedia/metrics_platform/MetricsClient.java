@@ -92,14 +92,12 @@ public final class MetricsClient {
         SessionController sessionController = new SessionController();
         SamplingController samplingController = new SamplingController(clientMetadata, sessionController);
         ContextController contextController = new ContextController(clientMetadata);
-        CurationController curationController = new CurationController();
 
         AtomicReference<SourceConfig> sourceConfigRef = new AtomicReference<>();
         BlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>(capacity);
 
         EventProcessor eventProcessor = new EventProcessor(
                 contextController,
-                curationController,
                 sourceConfigRef,
                 eventSender,
                 eventQueue

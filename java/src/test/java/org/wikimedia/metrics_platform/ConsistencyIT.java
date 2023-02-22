@@ -103,7 +103,6 @@ class ConsistencyIT {
             BlockingQueue<Event> eventQueue
     ) {
         ContextController contextController = new ContextController(consistencyTestClientMetadata);
-        CurationController curationController = new CurationController();
         EventSender eventSender = new EventSender() {
             @Override
             public void sendEvents(String baseUri, Collection<Event> events) throws IOException {
@@ -111,7 +110,6 @@ class ConsistencyIT {
         };
         return new EventProcessor(
                 contextController,
-                curationController,
                 sourceConfigRef,
                 eventSender,
                 eventQueue

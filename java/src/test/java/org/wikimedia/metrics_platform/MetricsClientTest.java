@@ -75,7 +75,7 @@ class MetricsClientTest {
     }
 
     @Test void testDispatch() throws InterruptedException {
-        when(mockSamplingController.isInSample(getTestStreamConfig())).thenReturn(true);
+        when(mockSamplingController.isInSample(getTestStreamConfig(curationFilter))).thenReturn(true);
 
         Map<String, Object> customDataMap = getTestCustomData();
         client.dispatch("test_event", customDataMap);
@@ -139,7 +139,7 @@ class MetricsClientTest {
     /**
      * Convenience method for getting stream config.
      */
-    private static StreamConfig getTestStreamConfig() {
+    static StreamConfig getTestStreamConfig(CurationFilter curationFilter) {
         String[] provideValues = {
             AGENT_CLIENT_PLATFORM,
             AGENT_CLIENT_PLATFORM_FAMILY,
@@ -167,7 +167,7 @@ class MetricsClientTest {
      * Convenience method for getting a stream config map.
      */
     public static Map<String, StreamConfig> getTestStreamConfigMap() {
-        StreamConfig streamConfig = getTestStreamConfig();
+        StreamConfig streamConfig = getTestStreamConfig(curationFilter);
         return singletonMap(streamConfig.getStreamName(), streamConfig);
     }
 
