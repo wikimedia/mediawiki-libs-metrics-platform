@@ -1,17 +1,14 @@
 {
-	"exclude": [ "docs" ],
+	"exclude": [
+		"docs/",
+		"build/",
+		"dist/"
+	],
 	"compilerOptions": {
-		"resolveJsonModule": true,
-		"esModuleInterop": true,
 		"strict": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
 		"noImplicitReturns": true,
-		"newLine": "lf",
-		"forceConsistentCasingInFileNames": true,
-		"pretty": true,
 		"target": "es5",
-		"lib": [ "es5", "dom", "es2015" ],
+		"lib": [ "es5", "dom" ],
 		"allowJs": true,
 		"checkJs": true,
 		"noEmit": true
