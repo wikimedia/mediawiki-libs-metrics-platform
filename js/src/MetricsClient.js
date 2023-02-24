@@ -7,7 +7,7 @@ var STATE_FETCHED_STREAM_CONFIGS = 2;
 
 var CALL_QUEUE_MAX_LENGTH = 128;
 
-var SCHEMA = '/analytics/mediawiki/client/metrics_event/1.1.1';
+var SCHEMA = '/analytics/mediawiki/client/metrics_event/1.2.0';
 
 /**
  * Client for producing events to [the Event Platform](https://wikitech.wikimedia.org/wiki/Event_Platform) and

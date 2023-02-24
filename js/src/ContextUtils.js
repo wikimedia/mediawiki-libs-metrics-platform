@@ -10,6 +10,7 @@ var VALID_ATTRIBUTE_NAMES = [
 	'page_namespace_name',
 	'page_revision_id',
 	'page_wikidata_id',
+	'page_wikidata_qid',
 	'page_content_language',
 	'page_is_redirect',
 	'page_user_groups_allowed_to_move',

@@ -12,12 +12,12 @@ class MetricsClient implements LoggerAwareInterface {
 	use LoggerAwareTrait;
 
 	/**
-	 * The ID of v1.0.0 of the mediawiki/client/metrics_event schema in the schemas/event/secondary
+	 * The ID of the mediawiki/client/metrics_event schema in the schemas/event/secondary
 	 * repository.
 	 *
 	 * @var string
 	 */
-	private const METRICS_PLATFORM_SCHEMA = '/analytics/mediawiki/client/metrics_event/1.1.0';
+	public const SCHEMA = '/analytics/mediawiki/client/metrics_event/1.2.0';
 
 	/** @var EventSubmitter */
 	private $eventSubmitter;
@@ -107,7 +107,7 @@ class MetricsClient implements LoggerAwareInterface {
 
 		foreach ( $streamNames as $streamName ) {
 			$event = [
-				'$schema' => self::METRICS_PLATFORM_SCHEMA,
+				'$schema' => self::SCHEMA,
 				'name' => $eventName,
 				'dt' => $timestamp,
 			];

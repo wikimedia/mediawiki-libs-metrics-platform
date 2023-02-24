@@ -142,7 +142,7 @@ class MetricsClientTest extends TestCase {
 		list( $streamName, $event ) = $this->eventSubmitter->getSubmissions()[0];
 
 		$this->assertEquals( 'test.event.mpc1', $streamName );
-		$this->assertEquals( '/analytics/mediawiki/client/metrics_event/1.1.0', $event['$schema'] );
+		$this->assertEquals( '/analytics/mediawiki/client/metrics_event/1.2.0', $event['$schema'] );
 
 		if ( $expectedCustomData === null ) {
 			$this->assertArrayNotHasKey( 'custom_data', $event );

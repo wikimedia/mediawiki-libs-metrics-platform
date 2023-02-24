@@ -51,7 +51,8 @@ interface EventPageData {
     namespace?: number;
     namespace_name?: string;
     revision_id?: number;
-    wikidata_id?: string;
+    wikidata_id?: number;
+    wikidata_qid?: string;
     content_language?: string;
     is_redirect?: boolean;
     user_groups_allowed_to_move?: string[];

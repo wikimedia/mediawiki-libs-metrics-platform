@@ -53,7 +53,8 @@ class ContextControllerTest extends TestCase {
 		$this->assertSame( 0, $pageData['namespace'] );
 		$this->assertSame( '', $pageData['namespace_name'] );
 		$this->assertSame( 1, $pageData['revision_id'] );
-		$this->assertSame( "Q1", $pageData["wikidata_id"] );
+		$this->assertSame( 1, $pageData["wikidata_id"] );
+		$this->assertSame( "Q1", $pageData["wikidata_qid"] );
 		$this->assertSame( "zh", $pageData["content_language"] );
 		$this->assertSame( false, $pageData["is_redirect"] );
 		$this->assertSame( $pageData["user_groups_allowed_to_move"], [] );
