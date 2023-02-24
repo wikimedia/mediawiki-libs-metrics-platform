@@ -46,7 +46,7 @@ class MetricsClientTest {
 
     @BeforeAll
     static void setUp() {
-        Gson gson = new Gson();
+        Gson gson = GsonHelper.getGson();
         String curationFilterJson = "{\"page_id\":{\"less_than\":500,\"not_equals\":42},\"page_namespace_text\":" +
             "{\"equals\":\"Talk\"},\"user_is_logged_in\":{\"equals\":true},\"user_edit_count_bucket\":" +
             "{\"in\":[\"100-999 edits\",\"1000+ edits\"]},\"user_groups\":{\"contains_all\":" +

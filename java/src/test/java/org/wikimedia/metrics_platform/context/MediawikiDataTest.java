@@ -3,6 +3,7 @@ package org.wikimedia.metrics_platform.context;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
+import org.wikimedia.metrics_platform.GsonHelper;
 
 import com.google.gson.Gson;
 
@@ -27,7 +28,7 @@ public class MediawikiDataTest {
         assertThat(mediawikiData.getSiteContentLanguage()).isEqualTo("en");
         assertThat(mediawikiData.getSiteContentLanguageVariant()).isEqualTo("en-zh");
 
-        Gson gson = new Gson();
+        Gson gson = GsonHelper.getGson();
         String json = gson.toJson(mediawikiData);
         assertThat(json).isEqualTo("{" +
                 "\"skin\":\"vector\"," +

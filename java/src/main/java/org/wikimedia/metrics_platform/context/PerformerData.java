@@ -1,5 +1,6 @@
 package org.wikimedia.metrics_platform.context;
 
+import java.time.Instant;
 import java.util.Collection;
 
 import javax.annotation.ParametersAreNullableByDefault;
@@ -35,5 +36,5 @@ public class PerformerData {
     @SerializedName("can_probably_edit_page") private Boolean canProbablyEditPage;
     @SerializedName("edit_count") private Integer editCount;
     @SerializedName("edit_count_bucket") private String editCountBucket;
-    @SerializedName("registration_dt") private Long registrationDt;
+    @SerializedName("registration_dt") private Instant registrationDt;
 }

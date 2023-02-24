@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+import org.wikimedia.metrics_platform.GsonHelper;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 class CustomDataTest {
 
@@ -26,10 +26,8 @@ class CustomDataTest {
         List<String> jsonStringList = new ArrayList<>();
 
         for (CustomData customData : sortedCustomDataList) {
-            Gson gsonBuilder = new GsonBuilder()
-                .registerTypeAdapter(CustomData.class, new CustomDataSerializer())
-                .create();
-            jsonStringList.add(gsonBuilder.toJson(customData));
+            Gson gson = GsonHelper.getGson();
+            jsonStringList.add(gson.toJson(customData));
 
         }
         String jsonCustomData = String.join(",", jsonStringList);

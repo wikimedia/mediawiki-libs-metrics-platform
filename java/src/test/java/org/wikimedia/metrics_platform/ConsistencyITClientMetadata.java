@@ -7,8 +7,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Clock;
+import java.time.Instant;
 import java.util.Collection;
-import java.util.Date;
 import java.util.stream.StreamSupport;
 
 import com.google.gson.JsonArray;
@@ -93,8 +94,8 @@ public class ConsistencyITClientMetadata implements ClientMetadata {
         return page.get("revision_id").getAsInt(); }
 
     @Override
-    public String getPageWikidataItemId() {
-        return page.get("wikidata_id").getAsString(); }
+    public String getPageWikidataItemQid() {
+        return page.get("wikidata_qid").getAsString(); }
 
     @Override
     public String getPageContentLanguage() {
@@ -218,10 +219,10 @@ public class ConsistencyITClientMetadata implements ClientMetadata {
     }
 
     @Override
-    public Long getPerformerRegistrationDt() {
-        long timestamp = performer.has("registration_dt") ?
-                Long.valueOf(performer.get("registration_dt").getAsString()) : new Date().getTime();
-        return timestamp;
+    public Instant getPerformerRegistrationDt() {
+        Clock clock = Clock.systemUTC();
+        return performer.has("registration_dt") ?
+                Instant.parse(performer.get("registration_dt").getAsString()) : Instant.now(clock);
     }
 
     @Override

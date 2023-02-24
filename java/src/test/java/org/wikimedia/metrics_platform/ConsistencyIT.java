@@ -69,7 +69,7 @@ class ConsistencyIT {
             try (BufferedReader expectedEventReader = Files.newBufferedReader(pathExpectedEvent)) {
                 JsonObject expectedEventJsonObject = JsonParser.parseReader(expectedEventReader).getAsJsonObject();
 
-                Gson gson = new Gson();
+                Gson gson = GsonHelper.getGson();
                 String queuedEventJsonStringRaw = gson.toJson(queuedEvent);
                 JsonObject queuedEventJsonObject = JsonParser.parseString(queuedEventJsonStringRaw).getAsJsonObject();
                 // Remove the timestamp properties from the queued event to match the expected event json.

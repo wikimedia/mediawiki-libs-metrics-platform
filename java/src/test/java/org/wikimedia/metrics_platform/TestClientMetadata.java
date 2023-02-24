@@ -2,6 +2,7 @@ package org.wikimedia.metrics_platform;
 
 import static java.util.Collections.singletonList;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -22,31 +23,31 @@ public class TestClientMetadata implements ClientMetadata {
     @Override
     public String getMediawikiSkin() {
         return "vector";
-    };
+    }
     @Override
     public String getMediawikiVersion() {
         return "1.40.0-wmf.19";
-    };
+    }
     @Override
     public Boolean getMediawikiIsProduction() {
         return true;
-    };
+    }
     @Override
     public Boolean getMediawikiIsDebugMode() {
         return false;
-    };
+    }
     @Override
     public String getMediawikiDatabase() {
         return "enwiki";
-    };
+    }
     @Override
     public String getMediawikiSiteContentLanguage() {
         return "en";
-    };
+    }
     @Override
     public String getMediawikiSiteContentLanguageVariant() {
         return "en-zh";
-    };
+    }
     @Override
     public Integer getPageId() {
         return 1;
@@ -78,7 +79,7 @@ public class TestClientMetadata implements ClientMetadata {
     }
 
     @Override
-    public String getPageWikidataItemId() {
+    public String getPageWikidataItemQid() {
         return "Q1";
     }
 
@@ -150,8 +151,8 @@ public class TestClientMetadata implements ClientMetadata {
     }
 
     @Override
-    public Long getPerformerRegistrationDt() {
-        return 1427224089000L;
+    public Instant getPerformerRegistrationDt() {
+        return Instant.parse("2023-03-01T01:08:30Z");
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.wikimedia.metrics_platform;
 
+import java.time.Instant;
 import java.util.Collection;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -24,7 +25,7 @@ public interface ClientMetadata {
     String getPageTitle();
     Boolean getPageIsRedirect();
     Integer getPageRevisionId();
-    String getPageWikidataItemId();
+    String getPageWikidataItemQid();
     String getPageContentLanguage();
     Collection<String> getPageUserGroupsAllowedToEdit();
     Collection<String> getPageUserGroupsAllowedToMove();
@@ -39,7 +40,7 @@ public interface ClientMetadata {
     Boolean getPerformerCanProbablyEditPage();
     Integer getPerformerEditCount();
     String getPerformerEditCountBucket();
-    Long getPerformerRegistrationDt();
+    Instant getPerformerRegistrationDt();
     String getPerformerLanguage();
     String getPerformerLanguageVariant();
 

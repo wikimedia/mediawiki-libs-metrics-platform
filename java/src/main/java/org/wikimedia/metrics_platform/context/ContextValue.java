@@ -21,7 +21,7 @@ public final class ContextValue {
     public static final String PAGE_NAMESPACE = "page_namespace";
     public static final String PAGE_NAMESPACE_NAME = "page_namespace_name";
     public static final String PAGE_REVISION_ID = "page_revision_id";
-    public static final String PAGE_WIKIDATA_ID = "page_wikidata_id";
+    public static final String PAGE_WIKIDATA_QID = "page_wikidata_qid";
     public static final String PAGE_CONTENT_LANGUAGE = "page_content_language";
     public static final String PAGE_IS_REDIRECT = "page_is_redirect";
     public static final String PAGE_USER_GROUPS_ALLOWED_TO_EDIT = "page_user_groups_allowed_to_edit";

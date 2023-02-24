@@ -40,7 +40,7 @@ public final class SourceConfigFixtures {
             "page_is_redirect",
             "page_revision_id",
             "page_content_language",
-            "page_wikidata_id",
+            "page_wikidata_qid",
             "page_user_groups_allowed_to_edit",
             "page_user_groups_allowed_to_move",
             "performer_id",

@@ -44,7 +44,7 @@ public final class MetricsClient {
 
     private static final Duration SEND_INTERVAL = Duration.ofSeconds(30);
 
-    private static final String METRICS_PLATFORM_SCHEMA = "/analytics/mediawiki/client/metrics_event/1.1.0";
+    private static final String METRICS_PLATFORM_SCHEMA = "/analytics/mediawiki/client/metrics_event/1.2.0";
 
     /**
      * Integration layer exposing hosting application functionality to the client library.

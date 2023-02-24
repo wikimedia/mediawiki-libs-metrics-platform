@@ -58,7 +58,7 @@ class EventTest {
         assertThat(event.getMediawikiData().getSiteContentLanguage()).isEqualTo("en");
         assertThat(event.getMediawikiData().getSiteContentLanguageVariant()).isEqualTo("en-zh");
 
-        Gson gson = new Gson();
+        Gson gson = GsonHelper.getGson();
         String json = gson.toJson(event);
         assertThat(json).isEqualTo(String.format(Locale.ROOT,
                 "{" +

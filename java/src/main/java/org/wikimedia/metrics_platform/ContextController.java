@@ -15,7 +15,7 @@ import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_TITLE;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_NAMESPACE;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_NAMESPACE_NAME;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_REVISION_ID;
-import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_WIKIDATA_ID;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_WIKIDATA_QID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_CONTENT_LANGUAGE;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_IS_REDIRECT;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_USER_GROUPS_ALLOWED_TO_EDIT;
@@ -117,8 +117,8 @@ public class ContextController {
                 case PAGE_REVISION_ID:
                     event.getPageData().setRevisionId(clientMetadata.getPageRevisionId());
                     break;
-                case PAGE_WIKIDATA_ID:
-                    event.getPageData().setWikidataItemId(clientMetadata.getPageWikidataItemId());
+                case PAGE_WIKIDATA_QID:
+                    event.getPageData().setWikidataItemQid(clientMetadata.getPageWikidataItemQid());
                     break;
                 case PAGE_CONTENT_LANGUAGE:
                     event.getPageData().setContentLanguage(clientMetadata.getPageContentLanguage());

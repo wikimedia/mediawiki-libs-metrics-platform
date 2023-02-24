@@ -6,13 +6,14 @@ import static org.wikimedia.metrics_platform.config.SampleConfig.Identifier.SESS
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
+import org.wikimedia.metrics_platform.GsonHelper;
 
 import com.google.gson.Gson;
 
 class StreamConfigTest {
 
     @Test void testStreamConfigDeserialization() {
-        Gson gson = new Gson();
+        Gson gson = GsonHelper.getGson();
         String streamConfigJson = "{\"stream_name\":\"test.event\",\"schema_title\":\"test/event\",\"producers\":" +
                 "{\"metrics_platform_client\":{\"provide_values\":[\"page_id\",\"user_id\"]}}," +
                 "\"sample\":{\"rate\":0.5,\"identifier\":\"session\"}}";

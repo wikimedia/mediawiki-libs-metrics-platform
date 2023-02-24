@@ -3,6 +3,7 @@ package org.wikimedia.metrics_platform.context;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
+import org.wikimedia.metrics_platform.GsonHelper;
 
 import com.google.gson.Gson;
 
@@ -19,7 +20,7 @@ public class AgentDataTest {
         assertThat(agentData.getClientPlatform()).isEqualTo("android");
         assertThat(agentData.getClientPlatformFamily()).isEqualTo("app");
 
-        Gson gson = new Gson();
+        Gson gson = GsonHelper.getGson();
         String json = gson.toJson(agentData);
         assertThat(json).isEqualTo("{" +
                 "\"app_install_id\":\"ffffffff-ffff-ffff-ffff-ffffffffffff\"," +

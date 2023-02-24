@@ -2,11 +2,13 @@ package org.wikimedia.metrics_platform.curation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.wikimedia.metrics_platform.GsonHelper;
 import org.wikimedia.metrics_platform.event.Event;
 import org.wikimedia.metrics_platform.config.CurationFilter;
 import org.wikimedia.metrics_platform.context.PageData;
@@ -19,7 +21,7 @@ class CurationFilterTest {
     private static CurationFilter curationFilter;
 
     @BeforeAll static void setUp() {
-        Gson gson = new Gson();
+        Gson gson = GsonHelper.getGson();
         String curationFilterJson = "{\"page_id\":{\"less_than\":500,\"not_equals\":42},\"page_namespace_name\":" +
                 "{\"equals\":\"Talk\"},\"performer_is_logged_in\":{\"equals\":true},\"performer_edit_count_bucket\":" +
                 "{\"in\":[\"100-999 edits\",\"1000+ edits\"]},\"performer_groups\":{\"contains_all\":" +
@@ -76,5 +78,11 @@ class CurationFilterTest {
         Event event = getBaseEvent();
         event.getPerformerData().setEditCountBucket("5-99 edits");
         assertThat(curationFilter.apply(event)).isFalse();
+    }
+
+    @Test void testEventPassesPerformerRegistrationDtDeserializes() {
+        Event event = getBaseEvent();
+        event.getPerformerData().setRegistrationDt(Instant.parse("2023-03-01T01:08:30Z"));
+        assertThat(curationFilter.apply(event)).isTrue();
     }
 }

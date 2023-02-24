@@ -43,7 +43,7 @@ class ContextControllerTest {
         assertThat(pageData.getIsRedirect()).isFalse();
         assertThat(pageData.getRevisionId()).isEqualTo(1);
         assertThat(pageData.getContentLanguage()).isEqualTo("zh");
-        assertThat(pageData.getWikidataItemId()).isEqualTo("Q1");
+        assertThat(pageData.getWikidataItemQid()).isEqualTo("Q1");
         assertThat(pageData.getGroupsAllowedToEdit()).isEmpty();
         assertThat(pageData.getGroupsAllowedToMove()).isEmpty();
 
@@ -53,7 +53,7 @@ class ContextControllerTest {
         assertThat(performerData.getGroups()).containsExactly("*");
         assertThat(performerData.getEditCount()).isEqualTo(10);
         assertThat(performerData.getEditCountBucket()).isEqualTo("5-99 edits");
-        assertThat(performerData.getRegistrationDt()).isEqualTo(1427224089000L);
+        assertThat(performerData.getRegistrationDt()).isEqualTo("2023-03-01T01:08:30Z");
         assertThat(performerData.getLanguage()).isEqualTo("zh");
         assertThat(performerData.getLanguageVariant()).isEqualTo("zh-tw");
         assertThat(performerData.getIsBot()).isFalse();

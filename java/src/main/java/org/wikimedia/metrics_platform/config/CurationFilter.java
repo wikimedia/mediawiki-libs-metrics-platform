@@ -1,5 +1,7 @@
 package org.wikimedia.metrics_platform.config;
 
+import java.time.Instant;
+
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNullableByDefault;
 
@@ -36,7 +38,7 @@ public class CurationFilter {
     @SerializedName("page_namespace_name") private CurationRules<String> pageNamespaceNameRules;
     @SerializedName("page_title") private CurationRules<String> pageTitleRules;
     @SerializedName("page_revision_id") private ComparableCurationRules<Integer> pageRevisionIdRules;
-    @SerializedName("page_wikidata_id") private CurationRules<String> pageWikidataIdRules;
+    @SerializedName("page_wikidata_qid") private CurationRules<String> pageWikidataQidRules;
     @SerializedName("page_is_redirect") private CurationRules<Boolean> pageIsRedirectRules;
     @SerializedName("page_content_language") private CurationRules<String> pageContentLanguageRules;
     @SerializedName("page_performer_groups_allowed_to_edit")
@@ -54,7 +56,7 @@ public class CurationFilter {
     @SerializedName("performer_can_probably_edit_page") private CurationRules<Boolean> performerCanProbablyEditPageRules;
     @SerializedName("performer_edit_count") private ComparableCurationRules<Integer> performerEditCountRules;
     @SerializedName("performer_edit_count_bucket") private CurationRules<String> performerEditCountBucketRules;
-    @SerializedName("performer_registration_dt") private ComparableCurationRules<Long> performerRegistrationDtRules;
+    @SerializedName("performer_registration_dt") private ComparableCurationRules<Instant> performerRegistrationDtRules;
     @SerializedName("performer_language") private CurationRules<String> performerLanguageRules;
     @SerializedName("performer_language_variant") private CurationRules<String> performerLanguageVariantRules;
 
@@ -197,11 +199,11 @@ public class CurationFilter {
                 return false;
             }
         }
-        if (pageWikidataIdRules != null) {
-            if (event.getPageData().getWikidataItemId() == null) {
+        if (pageWikidataQidRules != null) {
+            if (event.getPageData().getWikidataItemQid() == null) {
                 return false;
             }
-            if (!pageWikidataIdRules.apply(event.getPageData().getWikidataItemId())) {
+            if (!pageWikidataQidRules.apply(event.getPageData().getWikidataItemQid())) {
                 return false;
             }
         }
