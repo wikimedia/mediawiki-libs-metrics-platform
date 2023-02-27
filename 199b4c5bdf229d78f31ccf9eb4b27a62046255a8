@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0822756c_b67aa99d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-02-27T14:05:35Z",
+      "side": 1,
+      "message": "This LGTM. I\u0027ve left a Q inline about whether the user\u0027s (performer\u0027s) registration date can be represented by a Date object (Date, LocalDate, some thread-safe date object that I don\u0027t know about…).",
+      "revId": "199b4c5bdf229d78f31ccf9eb4b27a62046255a8",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c3a8dba_92bc0b9b",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/ClientMetadata.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-02-27T14:05:35Z",
+      "side": 1,
+      "message": "Is it possible for this to be some sort of Date object and then serialize it to a string when sending events?",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "199b4c5bdf229d78f31ccf9eb4b27a62046255a8",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
