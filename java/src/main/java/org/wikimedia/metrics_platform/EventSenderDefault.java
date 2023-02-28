@@ -1,0 +1,64 @@
+package org.wikimedia.metrics_platform;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.logging.Level.FINE;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
+import org.wikimedia.metrics_platform.event.Event;
+
+import com.google.gson.Gson;
+
+import lombok.extern.java.Log;
+
+@Log
+public class EventSenderDefault implements EventSender {
+
+    private final Gson gson = GsonHelper.getGson();
+
+    @Override
+    public void sendEvents(String baseUri, Collection<Event> events) throws IOException {
+        URL url = new URL(baseUri);
+        HttpURLConnection connection = null;
+
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Content-Type", "application/json");
+            String agent = MetricsClient.METRICS_PLATFORM_VERSION + " Java/" + System.getProperty("java.version");
+            connection.setRequestProperty("User-Agent", "Metrics Platform Client/" + agent);
+            connection.setDoOutput(true);
+
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), UTF_8))) {
+                for (Event event : events) {
+                    gson.toJson(event, writer);
+                }
+                log.log(FINE, "Events sent: posted data to event logging!");
+            }
+
+            int status = connection.getResponseCode();
+            if (status != HttpURLConnection.HTTP_OK) {
+                throw new IOException("Could not send events, response status is not HTTP/OK, but is " + status);
+            }
+
+            if (log.isLoggable(FINE)) {
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), UTF_8))) {
+                    String result = br.lines().collect(Collectors.joining());
+                    log.log(FINE, "Events sent: " + result);
+                }
+            }
+        } finally {
+            if (connection != null) connection.disconnect();
+        }
+    }
+}
