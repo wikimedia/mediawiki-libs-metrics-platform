@@ -16,6 +16,23 @@
       "message": "cjming: I made a minor tweak to the patch. If you\u0027re happy with it, then I\u0027m happy to +2 this.",
       "revId": "43c4b2752e067e3e05cb3ccad014c1201459dc49",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6ff0522_8de54134",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-01T14:51:38Z",
+      "side": 1,
+      "message": "lgtm - thanks!",
+      "revId": "43c4b2752e067e3e05cb3ccad014c1201459dc49",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
