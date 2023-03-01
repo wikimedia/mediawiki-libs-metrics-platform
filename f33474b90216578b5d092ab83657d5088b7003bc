@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd5bcfa6_4a111f23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-01T12:11:30Z",
+      "side": 1,
+      "message": "See inline for a minor nit about setting a distinct UA.",
+      "revId": "f33474b90216578b5d092ab83657d5088b7003bc",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "482c3d2a_9e06c89b",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-01T12:11:30Z",
+      "side": 1,
+      "message": "As we discussed, could you also set the UA to something distinct and recognisable, e.g.\n\n Metrics Platform Client/$mpcVersion Java/$javaVersion\n\n?",
+      "revId": "f33474b90216578b5d092ab83657d5088b7003bc",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
