@@ -35,6 +35,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d888eaf_4aedeffd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-02T23:28:10Z",
+      "side": 1,
+      "message": "Per Guillaume:\n\u003e An Instant is a specific point on the time-line\n\u003e A LocalDateTime is a time without a timezone, which could represent different points on the time-line\n\u003e For example, if I\u0027m saying: \"we eat lunch at noon\", this is a LocalDateTime. You probably don\u0027t eat lunch at the same time as I do, since we are in 2 different timezones, but we both eat lunch at noon.\n\u003e In this case, registration_dt is probably a timestamp, so should be an Instant.",
+      "parentUuid": "e399023b_ff6f7176",
+      "revId": "f1c29cf06ccdaf208f7a47e7b847144b2a092d71",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "718fd483_85ca5dce",
@@ -48,6 +66,30 @@
       "writtenOn": "2023-03-02T09:28:14Z",
       "side": 1,
       "message": "I think the constant that we need here is ISO_INSTANT [0]. The JS and PHP implementations append a \"Z\" at the end of all timestamps.\n\n[0] https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html#ISO_INSTANT",
+      "range": {
+        "startLine": 16,
+        "startChar": 56,
+        "endLine": 16,
+        "endChar": 75
+      },
+      "revId": "f1c29cf06ccdaf208f7a47e7b847144b2a092d71",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09c21609_11d53a6e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/LocalDateTimeSerializer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-02T23:28:10Z",
+      "side": 1,
+      "message": "Update adapter to serialize Instant with ISO_INSTANT formatter",
+      "parentUuid": "718fd483_85ca5dce",
       "range": {
         "startLine": 16,
         "startChar": 56,
