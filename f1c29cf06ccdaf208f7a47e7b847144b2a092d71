@@ -16,6 +16,46 @@
       "message": "I\u0027m not sure if LocalDateTime is the proper date data type for this context.",
       "revId": "f1c29cf06ccdaf208f7a47e7b847144b2a092d71",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e399023b_ff6f7176",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-02T09:28:14Z",
+      "side": 1,
+      "message": "Neato. Really minor nit inline about the DateTimeFormatter constant. I defer to Guillaume\u0027s expertise when it comes to whether we should use LocalDateTime.",
+      "revId": "f1c29cf06ccdaf208f7a47e7b847144b2a092d71",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "718fd483_85ca5dce",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/LocalDateTimeSerializer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-02T09:28:14Z",
+      "side": 1,
+      "message": "I think the constant that we need here is ISO_INSTANT [0]. The JS and PHP implementations append a \"Z\" at the end of all timestamps.\n\n[0] https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html#ISO_INSTANT",
+      "range": {
+        "startLine": 16,
+        "startChar": 56,
+        "endLine": 16,
+        "endChar": 75
+      },
+      "revId": "f1c29cf06ccdaf208f7a47e7b847144b2a092d71",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
