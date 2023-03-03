@@ -111,6 +111,30 @@
       },
       "revId": "199b4c5bdf229d78f31ccf9eb4b27a62046255a8",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c57ff21_745a5e4a",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/ClientMetadata.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-03T15:54:21Z",
+      "side": 1,
+      "message": "InstantConverter registered in new utility class called `GsonHelper`",
+      "parentUuid": "2eaf07f9_8f997a70",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "199b4c5bdf229d78f31ccf9eb4b27a62046255a8",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
