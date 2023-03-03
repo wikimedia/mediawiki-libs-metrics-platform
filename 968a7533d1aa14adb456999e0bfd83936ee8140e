@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7863cace_4fabcd10",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/ContextUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-03T15:44:14Z",
+      "side": 1,
+      "message": "This is already used by the config and the context packages (in tests). So it seems that it isn\u0027t stricly related to context. I would rename this class to GsonHelper (or GsonUtils, or whatever) and move it to the main package.",
+      "range": {
+        "startLine": 13,
+        "startChar": 23,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "968a7533d1aa14adb456999e0bfd83936ee8140e",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
