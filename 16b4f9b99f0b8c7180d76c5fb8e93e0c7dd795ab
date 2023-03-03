@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e75db9b8_3e1fbc4e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-03T17:50:44Z",
+      "side": 1,
+      "message": "self-merging since it was already approved before rebasing",
+      "revId": "16b4f9b99f0b8c7180d76c5fb8e93e0c7dd795ab",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
