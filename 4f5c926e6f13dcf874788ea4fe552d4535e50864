@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b011047_8731534f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-03T16:20:36Z",
+      "side": 1,
+      "message": "The GsonHelper class really neatens things up. Nice!",
+      "revId": "4f5c926e6f13dcf874788ea4fe552d4535e50864",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
