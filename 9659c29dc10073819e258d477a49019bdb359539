@@ -45,6 +45,54 @@
       },
       "revId": "9659c29dc10073819e258d477a49019bdb359539",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bb3df53_5e6591ac",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/InstantSerializer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-03T15:01:23Z",
+      "side": 1,
+      "message": "Updated Instant adapter to serialize and deserialize.\nAdded test to CurationFilterTest.\n\nHopefully this is what you had in mind. \n\nOut of curiosity, does PerformerDataTest not suffice to ensure that `performer_registration_dt` deserializes correctly?",
+      "parentUuid": "76e43d33_b34e688f",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "9659c29dc10073819e258d477a49019bdb359539",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14b73bb6_b1a1fba4",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/InstantSerializer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-03T15:01:23Z",
+      "side": 1,
+      "message": "Added ContextUtils class to generate Gson instance and replaced nearly all usages of\n\u003e Gson gson \u003d new Gson();\nwith\n\u003e Gson gson \u003d ContextUtils.getGson();",
+      "parentUuid": "06d5d230_88b4c214",
+      "range": {
+        "startLine": 12,
+        "startChar": 42,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "9659c29dc10073819e258d477a49019bdb359539",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
