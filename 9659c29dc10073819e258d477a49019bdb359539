@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76e43d33_b34e688f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/InstantSerializer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-03T08:14:38Z",
+      "side": 1,
+      "message": "Do we need a similar JsonDeserializer? If seems that for example CurationFilter now has an Instant field and that the CurationFilters are deserialized from configuration.\n\nI suggest that you should add a unit test to CurationFilterTest that also parses `performer_registration_dt` and validates that it is deserialized correctly.",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "9659c29dc10073819e258d477a49019bdb359539",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06d5d230_88b4c214",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/InstantSerializer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-03T08:14:38Z",
+      "side": 1,
+      "message": "At the moment, this Serializer is only registered for tests. This somewhat makes sense, since the serialization is done in the EventSender provided by the client of this library (at least at this point in time).\n\nI think is would still make sense to expose a method that creates and configures a Gson instance, with all available Serializers / Deserializers added to its configuration. This could then be reused from production code, test code and client code.",
+      "range": {
+        "startLine": 12,
+        "startChar": 42,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "9659c29dc10073819e258d477a49019bdb359539",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
