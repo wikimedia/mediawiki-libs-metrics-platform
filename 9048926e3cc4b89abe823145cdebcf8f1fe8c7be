@@ -68,6 +68,29 @@
       },
       "revId": "9048926e3cc4b89abe823145cdebcf8f1fe8c7be",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37921d22_9d9f214c",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-06T15:06:31Z",
+      "side": 1,
+      "message": "This method and `getMetricsClientCustomEventSender()` should both be named `createMetricsClient`. They are in the end just more specialized versions of the above similar methods. And we could rely on overloading as well here.",
+      "range": {
+        "startLine": 88,
+        "startChar": 33,
+        "endLine": 88,
+        "endChar": 67
+      },
+      "revId": "9048926e3cc4b89abe823145cdebcf8f1fe8c7be",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
