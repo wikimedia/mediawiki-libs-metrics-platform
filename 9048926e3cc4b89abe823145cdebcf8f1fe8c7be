@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e162e3b_f6e3ab83",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-06T14:44:03Z",
+      "side": 1,
+      "message": "nit: I would move this logic into the extracted method `isValid()` (and of course, change its name). That way, the sendEvents method is really about sending the events and the construction of URLs is moved outside. This would also allow to easily expose a `sendEvents(URL, Collection\u003cEvent\u003e)` method that is typesafe (and maybe should be added to the public interface).",
+      "range": {
+        "startLine": 34,
+        "startChar": 18,
+        "endLine": 34,
+        "endChar": 112
+      },
+      "revId": "9048926e3cc4b89abe823145cdebcf8f1fe8c7be",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cef30fe_2f1e0d7e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-06T14:44:03Z",
+      "side": 1,
+      "message": "This whole block will create a potentially large String in memory, but it is only used to log it when FINE is enabled. It should probably be guarded by `log.isLoggable(FINE)`.",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 17
+      },
+      "revId": "9048926e3cc4b89abe823145cdebcf8f1fe8c7be",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0005a3f_df72b635",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-06T14:44:03Z",
+      "side": 1,
+      "message": "nit: `get` implies getting an existing resource, `create` implies the creation of a new resource. In this case, it looks like a `create`.",
+      "range": {
+        "startLine": 88,
+        "startChar": 33,
+        "endLine": 88,
+        "endChar": 67
+      },
+      "revId": "9048926e3cc4b89abe823145cdebcf8f1fe8c7be",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
