@@ -16,6 +16,138 @@
       "message": "recheck",
       "revId": "216693dee5f59ba4e52c2808a0f33682d5c7b1e9",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6d07e62_2f935f59",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T19:35:33Z",
+      "side": 1,
+      "message": "A few comments already. I might have some minor comments on MetricsClient, but nothing that would prevent from merging.",
+      "revId": "216693dee5f59ba4e52c2808a0f33682d5c7b1e9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8708f6f5_2c35b2a2",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T19:35:33Z",
+      "side": 1,
+      "message": "This will throw an exception if `log.isLoggable(FINE) \u003d\u003d false`. Probably not what we want.",
+      "range": {
+        "startLine": 61,
+        "startChar": 16,
+        "endLine": 61,
+        "endChar": 85
+      },
+      "revId": "216693dee5f59ba4e52c2808a0f33682d5c7b1e9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab099198_ac16d432",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T19:35:33Z",
+      "side": 1,
+      "message": "Why converting this to a URI, ignoring it and recreating another URL? There might be a good reason, but it isn\u0027t obvious to me, so a comment would be welcomed.",
+      "range": {
+        "startLine": 70,
+        "startChar": 34,
+        "endLine": 70,
+        "endChar": 43
+      },
+      "revId": "216693dee5f59ba4e52c2808a0f33682d5c7b1e9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b404e745_d67f4c21",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T19:35:33Z",
+      "side": 1,
+      "message": "nit: Adding the invalid URL to the exception message would be nice.",
+      "range": {
+        "startLine": 73,
+        "startChar": 30,
+        "endLine": 73,
+        "endChar": 77
+      },
+      "revId": "216693dee5f59ba4e52c2808a0f33682d5c7b1e9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10b6bb39_47bb34ce",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T19:35:33Z",
+      "side": 1,
+      "message": "Isn\u0027t it better to throw an exception in case the URL isn\u0027t valid? As a user of this code, I think I\u0027d prefer the code to fail if I pass an invalid URL, rather than the URL silently (well there is a log message) being changed to something else.",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 71
+      },
+      "revId": "216693dee5f59ba4e52c2808a0f33682d5c7b1e9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c83e3375_e835d83f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T19:35:33Z",
+      "side": 1,
+      "message": "This method could be calling the other createMetricsClient method to reduce some duplication:\n\n    private static MetricsClient createMetricsClient(\n            ClientMetadata clientMetadata,\n            AtomicReference\u003cSourceConfig\u003e sourceConfigRef,\n            BlockingQueue\u003cEvent\u003e eventQueue,\n            SessionController sessionController\n    ) throws MalformedURLException {\n        return createMetricsClient(\n                clientMetadata,\n                sourceConfigRef,\n                eventQueue,\n                sessionController,\n                new EventSenderDefault()\n        );\n    }",
+      "range": {
+        "startLine": 88,
+        "startChar": 33,
+        "endLine": 88,
+        "endChar": 52
+      },
+      "revId": "216693dee5f59ba4e52c2808a0f33682d5c7b1e9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
