@@ -222,6 +222,14 @@ public final class MetricsClient {
         return streamConfig != null && samplingController.isInSample(streamConfig);
     }
 
+    public Boolean isFullyInitialized() {
+        return sourceConfig.get() != null;
+    }
+
+    public Boolean isEventQueueEmpty() {
+        return eventQueue.isEmpty();
+    }
+
     public static Builder builder(ClientMetadata clientMetadata) {
         return new Builder(clientMetadata);
     }
