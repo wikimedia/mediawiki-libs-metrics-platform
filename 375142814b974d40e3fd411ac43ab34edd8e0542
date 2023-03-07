@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48992f05_bcd9e367",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T09:16:16Z",
+      "side": 1,
+      "message": "I think most of those changes should be merged (after some refactoring). This EndToEnd integration test is extremely valuable as it exercises the whole code in the same manner as it will be used in production. We need to extract a few parameter / functions so that the production code can be used both for testing and for production, but that is a good case of tests showing us that the code lacks modularity.",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecc5fbe7_7135f70a",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T09:16:16Z",
+      "side": 1,
+      "message": "This constant should be passed as a parameter. We should use it as a hardcoded default, but provide a way for the client to specify its own value (for example for tests, but also for cases where the client has a higher metric rate, or different constraints).\n\nSame comment applies to SEND_INTERVAL below.",
+      "range": {
+        "startLine": 127,
+        "startChar": 15,
+        "endLine": 127,
+        "endChar": 51
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "475610cc_d6a3b9ff",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T09:16:16Z",
+      "side": 1,
+      "message": "I found the issue! This should be:\n\n        return new Thread(r, \"metrics-client-\" + counter.incrementAndGet());\n        \nNote the Runnable parameter \"r\" needs to be passed to the created Thread, otherwise it won\u0027t know what work it needs to do.",
+      "range": {
+        "startLine": 277,
+        "startChar": 12,
+        "endLine": 277,
+        "endChar": 77
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6260781e_9e14f05d",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T09:16:16Z",
+      "side": 1,
+      "message": "This is really an integration test, as such it should be named EndToEndIT.",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3b2fb4e_6ce2bfcb",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T09:16:16Z",
+      "side": 1,
+      "message": "I suspect that at the moment this test relies on components external to the project for serving the StreamConfig and for consuming the events. Ideally, we would want to have those as part of the project, so that this test can be run automatically as part of CI. This should be fairly easy to do with Wiremock (which we already use).",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 12
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da7507d5_267de3a9",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T09:16:16Z",
+      "side": 1,
+      "message": "We should use awaitility to ensure that the metrics client has been fully initialized before continuing.",
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfdbb5e6_2332a257",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T09:16:16Z",
+      "side": 1,
+      "message": "nit: This can be simplified to:\n\n        Map\u003cString, Object\u003e customData \u003d Collections.singletonMap(\"action\", \"surf\");",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84db5e26_5fbaf707",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndTestEventSender.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-07T09:16:16Z",
+      "side": 1,
+      "message": "We could use the DefaultEventSender directly (and it would be a good test for it). I suspect this isn\u0027t the case because it hasn\u0027t been merged yet.",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 36
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
