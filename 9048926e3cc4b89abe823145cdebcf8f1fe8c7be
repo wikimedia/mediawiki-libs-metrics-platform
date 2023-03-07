@@ -24,6 +24,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c86b329_c522a695",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-07T19:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e162e3b_f6e3ab83",
+      "range": {
+        "startLine": 34,
+        "startChar": 18,
+        "endLine": 34,
+        "endChar": 112
+      },
+      "revId": "9048926e3cc4b89abe823145cdebcf8f1fe8c7be",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cef30fe_2f1e0d7e",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-03-06T14:44:03Z",
       "side": 1,
       "message": "This whole block will create a potentially large String in memory, but it is only used to log it when FINE is enabled. It should probably be guarded by `log.isLoggable(FINE)`.",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 17
+      },
+      "revId": "9048926e3cc4b89abe823145cdebcf8f1fe8c7be",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c60421d4_b661fd4f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-07T19:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cef30fe_2f1e0d7e",
       "range": {
         "startLine": 54,
         "startChar": 16,
@@ -83,6 +131,54 @@
       "writtenOn": "2023-03-06T15:06:31Z",
       "side": 1,
       "message": "This method and `getMetricsClientCustomEventSender()` should both be named `createMetricsClient`. They are in the end just more specialized versions of the above similar methods. And we could rely on overloading as well here.",
+      "range": {
+        "startLine": 88,
+        "startChar": 33,
+        "endLine": 88,
+        "endChar": 67
+      },
+      "revId": "9048926e3cc4b89abe823145cdebcf8f1fe8c7be",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8aef489_6b8a5447",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-07T19:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37921d22_9d9f214c",
+      "range": {
+        "startLine": 88,
+        "startChar": 33,
+        "endLine": 88,
+        "endChar": 67
+      },
+      "revId": "9048926e3cc4b89abe823145cdebcf8f1fe8c7be",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "826a56f2_1b4ab8b9",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-07T19:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0005a3f_df72b635",
       "range": {
         "startLine": 88,
         "startChar": 33,
