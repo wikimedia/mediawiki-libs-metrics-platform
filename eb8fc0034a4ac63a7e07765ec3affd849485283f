@@ -55,6 +55,144 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6b5244e2_601dccd3",
+        "filename": "java/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:40:32Z",
+      "side": 1,
+      "message": "This should be a scope\u003dtest dependency.",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 36
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dc78ce9_ace4563f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:40:32Z",
+      "side": 1,
+      "message": "In case of an URISyntaxException, the events are not sent, so they need to be re-enqueued as in the case of an IOException.",
+      "range": {
+        "startLine": 109,
+        "startChar": 10,
+        "endLine": 110,
+        "endChar": 42
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "087b5559_cb453ef3",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:40:32Z",
+      "side": 1,
+      "message": "Awaitility is meant to be used in the test code, not in the production code. In normal useage (production), we don\u0027t want to wait before we give the control back to the caller (or if we do, then we wouldn\u0027t use an async call and just synchronously fetch the streamConfig). During tests, we want some more predictability, so that we can have proper assertions. This will probably require exposing a method on MetricsClient to allow the test to check if the class is fully initialized (`isFullyInitialized()`? `isConfigurationLoaded()`?).",
+      "range": {
+        "startLine": 157,
+        "startChar": 7,
+        "endLine": 157,
+        "endChar": 79
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1643290f_7f28449e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:40:32Z",
+      "side": 1,
+      "message": "Ideally, we want blackbox testing, and don\u0027t want to expose the internal state of the metrics client. I haven\u0027t looked at the tests yet, but I suspect we can assert on events having been sent instead of asserting on the size of the queue.",
+      "range": {
+        "startLine": 326,
+        "startChar": 32,
+        "endLine": 326,
+        "endChar": 45
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f045ebe2_60094831",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:40:32Z",
+      "side": 1,
+      "message": "Ideally, an end to end test should mock external services (with Wiremock), both to load the configuration and to assert that events are sent properly. Feel free to schedule some time with me if you want to pair on this. Or completely ignore it and call it good enough for now.",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b043f969_fa85da68",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:40:32Z",
+      "side": 1,
+      "message": "nit: static import?",
+      "range": {
+        "startLine": 41,
+        "startChar": 53,
+        "endLine": 41,
+        "endChar": 65
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ed8f5ae0_c132e00e",
         "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
         "patchSetId": 3
@@ -66,6 +204,52 @@
       "writtenOn": "2023-03-08T04:35:16Z",
       "side": 1,
       "message": "As noted in another comment, the event name has to match the prefix defined by config exactly in order for the event to be produced to eventlogging. Java client should be able to pattern match event names to prefixes provided by config.\n\nLogged https://phabricator.wikimedia.org/T331501 to address.",
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ab2e4da_ce27a55d",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:40:32Z",
+      "side": 1,
+      "message": "Reading the test config should probably be moved to it\u0027s own fixture class.",
+      "range": {
+        "startLine": 52,
+        "startChar": 87,
+        "endLine": 56,
+        "endChar": 87
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06671941_8dec26d1",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:40:32Z",
+      "side": 1,
+      "message": "`Collections.singletonMap()` (see above comment)",
+      "range": {
+        "startLine": 75,
+        "startChar": 45,
+        "endLine": 76,
+        "endChar": 47
+      },
       "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
