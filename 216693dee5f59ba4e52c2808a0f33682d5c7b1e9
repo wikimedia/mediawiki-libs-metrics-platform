@@ -81,6 +81,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f0819cf_cf76798d",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:17:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab099198_ac16d432",
+      "range": {
+        "startLine": 70,
+        "startChar": 34,
+        "endLine": 70,
+        "endChar": 43
+      },
+      "revId": "216693dee5f59ba4e52c2808a0f33682d5c7b1e9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b404e745_d67f4c21",
@@ -164,6 +188,30 @@
       "side": 1,
       "message": "See https://gerrit.wikimedia.org/r/c/mediawiki/libs/metrics-platform/+/895349 for some ideas on how to simplify this a bit. This is really cosmetic, don\u0027t spend too much time on it.",
       "parentUuid": "c83e3375_e835d83f",
+      "range": {
+        "startLine": 88,
+        "startChar": 33,
+        "endLine": 88,
+        "endChar": 52
+      },
+      "revId": "216693dee5f59ba4e52c2808a0f33682d5c7b1e9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c94fda23_85f2a450",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:17:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29d149d2_c8a278c0",
       "range": {
         "startLine": 88,
         "startChar": 33,

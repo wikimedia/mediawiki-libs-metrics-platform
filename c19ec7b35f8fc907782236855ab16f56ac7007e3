@@ -16,6 +16,92 @@
       "message": "recheck after revert of https://gerrit.wikimedia.org/r/c/integration/pipelinelib/+/895673 for CI test error | T331497\n",
       "revId": "c19ec7b35f8fc907782236855ab16f56ac7007e3",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd2bcf5b_bf5c3610",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:17:50Z",
+      "side": 1,
+      "message": "A few minor comments about exception handling, otherwise LGTM.",
+      "revId": "c19ec7b35f8fc907782236855ab16f56ac7007e3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71dda3fa_cde1cc37",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:17:50Z",
+      "side": 1,
+      "message": "We still want to throw an exception in case status !\u003d HTTP_OK, as this is an indication that publishing events has failed. Probably an IOException.",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 78
+      },
+      "revId": "c19ec7b35f8fc907782236855ab16f56ac7007e3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f3dbde8_9c66e8f9",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:17:50Z",
+      "side": 1,
+      "message": "Sorry, my previous comment probably wasn\u0027t clear enough. If we detect an invalid URL, we should throw an exception, not return null. The calling code isn\u0027t able to deal with a null, so an exception makes more sense.\n\nNote that this probably means that we can just inline this method and let the MalformedURLException bubble up.",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "c19ec7b35f8fc907782236855ab16f56ac7007e3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7137fbcc_2b00c945",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T09:17:50Z",
+      "side": 1,
+      "message": "nit (and unrelated to this CR): an initial delay of 1ms makes it unlikely that the configuration will be loaded before trying to send events. We should wait enough that we have reasonable confidence that sending event will work on the first try. This is really minor, worst case, the config isn\u0027t loaded on the first try and events will be processed on the second try. And it is probably that the client code will not start sending event right away anyway.",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 183,
+        "endChar": 17
+      },
+      "revId": "c19ec7b35f8fc907782236855ab16f56ac7007e3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
