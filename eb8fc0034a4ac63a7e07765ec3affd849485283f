@@ -33,6 +33,24 @@
       "message": "Here\u0027s my local eventlogging - https://phabricator.wikimedia.org/F36897369",
       "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a7dad62_bdff5bf7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-08T04:04:07Z",
+      "side": 1,
+      "message": "One thing I\u0027m realizing is that I think Java client needs to incorporate pattern matching for event names.\n\nTo leverage the active streams from the analytics api endpoint, I had to match the prefix `eas.` exactly to produce the event to my local eventlogging. Filed a ticket https://phabricator.wikimedia.org/T331501",
+      "parentUuid": "d4c5069f_d9e2637a",
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
