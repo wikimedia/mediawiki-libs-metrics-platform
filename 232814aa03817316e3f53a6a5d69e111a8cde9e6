@@ -22,6 +22,30 @@
       },
       "revId": "232814aa03817316e3f53a6a5d69e111a8cde9e6",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a0c89c3_a022cdd0",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EventProcessorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-08T16:14:18Z",
+      "side": 1,
+      "message": "Fixed (added a parent commit that refactors the tests)",
+      "parentUuid": "f2c6f374_18b4e9fc",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "232814aa03817316e3f53a6a5d69e111a8cde9e6",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
