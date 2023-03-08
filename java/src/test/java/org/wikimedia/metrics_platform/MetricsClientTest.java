@@ -167,15 +167,22 @@ class MetricsClientTest {
      * Convenience method for getting a stream config map.
      */
     public static Map<String, StreamConfig> getTestStreamConfigMap() {
+        return getTestStreamConfigMap(curationFilter);
+    }
+
+    public static Map<String, StreamConfig> getTestStreamConfigMap(CurationFilter curationFilter) {
         StreamConfig streamConfig = getTestStreamConfig(curationFilter);
         return singletonMap(streamConfig.getStreamName(), streamConfig);
     }
-
     /**
      * Convenience method for getting source config.
      */
     public static SourceConfig getTestSourceConfig() {
         return new SourceConfig(getTestStreamConfigMap());
+    }
+
+    public static SourceConfig getTestSourceConfig(CurationFilter curationFilter) {
+        return new SourceConfig(getTestStreamConfigMap(curationFilter));
     }
 
     /**

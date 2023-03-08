@@ -1,19 +1,24 @@
 package org.wikimedia.metrics_platform;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+import static java.util.Collections.singleton;
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.wikimedia.metrics_platform.MetricsClientTest.getTestSourceConfig;
 import static org.wikimedia.metrics_platform.MetricsClientTest.getTestStreamConfig;
-import static org.wikimedia.metrics_platform.config.CurationFilterFixtures.getCurationFilter;
+import static org.wikimedia.metrics_platform.event.EventFixtures.minimalEvent;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -34,75 +39,105 @@ import org.wikimedia.metrics_platform.event.Event;
 
 @ExtendWith(MockitoExtension.class)
 class EventProcessorTest {
-    private ContextController contextController = new ContextController(new TestClientMetadata());
     @Mock private EventSender mockEventSender;
-    private AtomicReference<SourceConfig> sourceConfig;
-    private BlockingQueue<Event> eventQueue;
+    @Mock private CurationFilter curationFilter;
+    private final AtomicReference<SourceConfig> sourceConfig = new AtomicReference<>();
+    private final BlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>(10);
     private EventProcessor eventProcessor;
-    private Event event;
-    private static final CurationFilter curationFilter = getCurationFilter();
+
+    @BeforeEach void clearEventQueue() {
+        eventQueue.clear();
+    }
 
     @BeforeEach void createEventProcessor() {
-        sourceConfig = new AtomicReference<>(getTestSourceConfig());
-        eventQueue = new LinkedBlockingQueue<>(10);
+        sourceConfig.set(getTestSourceConfig(curationFilter));
 
         eventProcessor = new EventProcessor(
-                contextController,
+                new ContextController(new TestClientMetadata()),
                 sourceConfig,
                 mockEventSender,
                 eventQueue
         );
     }
 
-    @BeforeEach void resetEvent() {
-        event = new Event("test_schema", "test_stream", "test_event");
-    }
+    @Test void enqueuedEventsAreSent() throws IOException {
+        whenEventsArePassingCurationFilter();
 
-    @Test void testSendEnqueuedEvents() throws IOException {
-        eventQueue.offer(event);
+        eventQueue.offer(minimalEvent());
         eventProcessor.sendEnqueuedEvents();
         verify(mockEventSender).sendEvents(anyString(), anyCollection());
     }
 
-    @Test void testEventsRemovedFromOutputBufferOnSuccess() {
-        eventQueue.offer(event);
+    @Test void eventsNotPassingCurationFiltersAreDropped() throws IOException {
+        whenEventsAreNotPassingCurationFilter();
+
+        eventQueue.offer(minimalEvent());
         eventProcessor.sendEnqueuedEvents();
+
+        verify(mockEventSender, never()).sendEvents(anyString(), anyCollection());
         assertThat(eventQueue).isEmpty();
     }
 
-    @Test void testEventsRemainInOutputBufferOnFailure() throws IOException {
-        doThrow(IOException.class).when(mockEventSender).sendEvents(anyString(), anyCollection());
-        eventQueue.offer(event);
+    @Test void eventsAreRemovedFromQueueOnceSent() {
+        whenEventsArePassingCurationFilter();
+
+        eventQueue.offer(minimalEvent());
         eventProcessor.sendEnqueuedEvents();
+
+        assertThat(eventQueue).isEmpty();
+    }
+
+    @Test void eventsRemainInOutputBufferOnFailure() throws IOException {
+        whenEventsArePassingCurationFilter();
+        doThrow(IOException.class).when(mockEventSender).sendEvents(anyString(), anyCollection());
+
+        eventQueue.offer(minimalEvent());
+        eventProcessor.sendEnqueuedEvents();
+
         assertThat(eventQueue).isNotEmpty();
     }
 
     @Test void eventsAreEnrichedBeforeBeingSent() throws IOException {
-        ArgumentCaptor<Collection<Event>> eventCaptor = ArgumentCaptor.forClass(Collection.class);
-        eventQueue.offer(event);
+        whenEventsArePassingCurationFilter();
+
+        eventQueue.offer(minimalEvent());
         eventProcessor.sendEnqueuedEvents();
+
+        ArgumentCaptor<Collection<Event>> eventCaptor = ArgumentCaptor.forClass(Collection.class);
         verify(mockEventSender).sendEvents(anyString(), eventCaptor.capture());
 
         Event sentEvent = eventCaptor.getValue().iterator().next();
         assertThat(sentEvent.getPageData().getTitle()).isEqualTo("Test");
     }
 
-    @Test void eventsNotSentWhenFetchStreamConfigFails() throws Exception {
+    @Test void eventsNotSentWhenFetchStreamConfigFails() {
         sourceConfig.set(null);
-        eventQueue.offer(new Event("stream", "stream", "event"));
+
+        eventQueue.offer(minimalEvent());
         eventProcessor.sendEnqueuedEvents();
+
         assertThat(eventQueue).isNotEmpty();
     }
 
     @Test void testEventPassesCurationFilters() {
-        PerformerData performerData = new PerformerData();
-        performerData.setGroups(Collections.singleton("steward"));
+        whenEventsArePassingCurationFilter();
+
+        // FIXME: move this to CurationFilterTest
+        Event event = minimalEvent();
         event.getPageData().setTitle("Test");
-        event.setPerformerData(performerData);
+
+        event.setPerformerData(
+                PerformerData.builder()
+                        .groups(singleton("steward"))
+                        .build()
+        );
+
         assertThat(eventProcessor.eventPassesCurationRules(event, getStreamConfigsMap())).isTrue();
     }
 
     @Test void testEventFailsEqualsRule() {
+
+        // FIXME: move this to CurationControllerTest
         ClientMetadata anotherTestClientMetadata = new TestClientMetadata() {
             @Override
             public String getPageTitle() {
@@ -115,26 +150,39 @@ class EventProcessorTest {
                 mockEventSender,
                 eventQueue
         );
-        assertThat(eventProcessor.eventPassesCurationRules(event, getStreamConfigsMap())).isFalse();
+        assertThat(eventProcessor.eventPassesCurationRules(minimalEvent(), getStreamConfigsMap())).isFalse();
     }
 
     @Test void testEventFailsCollectionContainsAnyRule() {
+
+        // FIXME: move to CurationControllerTest
         PerformerData performerData = new PerformerData();
-        performerData.setGroups(Collections.singleton("*"));
+        performerData.setGroups(singleton("*"));
+        Event event = minimalEvent();
         event.getPageData().setTitle("Test");
         event.setPerformerData(performerData);
         assertThat(eventProcessor.eventPassesCurationRules(event, getStreamConfigsMap())).isFalse();
     }
 
     @Test void testEventFailsCollectionDoesNotContainRule() {
+        // FIXME: move to CurationControllerTest
         PerformerData performerData = new PerformerData();
         performerData.setGroups(new HashSet<>(Arrays.asList("steward", "sysop")));
+        Event event = minimalEvent();
         event.getPageData().setTitle("Test");
         event.setPerformerData(performerData);
         assertThat(eventProcessor.eventPassesCurationRules(event, getStreamConfigsMap())).isFalse();
     }
 
-    private static Map<String, StreamConfig> getStreamConfigsMap() {
+    private void whenEventsArePassingCurationFilter() {
+        when(curationFilter.apply(any(Event.class))).thenReturn(TRUE);
+    }
+
+    private void whenEventsAreNotPassingCurationFilter() {
+        when(curationFilter.apply(any(Event.class))).thenReturn(FALSE);
+    }
+
+    private Map<String, StreamConfig> getStreamConfigsMap() {
         StreamConfig streamConfig = getTestStreamConfig(curationFilter);
         return singletonMap(streamConfig.getStreamName(), streamConfig);
     }
