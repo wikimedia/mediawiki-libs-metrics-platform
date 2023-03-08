@@ -9,23 +9,23 @@ class SourceConfigTest {
     private static SourceConfig sourceConfig;
 
     @Test void testConfig() {
-        sourceConfig = new SourceConfig(SourceConfigFixtures.STREAM_CONFIGS_WITH_EVENTS);
+        sourceConfig = new SourceConfig(StreamConfigFixtures.STREAM_CONFIGS_WITH_EVENTS);
         assertThat(sourceConfig.getStreamNamesByEvent("test.event")).containsExactly("test.stream");
     }
 
     @Test void testGetStreamNames() {
-        sourceConfig = new SourceConfig(SourceConfigFixtures.STREAM_CONFIGS_WITH_EVENTS);
+        sourceConfig = new SourceConfig(StreamConfigFixtures.STREAM_CONFIGS_WITH_EVENTS);
         assertThat(sourceConfig.getStreamNames()).containsExactly("test.stream");
     }
 
     @Test void testGetStreamConfigByName() {
-        sourceConfig = new SourceConfig(SourceConfigFixtures.STREAM_CONFIGS_WITH_EVENTS);
-        StreamConfig streamConfig = SourceConfigFixtures.getSampleStreamConfig(true);
+        sourceConfig = new SourceConfig(StreamConfigFixtures.STREAM_CONFIGS_WITH_EVENTS);
+        StreamConfig streamConfig = StreamConfigFixtures.sampleStreamConfig(true);
         assertThat(streamConfig).isEqualTo(sourceConfig.getStreamConfigByName("test.stream"));
     }
 
     @Test void testGetStreamNamesByEvent() {
-        sourceConfig = new SourceConfig(SourceConfigFixtures.STREAM_CONFIGS_WITH_EVENTS);
+        sourceConfig = new SourceConfig(StreamConfigFixtures.STREAM_CONFIGS_WITH_EVENTS);
         assertThat(sourceConfig.getStreamNamesByEvent("test.event")).containsExactly("test.stream");
     }
 }

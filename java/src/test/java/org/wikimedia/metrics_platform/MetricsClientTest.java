@@ -1,37 +1,26 @@
 package org.wikimedia.metrics_platform;
 
-import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.METRICS_PLATFORM_SCHEMA_TITLE;
-import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM;
-import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM_FAMILY;
-import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_TITLE;
+import static org.wikimedia.metrics_platform.config.StreamConfigFixtures.streamConfig;
+import static org.wikimedia.metrics_platform.curation.CurationFilterFixtures.curationFilter;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.wikimedia.metrics_platform.config.CurationFilter;
-import org.wikimedia.metrics_platform.config.DestinationEventService;
-import org.wikimedia.metrics_platform.config.SampleConfig;
 import org.wikimedia.metrics_platform.config.SourceConfig;
-import org.wikimedia.metrics_platform.config.StreamConfig;
+import org.wikimedia.metrics_platform.config.SourceConfigFixtures;
 import org.wikimedia.metrics_platform.event.Event;
-
-import com.google.gson.Gson;
 
 @ExtendWith(MockitoExtension.class)
 class MetricsClientTest {
@@ -40,23 +29,12 @@ class MetricsClientTest {
     @Mock private SessionController mockSessionController;
     @Mock private SamplingController mockSamplingController;
     private MetricsClient client;
-    private static CurationFilter curationFilter;
     private BlockingQueue<Event> eventQueue;
     private AtomicReference<SourceConfig> sourceConfig;
 
-    @BeforeAll
-    static void setUp() {
-        Gson gson = GsonHelper.getGson();
-        String curationFilterJson = "{\"page_id\":{\"less_than\":500,\"not_equals\":42},\"page_namespace_text\":" +
-            "{\"equals\":\"Talk\"},\"user_is_logged_in\":{\"equals\":true},\"user_edit_count_bucket\":" +
-            "{\"in\":[\"100-999 edits\",\"1000+ edits\"]},\"user_groups\":{\"contains_all\":" +
-            "[\"user\",\"autoconfirmed\"],\"does_not_contain\":\"sysop\"}}";
-        curationFilter = gson.fromJson(curationFilterJson, CurationFilter.class);
-    }
-
     @BeforeEach void createEventProcessorMetricsClient() {
         eventQueue = new LinkedBlockingQueue<>(10);
-        sourceConfig = new AtomicReference<>(getTestSourceConfig());
+        sourceConfig = new AtomicReference<>(SourceConfigFixtures.getTestSourceConfig());
 
         client =  new MetricsClient(
                 mockClientMetadata,
@@ -75,7 +53,7 @@ class MetricsClientTest {
     }
 
     @Test void testDispatch() throws InterruptedException {
-        when(mockSamplingController.isInSample(getTestStreamConfig(curationFilter))).thenReturn(true);
+        when(mockSamplingController.isInSample(streamConfig(curationFilter()))).thenReturn(true);
 
         Map<String, Object> customDataMap = getTestCustomData();
         client.dispatch("test_event", customDataMap);
@@ -134,55 +112,6 @@ class MetricsClientTest {
 
         verify(mockClientMetadata).getAgentAppInstallId();
         verify(mockSessionController).getSessionId();
-    }
-
-    /**
-     * Convenience method for getting stream config.
-     */
-    static StreamConfig getTestStreamConfig(CurationFilter curationFilter) {
-        String[] provideValues = {
-            AGENT_CLIENT_PLATFORM,
-            AGENT_CLIENT_PLATFORM_FAMILY,
-            PAGE_TITLE
-        };
-        Set<String> events = Collections.singleton("test_event");
-        SampleConfig sampleConfig = new SampleConfig(1.0f, SampleConfig.Identifier.PAGEVIEW);
-
-        return new StreamConfig(
-            "test_stream",
-            METRICS_PLATFORM_SCHEMA_TITLE,
-            DestinationEventService.LOCAL,
-            new StreamConfig.ProducerConfig(
-                new StreamConfig.MetricsPlatformClientConfig(
-                    events,
-                    Arrays.asList(provideValues),
-                    curationFilter
-                )
-            ),
-            sampleConfig
-        );
-    }
-
-    /**
-     * Convenience method for getting a stream config map.
-     */
-    public static Map<String, StreamConfig> getTestStreamConfigMap() {
-        return getTestStreamConfigMap(curationFilter);
-    }
-
-    public static Map<String, StreamConfig> getTestStreamConfigMap(CurationFilter curationFilter) {
-        StreamConfig streamConfig = getTestStreamConfig(curationFilter);
-        return singletonMap(streamConfig.getStreamName(), streamConfig);
-    }
-    /**
-     * Convenience method for getting source config.
-     */
-    public static SourceConfig getTestSourceConfig() {
-        return new SourceConfig(getTestStreamConfigMap());
-    }
-
-    public static SourceConfig getTestSourceConfig(CurationFilter curationFilter) {
-        return new SourceConfig(getTestStreamConfigMap(curationFilter));
     }
 
     /**

@@ -3,8 +3,8 @@ package org.wikimedia.metrics_platform;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
-import org.wikimedia.metrics_platform.config.SourceConfigFixtures;
 import org.wikimedia.metrics_platform.config.StreamConfig;
+import org.wikimedia.metrics_platform.config.StreamConfigFixtures;
 import org.wikimedia.metrics_platform.context.AgentData;
 import org.wikimedia.metrics_platform.context.MediawikiData;
 import org.wikimedia.metrics_platform.context.PageData;
@@ -16,7 +16,7 @@ class ContextControllerTest {
     @Test void testAddRequestedValues() {
         ContextController contextController = new ContextController(new TestClientMetadata());
         Event event = new Event("test/event", "test.stream", "testEvent");
-        StreamConfig streamConfig = SourceConfigFixtures.STREAM_CONFIGS_WITH_EVENTS.get("test.stream");
+        StreamConfig streamConfig = StreamConfigFixtures.STREAM_CONFIGS_WITH_EVENTS.get("test.stream");
         contextController.addRequestedValues(event, streamConfig);
 
         AgentData agentData = event.getAgentData();

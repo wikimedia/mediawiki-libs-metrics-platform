@@ -11,8 +11,8 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.wikimedia.metrics_platform.MetricsClientTest.getTestSourceConfig;
-import static org.wikimedia.metrics_platform.MetricsClientTest.getTestStreamConfig;
+import static org.wikimedia.metrics_platform.config.SourceConfigFixtures.getTestSourceConfig;
+import static org.wikimedia.metrics_platform.config.StreamConfigFixtures.streamConfig;
 import static org.wikimedia.metrics_platform.event.EventFixtures.minimalEvent;
 
 import java.io.IOException;
@@ -183,7 +183,7 @@ class EventProcessorTest {
     }
 
     private Map<String, StreamConfig> getStreamConfigsMap() {
-        StreamConfig streamConfig = getTestStreamConfig(curationFilter);
+        StreamConfig streamConfig = streamConfig(curationFilter);
         return singletonMap(streamConfig.getStreamName(), streamConfig);
     }
 }
