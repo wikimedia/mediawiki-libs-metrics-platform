@@ -51,6 +51,23 @@
       "parentUuid": "d4c5069f_d9e2637a",
       "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed8f5ae0_c132e00e",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-08T04:35:16Z",
+      "side": 1,
+      "message": "As noted in another comment, the event name has to match the prefix defined by config exactly in order for the event to be produced to eventlogging. Java client should be able to pattern match event names to prefixes provided by config.\n\nLogged https://phabricator.wikimedia.org/T331501 to address.",
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
