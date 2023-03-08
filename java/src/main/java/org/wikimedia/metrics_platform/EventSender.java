@@ -1,6 +1,7 @@
 package org.wikimedia.metrics_platform;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Collection;
 
 import org.wikimedia.metrics_platform.event.Event;
@@ -13,5 +14,6 @@ public interface EventSender {
      * @param baseUri base uri of destination intake service
      * @param events events to be sent
      */
-    void sendEvents(String baseUri, Collection<Event> events) throws IOException;
+
+    void sendEvents(URL baseUri, Collection<Event> events) throws IOException;
 }

@@ -1,11 +1,11 @@
 package org.wikimedia.metrics_platform.config;
 
-import static lombok.AccessLevel.PRIVATE;
+import java.net.URL;
 
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 
 /**
  * Possible event destination endpoints which can be specified in stream configurations.
@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
  *
  * https://wikitech.wikimedia.org/wiki/Event_Platform/EventGate#EventGate_clusters
  */
-@Getter @RequiredArgsConstructor(access = PRIVATE)
+@Getter
 public enum DestinationEventService {
 
     @SerializedName("eventgate-analytics-external")
@@ -25,6 +25,10 @@ public enum DestinationEventService {
     @SerializedName("eventgate-logging-local")
     LOCAL("http://localhost:8192/v1/events");
 
-    private final String baseUri;
+    private final URL baseUri;
 
+    @SneakyThrows
+    DestinationEventService(String baseUri) {
+        this.baseUri = new URL(baseUri);
+    }
 }

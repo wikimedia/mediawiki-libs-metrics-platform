@@ -26,12 +26,11 @@ public class EventSenderDefault implements EventSender {
     private final Gson gson = GsonHelper.getGson();
 
     @Override
-    public void sendEvents(String baseUri, Collection<Event> events) throws IOException {
-        URL url = new URL(baseUri);
+    public void sendEvents(URL baseUri, Collection<Event> events) throws IOException {
         HttpURLConnection connection = null;
 
         try {
-            connection = (HttpURLConnection) url.openConnection();
+            connection = (HttpURLConnection) baseUri.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Content-Type", "application/json");

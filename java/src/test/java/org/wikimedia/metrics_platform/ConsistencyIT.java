@@ -13,7 +13,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -103,11 +102,7 @@ class ConsistencyIT {
             BlockingQueue<Event> eventQueue
     ) {
         ContextController contextController = new ContextController(consistencyTestClientMetadata);
-        EventSender eventSender = new EventSender() {
-            @Override
-            public void sendEvents(String baseUri, Collection<Event> events) throws IOException {
-            }
-        };
+        EventSender eventSender = new TestEventSender();
         return new EventProcessor(
                 contextController,
                 sourceConfigRef,

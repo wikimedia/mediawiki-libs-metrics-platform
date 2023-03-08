@@ -7,7 +7,6 @@ import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyCollection;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -17,6 +16,7 @@ import static org.wikimedia.metrics_platform.MetricsClientTest.getTestStreamConf
 import static org.wikimedia.metrics_platform.event.EventFixtures.minimalEvent;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -65,7 +65,7 @@ class EventProcessorTest {
 
         eventQueue.offer(minimalEvent());
         eventProcessor.sendEnqueuedEvents();
-        verify(mockEventSender).sendEvents(anyString(), anyCollection());
+        verify(mockEventSender).sendEvents(any(URL.class), anyCollection());
     }
 
     @Test void eventsNotPassingCurationFiltersAreDropped() throws IOException {
@@ -74,7 +74,7 @@ class EventProcessorTest {
         eventQueue.offer(minimalEvent());
         eventProcessor.sendEnqueuedEvents();
 
-        verify(mockEventSender, never()).sendEvents(anyString(), anyCollection());
+        verify(mockEventSender, never()).sendEvents(any(URL.class), anyCollection());
         assertThat(eventQueue).isEmpty();
     }
 
@@ -89,7 +89,7 @@ class EventProcessorTest {
 
     @Test void eventsRemainInOutputBufferOnFailure() throws IOException {
         whenEventsArePassingCurationFilter();
-        doThrow(IOException.class).when(mockEventSender).sendEvents(anyString(), anyCollection());
+        doThrow(IOException.class).when(mockEventSender).sendEvents(any(URL.class), anyCollection());
 
         eventQueue.offer(minimalEvent());
         eventProcessor.sendEnqueuedEvents();
@@ -104,7 +104,7 @@ class EventProcessorTest {
         eventProcessor.sendEnqueuedEvents();
 
         ArgumentCaptor<Collection<Event>> eventCaptor = ArgumentCaptor.forClass(Collection.class);
-        verify(mockEventSender).sendEvents(anyString(), eventCaptor.capture());
+        verify(mockEventSender).sendEvents(any(URL.class), eventCaptor.capture());
 
         Event sentEvent = eventCaptor.getValue().iterator().next();
         assertThat(sentEvent.getPageData().getTitle()).isEqualTo("Test");
