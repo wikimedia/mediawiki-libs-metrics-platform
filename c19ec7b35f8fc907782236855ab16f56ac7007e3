@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57aa111d_159f78d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 24
+      },
+      "writtenOn": "2023-03-08T09:10:56Z",
+      "side": 1,
+      "message": "recheck after revert of https://gerrit.wikimedia.org/r/c/integration/pipelinelib/+/895673 for CI test error | T331497\n",
+      "revId": "c19ec7b35f8fc907782236855ab16f56ac7007e3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
