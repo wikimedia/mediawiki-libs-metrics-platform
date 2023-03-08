@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "40955203_101b059b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-08T03:48:01Z",
+      "side": 1,
+      "message": "agree - i got flummoxed with rebasing so once https://gerrit.wikimedia.org/r/c/mediawiki/libs/metrics-platform/+/892628 lands, i will modify this patch to submit EndToEndIT",
+      "parentUuid": "48992f05_bcd9e367",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ecc5fbe7_7135f70a",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 2
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b8aefc4e_6a31826e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-08T03:48:01Z",
+      "side": 1,
+      "message": "so this would mean adding 3 more overloaded methods for `createMetricsClient()`? \none for STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL, another for SEND_INTERVAL, and yet another one for both being passed in as parameters?\n\nas well as overloading `runExecutorService()` to accommodate for the 3 permutations of parameters above?",
+      "parentUuid": "ecc5fbe7_7135f70a",
+      "range": {
+        "startLine": 127,
+        "startChar": 15,
+        "endLine": 127,
+        "endChar": 51
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "475610cc_d6a3b9ff",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 2
@@ -60,6 +108,30 @@
       "writtenOn": "2023-03-07T09:16:16Z",
       "side": 1,
       "message": "I found the issue! This should be:\n\n        return new Thread(r, \"metrics-client-\" + counter.incrementAndGet());\n        \nNote the Runnable parameter \"r\" needs to be passed to the created Thread, otherwise it won\u0027t know what work it needs to do.",
+      "range": {
+        "startLine": 277,
+        "startChar": 12,
+        "endLine": 277,
+        "endChar": 77
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fb990ab_0c089b0d",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-08T03:48:01Z",
+      "side": 1,
+      "message": "eagle eyes \\o/",
+      "parentUuid": "475610cc_d6a3b9ff",
       "range": {
         "startLine": 277,
         "startChar": 12,
@@ -116,6 +188,54 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "505226ac_974b0225",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-08T03:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6260781e_9e14f05d",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8185298_eca7ab30",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-08T03:48:01Z",
+      "side": 1,
+      "message": "`EndToEndIT::submitEventTimerStreamConfig()` is the one test that\u0027s needed in this class. \n\n`EndToEndIT::submitEventCustomStreamConfig()` basically dupes `ConsistencyIT::testConsistency()` so it can be removed. I kept it around to easily test side-by-side with `submitEventTimerStreamConfig()`.",
+      "parentUuid": "d3b2fb4e_6ce2bfcb",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 12
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da7507d5_267de3a9",
@@ -129,6 +249,24 @@
       "writtenOn": "2023-03-07T09:16:16Z",
       "side": 1,
       "message": "We should use awaitility to ensure that the metrics client has been fully initialized before continuing.",
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9c8298a_4a2c4520",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-08T03:48:01Z",
+      "side": 1,
+      "message": "latest ps finally works to produce an event to local eventlogging using just `MetricsClient::createMetricsClinet()` and `MetricsClient::dispatch()`\n\nnot sure i used await() optimally but it does work \\o/",
+      "parentUuid": "da7507d5_267de3a9",
       "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
@@ -156,6 +294,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfffb628_bdd55975",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-08T03:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfdbb5e6_2332a257",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84db5e26_5fbaf707",
@@ -169,6 +331,30 @@
       "writtenOn": "2023-03-07T09:16:16Z",
       "side": 1,
       "message": "We could use the DefaultEventSender directly (and it would be a good test for it). I suspect this isn\u0027t the case because it hasn\u0027t been merged yet.",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 36
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "404f2260_8f5d7f36",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndTestEventSender.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-08T03:48:01Z",
+      "side": 1,
+      "message": "you\u0027re absolutely right -- i\u0027ll remove this EventSender once https://gerrit.wikimedia.org/r/c/mediawiki/libs/metrics-platform/+/892628 lands",
+      "parentUuid": "84db5e26_5fbaf707",
       "range": {
         "startLine": 29,
         "startChar": 13,
