@@ -16,6 +16,23 @@
       "message": "Very excited to report that I finally got events produced by `EndToEndIT::submitEventTimerStreamConfig()` \n\n\\O/\n\nAnticipating that latest ps can be optimized further.",
       "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4c5069f_d9e2637a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-08T03:48:32Z",
+      "side": 1,
+      "message": "Here\u0027s my local eventlogging - https://phabricator.wikimedia.org/F36897369",
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
