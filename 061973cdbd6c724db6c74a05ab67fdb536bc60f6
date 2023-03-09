@@ -56,6 +56,30 @@
       },
       "revId": "061973cdbd6c724db6c74a05ab67fdb536bc60f6",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c9265d7_0959ce18",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-09T13:46:39Z",
+      "side": 1,
+      "message": "I don\u0027t think it matters much. It could even be moved to a top level class, since it doesn\u0027t have any dependency on MetricsClient or it builder. I\u0027m naturally suspicious of multiple levels of nested classes, but I don\u0027t have a good rational for that.",
+      "parentUuid": "791936b5_d435787b",
+      "range": {
+        "startLine": 307,
+        "startChar": 4,
+        "endLine": 315,
+        "endChar": 5
+      },
+      "revId": "061973cdbd6c724db6c74a05ab67fdb536bc60f6",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
