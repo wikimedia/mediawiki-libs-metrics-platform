@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12febfed_620ddd79",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-09T12:19:54Z",
+      "side": 1,
+      "message": "PS5 is a manual rebase.",
+      "revId": "fce186ea8d0b8293e039f5c11640774d03fdc263",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
