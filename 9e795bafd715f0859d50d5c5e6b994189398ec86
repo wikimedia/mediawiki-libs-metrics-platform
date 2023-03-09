@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac107344_45cfd825",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-09T04:18:33Z",
+      "side": 1,
+      "message": "nice - this lgtm -- after we land the default EventSender, I can rebase/merge",
+      "revId": "9e795bafd715f0859d50d5c5e6b994189398ec86",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
