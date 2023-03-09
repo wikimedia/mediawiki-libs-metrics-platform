@@ -84,16 +84,10 @@ class ConsistencyIT {
             AtomicReference<SourceConfig> sourceConfigRef,
             BlockingQueue<Event> eventQueue
     ) {
-        SessionController sessionController = new SessionController();
-        SamplingController samplingController = new SamplingController(consistencyTestClientMetadata, sessionController);
-
-        return new MetricsClient(
-                consistencyTestClientMetadata,
-                sessionController,
-                samplingController,
-                sourceConfigRef,
-                eventQueue
-        );
+        return MetricsClient.builder(consistencyTestClientMetadata)
+                .sourceConfigRef(sourceConfigRef)
+                .eventQueue(eventQueue)
+                .build();
     }
 
     private static EventProcessor getTestEventProcessor(

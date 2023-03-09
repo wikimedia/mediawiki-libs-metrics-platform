@@ -36,13 +36,12 @@ class MetricsClientTest {
         eventQueue = new LinkedBlockingQueue<>(10);
         sourceConfig = new AtomicReference<>(SourceConfigFixtures.getTestSourceConfig());
 
-        client =  new MetricsClient(
-                mockClientMetadata,
-                mockSessionController,
-                mockSamplingController,
-                sourceConfig,
-                eventQueue
-        );
+        client = MetricsClient.builder(mockClientMetadata)
+                .sessionController(mockSessionController)
+                .samplingController(mockSamplingController)
+                .sourceConfigRef(sourceConfig)
+                .eventQueue(eventQueue)
+                .build();
     }
 
     @Test void testSubmit() {

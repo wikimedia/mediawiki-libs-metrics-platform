@@ -8,7 +8,6 @@ import static java.util.stream.Collectors.toSet;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.ANALYTICS_API_ENDPOINT;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.ZoneId;
@@ -16,8 +15,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Executors;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
@@ -25,12 +24,19 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.concurrent.NotThreadSafe;
+
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.config.StreamConfigFetcher;
 import org.wikimedia.metrics_platform.context.CustomData;
 import org.wikimedia.metrics_platform.event.Event;
 
+import lombok.Setter;
+import lombok.SneakyThrows;
+import lombok.experimental.Accessors;
 import lombok.extern.java.Log;
 
 @Log
@@ -40,15 +46,9 @@ public final class MetricsClient {
             .ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
             .withZone(ZoneId.of("UTC"));
 
-    private static final Duration STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL = Duration.ofSeconds(30);
-
-    private static final Duration SEND_INTERVAL = Duration.ofSeconds(30);
-
     public static final String METRICS_PLATFORM_VERSION = "1.2.0";
 
     private static final String METRICS_PLATFORM_SCHEMA = "/analytics/mediawiki/client/metrics_event/" + METRICS_PLATFORM_VERSION;
-
-    private static final int DEFAULT_QUEUE_CAPACITY = 10;
 
     /**
      * Integration layer exposing hosting application functionality to the client library.
@@ -73,7 +73,7 @@ public final class MetricsClient {
     /**
      * MetricsClient constructor.
      */
-    public MetricsClient(
+    private MetricsClient(
             ClientMetadata clientMetadata,
             SessionController sessionController,
             SamplingController samplingController,
@@ -85,152 +85,6 @@ public final class MetricsClient {
         this.samplingController = samplingController;
         this.sourceConfig = sourceConfig;
         this.eventQueue = eventQueue;
-    }
-
-    public static MetricsClient createMetricsClient(
-            ClientMetadata clientMetadata
-    ) throws MalformedURLException {
-        return createMetricsClient(clientMetadata, DEFAULT_QUEUE_CAPACITY);
-    }
-
-    public static MetricsClient createMetricsClient(
-            ClientMetadata clientMetadata,
-            int capacity
-    ) throws MalformedURLException {
-        return createMetricsClient(clientMetadata, new EventSenderDefault(), capacity);
-    }
-
-    public static MetricsClient createMetricsClient(
-            ClientMetadata clientMetadata,
-            EventSender eventSender
-    ) throws MalformedURLException {
-        return createMetricsClient(clientMetadata, eventSender, DEFAULT_QUEUE_CAPACITY);
-    }
-
-    public static MetricsClient createMetricsClient(
-            ClientMetadata clientMetadata,
-            EventSender eventSender,
-            int capacity
-    ) throws MalformedURLException {
-        SessionController sessionController = new SessionController();
-        AtomicReference<SourceConfig> sourceConfigRef = new AtomicReference<>();
-        BlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>(capacity);
-        return createMetricsClient(clientMetadata, sourceConfigRef, eventQueue, sessionController, eventSender);
-    }
-
-    public static MetricsClient createMetricsClient(
-            ClientMetadata clientMetadata,
-            EventSender eventSender,
-            int capacity,
-            Duration fetchStreamConfigsInterval,
-            Duration sendEnqueuedEventsInterval
-    ) throws MalformedURLException {
-        SessionController sessionController = new SessionController();
-        AtomicReference<SourceConfig> sourceConfigRef = new AtomicReference<>();
-        BlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>(capacity);
-        return createMetricsClient(
-                clientMetadata,
-                sourceConfigRef,
-                eventQueue,
-                sessionController,
-                eventSender,
-                fetchStreamConfigsInterval,
-                sendEnqueuedEventsInterval
-        );
-    }
-
-    public static MetricsClient createMetricsClient(
-            ClientMetadata clientMetadata,
-            AtomicReference<SourceConfig> sourceConfigRef,
-            BlockingQueue<Event> eventQueue,
-            SessionController sessionController
-    ) throws MalformedURLException {
-        return createMetricsClient(
-                clientMetadata,
-                sourceConfigRef,
-                eventQueue,
-                sessionController,
-                new EventSenderDefault()
-        );
-    }
-
-    private static MetricsClient createMetricsClient(
-            ClientMetadata clientMetadata,
-            AtomicReference<SourceConfig> sourceConfigRef,
-            BlockingQueue<Event> eventQueue,
-            SessionController sessionController,
-            EventSender eventSender
-    ) throws MalformedURLException {
-        return createMetricsClient(
-                clientMetadata,
-                sourceConfigRef,
-                eventQueue,
-                sessionController,
-                eventSender,
-                STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL,
-                SEND_INTERVAL
-        );
-    }
-
-    private static MetricsClient createMetricsClient(
-            ClientMetadata clientMetadata,
-            AtomicReference<SourceConfig> sourceConfigRef,
-            BlockingQueue<Event> eventQueue,
-            SessionController sessionController,
-            EventSender eventSender,
-            Duration fetchStreamConfigsInterval,
-            Duration sendEnqueuedEventsInterval
-    ) throws MalformedURLException {
-        StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT));
-        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1, new SimpleThreadFactory());
-        runFetchStreamConfigs(executorService, streamConfigFetcher, sourceConfigRef, fetchStreamConfigsInterval);
-
-        EventProcessor eventProcessor = new EventProcessor(
-                new ContextController(clientMetadata),
-                sourceConfigRef,
-                eventSender,
-                eventQueue
-        );
-
-        MetricsClient metricsClient = new MetricsClient(
-                clientMetadata,
-                sessionController,
-                new SamplingController(clientMetadata, sessionController),
-                sourceConfigRef,
-                eventQueue
-        );
-
-        runSendEnqueuedEvents(executorService, eventProcessor, sendEnqueuedEventsInterval);
-
-        return metricsClient;
-    }
-
-    private static void runFetchStreamConfigs(
-            ScheduledExecutorService scheduler,
-            StreamConfigFetcher streamConfigFetcher,
-            AtomicReference<SourceConfig> sourceConfigRef,
-            Duration streamConfigFetchInterval
-    ) {
-        scheduler.scheduleAtFixedRate(
-                () -> {
-                    try {
-                        SourceConfig sourceConfig = streamConfigFetcher.fetchStreamConfigs();
-                        sourceConfigRef.set(sourceConfig);
-                    } catch (IOException e) {
-                        log.log(WARNING, "Could not fetch configuration.", e);
-                    }
-                },
-                0, streamConfigFetchInterval.toMillis(), MILLISECONDS);
-    }
-
-    private static void runSendEnqueuedEvents(
-            ScheduledExecutorService scheduler,
-            EventProcessor eventProcessor,
-            Duration sendEnqueuedEventsInterval
-    ) {
-        scheduler.scheduleAtFixedRate(
-                eventProcessor::sendEnqueuedEvents,
-                Duration.ofSeconds(3).toMillis(), sendEnqueuedEventsInterval.toMillis(), MILLISECONDS);
     }
 
     /**
@@ -366,6 +220,88 @@ public final class MetricsClient {
     private boolean shouldProcessEventsForStream(String streamName, SourceConfig sourceConfig) {
         StreamConfig streamConfig = sourceConfig.getStreamConfigByName(streamName);
         return streamConfig != null && samplingController.isInSample(streamConfig);
+    }
+
+    public static Builder builder(ClientMetadata clientMetadata) {
+        return new Builder(clientMetadata);
+    }
+
+    @NotThreadSafe @ParametersAreNonnullByDefault
+    @Setter @Accessors(fluent = true)
+    public static final class Builder {
+
+        private final ClientMetadata clientMetadata;
+        private AtomicReference<SourceConfig> sourceConfigRef = new AtomicReference<>();
+        private BlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>(10);
+        private SessionController sessionController = new SessionController();
+
+        @Nullable
+        private SamplingController samplingController;
+        private EventSender eventSender = new EventSenderDefault();
+        private URL streamConfigURL = safeURL(ANALYTICS_API_ENDPOINT);
+        private Duration streamConfigFetchInitialDelay = Duration.ofSeconds(0);
+        private Duration streamConfigFetchInterval = Duration.ofSeconds(30);
+        private Duration sendEventsInitialDelay = Duration.ofSeconds(3);
+        private Duration sendEventsInterval = Duration.ofSeconds(30);
+
+        public Builder(ClientMetadata clientMetadata) {
+            this.clientMetadata = clientMetadata;
+        }
+
+        public Builder eventQueueCapacity(int capacity) {
+            eventQueue = new LinkedBlockingQueue<>(capacity);
+            return this;
+        }
+
+        public MetricsClient build() {
+            if (samplingController == null) {
+                samplingController = new SamplingController(clientMetadata, sessionController);
+            }
+
+            EventProcessor eventProcessor = new EventProcessor(
+                    new ContextController(clientMetadata),
+                    sourceConfigRef,
+                    eventSender,
+                    eventQueue
+            );
+
+            MetricsClient metricsClient = new MetricsClient(
+                    clientMetadata,
+                    sessionController,
+                    samplingController,
+                    sourceConfigRef,
+                    eventQueue
+            );
+
+            StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(streamConfigURL);
+
+            startScheduledOperations(eventProcessor, streamConfigFetcher);
+
+            return metricsClient;
+        }
+
+        private void startScheduledOperations(EventProcessor eventProcessor, StreamConfigFetcher streamConfigFetcher) {
+            ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1, new SimpleThreadFactory());
+
+            executorService.scheduleAtFixedRate(
+                    () -> {
+                        try {
+                            sourceConfigRef.set(streamConfigFetcher.fetchStreamConfigs());
+                        } catch (IOException e) {
+                            log.log(WARNING, "Could not fetch configuration.", e);
+                        }
+                    },
+                    streamConfigFetchInitialDelay.toMillis(), streamConfigFetchInterval.toMillis(), MILLISECONDS);
+
+            executorService.scheduleAtFixedRate(
+                    eventProcessor::sendEnqueuedEvents,
+                    sendEventsInitialDelay.toMillis(), sendEventsInterval.toMillis(), MILLISECONDS);
+        }
+
+        @SneakyThrows
+        private static URL safeURL(String url) {
+            return new URL(url);
+        }
     }
 
     private static class SimpleThreadFactory implements ThreadFactory {
