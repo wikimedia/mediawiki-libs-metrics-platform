@@ -77,6 +77,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "84a59991_99151cc6",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-09T04:16:33Z",
+      "side": 1,
+      "message": "after your ps 7, I updated conditional so that IOException is thrown when response code is not HTTP_OK",
+      "parentUuid": "71dda3fa_cde1cc37",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 78
+      },
+      "revId": "c19ec7b35f8fc907782236855ab16f56ac7007e3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2f3dbde8_9c66e8f9",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
         "patchSetId": 5
@@ -100,6 +124,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aacba369_8d51c6a4",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-09T04:16:33Z",
+      "side": 1,
+      "message": "i think this is resolved by ps 7",
+      "parentUuid": "2f3dbde8_9c66e8f9",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "c19ec7b35f8fc907782236855ab16f56ac7007e3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7137fbcc_2b00c945",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 5
@@ -111,6 +159,30 @@
       "writtenOn": "2023-03-08T09:17:50Z",
       "side": 1,
       "message": "nit (and unrelated to this CR): an initial delay of 1ms makes it unlikely that the configuration will be loaded before trying to send events. We should wait enough that we have reasonable confidence that sending event will work on the first try. This is really minor, worst case, the config isn\u0027t loaded on the first try and events will be processed on the second try. And it is probably that the client code will not start sending event right away anyway.",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 183,
+        "endChar": 17
+      },
+      "revId": "c19ec7b35f8fc907782236855ab16f56ac7007e3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfddf916_fcb7580e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-09T04:16:33Z",
+      "side": 1,
+      "message": "updated to 3 seconds in latest ps - this probably doesn\u0027t resolve it -- what would be the optimal delay value?",
+      "parentUuid": "7137fbcc_2b00c945",
       "range": {
         "startLine": 183,
         "startChar": 16,
