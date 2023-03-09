@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47321a3e_0ae45cf2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-09T04:19:36Z",
+      "side": 1,
+      "message": "cool -- after we land the default EventSender, I can rebase/merge all patches in the relation chain",
+      "revId": "65c89f5d8bfa0b122df71e823f93a493849fc87b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
