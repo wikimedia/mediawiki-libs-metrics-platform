@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34a20537_a12376d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-09T09:56:17Z",
+      "side": 1,
+      "message": "Note that the failing tests in CI are unrelated to this CR. Those are addressed in https://gerrit.wikimedia.org/r/c/mediawiki/libs/metrics-platform/+/895817",
+      "revId": "061973cdbd6c724db6c74a05ab67fdb536bc60f6",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
