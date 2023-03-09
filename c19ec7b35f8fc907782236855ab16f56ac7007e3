@@ -99,6 +99,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "43633154_ed8ac1ea",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-09T08:44:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84a59991_99151cc6",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 78
+      },
+      "revId": "c19ec7b35f8fc907782236855ab16f56ac7007e3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f3dbde8_9c66e8f9",
@@ -146,6 +170,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8b0cce0_298996aa",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-09T08:44:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aacba369_8d51c6a4",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "c19ec7b35f8fc907782236855ab16f56ac7007e3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7137fbcc_2b00c945",
@@ -183,6 +231,30 @@
       "side": 1,
       "message": "updated to 3 seconds in latest ps - this probably doesn\u0027t resolve it -- what would be the optimal delay value?",
       "parentUuid": "7137fbcc_2b00c945",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 183,
+        "endChar": 17
+      },
+      "revId": "c19ec7b35f8fc907782236855ab16f56ac7007e3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad7afed9_6c24c9c4",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-09T08:44:18Z",
+      "side": 1,
+      "message": "You updated to 3ms, not 3s (the unit is the one passed as the 3rd parameter). I\u0027ve made the code a bit more clear.",
+      "parentUuid": "bfddf916_fcb7580e",
       "range": {
         "startLine": 183,
         "startChar": 16,

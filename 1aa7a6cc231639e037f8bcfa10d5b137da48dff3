@@ -16,6 +16,47 @@
       "message": "I split the scheduler into 2 separate private methods -- one to fetch stream configs and the other to send enqueued events\n\nIn my testing with EndToEndIT, the only time I can get an event produced to my local eventlogging with MetricsClient.dispatch() is waiting for a bit (either with await() or Thread.sleep) after fetching the stream configs, and then waiting a bit after running MetricsClient.dispatch() in EndToEndIT::submitEventTimerStreamConfig()\n\nI also made the intervals optional parameters for another createMetricsClient() - is this what you meant by your earlier comment about these constants STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL + SEND_INTERVAL?",
       "revId": "1aa7a6cc231639e037f8bcfa10d5b137da48dff3",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "724b8e7d_8a251696",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-09T08:44:18Z",
+      "side": 1,
+      "message": "Splitting it 2 methods is not going to fundamentally change the timings. Fetching config and sending events still happens asynchronously and you\u0027ll still need to wait for both. If the split if more clear to you, it looks good to me as well.",
+      "parentUuid": "712549e6_4282eeda",
+      "revId": "1aa7a6cc231639e037f8bcfa10d5b137da48dff3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bbf8404_c8d15c71",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-09T08:44:18Z",
+      "side": 1,
+      "message": "This method isn\u0027t used, so it probably doesn\u0027t belong in this CR. Ideally, we should be able to test without knowing the internals of the MetricsClient, so I think this method is probably not needed at all.\n\nNote that `eventQueue.isEmpty()` would be a better implementation. In some collections, getting the size can be expensive.",
+      "range": {
+        "startLine": 381,
+        "startChar": 3,
+        "endLine": 383,
+        "endChar": 5
+      },
+      "revId": "1aa7a6cc231639e037f8bcfa10d5b137da48dff3",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
