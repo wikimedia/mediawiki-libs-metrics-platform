@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f28538ec_e0c9e9a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-09T10:51:00Z",
+      "side": 1,
+      "message": "I resolved a few comments that looked like they could be resolved.\n\nThis LGTM.",
+      "revId": "2adf6fdcd0f99113b471a42577c9103f7f74e40c",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}

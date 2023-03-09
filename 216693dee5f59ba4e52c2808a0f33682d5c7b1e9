@@ -58,6 +58,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "86a7db18_38c0b6b2",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-09T10:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8708f6f5_2c35b2a2",
+      "range": {
+        "startLine": 61,
+        "startChar": 16,
+        "endLine": 61,
+        "endChar": 85
+      },
+      "revId": "216693dee5f59ba4e52c2808a0f33682d5c7b1e9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab099198_ac16d432",
@@ -128,6 +152,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e37a5307_91505660",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-09T10:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b404e745_d67f4c21",
+      "range": {
+        "startLine": 73,
+        "startChar": 30,
+        "endLine": 73,
+        "endChar": 77
+      },
+      "revId": "216693dee5f59ba4e52c2808a0f33682d5c7b1e9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "10b6bb39_47bb34ce",
@@ -141,6 +189,30 @@
       "writtenOn": "2023-03-07T19:35:33Z",
       "side": 1,
       "message": "Isn\u0027t it better to throw an exception in case the URL isn\u0027t valid? As a user of this code, I think I\u0027d prefer the code to fail if I pass an invalid URL, rather than the URL silently (well there is a log message) being changed to something else.",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 71
+      },
+      "revId": "216693dee5f59ba4e52c2808a0f33682d5c7b1e9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bb7f1fc_8962208f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-09T10:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10b6bb39_47bb34ce",
       "range": {
         "startLine": 75,
         "startChar": 8,
