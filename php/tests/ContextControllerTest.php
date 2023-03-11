@@ -57,8 +57,8 @@ class ContextControllerTest extends TestCase {
 		$this->assertSame( "Q1", $pageData["wikidata_qid"] );
 		$this->assertSame( "zh", $pageData["content_language"] );
 		$this->assertSame( false, $pageData["is_redirect"] );
-		$this->assertSame( $pageData["user_groups_allowed_to_move"], [] );
-		$this->assertSame( $pageData["user_groups_allowed_to_edit"], [] );
+		$this->assertSame( [], $pageData["user_groups_allowed_to_move"] );
+		$this->assertSame( [], $pageData["user_groups_allowed_to_edit"] );
 
 		$this->assertSame( "timeless", $siteData["skin"] );
 		$this->assertSame( "1.39.0", $siteData["version"] );
@@ -73,7 +73,7 @@ class ContextControllerTest extends TestCase {
 		$this->assertSame( "TestUser", $userData["name"] );
 		$this->assertArrayNotHasKey( "session_id", $userData );
 		$this->assertArrayNotHasKey( "pageview_id", $userData );
-		$this->assertSame( $userData["groups"], [ "*" ] );
+		$this->assertSame( [ "*" ], $userData["groups"] );
 		$this->assertSame( false, $userData["is_bot"] );
 		$this->assertSame( "zh", $userData["language"] );
 		$this->assertSame( "zh-tw", $userData["language_variant"] );
