@@ -16,6 +16,23 @@
       "message": "One thing that needs addressing -- I have the StreamConfig returning a hard-coded LOCAL DestinationEventService. How would you go about changing the DestinationEventService for the EndToEndIT test?",
       "revId": "6f926340968755e3f03b194bc1dc1daa38ece04d",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4a91eaf_03963105",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-14T06:42:15Z",
+      "side": 1,
+      "message": "Do I need to add a custom serializer for the StreamConfig class to parse the DestinationEventService?",
+      "revId": "6f926340968755e3f03b194bc1dc1daa38ece04d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
