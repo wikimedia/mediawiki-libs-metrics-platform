@@ -39,6 +39,30 @@
       },
       "revId": "9625d573908b0113360692408e761ce4455c71fb",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22a6d6a0_0a030c7f",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-14T21:22:18Z",
+      "side": 1,
+      "message": "When I test end-to-end using the non-wiremock method (involves sleeps and hard-coding the DestinationEventService to LOCAL), I watch my local eventlogging stream during the test which produces, validates, and accepts the event, as well as spits out the event data upon success - so this mocks the response from my local eventgate. \n\nI\u0027m not sure how to go about testing/seeing the response on the prod EventGate Analytics cluster.\n\n@Phuedx do you happen to know? also, if this lgtu, please merge. This follow up patch actually helped identify some bugs so I\u0027m glad we\u0027re adding it. We could shave down \"streamconfigs-local.json\" to just the relevant streams if that helps on size but it closely replicates what the Java client would have to parse when fetching stream configs.",
+      "parentUuid": "d0d06f92_dd0bf079",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 60
+      },
+      "revId": "9625d573908b0113360692408e761ce4455c71fb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
