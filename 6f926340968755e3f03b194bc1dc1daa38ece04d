@@ -18,6 +18,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6db72305_61eb776a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-14T07:47:17Z",
+      "side": 1,
+      "message": "nvm - i got it",
+      "parentUuid": "e22bda49_148ed744",
+      "revId": "6f926340968755e3f03b194bc1dc1daa38ece04d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d4a91eaf_03963105",
@@ -49,6 +67,24 @@
       "side": 1,
       "message": "duh - nvm - there\u0027s already a custom serializer for StreamConfig -- new ps incoming",
       "parentUuid": "d4a91eaf_03963105",
+      "revId": "6f926340968755e3f03b194bc1dc1daa38ece04d",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e22b73f9_b12b1acc",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/StreamConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-14T07:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edfdf1cd_818939a7",
       "revId": "6f926340968755e3f03b194bc1dc1daa38ece04d",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
