@@ -76,6 +76,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "05754e99_e74238d0",
+        "filename": "java/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-14T06:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b5244e2_601dccd3",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 36
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1dc78ce9_ace4563f",
@@ -122,6 +146,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e19b738f_d7749207",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-14T06:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "087b5559_cb453ef3",
+      "range": {
+        "startLine": 157,
+        "startChar": 7,
+        "endLine": 157,
+        "endChar": 79
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1643290f_7f28449e",
@@ -145,6 +193,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5095c129_67c2585a",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-14T06:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1643290f_7f28449e",
+      "range": {
+        "startLine": 326,
+        "startChar": 32,
+        "endLine": 326,
+        "endChar": 45
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f045ebe2_60094831",
@@ -158,6 +230,30 @@
       "writtenOn": "2023-03-08T09:40:32Z",
       "side": 1,
       "message": "Ideally, an end to end test should mock external services (with Wiremock), both to load the configuration and to assert that events are sent properly. Feel free to schedule some time with me if you want to pair on this. Or completely ignore it and call it good enough for now.",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b259b49f_6bef3365",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-14T06:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f045ebe2_60094831",
       "range": {
         "startLine": 30,
         "startChar": 13,

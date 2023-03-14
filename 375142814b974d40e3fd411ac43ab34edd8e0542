@@ -48,6 +48,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d36e65e_f7823715",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-14T06:26:42Z",
+      "side": 1,
+      "message": "finally got this test wiremocked and passing \\o/",
+      "parentUuid": "40955203_101b059b",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ecc5fbe7_7135f70a",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "so this would mean adding 3 more overloaded methods for `createMetricsClient()`? \none for STREAM_CONFIG_FETCH_ATTEMPT_INTERVAL, another for SEND_INTERVAL, and yet another one for both being passed in as parameters?\n\nas well as overloading `runExecutorService()` to accommodate for the 3 permutations of parameters above?",
       "parentUuid": "ecc5fbe7_7135f70a",
+      "range": {
+        "startLine": 127,
+        "startChar": 15,
+        "endLine": 127,
+        "endChar": 51
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb6971c1_4ad666cf",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-14T06:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8aefc4e_6a31826e",
       "range": {
         "startLine": 127,
         "startChar": 15,
