@@ -18,6 +18,23 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10264a8a_66375043",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-15T11:42:40Z",
+      "side": 1,
+      "message": "I\u0027ve been \u0027\u0027\u0027bold\u0027\u0027\u0027 and resolved some comments that looked like they had been fully addressed.",
+      "revId": "9625d573908b0113360692408e761ce4455c71fb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0d06f92_dd0bf079",

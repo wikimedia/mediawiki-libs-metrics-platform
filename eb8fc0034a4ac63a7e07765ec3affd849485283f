@@ -53,6 +53,42 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4570718_008e7c2e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-15T11:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "926b57db_ae69893a",
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "074a7d81_edf73009",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-15T11:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a7dad62_bdff5bf7",
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b5244e2_601dccd3",
@@ -287,6 +323,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec6120bf_f6c09f1e",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-15T11:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b043f969_fa85da68",
+      "range": {
+        "startLine": 41,
+        "startChar": 53,
+        "endLine": 41,
+        "endChar": 65
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed8f5ae0_c132e00e",
@@ -300,6 +360,24 @@
       "writtenOn": "2023-03-08T04:35:16Z",
       "side": 1,
       "message": "As noted in another comment, the event name has to match the prefix defined by config exactly in order for the event to be produced to eventlogging. Java client should be able to pattern match event names to prefixes provided by config.\n\nLogged https://phabricator.wikimedia.org/T331501 to address.",
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd089a74_4025965e",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-15T11:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed8f5ae0_c132e00e",
       "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
@@ -340,6 +418,30 @@
       "writtenOn": "2023-03-08T09:40:32Z",
       "side": 1,
       "message": "`Collections.singletonMap()` (see above comment)",
+      "range": {
+        "startLine": 75,
+        "startChar": 45,
+        "endLine": 76,
+        "endChar": 47
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84327612_f94c7f76",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-15T11:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06671941_8dec26d1",
       "range": {
         "startLine": 75,
         "startChar": 45,

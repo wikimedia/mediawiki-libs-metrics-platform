@@ -284,6 +284,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c43fa2bc_eb701a0f",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-15T11:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8185298_eca7ab30",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 12
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da7507d5_267de3a9",
@@ -315,6 +339,24 @@
       "side": 1,
       "message": "latest ps finally works to produce an event to local eventlogging using just `MetricsClient::createMetricsClinet()` and `MetricsClient::dispatch()`\n\nnot sure i used await() optimally but it does work \\o/",
       "parentUuid": "da7507d5_267de3a9",
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "465fb290_4b695d84",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-15T11:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9c8298a_4a2c4520",
       "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
@@ -403,6 +445,30 @@
       "side": 1,
       "message": "you\u0027re absolutely right -- i\u0027ll remove this EventSender once https://gerrit.wikimedia.org/r/c/mediawiki/libs/metrics-platform/+/892628 lands",
       "parentUuid": "84db5e26_5fbaf707",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 36
+      },
+      "revId": "375142814b974d40e3fd411ac43ab34edd8e0542",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c451366_5ab37767",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndTestEventSender.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-15T11:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "404f2260_8f5d7f36",
       "range": {
         "startLine": 29,
         "startChar": 13,
