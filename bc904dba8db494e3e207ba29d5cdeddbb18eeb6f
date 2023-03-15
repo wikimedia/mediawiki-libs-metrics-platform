@@ -34,6 +34,24 @@
       "parentUuid": "b8e09df3_e94cb40e",
       "revId": "bc904dba8db494e3e207ba29d5cdeddbb18eeb6f",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e9bb63d_8ac5d4ae",
+        "filename": "js/package.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-15T22:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f60a090e_cf2537c9",
+      "revId": "bc904dba8db494e3e207ba29d5cdeddbb18eeb6f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
