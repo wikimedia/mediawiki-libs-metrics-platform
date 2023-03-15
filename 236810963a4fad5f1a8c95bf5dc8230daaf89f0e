@@ -16,6 +16,24 @@
       "message": "ok - I think this should work but of course now EndToEndIT is failing on the first \"await()\" (waiting for config) -- all I did was update the StreamConfig deserializer to pass in the correct DestinationEventService (which works in \"StreamConfigTest::testStreamConfigDeserialization\")\n\nnot sure how to get it to pass (it passes fine with a hard-coded DestinationEventService.LOCAL)",
       "revId": "236810963a4fad5f1a8c95bf5dc8230daaf89f0e",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3a85a48_9d875039",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-15T11:49:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cef99707_f9ff4ba5",
+      "revId": "236810963a4fad5f1a8c95bf5dc8230daaf89f0e",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
