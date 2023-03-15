@@ -63,6 +63,30 @@
       },
       "revId": "9625d573908b0113360692408e761ce4455c71fb",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c241cac_5eb61407",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-15T11:33:20Z",
+      "side": 1,
+      "message": "EventGate will respond in the following ways:\n\n * Received N valid events:\n  * Status code: 204\n  * Reason phrase: \"All N events out of N events were accepted.\"\n  * Body: Empty\n\n * Received N invalid events:\n  * Status code: 400\n  * Reason phrase: \"N out of N events were invalid and not accepted.\"\n  * Body: JSON-encoded list of validation errors\n\n * Received N events, M were invalid, O had errors, and M + O \u003c N:\n  * Status code: 207\n  * Reason phrase: \"N-M out of N events were accepted, but M failed (M invalid and O errored).\"\n  * Body: JSON-encoded object with two keys – invalid, error – which map to lists of validation errors\n\n * Received N events, M were invalid, O had errors, and M + O \u003d N:\n  * Status code: 500\n  * Reason phrase: \"N out of N events had failures and were not accepted. (M invalid and O errored).\"\n  * Body: JSON-encoded object with two keys – invalid, error – which map to lists of validation errors\n\nSee https://github.com/wikimedia/eventgate/blob/master/routes/events.js#L77-L127C2",
+      "parentUuid": "22a6d6a0_0a030c7f",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 60
+      },
+      "revId": "9625d573908b0113360692408e761ce4455c71fb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
