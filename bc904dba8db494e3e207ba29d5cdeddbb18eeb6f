@@ -16,6 +16,24 @@
       "message": "out of curiosity, why is the major version dropping and the minor version increasing?",
       "revId": "bc904dba8db494e3e207ba29d5cdeddbb18eeb6f",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f60a090e_cf2537c9",
+        "filename": "js/package.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-15T12:06:04Z",
+      "side": 1,
+      "message": "As of yet, we\u0027ve yet to publish a release of the library (and so no projects formally depend on the package). I figured dropping the version to 0.1.0 reflected that and that it should be bumped to 1.0.0 as part of publishing the first release.",
+      "parentUuid": "b8e09df3_e94cb40e",
+      "revId": "bc904dba8db494e3e207ba29d5cdeddbb18eeb6f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
