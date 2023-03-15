@@ -159,6 +159,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dedd570_c4258d2a",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-15T11:52:16Z",
+      "side": 1,
+      "message": "We no longer have to handle this impossible exception now that If92d9e719919a49239a96a03d5d3bfcfba09e152 has been merged.",
+      "parentUuid": "1dc78ce9_ace4563f",
+      "range": {
+        "startLine": 109,
+        "startChar": 10,
+        "endLine": 110,
+        "endChar": 42
+      },
+      "revId": "eb8fc0034a4ac63a7e07765ec3affd849485283f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "087b5559_cb453ef3",
