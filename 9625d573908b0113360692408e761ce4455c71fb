@@ -104,6 +104,30 @@
       },
       "revId": "9625d573908b0113360692408e761ce4455c71fb",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27f09859_676e5fd4",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-15T22:33:29Z",
+      "side": 1,
+      "message": "thanks - that\u0027s gtk -- so in the context of this particular test, sending back a response of the expected event (similar to the consistency test) to compare against using stubbed api calls and the client code methods is still valuable?\n\nfwiw, every time code gets updated, i run an end-to-end test to verify produced/validated/accepted events on my local eventgate server and so far with the current state of the java client, it works \\o/",
+      "parentUuid": "5c241cac_5eb61407",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 60
+      },
+      "revId": "9625d573908b0113360692408e761ce4455c71fb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
