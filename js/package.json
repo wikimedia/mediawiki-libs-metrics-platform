@@ -1,13 +1,14 @@
 {
 	"name": "@wikimedia/metrics-platform",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"description": "Client libraries for Wikimedia analytics instrumentation",
-	"main": "src/MetricsClient.js",
+	"main": "index.js",
 	"scripts": {
 		"test": "qunit ./test/unit/ && npm run lint",
 		"lint": "eslint --cache . && tsc",
 		"doc": "jsdoc -c jsdoc.json",
-		"coverage": "nyc qunit ./test/unit/"
+		"coverage": "nyc qunit ./test/unit/",
+		"build": "esbuild build/index.js --bundle --outfile=dist/metrics-platform.js"
 	},
 	"repository": {
 		"type": "git",
@@ -23,11 +24,17 @@
 		"@types/node": "^18.11.18",
 		"@types/qunit": "^2.11.3",
 		"@types/sinon": "^10.0.11",
+		"esbuild": "^0.17.8",
 		"eslint-config-wikimedia": "0.21.0",
 		"jsdoc": "3.6.7",
 		"nyc": "15.1.0",
 		"qunit": "2.18.1",
 		"sinon": "10.0.0",
 		"typescript": "4.5.5"
-	}
+	},
+	"files": [
+		"src/*.js",
+		"index.js",
+		"dist/*.js"
+	]
 }
