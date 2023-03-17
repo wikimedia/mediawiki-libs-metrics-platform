@@ -6,16 +6,18 @@ import static org.wikimedia.metrics_platform.config.DestinationEventService.LOCA
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.ANALYTICS_API_ENDPOINT;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.URL;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import com.google.common.io.Resources;
+
 class StreamConfigFetcherTest {
 
     @Test void parsingConfigFromJsonWorks() throws IOException {
-        try (InputStreamReader in = readConfigFile("streamconfigs.json")) {
+        try (Reader in = readConfigFile("streamconfigs.json")) {
             StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT));
             Map<String, StreamConfig> config = streamConfigFetcher.parseConfig(in);
             assertThat(config).containsKey("mediawiki.visual_editor_feature_use");
@@ -27,7 +29,7 @@ class StreamConfigFetcherTest {
     }
 
     @Test void parsingLocalConfigFromJsonWorks() throws IOException {
-        try (InputStreamReader in = readConfigFile("streamconfigs-local.json")) {
+        try (Reader in = readConfigFile("streamconfigs-local.json")) {
             StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT));
             Map<String, StreamConfig> config = streamConfigFetcher.parseConfig(in);
             assertThat(config).containsKey("mediawiki.visual_editor_feature_use");
@@ -36,11 +38,10 @@ class StreamConfigFetcherTest {
         }
     }
 
-    private InputStreamReader readConfigFile(String filename) {
-        return new InputStreamReader(
-                StreamConfigFetcher.class.getClassLoader()
-                        .getResourceAsStream("org/wikimedia/metrics_platform/config/" + filename),
+    private Reader readConfigFile(String filename) throws IOException {
+        return Resources.asCharSource(
+                Resources.getResource("org/wikimedia/metrics_platform/config/" + filename),
                 UTF_8
-        );
+        ).openStream();
     }
 }

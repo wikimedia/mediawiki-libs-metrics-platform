@@ -8,25 +8,20 @@ import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.singletonMap;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.wikimedia.metrics_platform.ConsistencyITClientMetadata.createConsistencyTestClientMetadata;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
-import com.google.common.io.ByteStreams;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.common.io.Resources;
 
 @WireMockTest(httpPort = 8192)
 public class EndToEndIT {
@@ -40,7 +35,7 @@ public class EndToEndIT {
         // Stub response from posting event to local eventgate logging service.
         stubFor(post("/v1/events")
                 .willReturn(aResponse()
-                        .withBodyFile("expected_event.json")));
+                        .withBody(getExpectedEvent())));
 
         // Create the metrics client.
         ClientMetadata testJavaClientMetadata = createConsistencyTestClientMetadata();
@@ -62,14 +57,15 @@ public class EndToEndIT {
     }
 
     private byte[] readConfig() throws IOException {
-        return ByteStreams.toByteArray(EndToEndIT.class.getClassLoader().getResourceAsStream("org/wikimedia/metrics_platform/config/streamconfigs-local.json"));
+        return Resources.asByteSource(
+                Resources.getResource("org/wikimedia/metrics_platform/config/streamconfigs-local.json")
+        ).read();
     }
 
     private String getExpectedEvent() throws IOException {
-        Path pathExpectedEvent = Paths.get("src/test/resources/__files/expected_event.json");
-        try (BufferedReader expectedEventReader = Files.newBufferedReader(pathExpectedEvent)) {
-            JsonObject expectedEventJsonObject = JsonParser.parseReader(expectedEventReader).getAsJsonObject();
-            return expectedEventJsonObject.toString();
-        }
+        return Resources.asCharSource(
+                Resources.getResource("org/wikimedia/metrics_platform/event/expected_event.json"),
+                UTF_8
+        ).read();
     }
 }
