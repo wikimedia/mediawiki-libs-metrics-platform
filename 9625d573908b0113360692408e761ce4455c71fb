@@ -152,6 +152,30 @@
       },
       "revId": "9625d573908b0113360692408e761ce4455c71fb",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bee6801d_7d427c77",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EndToEndIT.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-03-17T13:23:09Z",
+      "side": 1,
+      "message": "That\u0027s super interesting! I think we don\u0027t manage those responses correctly. We assumed that the nominal response was HTTP/200 instead of HTTP/204. So we\u0027ll probably reenqueue events forever, assuming they were not sent correctly.\n\nWe should also handle the failure modes better, probably dropping events that were invalid since it is unlikely that a retry will suddenly make them valid. Not sure about errors.\n\nIn all cases, I think this should be done as a separate CR. This one is already large enough!",
+      "parentUuid": "3535ecc9_f67d4fac",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 60
+      },
+      "revId": "9625d573908b0113360692408e761ce4455c71fb",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
