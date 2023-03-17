@@ -81,6 +81,7 @@ public class StreamConfigFetcher {
             JsonObject streamConfigJson = json.getAsJsonObject();
             String streamName = streamConfigJson.get("stream").getAsString();
             String schemaTitle = streamConfigJson.get("schema_title").getAsString();
+            DestinationEventService destinationEventService = parseDestinationEventService(streamConfigJson);
             JsonObject producers = streamConfigJson.get("producers").getAsJsonObject();
             JsonObject metricsPlatformClient = producers.get("metrics_platform_client").getAsJsonObject();
 
@@ -102,12 +103,20 @@ public class StreamConfigFetcher {
             StreamConfig.ProducerConfig producerConfig = new StreamConfig.ProducerConfig(mpcConfig);
 
             return new StreamConfig(
-                streamName,
-                schemaTitle,
-                DestinationEventService.ANALYTICS,
-                producerConfig,
-                sampleConfig
+                    streamName,
+                    schemaTitle,
+                    destinationEventService,
+                    producerConfig,
+                    sampleConfig
             );
+        }
+
+        private static DestinationEventService parseDestinationEventService(JsonObject streamConfigJson) {
+            JsonElement destinationEventService = streamConfigJson.get("destination_event_service");
+
+            if (destinationEventService == null) return null;
+
+            return DestinationEventService.fromName(destinationEventService.getAsString());
         }
 
         private static Set<String> convertToSet(JsonElement element) {

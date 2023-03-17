@@ -31,4 +31,17 @@ public enum DestinationEventService {
     DestinationEventService(String baseUri) {
         this.baseUri = new URL(baseUri);
     }
+
+    public static DestinationEventService fromName(String name) {
+        switch (name) {
+            case "eventgate-analytics-external":
+                return ANALYTICS;
+            case "eventgate-logging-external":
+                return ERROR_LOGGING;
+            case "eventgate-logging-local":
+                return LOCAL;
+            default:
+                throw new IllegalArgumentException("Invalid name: " + name);
+        }
+    }
 }

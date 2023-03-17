@@ -2,6 +2,7 @@ package org.wikimedia.metrics_platform.config;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.wikimedia.metrics_platform.config.DestinationEventService.LOCAL;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.ANALYTICS_API_ENDPOINT;
 
 import java.io.IOException;
@@ -13,8 +14,8 @@ import org.junit.jupiter.api.Test;
 
 class StreamConfigFetcherTest {
 
-    @Test void ParsingConfigFromJsonWorks() throws IOException {
-        try (InputStreamReader in = readConfigFile()) {
+    @Test void parsingConfigFromJsonWorks() throws IOException {
+        try (InputStreamReader in = readConfigFile("streamconfigs.json")) {
             StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT));
             Map<String, StreamConfig> config = streamConfigFetcher.parseConfig(in);
             assertThat(config).containsKey("mediawiki.visual_editor_feature_use");
@@ -25,10 +26,20 @@ class StreamConfigFetcherTest {
         }
     }
 
-    private InputStreamReader readConfigFile() {
+    @Test void parsingLocalConfigFromJsonWorks() throws IOException {
+        try (InputStreamReader in = readConfigFile("streamconfigs-local.json")) {
+            StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT));
+            Map<String, StreamConfig> config = streamConfigFetcher.parseConfig(in);
+            assertThat(config).containsKey("mediawiki.visual_editor_feature_use");
+            StreamConfig streamConfig = config.get("mediawiki.edit_attempt");
+            assertThat(streamConfig.getDestinationEventService()).isEqualTo(LOCAL);
+        }
+    }
+
+    private InputStreamReader readConfigFile(String filename) {
         return new InputStreamReader(
                 StreamConfigFetcher.class.getClassLoader()
-                        .getResourceAsStream("org/wikimedia/metrics_platform/config/streamconfigs.json"),
+                        .getResourceAsStream("org/wikimedia/metrics_platform/config/" + filename),
                 UTF_8
         );
     }
