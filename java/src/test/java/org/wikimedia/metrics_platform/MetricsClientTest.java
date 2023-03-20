@@ -51,11 +51,11 @@ class MetricsClientTest {
         assertThat(eventQueue).contains(event);
     }
 
-    @Test void testDispatch() throws InterruptedException {
+    @Test void testSubmitMetricsEvent() throws InterruptedException {
         when(mockSamplingController.isInSample(streamConfig(curationFilter()))).thenReturn(true);
 
         Map<String, Object> customDataMap = getTestCustomData();
-        client.dispatch("test_event", customDataMap);
+        client.submitMetricsEvent("test_event", customDataMap);
 
         assertThat(eventQueue).isNotEmpty();
 
@@ -80,7 +80,7 @@ class MetricsClientTest {
             eventQueue.add(event);
         }
         Event event11 = new Event("schema", "stream", "event");
-        client.dispatch(event11.getName(), getTestCustomData());
+        client.submitMetricsEvent(event11.getName(), getTestCustomData());
 
         assertThat(eventQueue).doesNotContain(event11);
     }

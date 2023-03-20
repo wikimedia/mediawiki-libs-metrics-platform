@@ -119,33 +119,33 @@ public final class MetricsClient {
      * The Metrics Platform Event is submitted to a stream (S) if: 1) S is in sample; and 2) the event
      * is filtered due to the filtering rules for S.
      * <p>
-     * This particular dispatch method accepts unformatted custom data and calls the following dispatch
-     * method with the custom data properly formatted.
+     * This particular submitMetricsEvent method accepts unformatted custom data and calls the following
+     * submitMetricsEvent method with the custom data properly formatted.
      * <p>
      * @see <a href="https://wikitech.wikimedia.org/wiki/Metrics_Platform">Metrics Platform</a>
      *
      * @param eventName event name
      * @param customData custom data
      */
-    public void dispatch(String eventName, Map<String, Object> customData) {
+    public void submitMetricsEvent(String eventName, Map<String, Object> customData) {
         Set<CustomData> customDataSetFormatted = customData.entrySet().stream()
             .map(CustomData::of)
             .collect(toSet());
-        dispatch(eventName, customDataSetFormatted);
+        submitMetricsEvent(eventName, customDataSetFormatted);
     }
 
     /**
-     * See doc comment for above dispatch method.
+     * See doc comment for above submitMetricsEvent() method.
      * <p>
-     * This particular dispatch method accepts formatted custom data and submits the event.
+     * This particular submitMetricsEvent() method accepts formatted custom data and submits the event.
      *
      * @param eventName event name
      * @param customData custom data
      */
-    public void dispatch(String eventName, Set<CustomData> customData) {
+    public void submitMetricsEvent(String eventName, Set<CustomData> customData) {
         SourceConfig sourceConfig = this.sourceConfig.get();
         if (sourceConfig == null) {
-            log.log(Level.FINE, "Configuration not loaded yet, the dispatched event is ignored and dropped.");
+            log.log(Level.FINE, "Configuration not loaded yet, the submitMetricsEvent event is ignored and dropped.");
             return;
         }
 

@@ -56,7 +56,7 @@ class ConsistencyIT {
                     eventQueue
             );
 
-            consistencyTestMetricsClient.dispatch(
+            consistencyTestMetricsClient.submitMetricsEvent(
                     "test_consistency_event",
                     singletonMap("test", "consistency")
             );
