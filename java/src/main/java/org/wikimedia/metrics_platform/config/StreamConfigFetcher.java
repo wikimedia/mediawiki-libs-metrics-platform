@@ -26,7 +26,7 @@ import com.google.gson.stream.JsonReader;
 
 public class StreamConfigFetcher {
     public static final String ANALYTICS_API_ENDPOINT = "https://meta.wikimedia.org/w/api.php?" +
-            "action=streamconfigs&format=json&formatversion=2&all_settings=1&" +
+            "action=streamconfigs&format=json&formatversion=2&" +
             "constraints=destination_event_service%3Deventgate-analytics-external";
 
     public static final String METRICS_PLATFORM_SCHEMA_TITLE = "analytics/mediawiki/client/metrics_event";
