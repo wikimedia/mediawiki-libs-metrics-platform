@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e22c39b_13ac397d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-03-22T10:22:45Z",
+      "side": 1,
+      "message": "ext.eventLogging minified and gzipped size:\n\nBaseline: 5.8 kB\nIcc620a178ef: 6.7 kB\nThis and Icc620a178ef: 6.3 kB",
+      "revId": "7cdf5d8180668e3a5e84e68e2140afa61a942f3e",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
