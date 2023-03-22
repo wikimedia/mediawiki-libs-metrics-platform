@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-const MetricsClient = require( './../../src/MetricsClient' );
+const MetricsClient = require( './../../src/ExternalMetricsClient' );
 const Integration = require( './NodeIntegration' );
 
 const integration = new Integration(
