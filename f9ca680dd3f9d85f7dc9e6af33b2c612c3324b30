@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af0f68b7_f2ebeb5d",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/SourceConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-23T20:10:02Z",
+      "side": 1,
+      "message": "Surely there\u0027s a more elegant way to do this using stream api but I couldn\u0027t quite nail down the proper syntax.",
+      "revId": "f9ca680dd3f9d85f7dc9e6af33b2c612c3324b30",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
