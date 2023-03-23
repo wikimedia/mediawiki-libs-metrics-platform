@@ -46,7 +46,7 @@ public class EndToEndIT {
         await().atMost(5, SECONDS).until(testJavaMetricsClient::isFullyInitialized);
 
         testJavaMetricsClient.submitMetricsEvent(
-                "eas.",
+                "eas.test_event_name_for_end_to_end_testing",
                 singletonMap("action", "surf")
         );
 

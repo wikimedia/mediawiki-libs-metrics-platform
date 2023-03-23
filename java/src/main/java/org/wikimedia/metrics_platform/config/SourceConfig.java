@@ -55,7 +55,7 @@ public class SourceConfig {
      */
     public Set<String> getStreamNamesByEvent(String eventName) {
         return sourceConfigs.stream()
-                .filter(streamConfig -> streamConfig.getEvents().contains(eventName))
+                .filter(streamConfig -> streamConfig.isInterestedInEvent(eventName))
                 .map(StreamConfig::getStreamName)
                 .collect(toSet());
     }

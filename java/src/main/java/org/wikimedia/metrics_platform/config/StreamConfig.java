@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNullableByDefault;
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -119,5 +120,15 @@ public class StreamConfig {
         @SerializedName("events") Set<String> events;
         @SerializedName("provide_values") Collection<String> requestedValues;
         @SerializedName("curation") CurationFilter curationFilter;
+    }
+
+    public boolean isInterestedInEvent(@Nonnull String eventName) {
+        for (String streamEventName : getEvents()) {
+            // Match string prefixes for event names of interested streams.
+            if (eventName.startsWith(streamEventName)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
