@@ -24,6 +24,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6fd8047_a287bc91",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/SourceConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-27T17:28:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b76307df_4a7b813c",
+      "range": {
+        "startLine": 59,
+        "startChar": 30,
+        "endLine": 59,
+        "endChar": 38
+      },
+      "revId": "f9ca680dd3f9d85f7dc9e6af33b2c612c3324b30",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af0f68b7_f2ebeb5d",
