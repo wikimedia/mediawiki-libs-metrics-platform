@@ -81,6 +81,24 @@
       "parentUuid": "af0f68b7_f2ebeb5d",
       "revId": "f9ca680dd3f9d85f7dc9e6af33b2c612c3324b30",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9af792d3_abf2aa51",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/config/SourceConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-03-28T14:22:48Z",
+      "side": 1,
+      "message": "thanks for the suggestion - incorporated",
+      "parentUuid": "fe4285f0_c69d4130",
+      "revId": "f9ca680dd3f9d85f7dc9e6af33b2c612c3324b30",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
