@@ -10,7 +10,7 @@
 
     <groupId>org.wikimedia.metrics</groupId>
     <artifactId>metrics-platform</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
 
     <name>Metrics Platform</name>
     <description>The Java Metrics Platform Client.</description>
