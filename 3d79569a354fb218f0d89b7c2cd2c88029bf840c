@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4898eff8_12c5ed37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-04-03T18:23:56Z",
+      "side": 1,
+      "message": "tested locally - verified seeing JS events in my local EventLogging\n\nhttps://phabricator.wikimedia.org/F36938181",
+      "revId": "3d79569a354fb218f0d89b7c2cd2c88029bf840c",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
