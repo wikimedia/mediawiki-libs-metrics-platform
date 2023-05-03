@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
 
-import org.wikimedia.metrics_platform.event.Event;
+import org.wikimedia.metrics_platform.event.EventProcessed;
 
 public interface EventSender {
 
@@ -15,5 +15,5 @@ public interface EventSender {
      * @param events events to be sent
      */
 
-    void sendEvents(URL baseUri, Collection<Event> events) throws IOException;
+    void sendEvents(URL baseUri, Collection<EventProcessed> events) throws IOException;
 }

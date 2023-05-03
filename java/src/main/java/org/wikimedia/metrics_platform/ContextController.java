@@ -42,7 +42,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.wikimedia.metrics_platform.config.StreamConfig;
-import org.wikimedia.metrics_platform.event.Event;
+import org.wikimedia.metrics_platform.context.ClientData;
+import org.wikimedia.metrics_platform.event.EventProcessed;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -51,127 +52,114 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public class ContextController {
 
     @Nonnull
-    private final ClientMetadata clientMetadata;
+    private final ClientData clientData;
 
-    public ContextController(ClientMetadata clientMetadata) {
-        this.clientMetadata = clientMetadata;
+    public ContextController(ClientData clientData) {
+        this.clientData = clientData;
     }
 
     @SuppressFBWarnings(value = "CC_CYCLOMATIC_COMPLEXITY", justification = "TODO: needs to be refactored")
     @SuppressWarnings("checkstyle:CyclomaticComplexity")
-    public void addRequestedValues(Event event, StreamConfig streamConfig) {
+    public void enrichEvent(EventProcessed event, StreamConfig streamConfig) {
+        // Add required metadata to the event.
+        event.setDomain(clientData.getDomain());
+        event.setClientData(clientData);
+
         if (!streamConfig.hasRequestedContextValuesConfig()) {
             return;
         }
+
+        // Check stream config for which contextual values should be added to the event.
         Collection<String> requestedValues = streamConfig.getProducerConfig()
                 .getMetricsPlatformClientConfig().getRequestedValues();
         for (String value : requestedValues) {
             switch (value) {
                 // Agent
                 case AGENT_APP_INSTALL_ID:
-                    event.getAgentData().setAppInstallId(clientMetadata.getAgentAppInstallId());
+                    event.getAgentData().setAppInstallId(clientData.getAgentData().getAppInstallId());
                     break;
                 case AGENT_CLIENT_PLATFORM:
-                    event.getAgentData().setClientPlatform(clientMetadata.getAgentClientPlatform());
+                    event.getAgentData().setClientPlatform(clientData.getAgentData().getClientPlatform());
                     break;
                 case AGENT_CLIENT_PLATFORM_FAMILY:
-                    event.getAgentData().setClientPlatformFamily(clientMetadata.getAgentClientPlatformFamily());
+                    event.getAgentData().setClientPlatformFamily(clientData.getAgentData().getClientPlatformFamily());
                     break;
 
-                // Mediawiki
+                // Application
                 case MEDIAWIKI_SKIN:
-                    event.getMediawikiData().setSkin(clientMetadata.getMediawikiSkin());
+                    event.getMediawikiData().setSkin(clientData.getMediawikiData().getSkin());
                     break;
                 case MEDIAWIKI_VERSION:
-                    event.getMediawikiData().setVersion(clientMetadata.getMediawikiVersion());
+                    event.getMediawikiData().setVersion(clientData.getMediawikiData().getVersion());
                     break;
                 case MEDIAWIKI_IS_PRODUCTION:
-                    event.getMediawikiData().setIsProduction(clientMetadata.getMediawikiIsProduction());
+                    event.getMediawikiData().setIsProduction(clientData.getMediawikiData().getIsProduction());
                     break;
                 case MEDIAWIKI_IS_DEBUG_MODE:
-                    event.getMediawikiData().setIsDebugMode(clientMetadata.getMediawikiIsDebugMode());
+                    event.getMediawikiData().setIsDebugMode(clientData.getMediawikiData().getIsDebugMode());
                     break;
                 case MEDIAWIKI_DATABASE:
-                    event.getMediawikiData().setDatabase(clientMetadata.getMediawikiDatabase());
+                    event.getMediawikiData().setDatabase(clientData.getMediawikiData().getDatabase());
                     break;
                 case MEDIAWIKI_SITE_CONTENT_LANGUAGE:
-                    event.getMediawikiData().setSiteContentLanguage(clientMetadata.getMediawikiSiteContentLanguage());
+                    event.getMediawikiData().setSiteContentLanguage(clientData.getMediawikiData().getSiteContentLanguage());
                     break;
                 case MEDIAWIKI_SITE_CONTENT_LANGUAGE_VARIANT:
-                    event.getMediawikiData().setSiteContentLanguageVariant(clientMetadata.getMediawikiSiteContentLanguageVariant());
+                    event.getMediawikiData().setSiteContentLanguageVariant(clientData.getMediawikiData().getSiteContentLanguageVariant());
                     break;
 
                 // Page
                 case PAGE_ID:
-                    event.getPageData().setId(clientMetadata.getPageId());
-                    break;
                 case PAGE_TITLE:
-                    event.getPageData().setTitle(clientMetadata.getPageTitle());
-                    break;
                 case PAGE_NAMESPACE:
-                    event.getPageData().setNamespace(clientMetadata.getPageNamespace());
-                    break;
                 case PAGE_NAMESPACE_NAME:
-                    event.getPageData().setNamespaceName(clientMetadata.getPageNamespaceName());
-                    break;
                 case PAGE_REVISION_ID:
-                    event.getPageData().setRevisionId(clientMetadata.getPageRevisionId());
-                    break;
                 case PAGE_WIKIDATA_QID:
-                    event.getPageData().setWikidataItemQid(clientMetadata.getPageWikidataItemQid());
-                    break;
                 case PAGE_CONTENT_LANGUAGE:
-                    event.getPageData().setContentLanguage(clientMetadata.getPageContentLanguage());
-                    break;
                 case PAGE_IS_REDIRECT:
-                    event.getPageData().setIsRedirect(clientMetadata.getPageIsRedirect());
-                    break;
                 case PAGE_USER_GROUPS_ALLOWED_TO_EDIT:
-                    event.getPageData().setGroupsAllowedToEdit(clientMetadata.getPageUserGroupsAllowedToEdit());
-                    break;
                 case PAGE_USER_GROUPS_ALLOWED_TO_MOVE:
-                    event.getPageData().setGroupsAllowedToMove(clientMetadata.getPageUserGroupsAllowedToMove());
                     break;
 
                 // Performer
                 case PERFORMER_ID:
-                    event.getPerformerData().setId(clientMetadata.getPerformerId());
+                    event.getPerformerData().setId(clientData.getPerformerData().getId());
                     break;
                 case PERFORMER_NAME:
-                    event.getPerformerData().setName(clientMetadata.getPerformerName());
+                    event.getPerformerData().setName(clientData.getPerformerData().getName());
                     break;
                 case PERFORMER_IS_LOGGED_IN:
-                    event.getPerformerData().setIsLoggedIn(clientMetadata.getPerformerIsLoggedIn());
+                    event.getPerformerData().setIsLoggedIn(clientData.getPerformerData().getIsLoggedIn());
                     break;
                 case PERFORMER_SESSION_ID:
-                    event.getPerformerData().setSessionId(clientMetadata.getPerformerSessionId());
+                    event.getPerformerData().setSessionId(clientData.getPerformerData().getSessionId());
                     break;
                 case PERFORMER_PAGEVIEW_ID:
-                    event.getPerformerData().setPageviewId(clientMetadata.getPerformerPageviewId());
+                    event.getPerformerData().setPageviewId(clientData.getPerformerData().getPageviewId());
                     break;
                 case PERFORMER_GROUPS:
-                    event.getPerformerData().setGroups(clientMetadata.getPerformerGroups());
+                    event.getPerformerData().setGroups(clientData.getPerformerData().getGroups());
                     break;
                 case PERFORMER_IS_BOT:
-                    event.getPerformerData().setIsBot(clientMetadata.getPerformerIsBot());
+                    event.getPerformerData().setIsBot(clientData.getPerformerData().getIsBot());
                     break;
                 case PERFORMER_LANGUAGE:
-                    event.getPerformerData().setLanguage(clientMetadata.getPerformerLanguage());
+                    event.getPerformerData().setLanguage(clientData.getPerformerData().getLanguage());
                     break;
                 case PERFORMER_LANGUAGE_VARIANT:
-                    event.getPerformerData().setLanguageVariant(clientMetadata.getPerformerLanguageVariant());
+                    event.getPerformerData().setLanguageVariant(clientData.getPerformerData().getLanguageVariant());
                     break;
                 case PERFORMER_CAN_PROBABLY_EDIT_PAGE:
-                    event.getPerformerData().setCanProbablyEditPage(clientMetadata.getPerformerCanProbablyEditPage());
+                    event.getPerformerData().setCanProbablyEditPage(clientData.getPerformerData().getCanProbablyEditPage());
                     break;
                 case PERFORMER_EDIT_COUNT:
-                    event.getPerformerData().setEditCount(clientMetadata.getPerformerEditCount());
+                    event.getPerformerData().setEditCount(clientData.getPerformerData().getEditCount());
                     break;
                 case PERFORMER_EDIT_COUNT_BUCKET:
-                    event.getPerformerData().setEditCountBucket(clientMetadata.getPerformerEditCountBucket());
+                    event.getPerformerData().setEditCountBucket(clientData.getPerformerData().getEditCountBucket());
                     break;
                 case PERFORMER_REGISTRATION_DT:
-                    event.getPerformerData().setRegistrationDt(clientMetadata.getPerformerRegistrationDt());
+                    event.getPerformerData().setRegistrationDt(clientData.getPerformerData().getRegistrationDt());
                     break;
 
                 default:

@@ -6,6 +6,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.wikimedia.metrics_platform.config.SampleConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
+import org.wikimedia.metrics_platform.context.ClientData;
 
 /**
  * SamplingController: computes various sampling functions on the client
@@ -18,11 +19,11 @@ import org.wikimedia.metrics_platform.config.StreamConfig;
 @ParametersAreNonnullByDefault
 public class SamplingController {
 
-    private final ClientMetadata clientMetadata;
+    private final ClientData clientData;
     private final SessionController sessionController;
 
-    SamplingController(ClientMetadata clientMetadata, SessionController sessionController) {
-        this.clientMetadata = clientMetadata;
+    SamplingController(ClientData clientData, SessionController sessionController) {
+        this.clientData = clientData;
         this.sessionController = sessionController;
     }
 
@@ -66,9 +67,9 @@ public class SamplingController {
             case SESSION:
                 return sessionController.getSessionId();
             case DEVICE:
-                return clientMetadata.getAgentAppInstallId();
+                return clientData.getAgentData().getAppInstallId();
             case PAGEVIEW:
-                return clientMetadata.getPerformerPageviewId();
+                return clientData.getPerformerData().getPageviewId();
             default:
                 throw new IllegalArgumentException("Bad identifier type: " + identifier);
         }

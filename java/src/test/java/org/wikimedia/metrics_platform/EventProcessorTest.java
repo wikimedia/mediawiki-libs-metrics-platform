@@ -11,9 +11,10 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.wikimedia.metrics_platform.config.SourceConfigFixtures.getTestSourceConfig;
 import static org.wikimedia.metrics_platform.config.StreamConfigFixtures.streamConfig;
 import static org.wikimedia.metrics_platform.event.EventFixtures.minimalEvent;
+import static org.wikimedia.metrics_platform.event.EventFixtures.minimalEventProcessed;
+import static org.wikimedia.metrics_platform.event.EventProcessed.fromEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,16 +34,20 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.wikimedia.metrics_platform.config.CurationFilter;
 import org.wikimedia.metrics_platform.config.SourceConfig;
+import org.wikimedia.metrics_platform.config.SourceConfigFixtures;
 import org.wikimedia.metrics_platform.config.StreamConfig;
+import org.wikimedia.metrics_platform.context.ClientData;
+import org.wikimedia.metrics_platform.context.ClientDataFixtures;
 import org.wikimedia.metrics_platform.context.PerformerData;
 import org.wikimedia.metrics_platform.event.Event;
+import org.wikimedia.metrics_platform.event.EventProcessed;
 
 @ExtendWith(MockitoExtension.class)
 class EventProcessorTest {
     @Mock private EventSender mockEventSender;
     @Mock private CurationFilter curationFilter;
     private final AtomicReference<SourceConfig> sourceConfig = new AtomicReference<>();
-    private final BlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>(10);
+    private final BlockingQueue<EventProcessed> eventQueue = new LinkedBlockingQueue<>(10);
     private EventProcessor eventProcessor;
 
     @BeforeEach void clearEventQueue() {
@@ -50,10 +55,10 @@ class EventProcessorTest {
     }
 
     @BeforeEach void createEventProcessor() {
-        sourceConfig.set(getTestSourceConfig(curationFilter));
+        sourceConfig.set(SourceConfigFixtures.getTestSourceConfig(curationFilter));
 
         eventProcessor = new EventProcessor(
-                new ContextController(new TestClientMetadata()),
+                new ContextController(ClientDataFixtures.getTestClientData()),
                 sourceConfig,
                 mockEventSender,
                 eventQueue
@@ -63,7 +68,7 @@ class EventProcessorTest {
     @Test void enqueuedEventsAreSent() throws IOException {
         whenEventsArePassingCurationFilter();
 
-        eventQueue.offer(minimalEvent());
+        eventQueue.offer(minimalEventProcessed());
         eventProcessor.sendEnqueuedEvents();
         verify(mockEventSender).sendEvents(any(URL.class), anyCollection());
     }
@@ -71,7 +76,7 @@ class EventProcessorTest {
     @Test void eventsNotPassingCurationFiltersAreDropped() throws IOException {
         whenEventsAreNotPassingCurationFilter();
 
-        eventQueue.offer(minimalEvent());
+        eventQueue.offer(minimalEventProcessed());
         eventProcessor.sendEnqueuedEvents();
 
         verify(mockEventSender, never()).sendEvents(any(URL.class), anyCollection());
@@ -81,7 +86,7 @@ class EventProcessorTest {
     @Test void eventsAreRemovedFromQueueOnceSent() {
         whenEventsArePassingCurationFilter();
 
-        eventQueue.offer(minimalEvent());
+        eventQueue.offer(minimalEventProcessed());
         eventProcessor.sendEnqueuedEvents();
 
         assertThat(eventQueue).isEmpty();
@@ -91,7 +96,7 @@ class EventProcessorTest {
         whenEventsArePassingCurationFilter();
         doThrow(IOException.class).when(mockEventSender).sendEvents(any(URL.class), anyCollection());
 
-        eventQueue.offer(minimalEvent());
+        eventQueue.offer(minimalEventProcessed());
         eventProcessor.sendEnqueuedEvents();
 
         assertThat(eventQueue).isNotEmpty();
@@ -100,20 +105,20 @@ class EventProcessorTest {
     @Test void eventsAreEnrichedBeforeBeingSent() throws IOException {
         whenEventsArePassingCurationFilter();
 
-        eventQueue.offer(minimalEvent());
+        eventQueue.offer(minimalEventProcessed());
         eventProcessor.sendEnqueuedEvents();
 
-        ArgumentCaptor<Collection<Event>> eventCaptor = ArgumentCaptor.forClass(Collection.class);
+        ArgumentCaptor<Collection<EventProcessed>> eventCaptor = ArgumentCaptor.forClass(Collection.class);
         verify(mockEventSender).sendEvents(any(URL.class), eventCaptor.capture());
 
-        Event sentEvent = eventCaptor.getValue().iterator().next();
-        assertThat(sentEvent.getPageData().getTitle()).isEqualTo("Test");
+        EventProcessed sentEvent = eventCaptor.getValue().iterator().next();
+        assertThat(sentEvent.getAgentData().getClientPlatform()).isEqualTo("android");
     }
 
     @Test void eventsNotSentWhenFetchStreamConfigFails() {
         sourceConfig.set(null);
 
-        eventQueue.offer(minimalEvent());
+        eventQueue.offer(minimalEventProcessed());
         eventProcessor.sendEnqueuedEvents();
 
         assertThat(eventQueue).isNotEmpty();
@@ -123,7 +128,9 @@ class EventProcessorTest {
         whenEventsArePassingCurationFilter();
 
         // FIXME: move this to CurationFilterTest
-        Event event = minimalEvent();
+        Event eventClient = minimalEvent();
+        EventProcessed event = fromEvent(eventClient);
+        event.setClientData(ClientDataFixtures.getTestClientData());
         event.getPageData().setTitle("Test");
 
         event.setPerformerData(
@@ -138,19 +145,16 @@ class EventProcessorTest {
     @Test void testEventFailsEqualsRule() {
 
         // FIXME: move this to CurationControllerTest
-        ClientMetadata anotherTestClientMetadata = new TestClientMetadata() {
-            @Override
-            public String getPageTitle() {
-                return "Not Test";
-            }
-        };
+        ClientData anotherTestClientData = ClientDataFixtures.getTestClientData();
+        anotherTestClientData.getPerformerData().setSessionId("No session");
+
         eventProcessor = new EventProcessor(
-                new ContextController(anotherTestClientMetadata),
+                new ContextController(anotherTestClientData),
                 sourceConfig,
                 mockEventSender,
                 eventQueue
         );
-        assertThat(eventProcessor.eventPassesCurationRules(minimalEvent(), getStreamConfigsMap())).isFalse();
+        assertThat(eventProcessor.eventPassesCurationRules(minimalEventProcessed(), getStreamConfigsMap())).isFalse();
     }
 
     @Test void testEventFailsCollectionContainsAnyRule() {
@@ -158,7 +162,7 @@ class EventProcessorTest {
         // FIXME: move to CurationControllerTest
         PerformerData performerData = new PerformerData();
         performerData.setGroups(singleton("*"));
-        Event event = minimalEvent();
+        EventProcessed event = minimalEventProcessed();
         event.getPageData().setTitle("Test");
         event.setPerformerData(performerData);
         assertThat(eventProcessor.eventPassesCurationRules(event, getStreamConfigsMap())).isFalse();
@@ -168,18 +172,18 @@ class EventProcessorTest {
         // FIXME: move to CurationControllerTest
         PerformerData performerData = new PerformerData();
         performerData.setGroups(new HashSet<>(Arrays.asList("steward", "sysop")));
-        Event event = minimalEvent();
+        EventProcessed event = minimalEventProcessed();
         event.getPageData().setTitle("Test");
         event.setPerformerData(performerData);
         assertThat(eventProcessor.eventPassesCurationRules(event, getStreamConfigsMap())).isFalse();
     }
 
     private void whenEventsArePassingCurationFilter() {
-        when(curationFilter.apply(any(Event.class))).thenReturn(TRUE);
+        when(curationFilter.apply(any(EventProcessed.class))).thenReturn(TRUE);
     }
 
     private void whenEventsAreNotPassingCurationFilter() {
-        when(curationFilter.apply(any(Event.class))).thenReturn(FALSE);
+        when(curationFilter.apply(any(EventProcessed.class))).thenReturn(FALSE);
     }
 
     private Map<String, StreamConfig> getStreamConfigsMap() {

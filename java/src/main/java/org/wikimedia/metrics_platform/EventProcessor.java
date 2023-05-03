@@ -17,7 +17,7 @@ import org.wikimedia.metrics_platform.config.CurationFilter;
 import org.wikimedia.metrics_platform.config.DestinationEventService;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
-import org.wikimedia.metrics_platform.event.Event;
+import org.wikimedia.metrics_platform.event.EventProcessed;
 
 import lombok.extern.java.Log;
 
@@ -31,7 +31,7 @@ public class EventProcessor {
     private final ContextController contextController;
 
     private final AtomicReference<SourceConfig> sourceConfig;
-    private final BlockingQueue<Event> eventQueue;
+    private final BlockingQueue<EventProcessed> eventQueue;
     private final EventSender eventSender;
 
 
@@ -42,7 +42,7 @@ public class EventProcessor {
             ContextController contextController,
             AtomicReference<SourceConfig> sourceConfig,
             EventSender eventSender,
-            BlockingQueue<Event> eventQueue
+            BlockingQueue<EventProcessed> eventQueue
     ) {
         this.contextController = contextController;
         this.sourceConfig = sourceConfig;
@@ -66,7 +66,7 @@ public class EventProcessor {
             return;
         }
 
-        ArrayList<Event> pending = new ArrayList<>();
+        ArrayList<EventProcessed> pending = new ArrayList<>();
         this.eventQueue.drainTo(pending);
 
         Map<String, StreamConfig> streamConfigsMap = config.getStreamConfigsMap();
@@ -77,9 +77,9 @@ public class EventProcessor {
                 .forEach(this::sendEventsToDestination);
     }
 
-    protected boolean eventPassesCurationRules(Event event, Map<String, StreamConfig> streamConfigMap) {
+    protected boolean eventPassesCurationRules(EventProcessed event, Map<String, StreamConfig> streamConfigMap) {
         StreamConfig streamConfig = streamConfigMap.get(event.getStream());
-        contextController.addRequestedValues(event, streamConfig);
+        contextController.enrichEvent(event, streamConfig);
         StreamConfig.ProducerConfig producerConfig = streamConfig.getProducerConfig();
         if (producerConfig == null) return true;
 
@@ -92,14 +92,14 @@ public class EventProcessor {
         return curationFilter.apply(event);
     }
 
-    private DestinationEventService destinationEventService(Event event, Map<String, StreamConfig> streamConfigMap) {
+    private DestinationEventService destinationEventService(EventProcessed event, Map<String, StreamConfig> streamConfigMap) {
         StreamConfig streamConfig = streamConfigMap.get(event.getStream());
         return streamConfig.getDestinationEventService();
     }
 
     private void sendEventsToDestination(
         DestinationEventService destinationEventService,
-        List<Event> pendingValidEvents
+        List<EventProcessed> pendingValidEvents
     ) {
         try {
             eventSender.sendEvents(destinationEventService.getBaseUri(), pendingValidEvents);

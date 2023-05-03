@@ -1,7 +1,7 @@
 package org.wikimedia.metrics_platform.curation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.wikimedia.metrics_platform.event.EventFixtures.getBaseEvent;
+import static org.wikimedia.metrics_platform.event.EventFixtures.getEvent;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.GsonHelper;
 import org.wikimedia.metrics_platform.config.CurationFilter;
-import org.wikimedia.metrics_platform.event.Event;
+import org.wikimedia.metrics_platform.event.EventProcessed;
 
 import com.google.gson.Gson;
 
@@ -29,47 +29,47 @@ class CurationFilterTest {
     }
 
     @Test void testEventPasses() {
-        assertThat(curationFilter.apply(getBaseEvent())).isTrue();
+        assertThat(curationFilter.apply(getEvent())).isTrue();
     }
 
     @Test void testEventFailsWrongPageId() {
-        Event event = getBaseEvent();
+        EventProcessed event = getEvent();
         event.getPageData().setId(42);
         assertThat(curationFilter.apply(event)).isFalse();
     }
 
     @Test void testEventFailsWrongPageNamespaceText() {
-        Event event = getBaseEvent();
+        EventProcessed event = getEvent();
         event.getPageData().setNamespaceName("User");
         assertThat(curationFilter.apply(event)).isFalse();
     }
 
     @Test void testEventFailsWrongUserGroups() {
-        Event event = getBaseEvent();
+        EventProcessed event = getEvent();
         event.getPerformerData().setGroups(Arrays.asList("user", "autoconfirmed", "sysop"));
         assertThat(curationFilter.apply(event)).isFalse();
     }
 
     @Test void testEventFailsNoUserGroups() {
-        Event event = getBaseEvent();
+        EventProcessed event = getEvent();
         event.getPerformerData().setGroups(Collections.emptyList());
         assertThat(curationFilter.apply(event)).isFalse();
     }
 
     @Test void testEventFailsNotLoggedIn() {
-        Event event = getBaseEvent();
+        EventProcessed event = getEvent();
         event.getPerformerData().setIsLoggedIn(false);
         assertThat(curationFilter.apply(event)).isFalse();
     }
 
     @Test void testEventFailsWrongUserEditCountBucket() {
-        Event event = getBaseEvent();
+        EventProcessed event = getEvent();
         event.getPerformerData().setEditCountBucket("5-99 edits");
         assertThat(curationFilter.apply(event)).isFalse();
     }
 
     @Test void testEventPassesPerformerRegistrationDtDeserializes() {
-        Event event = getBaseEvent();
+        EventProcessed event = getEvent();
         event.getPerformerData().setRegistrationDt(Instant.parse("2023-03-01T01:08:30Z"));
         assertThat(curationFilter.apply(event)).isTrue();
     }

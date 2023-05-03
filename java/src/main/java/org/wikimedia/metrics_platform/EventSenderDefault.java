@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import org.wikimedia.metrics_platform.event.Event;
+import org.wikimedia.metrics_platform.event.EventProcessed;
 
 import com.google.gson.Gson;
 
@@ -26,7 +26,7 @@ public class EventSenderDefault implements EventSender {
     private final Gson gson = GsonHelper.getGson();
 
     @Override
-    public void sendEvents(URL baseUri, Collection<Event> events) throws IOException {
+    public void sendEvents(URL baseUri, Collection<EventProcessed> events) throws IOException {
         HttpURLConnection connection = null;
 
         try {
@@ -39,7 +39,7 @@ public class EventSenderDefault implements EventSender {
             connection.setDoOutput(true);
 
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), UTF_8))) {
-                for (Event event : events) {
+                for (EventProcessed event : events) {
                     gson.toJson(event, writer);
                 }
                 log.log(FINE, "Events sent: posted data to event logging!");

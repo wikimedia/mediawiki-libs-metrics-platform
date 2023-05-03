@@ -6,6 +6,7 @@ import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.WARNING;
 import static java.util.stream.Collectors.toSet;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.ANALYTICS_API_ENDPOINT;
+import static org.wikimedia.metrics_platform.event.EventProcessed.fromEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,8 +32,11 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.config.StreamConfigFetcher;
+import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.CustomData;
+import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.event.Event;
+import org.wikimedia.metrics_platform.event.EventProcessed;
 
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -50,11 +54,6 @@ public final class MetricsClient {
 
     private static final String METRICS_PLATFORM_SCHEMA = "/analytics/mediawiki/client/metrics_event/" + METRICS_PLATFORM_VERSION;
 
-    /**
-     * Integration layer exposing hosting application functionality to the client library.
-     */
-    private final ClientMetadata clientMetadata;
-
     private final AtomicReference<SourceConfig> sourceConfig;
 
     /**
@@ -68,19 +67,17 @@ public final class MetricsClient {
      */
     private final SamplingController samplingController;
 
-    private final BlockingQueue<Event> eventQueue;
+    private final BlockingQueue<EventProcessed> eventQueue;
 
     /**
      * MetricsClient constructor.
      */
     private MetricsClient(
-            ClientMetadata clientMetadata,
             SessionController sessionController,
             SamplingController samplingController,
             AtomicReference<SourceConfig> sourceConfig,
-            BlockingQueue<Event> eventQueue
+            BlockingQueue<EventProcessed> eventQueue
     ) {
-        this.clientMetadata = clientMetadata;
         this.sessionController = sessionController;
         this.samplingController = samplingController;
         this.sourceConfig = sourceConfig;
@@ -102,8 +99,9 @@ public final class MetricsClient {
      * @param event  event data
      */
     public void submit(Event event) {
-        addRequiredMetadata(event);
-        if (!eventQueue.offer(event)) {
+        EventProcessed eventProcessed = fromEvent(event);
+        addRequiredMetadata(eventProcessed);
+        if (!eventQueue.offer(eventProcessed)) {
             log.log(FINE, "Event dropped, event queue is full");
         }
     }
@@ -128,10 +126,22 @@ public final class MetricsClient {
      * @param customData custom data
      */
     public void submitMetricsEvent(String eventName, Map<String, Object> customData) {
+        submitMetricsEvent(eventName, null, customData);
+    }
+
+    /**
+     * Construct and submits a Metrics Platform Event from the event name, page metadata, and custom data for each
+     * stream that is interested in those events.
+     *
+     * @param eventName event name
+     * @param pageData page context data
+     * @param customData custom data
+     */
+    public void submitMetricsEvent(String eventName, PageData pageData, Map<String, Object> customData) {
         Set<CustomData> customDataSetFormatted = customData.entrySet().stream()
-            .map(CustomData::of)
-            .collect(toSet());
-        submitMetricsEvent(eventName, customDataSetFormatted);
+                .map(CustomData::of)
+                .collect(toSet());
+        submitMetricsEvent(eventName, pageData, customDataSetFormatted);
     }
 
     /**
@@ -140,9 +150,10 @@ public final class MetricsClient {
      * This particular submitMetricsEvent() method accepts formatted custom data and submits the event.
      *
      * @param eventName event name
+     * @param pageData page metadata
      * @param customData custom data
      */
-    public void submitMetricsEvent(String eventName, Set<CustomData> customData) {
+    public void submitMetricsEvent(String eventName, PageData pageData, Set<CustomData> customData) {
         SourceConfig sourceConfig = this.sourceConfig.get();
         if (sourceConfig == null) {
             log.log(Level.FINE, "Configuration not loaded yet, the submitMetricsEvent event is ignored and dropped.");
@@ -155,6 +166,7 @@ public final class MetricsClient {
             if (shouldProcessEventsForStream(streamName, sourceConfig)) {
                 Event event = new Event(METRICS_PLATFORM_SCHEMA, streamName, eventName);
                 event.setCustomData(customData);
+                event.setPageData(pageData);
                 submit(event);
             }
         }
@@ -207,10 +219,8 @@ public final class MetricsClient {
      *
      * @param event event
      */
-    private void addRequiredMetadata(Event event) {
-        event.getAgentData().setAppInstallId(clientMetadata.getAgentAppInstallId());
+    private void addRequiredMetadata(EventProcessed event) {
         event.getPerformerData().setSessionId(sessionController.getSessionId());
-        event.setDomain(clientMetadata.getDomain());
         event.setTimestamp(DATE_FORMAT.format(now()));
     }
 
@@ -230,17 +240,17 @@ public final class MetricsClient {
         return eventQueue.isEmpty();
     }
 
-    public static Builder builder(ClientMetadata clientMetadata) {
-        return new Builder(clientMetadata);
+    public static Builder builder(ClientData clientData) {
+        return new Builder(clientData);
     }
 
     @NotThreadSafe @ParametersAreNonnullByDefault
     @Setter @Accessors(fluent = true)
     public static final class Builder {
 
-        private final ClientMetadata clientMetadata;
+        private final ClientData clientData;
         private AtomicReference<SourceConfig> sourceConfigRef = new AtomicReference<>();
-        private BlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>(10);
+        private BlockingQueue<EventProcessed> eventQueue = new LinkedBlockingQueue<>(10);
         private SessionController sessionController = new SessionController();
 
         @Nullable
@@ -252,8 +262,8 @@ public final class MetricsClient {
         private Duration sendEventsInitialDelay = Duration.ofSeconds(3);
         private Duration sendEventsInterval = Duration.ofSeconds(30);
 
-        public Builder(ClientMetadata clientMetadata) {
-            this.clientMetadata = clientMetadata;
+        public Builder(ClientData clientData) {
+            this.clientData = clientData;
         }
 
         public Builder eventQueueCapacity(int capacity) {
@@ -263,18 +273,17 @@ public final class MetricsClient {
 
         public MetricsClient build() {
             if (samplingController == null) {
-                samplingController = new SamplingController(clientMetadata, sessionController);
+                samplingController = new SamplingController(clientData, sessionController);
             }
 
             EventProcessor eventProcessor = new EventProcessor(
-                    new ContextController(clientMetadata),
+                    new ContextController(clientData),
                     sourceConfigRef,
                     eventSender,
                     eventQueue
             );
 
             MetricsClient metricsClient = new MetricsClient(
-                    clientMetadata,
                     sessionController,
                     samplingController,
                     sourceConfigRef,

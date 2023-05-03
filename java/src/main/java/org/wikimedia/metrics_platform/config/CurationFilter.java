@@ -8,7 +8,7 @@ import javax.annotation.ParametersAreNullableByDefault;
 import org.wikimedia.metrics_platform.curation.CollectionCurationRules;
 import org.wikimedia.metrics_platform.curation.ComparableCurationRules;
 import org.wikimedia.metrics_platform.curation.CurationRules;
-import org.wikimedia.metrics_platform.event.Event;
+import org.wikimedia.metrics_platform.event.EventProcessed;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -62,7 +62,7 @@ public class CurationFilter {
 
     @SuppressFBWarnings(value = "CC_CYCLOMATIC_COMPLEXITY", justification = "TODO: needs to be refactored!")
     @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:NPathComplexity"})
-    public boolean apply(@Nonnull Event event) {
+    public boolean apply(@Nonnull EventProcessed event) {
         // Agent
 
         if (agentAppInstallIdRules != null) {

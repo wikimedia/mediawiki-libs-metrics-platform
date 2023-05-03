@@ -2,7 +2,7 @@ package org.wikimedia.metrics_platform;
 
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.wikimedia.metrics_platform.ConsistencyITClientMetadata.createConsistencyTestClientMetadata;
+import static org.wikimedia.metrics_platform.ConsistencyITClientData.createConsistencyTestClientData;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.ANALYTICS_API_ENDPOINT;
 
 import java.io.BufferedReader;
@@ -22,17 +22,19 @@ import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.config.StreamConfigFetcher;
-import org.wikimedia.metrics_platform.event.Event;
+import org.wikimedia.metrics_platform.context.ClientData;
+import org.wikimedia.metrics_platform.context.PageDataFixtures;
+import org.wikimedia.metrics_platform.event.EventProcessed;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 class ConsistencyIT {
+    private JsonObject expectedEvent;
 
     @Test void testConsistency() throws IOException {
         Path pathStreamConfigs = Paths.get("../tests/consistency/stream_configs.json");
-        Path pathExpectedEvent = Paths.get("../tests/consistency/expected_event.json");
 
         try (BufferedReader reader = Files.newBufferedReader(pathStreamConfigs)) {
 
@@ -41,61 +43,64 @@ class ConsistencyIT {
             SourceConfig sourceConfig = new SourceConfig(testStreamConfigs);
             AtomicReference<SourceConfig> sourceConfigRef = new AtomicReference<>();
             sourceConfigRef.set(sourceConfig);
-            BlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>(10);
-            ClientMetadata consistencyTestClientMetadata = createConsistencyTestClientMetadata();
+            BlockingQueue<EventProcessed> eventQueue = new LinkedBlockingQueue<>(10);
+            ClientData consistencyTestClientData = createConsistencyTestClientData();
 
             EventProcessor consistencyTestEventProcessor = getTestEventProcessor(
-                    consistencyTestClientMetadata,
+                    consistencyTestClientData,
                     sourceConfigRef,
                     eventQueue
             );
 
             MetricsClient consistencyTestMetricsClient = getTestMetricsClient(
-                    consistencyTestClientMetadata,
+                    consistencyTestClientData,
                     sourceConfigRef,
                     eventQueue
             );
 
             consistencyTestMetricsClient.submitMetricsEvent(
                     "test_consistency_event",
+                    PageDataFixtures.getTestPageData(getExpectedEventJson().toString()),
                     singletonMap("test", "consistency")
             );
 
-            Event queuedEvent = eventQueue.peek();
+            EventProcessed queuedEvent = eventQueue.peek();
+            queuedEvent.setDomain(consistencyTestClientData.getDomain());
             consistencyTestEventProcessor.eventPassesCurationRules(queuedEvent, testStreamConfigs);
 
             // Adjust the queuedEvent and compare it against the expected event.
-            try (BufferedReader expectedEventReader = Files.newBufferedReader(pathExpectedEvent)) {
-                JsonObject expectedEventJsonObject = JsonParser.parseReader(expectedEventReader).getAsJsonObject();
-
+            if (this.expectedEvent != null) {
                 Gson gson = GsonHelper.getGson();
                 String queuedEventJsonStringRaw = gson.toJson(queuedEvent);
                 JsonObject queuedEventJsonObject = JsonParser.parseString(queuedEventJsonStringRaw).getAsJsonObject();
                 // Remove the timestamp properties from the queued event to match the expected event json.
                 removeExtraProperties(queuedEventJsonObject);
 
-                assertThat(queuedEventJsonObject).isEqualTo(expectedEventJsonObject);
+                assertThat(queuedEventJsonObject)
+                        .usingRecursiveComparison()
+                        .ignoringCollectionOrder()
+                        .isEqualTo(this.expectedEvent);
             }
         }
     }
 
     private static MetricsClient getTestMetricsClient(
-            ClientMetadata consistencyTestClientMetadata,
+            ClientData consistencyTestClientData,
             AtomicReference<SourceConfig> sourceConfigRef,
-            BlockingQueue<Event> eventQueue
+            BlockingQueue<EventProcessed> eventQueue
     ) {
-        return MetricsClient.builder(consistencyTestClientMetadata)
+        return MetricsClient.builder(consistencyTestClientData)
                 .sourceConfigRef(sourceConfigRef)
                 .eventQueue(eventQueue)
                 .build();
     }
 
     private static EventProcessor getTestEventProcessor(
-            ClientMetadata consistencyTestClientMetadata,
+            ClientData consistencyTestClientData,
             AtomicReference<SourceConfig> sourceConfigRef,
-            BlockingQueue<Event> eventQueue
+            BlockingQueue<EventProcessed> eventQueue
     ) {
-        ContextController contextController = new ContextController(consistencyTestClientMetadata);
+        ContextController contextController = new ContextController(consistencyTestClientData);
         EventSender eventSender = new TestEventSender();
         return new EventProcessor(
                 contextController,
@@ -114,5 +119,15 @@ class ConsistencyIT {
     private static void removeExtraProperties(JsonObject eventJsonObject) {
         eventJsonObject.remove("dt");
         eventJsonObject.getAsJsonObject("performer").remove("registration_dt");
+    }
+
+    private JsonObject getExpectedEventJson() throws IOException {
+        if (this.expectedEvent == null) {
+            Path pathExpectedEvent = Paths.get("../tests/consistency/expected_event.json");
+            try (BufferedReader expectedEventReader = Files.newBufferedReader(pathExpectedEvent)) {
+                this.expectedEvent = JsonParser.parseReader(expectedEventReader).getAsJsonObject();
+            }
+        }
+        return this.expectedEvent;
     }
 }

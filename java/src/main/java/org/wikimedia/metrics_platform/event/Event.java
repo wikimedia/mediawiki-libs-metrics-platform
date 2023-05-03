@@ -7,11 +7,8 @@ import java.util.Set;
 
 import javax.annotation.ParametersAreNullableByDefault;
 
-import org.wikimedia.metrics_platform.context.AgentData;
 import org.wikimedia.metrics_platform.context.CustomData;
-import org.wikimedia.metrics_platform.context.MediawikiData;
 import org.wikimedia.metrics_platform.context.PageData;
-import org.wikimedia.metrics_platform.context.PerformerData;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -20,15 +17,12 @@ import lombok.Data;
 @Data
 @ParametersAreNullableByDefault
 public class Event {
-    @SerializedName("$schema") private String schema;
-    @SerializedName("name") private final String name;
-    @SerializedName("dt") private String timestamp;
-    @SerializedName("custom_data") private Map<String, Object> customData;
-    private final Meta meta;
-    @SerializedName("agent") private AgentData agentData;
-    @SerializedName("page") private PageData pageData;
-    @SerializedName("mediawiki") private MediawikiData mediawikiData;
-    @SerializedName("performer") private PerformerData performerData;
+    @SerializedName("$schema") protected String schema;
+    @SerializedName("name") protected final String name;
+    @SerializedName("dt") protected String timestamp;
+    @SerializedName("custom_data") protected Map<String, Object> customData;
+    protected final Meta meta;
+    @SerializedName("page") protected PageData pageData;
 
     public Event(String schema, String stream, String name) {
         this.schema = schema;
@@ -40,40 +34,13 @@ public class Event {
         return meta.getStream();
     }
 
-    public String getDomain() {
-        return meta.getDomain();
-    }
-
-    public AgentData getAgentData() {
-        if (this.agentData == null) {
-            this.agentData = new AgentData();
-        }
-        return this.agentData;
+    public void setDomain(String domain) {
+        this.meta.domain = domain;
     }
 
     public PageData getPageData() {
-        if (this.pageData == null) {
-            this.pageData = new PageData();
-        }
+        if (this.pageData == null) this.pageData = new PageData();
         return this.pageData;
-    }
-
-    public MediawikiData getMediawikiData() {
-        if (this.mediawikiData == null) {
-            this.mediawikiData = new MediawikiData();
-        }
-        return this.mediawikiData;
-    }
-
-    public PerformerData getPerformerData() {
-        if (this.performerData == null) {
-            this.performerData = new PerformerData();
-        }
-        return this.performerData;
-    }
-
-    public void setDomain(String domain) {
-        this.meta.domain = domain;
     }
 
     public void setCustomData(Set<CustomData>customDataSet) {
@@ -87,8 +54,12 @@ public class Event {
         this.customData = formattedCustomData;
     }
 
+    public void setCustomData(Map<String, Object> customData) {
+        this.customData = customData;
+    }
+
     @Data
-    private static final class Meta {
+    protected static final class Meta {
         private final String stream;
         private String domain;
     }

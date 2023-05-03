@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.METRICS_PLATFORM_SCHEMA_TITLE;
 import static org.wikimedia.metrics_platform.config.StreamConfigFixtures.streamConfig;
 import static org.wikimedia.metrics_platform.curation.CurationFilterFixtures.curationFilter;
+import static org.wikimedia.metrics_platform.event.EventProcessed.fromEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,23 +21,28 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.SourceConfigFixtures;
+import org.wikimedia.metrics_platform.context.ClientData;
+import org.wikimedia.metrics_platform.context.ClientDataFixtures;
+import org.wikimedia.metrics_platform.context.PageDataFixtures;
 import org.wikimedia.metrics_platform.event.Event;
+import org.wikimedia.metrics_platform.event.EventProcessed;
 
 @ExtendWith(MockitoExtension.class)
 class MetricsClientTest {
 
-    @Mock private ClientMetadata mockClientMetadata;
+    @Mock private ClientData clientData;
     @Mock private SessionController mockSessionController;
     @Mock private SamplingController mockSamplingController;
     private MetricsClient client;
-    private BlockingQueue<Event> eventQueue;
+    private BlockingQueue<EventProcessed> eventQueue;
     private AtomicReference<SourceConfig> sourceConfig;
 
     @BeforeEach void createEventProcessorMetricsClient() {
         eventQueue = new LinkedBlockingQueue<>(10);
         sourceConfig = new AtomicReference<>(SourceConfigFixtures.getTestSourceConfig());
+        clientData = ClientDataFixtures.getTestClientData();
 
-        client = MetricsClient.builder(mockClientMetadata)
+        client = MetricsClient.builder(clientData)
                 .sessionController(mockSessionController)
                 .samplingController(mockSamplingController)
                 .sourceConfigRef(sourceConfig)
@@ -47,11 +53,12 @@ class MetricsClientTest {
     @Test void testSubmit() {
         Event event = new Event(METRICS_PLATFORM_SCHEMA_TITLE, "test_stream", "test_event");
         client.submit(event);
-
-        assertThat(eventQueue).contains(event);
+        EventProcessed eventProcessed = eventQueue.peek();
+        String stream = eventProcessed.getStream();
+        assertThat(stream).isEqualTo("test_stream");
     }
 
-    @Test void testSubmitMetricsEvent() throws InterruptedException {
+    @Test void testSubmitMetricsEventWithoutPageData() throws InterruptedException {
         when(mockSamplingController.isInSample(streamConfig(curationFilter()))).thenReturn(true);
 
         Map<String, Object> customDataMap = getTestCustomData();
@@ -59,10 +66,11 @@ class MetricsClientTest {
 
         assertThat(eventQueue).isNotEmpty();
 
-        Event take = eventQueue.take();
+        EventProcessed queuedEvent = eventQueue.take();
 
-        assertThat(take.getName()).isEqualTo("test_event");
-        Map<String, Object> customData = take.getCustomData();
+        // Verify custom data
+        assertThat(queuedEvent.getName()).isEqualTo("test_event");
+        Map<String, Object> customData = queuedEvent.getCustomData();
         Map<String, String> isEditor = (Map<String, String>) customData.get("is_editor");
         assertThat(isEditor.get("data_type")).isEqualTo("boolean");
         assertThat(isEditor.get("value")).isEqualTo("true");
@@ -72,17 +80,46 @@ class MetricsClientTest {
         Map<String, String> screenSize = (Map<String, String>) customData.get("screen_size");
         assertThat(screenSize.get("data_type")).isEqualTo("number");
         assertThat(screenSize.get("value")).isEqualTo("1080");
+
+        // Verify that page data is not included
+        assertThat(queuedEvent.getPageData().getId()).isNull();
+        assertThat(queuedEvent.getPageData().getTitle()).isNull();
+        assertThat(queuedEvent.getPageData().getNamespace()).isNull();
+        assertThat(queuedEvent.getPageData().getNamespaceName()).isNull();
+        assertThat(queuedEvent.getPageData().getRevisionId()).isNull();
+        assertThat(queuedEvent.getPageData().getWikidataItemQid()).isNull();
+        assertThat(queuedEvent.getPageData().getContentLanguage()).isNull();
+    }
+
+    @Test void testSubmitMetricsEventWithPageData() throws InterruptedException {
+        when(mockSamplingController.isInSample(streamConfig(curationFilter()))).thenReturn(true);
+
+        client.submitMetricsEvent("test_event", PageDataFixtures.getTestPageData(), getTestCustomData());
+
+        assertThat(eventQueue).isNotEmpty();
+
+        EventProcessed queuedEvent = eventQueue.take();
+
+        assertThat(queuedEvent.getPageData().getId()).isEqualTo(1);
+        assertThat(queuedEvent.getPageData().getTitle()).isEqualTo("Test Page Title");
+        assertThat(queuedEvent.getPageData().getNamespace()).isEqualTo(0);
+        assertThat(queuedEvent.getPageData().getNamespaceName()).isEqualTo("");
+        assertThat(queuedEvent.getPageData().getRevisionId()).isEqualTo(1);
+        assertThat(queuedEvent.getPageData().getWikidataItemQid()).isEqualTo("Q1");
+        assertThat(queuedEvent.getPageData().getContentLanguage()).isEqualTo("zh");
     }
 
     @Test void testSubmitWhenEventQueueIsFull() {
         for (int i = 1; i <= 10; i++) {
             Event event = new Event("test_schema" + i, "test_stream" + i, "test_event" + i);
-            eventQueue.add(event);
+            EventProcessed eventProcessed = fromEvent(event);
+            eventQueue.add(eventProcessed);
         }
         Event event11 = new Event("schema", "stream", "event");
         client.submitMetricsEvent(event11.getName(), getTestCustomData());
+        EventProcessed eventProcessed11 = fromEvent(event11);
 
-        assertThat(eventQueue).doesNotContain(event11);
+        assertThat(eventQueue).doesNotContain(eventProcessed11);
     }
 
     @Test void testTouchSessionOnAppPause() {
@@ -105,11 +142,14 @@ class MetricsClientTest {
         verify(mockSessionController).closeSession();
     }
 
-    @Test void testAddRequiredMetadata() {
+    @Test void testAddRequiredMetadata() throws InterruptedException {
         Event event = new Event("test/event/1.0.0", "test_event", "testEvent");
-        client.submit(event);
+        assertThat(event.getTimestamp()).isNull();
 
-        verify(mockClientMetadata).getAgentAppInstallId();
+        client.submit(event);
+        EventProcessed queuedEvent = eventQueue.take();
+
+        assertThat(queuedEvent.getTimestamp()).isNotNull();
         verify(mockSessionController).getSessionId();
     }
 

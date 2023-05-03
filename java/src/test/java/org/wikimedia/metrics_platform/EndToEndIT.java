@@ -12,12 +12,14 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.singletonMap;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
-import static org.wikimedia.metrics_platform.ConsistencyITClientMetadata.createConsistencyTestClientMetadata;
+import static org.wikimedia.metrics_platform.ConsistencyITClientData.createConsistencyTestClientData;
 
 import java.io.IOException;
 import java.net.URL;
 
 import org.junit.jupiter.api.Test;
+import org.wikimedia.metrics_platform.context.ClientData;
+import org.wikimedia.metrics_platform.context.PageDataFixtures;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
@@ -25,6 +27,8 @@ import com.google.common.io.Resources;
 
 @WireMockTest(httpPort = 8192)
 public class EndToEndIT {
+    private String expectedEvent;
+
     @Test void submitEventTimerStreamConfig(WireMockRuntimeInfo wireMockRuntimeInfo) throws IOException {
         // Stub fetching the stream config from api endpoint.
         stubFor(get(urlEqualTo("/config"))
@@ -38,8 +42,8 @@ public class EndToEndIT {
                         .withBody(getExpectedEvent())));
 
         // Create the metrics client.
-        ClientMetadata testJavaClientMetadata = createConsistencyTestClientMetadata();
-        MetricsClient testJavaMetricsClient = MetricsClient.builder(testJavaClientMetadata)
+        ClientData testJavaClientData = createConsistencyTestClientData();
+        MetricsClient testJavaMetricsClient = MetricsClient.builder(testJavaClientData)
                 .streamConfigURL(new URL(wireMockRuntimeInfo.getHttpBaseUrl() + "/config"))
                 .build();
 
@@ -47,13 +51,14 @@ public class EndToEndIT {
 
         testJavaMetricsClient.submitMetricsEvent(
                 "eas.test_event_name_for_end_to_end_testing",
+                PageDataFixtures.getTestPageData(getExpectedEvent()),
                 singletonMap("action", "surf")
         );
 
         await().atMost(5, SECONDS).until(testJavaMetricsClient::isEventQueueEmpty);
 
         verify(postRequestedFor(urlEqualTo("/v1/events"))
-                .withRequestBody(equalToJson(getExpectedEvent(), false, true)));
+                .withRequestBody(equalToJson(getExpectedEvent(), true, true)));
     }
 
     private byte[] readConfig() throws IOException {
@@ -63,9 +68,12 @@ public class EndToEndIT {
     }
 
     private String getExpectedEvent() throws IOException {
-        return Resources.asCharSource(
-                Resources.getResource("org/wikimedia/metrics_platform/event/expected_event.json"),
-                UTF_8
-        ).read();
+        if (this.expectedEvent == null) {
+            this.expectedEvent = Resources.asCharSource(
+                    Resources.getResource("org/wikimedia/metrics_platform/event/expected_event.json"),
+                    UTF_8
+            ).read();
+        }
+        return this.expectedEvent;
     }
 }
