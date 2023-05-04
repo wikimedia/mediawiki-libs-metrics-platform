@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6f10302_cdcc29b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-04T08:29:27Z",
+      "side": 1,
+      "message": "This is going exactly in the right direction! I have a bunch of comments inline, most are minor. I\u0027d be happy to have more discussion about using Maps in APIs, and about using different Event classes internally and as part of the API. Let me know if that\u0027s useful to you.",
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85a9f539_719ba5d6",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/ContextController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-04T08:29:27Z",
+      "side": 1,
+      "message": "Those are all NOOP (we set the pagedata on the event from the page data we got from the event).\n\nIf I understand the role of this context controller, it is meant to enrich the event with all the data that is required for a given stream, but nothing more. Which means that we probably want one of those 2 things:\n\n1) get the page data independently from the event, enrich the event as needed\n2) get the page data as part of the event, remove it if not needed\n\nThis also shows that there is some confusion in how we use the Event class. We use the same class for our library interface (the client of this library is creating Events) and internally to send it to the metrics collection endpoint. This creates some confusion, as it is unclear who has the responsibility to fill which data in the event. This isn\u0027t a huge deal if it is clearly documented. But a more explicit approach could be to have 2 different Event classes. A minimal version that has just the data that the client needs to provide, and a richer one that maps to the format expected by the metrics collection endpoint. The role of the ContextController (and I think some other code as well) becomes to map between those 2 events. The responsibilities becomes more clear, as the client would not have any way to provide data that it should not.",
+      "range": {
+        "startLine": 106,
+        "startChar": 20,
+        "endLine": 106,
+        "endChar": 75
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0a03083_bf7d10f8",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-04T08:29:27Z",
+      "side": 1,
+      "message": "Since we expect specific fields in this map, we should have a PageData object as argument, not a Map\u003cString, Object\u003e. Using a map hides the requirements for specific fields. We could address that by documenting the expected shape of that map, but that\u0027s really what the type system is there for.",
+      "range": {
+        "startLine": 138,
+        "startChar": 53,
+        "endLine": 138,
+        "endChar": 81
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df20c166_cbaf3566",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-04T08:29:27Z",
+      "side": 1,
+      "message": "To reduce duplication and to simplify the flow, this method should just delegate to `submitMetricsEvent(String, PageData, Set\u003cCustomData\u003e), with an empty PageData.",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 9
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e439519_9b6f958d",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/PageData.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-04T08:29:27Z",
+      "side": 1,
+      "message": "nit: This method isn\u0027t really about JSON, so it probably shouldn\u0027t use Gson to parse a Map. I can see that it is taking less code to do it this way as opposed to mapping the fields manually.\n\nWith a bit more thinking, I\u0027m actually a bit suspicious of the need for this method at all. The client should not supply a Map if there are strict requirements on what needs to be contained in that map, but it should supply the POJO directly.",
+      "range": {
+        "startLine": 42,
+        "startChar": 27,
+        "endLine": 42,
+        "endChar": 41
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "401c2200_4c755ef9",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyITClientMetadata.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-04T08:29:27Z",
+      "side": 1,
+      "message": "Those methods are not required by the interface anymore. So instead of removing the `@Override`, we should delete the method completely. Btw: this is a great use case for @Override: reminding you that methods are not needed anymore :)",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ca553f7_c05c39ef",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ContextControllerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-04T08:29:27Z",
+      "side": 1,
+      "message": "This should probably be extracted to a `PageDataFixtures` class, which would encourage reusing the same fixtures across tests (see other *Fixtures classes for example).\n\nSee EndToEndIT and MetricsClientTest as well.",
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "627ab394_21cf881b",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-04T08:29:27Z",
+      "side": 1,
+      "message": "We probably need the opposite test as well (unless that\u0027s not part of the spec, I\u0027m unsure): if the stream config does not specify the need for page data, ensure that the event does not contain it.",
+      "range": {
+        "startLine": 116,
+        "startChar": 15,
+        "endLine": 116,
+        "endChar": 49
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1081264a_dd1cb1f2",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-04T08:29:27Z",
+      "side": 1,
+      "message": "nit: rename this to \"event\"?",
+      "range": {
+        "startLine": 125,
+        "startChar": 14,
+        "endLine": 125,
+        "endChar": 18
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "717148dc_887e7504",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/TestClientMetadata.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-04T08:29:27Z",
+      "side": 1,
+      "message": "Methods should be removed entirely.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 5
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3608b25d_27cd9044",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/ClientMetadata.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-04T08:29:27Z",
+      "side": 1,
+      "message": "nit: Instead of this being an interface that needs to be implemented by the client, this could be a Data Object that the client needs to fill with the appropriate data. This way, we could also make it immutable (or at least mostly immutable). This would have the added benefit that in the cases where getting the data is expensive, it is done only one at creation time.",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "132b9c643bd6f0ccccbcd4bb01557cbb32aacaed",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92e7738b_372a7127",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/event/Event.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-04T08:29:27Z",
+      "side": 1,
+      "message": "nit (and unrelated to this CR): we could simplify this check for null pattern by introducing a `firstNonNull()` function:\n\n    private \u003cT\u003e T firstNonNull(T first, Supplier\u003cT\u003e second) {\n        if (first !\u003d null) return first;\n        return second.get();\n    }\n    \nAnd use it as:\n\n    public MediawikiData getMediawikiData() {\n        return mediawikiData \u003d firstNonNull(mediawikiData, () -\u003e new MediawikiData());\n    }",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "132b9c643bd6f0ccccbcd4bb01557cbb32aacaed",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
