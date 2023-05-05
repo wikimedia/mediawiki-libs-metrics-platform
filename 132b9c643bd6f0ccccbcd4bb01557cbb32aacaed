@@ -69,6 +69,30 @@
       },
       "revId": "132b9c643bd6f0ccccbcd4bb01557cbb32aacaed",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85d47aee_ecb9831c",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/event/Event.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-05T13:23:51Z",
+      "side": 1,
+      "message": "missed this suggestion - will incorporate in follow up commit",
+      "parentUuid": "92e7738b_372a7127",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "132b9c643bd6f0ccccbcd4bb01557cbb32aacaed",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
