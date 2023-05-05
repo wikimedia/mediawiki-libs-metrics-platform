@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "44b61c71_1b45419e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/ContextController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-05T13:19:01Z",
+      "side": 1,
+      "message": "revising my Q:\nIf page metadata (optional) + custom data (optional) are properties of a base Event object then another inheriting Event class would have the client metadata (required and dependency injected by MetricsClient builder), then this enriched event object\u0027s properties/data would be filtered/specified by the ContextController and stream config?",
+      "parentUuid": "9f495071_85758cc0",
+      "range": {
+        "startLine": 106,
+        "startChar": 20,
+        "endLine": 106,
+        "endChar": 75
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b0a03083_bf7d10f8",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 6
