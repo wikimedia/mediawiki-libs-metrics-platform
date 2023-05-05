@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "caefd527_a02cd9c5",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/ClientMetadata.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-05T13:16:28Z",
+      "side": 1,
+      "message": "need to incorporate this suggestion -- will do so in a followup commit",
+      "parentUuid": "3608b25d_27cd9044",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "132b9c643bd6f0ccccbcd4bb01557cbb32aacaed",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "92e7738b_372a7127",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/event/Event.java",
         "patchSetId": 5

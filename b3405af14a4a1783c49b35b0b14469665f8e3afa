@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9f495071_85758cc0",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/ContextController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-05T13:16:28Z",
+      "side": 1,
+      "message": "I\u0027m not sure I grok what you mean by 2 Event classes -- is it that:\n\nIf client metadata (required) + page metadata (optional) + custom data (optional) are properties of one Event class then another inheriting Event class would have its properties/data filtered/specified by the ContextController and stream config?\n\ni don\u0027t have this suggestion fully baked -- want to make sure i\u0027m on the right track before changing everything from the base event to the enriched event",
+      "parentUuid": "85a9f539_719ba5d6",
+      "range": {
+        "startLine": 106,
+        "startChar": 20,
+        "endLine": 106,
+        "endChar": 75
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b0a03083_bf7d10f8",
         "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
         "patchSetId": 6
@@ -54,6 +78,30 @@
       "writtenOn": "2023-05-04T08:29:27Z",
       "side": 1,
       "message": "Since we expect specific fields in this map, we should have a PageData object as argument, not a Map\u003cString, Object\u003e. Using a map hides the requirements for specific fields. We could address that by documenting the expected shape of that map, but that\u0027s really what the type system is there for.",
+      "range": {
+        "startLine": 138,
+        "startChar": 53,
+        "endLine": 138,
+        "endChar": 81
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c942b29_e824da1f",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-05T13:16:28Z",
+      "side": 1,
+      "message": "Made PageData object as argument",
+      "parentUuid": "b0a03083_bf7d10f8",
       "range": {
         "startLine": 138,
         "startChar": 53,
@@ -87,6 +135,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e60d0a3f_4bd88d96",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-05T13:16:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df20c166_cbaf3566",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 9
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e439519_9b6f958d",
@@ -100,6 +172,30 @@
       "writtenOn": "2023-05-04T08:29:27Z",
       "side": 1,
       "message": "nit: This method isn\u0027t really about JSON, so it probably shouldn\u0027t use Gson to parse a Map. I can see that it is taking less code to do it this way as opposed to mapping the fields manually.\n\nWith a bit more thinking, I\u0027m actually a bit suspicious of the need for this method at all. The client should not supply a Map if there are strict requirements on what needs to be contained in that map, but it should supply the POJO directly.",
+      "range": {
+        "startLine": 42,
+        "startChar": 27,
+        "endLine": 42,
+        "endChar": 41
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20087b39_bc37b576",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/PageData.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-05T13:16:28Z",
+      "side": 1,
+      "message": "moved this functionality into the PageDataFixtures class -- we need a way to create PageData from json for various tests",
+      "parentUuid": "9e439519_9b6f958d",
       "range": {
         "startLine": 42,
         "startChar": 27,
@@ -133,6 +229,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb32fa4d_6bc8af53",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyITClientMetadata.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-05T13:16:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "401c2200_4c755ef9",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ca553f7_c05c39ef",
@@ -150,6 +270,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e432e746_2516ea1b",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ContextControllerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-05T13:16:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ca553f7_c05c39ef",
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "627ab394_21cf881b",
@@ -163,6 +301,30 @@
       "writtenOn": "2023-05-04T08:29:27Z",
       "side": 1,
       "message": "We probably need the opposite test as well (unless that\u0027s not part of the spec, I\u0027m unsure): if the stream config does not specify the need for page data, ensure that the event does not contain it.",
+      "range": {
+        "startLine": 116,
+        "startChar": 15,
+        "endLine": 116,
+        "endChar": 49
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ab2e87e_a7d1e60e",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-05T13:16:28Z",
+      "side": 1,
+      "message": "Revised the first testSubmitMetricsEvent to account for this use case",
+      "parentUuid": "627ab394_21cf881b",
       "range": {
         "startLine": 116,
         "startChar": 15,
@@ -196,6 +358,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fc3e4c0_6706781e",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/MetricsClientTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-05T13:16:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1081264a_dd1cb1f2",
+      "range": {
+        "startLine": 125,
+        "startChar": 14,
+        "endLine": 125,
+        "endChar": 18
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "717148dc_887e7504",
@@ -209,6 +395,30 @@
       "writtenOn": "2023-05-04T08:29:27Z",
       "side": 1,
       "message": "Methods should be removed entirely.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 5
+      },
+      "revId": "b3405af14a4a1783c49b35b0b14469665f8e3afa",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3aab9c83_d6d10ed1",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/TestClientMetadata.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-05T13:16:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "717148dc_887e7504",
       "range": {
         "startLine": 52,
         "startChar": 4,
