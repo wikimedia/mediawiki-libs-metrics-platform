@@ -48,6 +48,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c892020_ee45de69",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/ClientMetadata.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-08T22:28:13Z",
+      "side": 1,
+      "message": "Replaced ClientMetadata interface with ClientData data object.",
+      "parentUuid": "caefd527_a02cd9c5",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "132b9c643bd6f0ccccbcd4bb01557cbb32aacaed",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92e7738b_372a7127",
