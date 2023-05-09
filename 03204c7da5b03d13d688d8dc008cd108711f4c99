@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99642766_b898fc79",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-09T10:05:33Z",
+      "side": 1,
+      "message": "Since `ClientData` is now mostly about data that isn\u0027t contextual to the request, but to the client as a whole, we don\u0027t need to set it when the event is received by `MetricsClient`, but we should be able to move this entirely in the `ContextController`. This makes the separation between static data and request data more clear, removes the dependency from `MetricsClient` to `ClientData`, and makes it more clear where that data is added to the Event. Happy to discuss this more if needed!",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 39
+      },
+      "revId": "03204c7da5b03d13d688d8dc008cd108711f4c99",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7a39d32_c0abe92c",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-09T10:05:33Z",
+      "side": 1,
+      "message": "nit: we can remove some minor duplication by having this method just forward to `submitMetricsEvent(String, PageData, Map\u003cString, Object\u003e)`.",
+      "range": {
+        "startLine": 137,
+        "startChar": 7,
+        "endLine": 139,
+        "endChar": 34
+      },
+      "revId": "03204c7da5b03d13d688d8dc008cd108711f4c99",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a7ce47b_efc7c275",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/ClientData.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-09T10:05:33Z",
+      "side": 1,
+      "message": "We could have a bit more documentation about the intent of those ClientData, and how they are different from the PageData. The intention is that ClientData is everything that is (at least mostly) static and does not change with every request.\n\nNote: I suspect that we will still need to move some data around between ClientData and PageData. For example, the Mediawiki database is likely to be bound to the page and not to the client: the same Android app can browse multiple different wikis.",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "03204c7da5b03d13d688d8dc008cd108711f4c99",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4cc61f4_958fdb72",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/event/EventProcessed.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-09T10:05:33Z",
+      "side": 1,
+      "message": "nit: naming: `fromEvent()` (`get` tends to imply returing an exising value, not creating a new object)",
+      "range": {
+        "startLine": 33,
+        "startChar": 33,
+        "endLine": 33,
+        "endChar": 50
+      },
+      "revId": "03204c7da5b03d13d688d8dc008cd108711f4c99",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02f83310_c6b46d11",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/event/EventProcessed.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-09T10:05:33Z",
+      "side": 1,
+      "message": "Lombok\u0027s @EqualsAndHashCode can generate this for you: https://projectlombok.org/features/EqualsAndHashCode\n\nNote that @Data will include @EqualsAndHashCode: https://projectlombok.org/features/Data",
+      "range": {
+        "startLine": 44,
+        "startChar": 19,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "03204c7da5b03d13d688d8dc008cd108711f4c99",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
