@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "378731b7_5d036916",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-10T19:40:58Z",
+      "side": 1,
+      "message": "it seemed overkill to create a new class for this -- does this suffice to address the circular buffer requirement?",
+      "revId": "d3379fb81f71a1e2afcb912c8f2717d8c4c24944",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}

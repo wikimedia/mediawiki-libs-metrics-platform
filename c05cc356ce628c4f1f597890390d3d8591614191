@@ -16,6 +16,24 @@
       "message": "it seemed overkill to create a new class for this -- does this suffice to address the circular buffer requirement?",
       "revId": "c05cc356ce628c4f1f597890390d3d8591614191",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "774d6deb_ff1079e7",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-10T19:40:58Z",
+      "side": 1,
+      "message": "moving comment to relevant spot in latest ps",
+      "parentUuid": "66c6777d_d0cd80dd",
+      "revId": "c05cc356ce628c4f1f597890390d3d8591614191",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
