@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84f13770_d2b33754",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-10T17:58:50Z",
+      "side": 0,
+      "message": "cruft that should have been removed in previous commit",
+      "revId": "5d5167fc3837ceba27d2c5e0a710601619400dd9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
