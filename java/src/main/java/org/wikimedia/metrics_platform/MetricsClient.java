@@ -1,5 +1,6 @@
 package org.wikimedia.metrics_platform;
 
+import static java.lang.Math.max;
 import static java.time.Instant.now;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.logging.Level.FINE;
@@ -68,6 +69,7 @@ public final class MetricsClient {
     private final SamplingController samplingController;
 
     private final BlockingQueue<EventProcessed> eventQueue;
+    private final EventProcessor eventProcessor;
 
     /**
      * MetricsClient constructor.
@@ -76,12 +78,14 @@ public final class MetricsClient {
             SessionController sessionController,
             SamplingController samplingController,
             AtomicReference<SourceConfig> sourceConfig,
-            BlockingQueue<EventProcessed> eventQueue
+            BlockingQueue<EventProcessed> eventQueue,
+            EventProcessor eventProcessor
     ) {
         this.sessionController = sessionController;
         this.samplingController = samplingController;
         this.sourceConfig = sourceConfig;
         this.eventQueue = eventQueue;
+        this.eventProcessor = eventProcessor;
     }
 
     /**
@@ -101,9 +105,7 @@ public final class MetricsClient {
     public void submit(Event event) {
         EventProcessed eventProcessed = fromEvent(event);
         addRequiredMetadata(eventProcessed);
-        if (!eventQueue.offer(eventProcessed)) {
-            log.log(FINE, "Event dropped, event queue is full");
-        }
+        addToEventQueue(eventProcessed);
     }
 
     /**
@@ -181,6 +183,7 @@ public final class MetricsClient {
      * application is resumed.
      */
     public void onAppPause() {
+        eventProcessor.sendEnqueuedEvents();
         sessionController.touchSession();
     }
 
@@ -199,6 +202,7 @@ public final class MetricsClient {
      * Closes the session.
      */
     public void onAppClose() {
+        eventProcessor.sendEnqueuedEvents();
         sessionController.closeSession();
     }
 
@@ -212,16 +216,33 @@ public final class MetricsClient {
     /**
      * Supplement the outgoing event with additional metadata.
      * These include:
-     * - app_install_id: app install ID
      * - app_session_id: the current session ID
      * - dt: ISO 8601 timestamp
-     * - domain: the
      *
      * @param event event
      */
     private void addRequiredMetadata(EventProcessed event) {
         event.getPerformerData().setSessionId(sessionController.getSessionId());
         event.setTimestamp(DATE_FORMAT.format(now()));
+    }
+
+    /**
+     * Append an enriched event to the queue.
+     * If the queue is full, we remove the oldest events from the queue to add the current event.
+     * Number of attempts to add to the queue is 1/50 of the number queue capacity but at least 10
+     *
+     * @param event a processed event
+     */
+    private void addToEventQueue(EventProcessed event) {
+        int eventQueueAppendAttempts = max(eventQueue.size() / 50, 10);
+
+        while (!eventQueue.offer(event)) {
+            EventProcessed removedEvent = eventQueue.remove();
+            if (removedEvent != null) {
+                log.log(FINE, removedEvent.getName() + " was dropped so that a newer event could be added to the queue.");
+            }
+            if (eventQueueAppendAttempts-- <= 0) break;
+        }
     }
 
     /**
@@ -287,7 +308,8 @@ public final class MetricsClient {
                     sessionController,
                     samplingController,
                     sourceConfigRef,
-                    eventQueue
+                    eventQueue,
+                    eventProcessor
             );
 
             StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(streamConfigURL);

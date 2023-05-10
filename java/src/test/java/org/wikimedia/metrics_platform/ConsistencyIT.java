@@ -65,7 +65,6 @@ class ConsistencyIT {
             );
 
             EventProcessed queuedEvent = eventQueue.peek();
-            queuedEvent.setDomain(consistencyTestClientData.getDomain());
             consistencyTestEventProcessor.eventPassesCurationRules(queuedEvent, testStreamConfigs);
 
             // Adjust the queuedEvent and compare it against the expected event.

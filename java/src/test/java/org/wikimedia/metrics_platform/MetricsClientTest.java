@@ -58,7 +58,7 @@ class MetricsClientTest {
         assertThat(stream).isEqualTo("test_stream");
     }
 
-    @Test void testSubmitMetricsEventWithoutPageData() throws InterruptedException {
+    @Test void testSubmitMetricsEventWithoutPageData() {
         when(mockSamplingController.isInSample(streamConfig(curationFilter()))).thenReturn(true);
 
         Map<String, Object> customDataMap = getTestCustomData();
@@ -66,7 +66,7 @@ class MetricsClientTest {
 
         assertThat(eventQueue).isNotEmpty();
 
-        EventProcessed queuedEvent = eventQueue.take();
+        EventProcessed queuedEvent = eventQueue.remove();
 
         // Verify custom data
         assertThat(queuedEvent.getName()).isEqualTo("test_event");
@@ -91,14 +91,14 @@ class MetricsClientTest {
         assertThat(queuedEvent.getPageData().getContentLanguage()).isNull();
     }
 
-    @Test void testSubmitMetricsEventWithPageData() throws InterruptedException {
+    @Test void testSubmitMetricsEventWithPageData() {
         when(mockSamplingController.isInSample(streamConfig(curationFilter()))).thenReturn(true);
 
         client.submitMetricsEvent("test_event", PageDataFixtures.getTestPageData(), getTestCustomData());
 
         assertThat(eventQueue).isNotEmpty();
 
-        EventProcessed queuedEvent = eventQueue.take();
+        EventProcessed queuedEvent = eventQueue.remove();
 
         assertThat(queuedEvent.getPageData().getId()).isEqualTo(1);
         assertThat(queuedEvent.getPageData().getTitle()).isEqualTo("Test Page Title");
@@ -115,16 +115,26 @@ class MetricsClientTest {
             EventProcessed eventProcessed = fromEvent(event);
             eventQueue.add(eventProcessed);
         }
-        Event event11 = new Event("schema", "stream", "event");
-        client.submitMetricsEvent(event11.getName(), getTestCustomData());
-        EventProcessed eventProcessed11 = fromEvent(event11);
+        EventProcessed oldestEvent = eventQueue.peek();
 
-        assertThat(eventQueue).doesNotContain(eventProcessed11);
+        Event event11 = new Event("test_schema11", "test_stream11", "test_event11");
+        EventProcessed eventProcessed11 = fromEvent(event11);
+        client.submit(eventProcessed11);
+
+        assertThat(eventQueue).doesNotContain(oldestEvent);
+
+        Boolean containsNewestEvent = eventQueue.stream().anyMatch(event -> event.getName().equals("test_event11"));
+        assertThat(containsNewestEvent).isTrue();
     }
 
     @Test void testTouchSessionOnAppPause() {
+        when(mockSamplingController.isInSample(streamConfig(curationFilter()))).thenReturn(true);
+        fillEventQueue();
+        assertThat(eventQueue).isNotEmpty();
+
         client.onAppPause();
         verify(mockSessionController).touchSession();
+        assertThat(eventQueue).isEmpty();
     }
 
     @Test void testResumeSessionOnAppResume() {
@@ -138,16 +148,21 @@ class MetricsClientTest {
     }
 
     @Test void testCloseSessionOnAppClose() {
+        when(mockSamplingController.isInSample(streamConfig(curationFilter()))).thenReturn(true);
+        fillEventQueue();
+        assertThat(eventQueue).isNotEmpty();
+
         client.onAppClose();
         verify(mockSessionController).closeSession();
+        assertThat(eventQueue).isEmpty();
     }
 
-    @Test void testAddRequiredMetadata() throws InterruptedException {
+    @Test void testAddRequiredMetadata() {
         Event event = new Event("test/event/1.0.0", "test_event", "testEvent");
         assertThat(event.getTimestamp()).isNull();
 
         client.submit(event);
-        EventProcessed queuedEvent = eventQueue.take();
+        EventProcessed queuedEvent = eventQueue.remove();
 
         assertThat(queuedEvent.getTimestamp()).isNotNull();
         verify(mockSessionController).getSessionId();
@@ -164,5 +179,11 @@ class MetricsClientTest {
         customData.put("screen_size", 1080);
 
         return customData;
+    }
+
+    private void fillEventQueue() {
+        for (int i = 1; i <= 10; i++) {
+            client.submitMetricsEvent("test_event", getTestCustomData());
+        }
     }
 }
