@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4588ede2_628cfc29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-11T14:09:20Z",
+      "side": 1,
+      "message": "see comments inline",
+      "revId": "43f50721918c94d66e5bab0d041dfe6c32a4cb76",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d3570ed_9e3709ca",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-11T14:09:20Z",
+      "side": 1,
+      "message": "We probably want to have a counter of the number of attempts here, so that we don\u0027t end up in an infinite loop if the queue is overloaded in some way. I\u0027d do 10 tries before bailing out (yes, that is an entirely made up number).",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 51
+      },
+      "revId": "43f50721918c94d66e5bab0d041dfe6c32a4cb76",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46d2df6b_69877516",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/MetricsClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-11T14:09:20Z",
+      "side": 1,
+      "message": "We probably want to use `remote()` so that we don\u0027t block in the case the queue was emptied between L107 and L108. This would also remove the need to propagate an InterruptedException, which is almost always handled wrong by the client.",
+      "range": {
+        "startLine": 108,
+        "startChar": 53,
+        "endLine": 108,
+        "endChar": 57
+      },
+      "revId": "43f50721918c94d66e5bab0d041dfe6c32a4cb76",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
