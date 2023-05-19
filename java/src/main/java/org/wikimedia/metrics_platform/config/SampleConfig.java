@@ -1,8 +1,9 @@
 package org.wikimedia.metrics_platform.config;
 
+import javax.annotation.Nonnull;
+
 import com.google.gson.annotations.SerializedName;
 
-import lombok.NonNull;
 import lombok.Value;
 
 @Value
@@ -18,5 +19,5 @@ public class SampleConfig {
     double rate;
 
     /** ID type to use for sampling. */
-    @NonNull Identifier identifier;
+    @Nonnull Identifier identifier;
 }

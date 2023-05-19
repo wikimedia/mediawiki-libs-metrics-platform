@@ -253,11 +253,11 @@ public final class MetricsClient {
         return streamConfig != null && samplingController.isInSample(streamConfig);
     }
 
-    public Boolean isFullyInitialized() {
+    public boolean isFullyInitialized() {
         return sourceConfig.get() != null;
     }
 
-    public Boolean isEventQueueEmpty() {
+    public boolean isEventQueueEmpty() {
         return eventQueue.isEmpty();
     }
 
