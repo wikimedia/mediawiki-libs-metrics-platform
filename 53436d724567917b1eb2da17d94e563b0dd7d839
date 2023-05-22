@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c4c05b6_4ad80e34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-05-22T18:42:39Z",
+      "side": 1,
+      "message": "Adding a bit more context as a comment:\n\nThe `@Lombok.NonNull` is an error, it should have been a JSR305 as you pointed out. There are way too many ways to deal with nullity, with all slightly different semantics.\n\nThe `addLombokGeneratedAnnotation` is an easy way to document generated code (as you probably realized). In our context, it is used by JaCoCo to calculate code coverage more accurately. It wouldn\u0027t be the end of the world to remove it, but it is nice to have coherent coverage numbers. Also, that annotation has `RetentionPolicy.CLASS`, which means that it can explicitly be ignored at runtime. So I\u0027m a bit surprised that your build optimizer needs more explicit configuration.",
+      "revId": "53436d724567917b1eb2da17d94e563b0dd7d839",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
