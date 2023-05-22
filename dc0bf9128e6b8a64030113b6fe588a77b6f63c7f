@@ -34,6 +34,24 @@
       "parentUuid": "bdcc6e0e_f0390fa1",
       "revId": "dc0bf9128e6b8a64030113b6fe588a77b6f63c7f",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "786b635c_f4fd6bc1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-22T20:46:33Z",
+      "side": 1,
+      "message": "whoops - actually this is the error i need to resolve:\n```\n[ERROR] Failed to execute goal org.sonatype.plugins:nexus-staging-maven-plugin:1.6.8:deploy (injected-nexus-deploy) on project metrics-platform: Execution injected-nexus-deploy of goal org.sonatype.plugins:nexus-staging-maven-plugin:1.6.8:deploy failed: An API incompatibility was encountered while executing org.sonatype.plugins:nexus-staging-maven-plugin:1.6.8:deploy: java.lang.ExceptionInInitializerError: null\n```\n\nwondering if this is the solution:\nhttps://stackoverflow.com/questions/70153962/nexus-staging-maven-plugin-maven-deploy-failed-an-api-incompatibility-was-enco",
+      "parentUuid": "f7c7b097_639c3d82",
+      "revId": "dc0bf9128e6b8a64030113b6fe588a77b6f63c7f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
