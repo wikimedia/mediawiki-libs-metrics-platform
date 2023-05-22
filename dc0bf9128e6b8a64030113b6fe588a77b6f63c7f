@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdcc6e0e_f0390fa1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-22T20:37:11Z",
+      "side": 1,
+      "message": "when trying to publish another release, i ran into:\n```\n[ERROR] import: Entry[import  from realm ClassRealm[maven.api, parent: null]]\n[ERROR] Unable to make field private final java.util.Comparator java.util.TreeMap.comparator accessible: module java.base does not \"opens java.util\" to unnamed module\n```\nwhich in my researching seems to be an error related to different JDK versions (I installed Coretto 17 in order to run gradle minify cmds on the android repo) and possibly gson being compatible with a lower JDK version?\n\nnot sure this will actually fix the issue until i try to re-publish but here\u0027s to trying\n\n",
+      "revId": "dc0bf9128e6b8a64030113b6fe588a77b6f63c7f",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
