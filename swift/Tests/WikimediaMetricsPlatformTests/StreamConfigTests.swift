@@ -9,7 +9,7 @@ final class StreamConfigTests: XCTestCase {
             \"producers\": {
               \"metrics_platform_client\": {
                 \"sampling\": {
-                  \"identifier\": \"device\",
+                  \"unit\": \"device\",
                   \"rate\": 0.1
                 }
               }
@@ -31,7 +31,7 @@ final class StreamConfigTests: XCTestCase {
             XCTAssertEqual(streamConfig.schemaTitle, "test/event")
             XCTAssertEqual(streamConfig.destinationEventService, .analytics)
             XCTAssertEqual(streamConfig.getSamplingConfig()?.rate, 0.1)
-            XCTAssertEqual(streamConfig.getSamplingConfig()?.identifier, "device")
+            XCTAssertEqual(streamConfig.getSamplingConfig()?.unit, "device")
         } catch {
             XCTFail("Failed to encode or decode stream config: \(error)")
         }
