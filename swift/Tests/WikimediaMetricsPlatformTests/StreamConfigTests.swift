@@ -24,10 +24,12 @@ final class StreamConfigTests: XCTestCase {
             return
         }
         do {
-            let streamConfig = try JSONDecoder().decode(StreamConfig.self, from: data)
-            XCTAssertEqual(streamConfig.stream, "test.event")
-            XCTAssertEqual(streamConfig.schema, "test/event")
-            XCTAssertEqual(streamConfig.destination, .analytics)
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            
+            let streamConfig = try decoder.decode(StreamConfig.self, from: data)
+            XCTAssertEqual(streamConfig.schemaTitle, "test/event")
+            XCTAssertEqual(streamConfig.destinationEventService, .analytics)
             XCTAssertEqual(streamConfig.getSamplingConfig()?.rate, 0.1)
             XCTAssertEqual(streamConfig.getSamplingConfig()?.identifier, "device")
         } catch {

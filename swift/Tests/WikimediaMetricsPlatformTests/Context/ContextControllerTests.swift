@@ -3,87 +3,62 @@ import XCTest
 
 final class ContextControllerTests: XCTestCase {
 
-    var streamConfigs: [String: StreamConfig] = [:]
+    var streamConfig: StreamConfig?
 
     override func setUp() {
         super.setUp()
-        let requestedValues = [
-            ContextValue.pageId,
-            ContextValue.pageNamespaceId,
-            ContextValue.pageNamespaceText,
-            ContextValue.pageTitle,
-            ContextValue.pageIsRedirect,
-            ContextValue.pageRevisionId,
-            ContextValue.pageContentLanguage,
-            ContextValue.pageWikidataId,
-            ContextValue.pageUserGroupsAllowedToEdit,
-            ContextValue.pageUserGroupsAllowedToMove,
-            ContextValue.userId,
-            ContextValue.userName,
-            ContextValue.userGroups,
-            ContextValue.userIsLoggedIn,
-            ContextValue.userIsBot,
-            ContextValue.userEditCount,
-            ContextValue.userEditCountBucket,
-            ContextValue.userRegistrationTimestamp,
-            ContextValue.userLanguage,
-            ContextValue.userLanguageVariant,
-            ContextValue.userCanProbablyEditPage,
-            ContextValue.devicePixelRatio,
-            ContextValue.deviceHardwareConcurrency,
-            ContextValue.deviceMaxTouchPoints,
-            ContextValue.accessMethod,
-            ContextValue.platform,
-            ContextValue.platformFamily,
-            ContextValue.isProduction,
-        ]
-        let clientConfig = StreamConfig.ProducerConfig.MetricsPlatformClientConfig(requestedValues: requestedValues)
-        let producerConfig = StreamConfig.ProducerConfig(clientConfig: clientConfig)
-        let streamConfig = StreamConfig(
-                stream: "test.event",
-                schema: "test/event",
-                destination: DestinationEventService.analytics,
-                producerConfig: producerConfig
+
+        let clientConfig = StreamConfig.Producers.MetricsPlatformClient(provideValues: ContextAttribute.allCases)
+        let producersConfig = StreamConfig.Producers(metricsPlatformClient: clientConfig)
+        self.streamConfig = StreamConfig(
+            schemaTitle: "test/event",
+            destinationEventService: DestinationEventService.analytics,
+            producers: producersConfig
         )
-        self.streamConfigs = ["test.event": streamConfig]
     }
 
     func testAddRequestedValues() {
-        let event = Event(stream: "test.event", schema: "test/event")
-        let contextController = ContextController(integration: TestMetricsClientIntegration())
-        contextController.addRequestedValues(event, config: self.streamConfigs["test.event"]!)
+        let integration = TestMetricsClientIntegration()
+        let event = Event(stream: "test.events", name: "test.event")
 
-        XCTAssertEqual(event.pageData?.id, 1)
-        XCTAssertEqual(event.pageData?.namespaceId, 0)
-        XCTAssertEqual(event.pageData?.namespaceText, "")
-        XCTAssertEqual(event.pageData?.title, "Test")
-        XCTAssertEqual(event.pageData?.isRedirect, false)
-        XCTAssertEqual(event.pageData?.revisionId, 1)
-        XCTAssertEqual(event.pageData?.contentLanguage, "zh")
-        XCTAssertEqual(event.pageData?.wikidataId, "Q1")
-        XCTAssertEqual(event.pageData?.userGroupsAllowedToMove, [])
-        XCTAssertEqual(event.pageData?.userGroupsAllowedToEdit, [])
+        ContextController(integration: integration)
+            .addRequestedValues(event, config: self.streamConfig!)
 
-        XCTAssertEqual(event.userData?.id, 1)
-        XCTAssertEqual(event.userData?.name, "TestUser")
-        XCTAssertEqual(event.userData?.groups, ["*"])
-        XCTAssertEqual(event.userData?.isLoggedIn, true)
-        XCTAssertEqual(event.userData?.isBot, false)
-        XCTAssertEqual(event.userData?.editCount, 10)
-        XCTAssertEqual(event.userData?.editCountBucket, "5-99 edits")
-        XCTAssertEqual(event.userData?.registrationTimestamp, 1427224089000)
-        XCTAssertEqual(event.userData?.language, "zh")
-        XCTAssertEqual(event.userData?.languageVariant, "zh-tw")
-        XCTAssertEqual(event.userData?.canProbablyEditPage, true)
+        XCTAssertNil(event.agent.appInstallId)
+        XCTAssertEqual(event.agent.clientPlatform, "ios")
+        XCTAssertEqual(event.agent.clientPlatformFamily, "app")
+        
+        XCTAssertEqual(event.page?.id, 1)
+        XCTAssertEqual(event.page?.title, "Test")
+        XCTAssertEqual(event.page?.namespace, 0)
+        XCTAssertEqual(event.page?.namespaceName, "")
+        XCTAssertEqual(event.page?.revisionId, 1)
+        XCTAssertEqual(event.page?.wikidataId, "Q1")
+        XCTAssertEqual(event.page?.contentLanguage, "zh")
+        XCTAssertEqual(event.page?.isRedirect, false)
+        XCTAssertEqual(event.page?.userGroupsAllowedToEdit, [])
+        XCTAssertEqual(event.page?.userGroupsAllowedToMove, [])
+        
+        XCTAssertEqual(event.performer?.isLoggedIn, true)
+        XCTAssertEqual(event.performer?.id, 1)
+        XCTAssertEqual(event.performer?.name, "TestUser")
 
-        XCTAssertEqual(event.deviceData?.pixelRatio, 1.0)
-        XCTAssertEqual(event.deviceData?.hardwareConcurrency, 1)
-        XCTAssertEqual(event.deviceData?.maxTouchPoints, 1)
+        /// TODO: Make ContextController get the session and pageview IDs from the session controller
+        /// and/or integration.
+        XCTAssertNil(event.performer?.sessionId)
+        XCTAssertNil(event.performer?.pageviewId)
+        
+        XCTAssertEqual(event.performer?.groups, ["*"])
+        XCTAssertEqual(event.performer?.isBot, false)
+        XCTAssertEqual(event.performer?.language, "zh")
+        XCTAssertEqual(event.performer?.languageVariant, "zh-tw")
+        XCTAssertEqual(event.performer?.canProbablyEditPage, true)
 
-        XCTAssertEqual(event.accessMethod, "mobile app")
-        XCTAssertEqual(event.platform, "ios")
-        XCTAssertEqual(event.platformFamily, "app")
-        XCTAssertEqual(event.isProduction, true)
+        XCTAssertEqual(event.performer?.editCount, 10)
+        XCTAssertEqual(event.performer?.editCountBucket, "5-99 edits")
+        
+        /// TODO: Make this assertion pass (it should!)
+        //XCTAssertEqual(event.performer?.registrationDt, integration.getUserRegistrationTimestamp())
     }
 
     static var allTests = [

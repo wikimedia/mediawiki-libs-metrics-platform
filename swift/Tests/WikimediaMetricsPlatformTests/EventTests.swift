@@ -5,25 +5,43 @@ final class EventTests: XCTestCase {
 
     func testEncodeEvent() {
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .sortedKeys
-        let uuid = UUID()
-        let dateFormatter = ISO8601DateFormatter()
 
-        let event = Event(stream: "test.event", schema: "test/event")
-        event.meta.id = uuid.uuidString
+        encoder.outputFormatting = JSONEncoder.OutputFormatting(arrayLiteral: [.prettyPrinted, .sortedKeys])
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.dateEncodingStrategy = .iso8601
+
+        let uuid = UUID().uuidString
+
+        let event = Event(stream: "test.events", name: "test.event")
         event.meta.domain = "foo.wikipedia.org"
-        event.appInstallId = uuid.uuidString
-        event.appSessionId = uuid.uuidString
-        event.dt = dateFormatter.string(from: Date(timeIntervalSinceReferenceDate: 0.0))
+        event.agent.appInstallId = uuid
+        
+        let expectedDt = ISO8601DateFormatter().string(from: event.dt)
 
         do {
             let data = try encoder.encode(event)
             let json = String(decoding: data, as: UTF8.self)
-            XCTAssertEqual(json, "{\"$schema\":\"test\\/event\",\"app_install_id\":" +
-                    "\"\(uuid.uuidString)\",\"app_session_id\":" +
-                    "\"\(uuid.uuidString)\",\"dt\":\"2001-01-01T00:00:00Z\"," +
-                    "\"meta\":{\"domain\":\"foo.wikipedia.org\"," +
-                    "\"id\":\"\(uuid.uuidString)\",\"stream\":\"test.event\"}}")
+            
+            
+
+            XCTAssertEqual(
+                json,
+                """
+                {
+                  "$schema" : "\\/analytics\\/mediawiki\\/client\\/metrics_event\\/1.1.0",
+                  "agent" : {
+                    "app_install_id" : "\(uuid)",
+                    "client_platform" : "ios",
+                    "client_platform_family" : "app"
+                  },
+                  "dt" : "\(expectedDt)",
+                  "meta" : {
+                    "domain" : "foo.wikipedia.org",
+                    "stream" : "test.events"
+                  }
+                }
+                """
+            )
         } catch {
             XCTFail("Failed to encode event")
         }

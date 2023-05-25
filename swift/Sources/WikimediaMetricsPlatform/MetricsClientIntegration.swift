@@ -1,5 +1,9 @@
 import Foundation
-import FoundationNetworking
+
+/// Support macOS and Linux. See https://github.com/tensorflow/swift/issues/486#issuecomment-646083111
+#if canImport(FoundationNetworking)
+    import FoundationNetworking
+#endif
 
 protocol MetricsClientIntegration {
     func loggingEnabled() -> Bool
@@ -26,7 +30,7 @@ protocol MetricsClientIntegration {
     func getUserCanProbablyEditPage() -> Bool?
     func getUserEditCount() -> Int?
     func getUserEditCountBucket() -> String?
-    func getUserRegistrationTimestamp() -> Int?
+    func getUserRegistrationTimestamp() -> Date?
     func getUserLanguage() -> String?
     func getUserLanguageVariant() -> String?
 

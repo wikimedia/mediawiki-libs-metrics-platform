@@ -9,146 +9,176 @@ class ContextController {
     }
 
     func addRequestedValues(_ event: Event, config streamConfig: StreamConfig) {
-        guard let requestedValues = streamConfig.producerConfig?.clientConfig?.requestedValues else {
-            return
-        }
-        for value in requestedValues {
+        for value in streamConfig.getRequestedValues() {
             switch value {
-            // Page
+
+            /// Agent
+            /// NOTE: The app install ID, client platform, and client platform family are initialized in `Event()`.
+            case .agentAppInstallId:
+                break
+            case .agentClientPlatform:
+                break
+            case .agentClientPlatformFamily:
+                break
+            
+            /// Page
             case .pageId:
-                if event.pageData == nil {
-                    event.pageData = PageData()
+                if event.page == nil {
+                    event.page = Event.Page()
                 }
-                event.pageData?.id = integration.getPageId()
-            case .pageNamespaceId:
-                if event.pageData == nil {
-                    event.pageData = PageData()
-                }
-                event.pageData?.namespaceId = integration.getPageNamespaceId()
-            case .pageNamespaceText:
-                if event.pageData == nil {
-                    event.pageData = PageData()
-                }
-                event.pageData?.namespaceText = integration.getPageNamespaceText()
+                event.page?.id = integration.getPageId()
             case .pageTitle:
-                if event.pageData == nil {
-                    event.pageData = PageData()
+                if event.page == nil {
+                    event.page = Event.Page()
                 }
-                event.pageData?.title = integration.getPageTitle()
-            case .pageIsRedirect:
-                if event.pageData == nil {
-                    event.pageData = PageData()
+                event.page?.title = integration.getPageTitle()
+            case .pageNamespace:
+                if event.page == nil {
+                    event.page = Event.Page()
                 }
-                event.pageData?.isRedirect = integration.getPageIsRedirect()
+                event.page?.namespace = integration.getPageNamespaceId()
+            case .pageNamespaceName:
+                if event.page == nil {
+                    event.page = Event.Page()
+                }
+                event.page?.namespaceName = integration.getPageNamespaceText()
             case .pageRevisionId:
-                if event.pageData == nil {
-                    event.pageData = PageData()
+                if event.page == nil {
+                    event.page = Event.Page()
                 }
-                event.pageData?.revisionId = integration.getPageRevisionId()
+                event.page?.revisionId = integration.getPageRevisionId()
             case .pageWikidataId:
-                if event.pageData == nil {
-                    event.pageData = PageData()
+                if event.page == nil {
+                    event.page = Event.Page()
                 }
-                event.pageData?.wikidataId = integration.getPageWikidataItemId()
+                event.page?.wikidataId = integration.getPageWikidataItemId()
             case .pageContentLanguage:
-                if event.pageData == nil {
-                    event.pageData = PageData()
+                if event.page == nil {
+                    event.page = Event.Page()
                 }
-                event.pageData?.contentLanguage = integration.getPageContentLanguage()
+                event.page?.contentLanguage = integration.getPageContentLanguage()
+            case .pageIsRedirect:
+                if event.page == nil {
+                    event.page = Event.Page()
+                }
+                event.page?.isRedirect = integration.getPageIsRedirect()
             case .pageUserGroupsAllowedToEdit:
-                if event.pageData == nil {
-                    event.pageData = PageData()
+                if event.page == nil {
+                    event.page = Event.Page()
                 }
-                event.pageData?.userGroupsAllowedToEdit = integration.getGroupsAllowedToEditPage()
+                event.page?.userGroupsAllowedToEdit = integration.getGroupsAllowedToEditPage()
             case .pageUserGroupsAllowedToMove:
-                if event.pageData == nil {
-                    event.pageData = PageData()
+                if event.page == nil {
+                    event.page = Event.Page()
                 }
-                event.pageData?.userGroupsAllowedToMove = integration.getGroupsAllowedToMovePage()
+                event.page?.userGroupsAllowedToMove = integration.getGroupsAllowedToMovePage()
 
-                // User
-            case .userId:
-                if event.userData == nil {
-                    event.userData = UserData()
+            /// MediaWiki
+                
+            /// Since the Wikipedia app (and others) interact with the MediaWiki instance via the API, no skin will be enabled.
+            case .mediawikiSkin:
+                break
+                
+            case .mediawikiVersion:
+                if event.mediawiki == nil {
+                    event.mediawiki = Event.MediaWiki()
                 }
-                event.userData?.id = integration.getUserId()
-            case .userName:
-                if event.userData == nil {
-                    event.userData = UserData()
+                // TODO
+            case .mediawikiIsProduction:
+                if event.mediawiki == nil {
+                    event.mediawiki = Event.MediaWiki()
                 }
-                event.userData?.name = integration.getUserName()
-            case .userGroups:
-                if event.userData == nil {
-                    event.userData = UserData()
+                event.mediawiki?.isProduction = integration.isProduction()
+            case .mediawikiIsDebugMode:
+                if event.mediawiki == nil {
+                    event.mediawiki = Event.MediaWiki()
                 }
-                event.userData?.groups = integration.getUserGroups()
-            case .userIsLoggedIn:
-                if event.userData == nil {
-                    event.userData = UserData()
+                // TODO
+            case .mediawikiDatabase:
+                if event.mediawiki == nil {
+                    event.mediawiki = Event.MediaWiki()
                 }
-                event.userData?.isLoggedIn = integration.getUserIsLoggedIn()
-            case .userIsBot:
-                if event.userData == nil {
-                    event.userData = UserData()
+                // TODO
+            case .mediawikiSiteContentLanguage:
+                if event.mediawiki == nil {
+                    event.mediawiki = Event.MediaWiki()
                 }
-                event.userData?.isBot = integration.getUserIsBot()
-            case .userCanProbablyEditPage:
-                if event.userData == nil {
-                    event.userData = UserData()
+                // TODO
+            case .mediawikiSiteContentLanguageVariant:
+                if event.mediawiki == nil {
+                    event.mediawiki = Event.MediaWiki()
                 }
-                event.userData?.canProbablyEditPage = integration.getUserCanProbablyEditPage()
-            case .userEditCount:
-                if event.userData == nil {
-                    event.userData = UserData()
-                }
-                event.userData?.editCount = integration.getUserEditCount()
-            case .userEditCountBucket:
-                if event.userData == nil {
-                    event.userData = UserData()
-                }
-                event.userData?.editCountBucket = integration.getUserEditCountBucket()
-            case .userRegistrationTimestamp:
-                if event.userData == nil {
-                    event.userData = UserData()
-                }
-                event.userData?.registrationTimestamp = integration.getUserRegistrationTimestamp()
-            case .userLanguage:
-                if event.userData == nil {
-                    event.userData = UserData()
-                }
-                event.userData?.language = integration.getUserLanguage()
-            case .userLanguageVariant:
-                if event.userData == nil {
-                    event.userData = UserData()
-                }
-                event.userData?.languageVariant = integration.getUserLanguageVariant()
+                // TODO
 
-                // Device
-            case .devicePixelRatio:
-                if event.deviceData == nil {
-                    event.deviceData = DeviceData()
+            // Performer
+            case .performerIsLoggedIn:
+                if event.performer == nil {
+                    event.performer = Event.Performer()
                 }
-                event.deviceData?.pixelRatio = integration.getDevicePixelRatio()
-            case .deviceHardwareConcurrency:
-                if event.deviceData == nil {
-                    event.deviceData = DeviceData()
+                event.performer?.isLoggedIn = integration.getUserIsLoggedIn()
+            case .performerId:
+                if event.performer == nil {
+                    event.performer = Event.Performer()
                 }
-                event.deviceData?.hardwareConcurrency = integration.getDeviceHardwareConcurrency()
-            case .deviceMaxTouchPoints:
-                if event.deviceData == nil {
-                    event.deviceData = DeviceData()
+                event.performer?.id = integration.getUserId()
+            case .performerName:
+                if event.performer == nil {
+                    event.performer = Event.Performer()
                 }
-                event.deviceData?.maxTouchPoints = integration.getDeviceMaxTouchPoints()
+                event.performer?.name = integration.getUserName()
+            
+            case .performerSessionId:
+                // TODO
+                if event.performer == nil {
+                }
+                //event.performer?.sessionId = sessionController.getSessionId()
+            case .performerPageviewId:
+                // TODO
+                if event.performer == nil {
+                }
+                //event.performer?.pageviewId = integration.getPageviewId()
 
-                // Other
-            case .accessMethod:
-                event.accessMethod = "mobile app"
-            case .platform:
-                event.platform = "ios"
-            case .platformFamily:
-                event.platformFamily = "app"
-            case .isProduction:
-                event.isProduction = integration.isProduction()
+            case .performerGroups:
+                if event.performer == nil {
+                    event.performer = Event.Performer()
+                }
+                event.performer?.groups = integration.getUserGroups()
+            case .performerIsBot:
+                if event.performer == nil {
+                    event.performer = Event.Performer()
+                }
+                event.performer?.isBot = integration.getUserIsBot()
+            case .performerLanguage:
+                if event.performer == nil {
+                    event.performer = Event.Performer()
+                }
+                event.performer?.language = integration.getUserLanguage()
+            case .performerLanguageVariant:
+                if event.performer == nil {
+                    event.performer = Event.Performer()
+                }
+                event.performer?.languageVariant = integration.getUserLanguageVariant()
+            case .performerCanProbablyEditPage:
+                if event.performer == nil {
+                    event.performer = Event.Performer()
+                }
+                event.performer?.canProbablyEditPage = integration.getUserCanProbablyEditPage()
+            case .performerEditCount:
+                if event.performer == nil {
+                    event.performer = Event.Performer()
+                }
+                event.performer?.editCount = integration.getUserEditCount()
+            case .performerEditCountBucket:
+                if event.performer == nil {
+                    event.performer = Event.Performer()
+                }
+                event.performer?.editCountBucket = integration.getUserEditCountBucket()
+            case .performerRegistrationDt:
+                if event.performer == nil {
+                    event.performer = Event.Performer()
+                }
+                event.performer?.registrationDt = integration.getUserRegistrationTimestamp()
+
             }
         }
     }

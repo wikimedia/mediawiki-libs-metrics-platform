@@ -3,7 +3,7 @@ import XCTest
 
 final class CurationFilterTests: XCTestCase {
 
-    var curationFilter: CurationFilter = CurationFilter()
+    var curationFilter: CurationFilter?
 
     override func setUp() {
         super.setUp()
@@ -45,88 +45,138 @@ final class CurationFilterTests: XCTestCase {
     }
 
     func testEventPasses() {
-        let event = Event(stream: "test.event", schema: "test/event")
-        event.pageData = PageData(id: 1, namespaceText: "Talk")
-        event.userData = UserData(groups: ["user", "autoconfirmed", "steward"], isLoggedIn: true, editCountBucket: "1000+ edits")
-        event.deviceData = DeviceData(pixelRatio: 2.0)
-        XCTAssertTrue(curationFilter.apply(to: event))
+        let event = Event(stream: "test.event", name: "test.curation_filter")
+        
+        event.page = Event.Page()
+        event.page?.id = 1
+        event.page?.namespaceName = "Talk"
+        
+        event.performer = Event.Performer()
+        event.performer?.groups = ["user", "autoconfirmed", "steward"]
+        event.performer?.isLoggedIn = true
+        event.performer?.editCountBucket = "1000+ edits"
+        
+        XCTAssertTrue(curationFilter!.apply(to: event))
     }
 
     func testEventFailsWrongPageId() {
-        let event1 = Event(stream: "test.event", schema: "test/event")
-        event1.pageData = PageData(id: 42, namespaceText: "Talk")
-        event1.userData = UserData(groups: ["user", "autoconfirmed", "steward"], isLoggedIn: true, editCountBucket: "1000+ edits")
-        event1.deviceData = DeviceData(pixelRatio: 2.0)
-        XCTAssertFalse(curationFilter.apply(to: event1))
+        let event1 = Event(stream: "test.event", name: "test.curation_filter")
 
-        let event2 = Event(stream: "test.event", schema: "test/event")
-        event2.pageData = PageData(id: 501, namespaceText: "Talk")
-        event2.userData = UserData(groups: ["user", "autoconfirmed", "steward"], isLoggedIn: true, editCountBucket: "1000+ edits")
-        event2.deviceData = DeviceData(pixelRatio: 2.0)
-        XCTAssertFalse(curationFilter.apply(to: event2))
+        event1.page = Event.Page()
+        event1.page?.id = 42
+        event1.page?.namespaceName = "Talk"
+
+        event1.performer = Event.Performer()
+        event1.performer?.groups = ["user", "autoconfirmed", "steward"]
+        event1.performer?.isLoggedIn = true
+        event1.performer?.editCountBucket = "1000+ edits"
+
+        XCTAssertFalse(curationFilter!.apply(to: event1))
+
+        let event2 = Event(stream: "test.event", name: "test.curation_filter")
+        
+        event2.page = Event.Page()
+        event2.page?.id = 501
+        event2.page?.namespaceName = "Talk"
+
+        event2.performer = Event.Performer()
+        event2.performer?.groups = ["user", "autoconfirmed", "steward"]
+        event2.performer?.isLoggedIn = true
+        event2.performer?.editCountBucket = "1000+ edits"
+
+        XCTAssertFalse(curationFilter!.apply(to: event2))
     }
 
     func testEventFailsWrongPageNamespaceText() {
-        let event1 = Event(stream: "test.event", schema: "test/event")
-        event1.pageData = PageData(id: 1, namespaceText: "User")
-        event1.userData = UserData(groups: ["user", "autoconfirmed", "steward"], isLoggedIn: true, editCountBucket: "1000+ edits")
-        event1.deviceData = DeviceData(pixelRatio: 2.0)
-        XCTAssertFalse(curationFilter.apply(to: event1))
+        let event1 = Event(stream: "test.event", name: "test.curation_filter")
+        
+        event1.page = Event.Page()
+        event1.page?.id = 1
+        event1.page?.namespaceName = "User"
 
-        let event2 = Event(stream: "test.event", schema: "test/event")
-        event2.pageData = PageData(id: 1, namespaceText: "")
-        event2.userData = UserData(groups: ["user", "autoconfirmed", "steward"], isLoggedIn: true, editCountBucket: "1000+ edits")
-        event2.deviceData = DeviceData(pixelRatio: 2.0)
-        XCTAssertFalse(curationFilter.apply(to: event2))
+        event1.performer = Event.Performer()
+        event1.performer?.groups = ["user", "autoconfirmed", "steward"]
+        event1.performer?.isLoggedIn = true
+        event1.performer?.editCountBucket = "1000+ edits"
+
+        XCTAssertFalse(curationFilter!.apply(to: event1))
+
+        let event2 = Event(stream: "test.event", name: "test.curation_filter")
+
+        event2.page = Event.Page()
+        event2.page?.id = 1
+        event2.page?.namespaceName = ""
+
+        event2.performer = Event.Performer()
+        event2.performer?.groups = ["user", "autoconfirmed", "steward"]
+        event2.performer?.isLoggedIn = true
+        event2.performer?.editCountBucket = "1000+ edits"
+
+        XCTAssertFalse(curationFilter!.apply(to: event2))
     }
 
     func testEventFailsWrongUserGroups() {
-        let event1 = Event(stream: "test.event", schema: "test/event")
-        event1.pageData = PageData(id: 1, namespaceText: "Talk")
-        event1.userData = UserData(groups: ["user", "autoconfirmed", "sysop"], isLoggedIn: true, editCountBucket: "1000+ edits")
-        event1.deviceData = DeviceData(pixelRatio: 2.0)
-        XCTAssertFalse(curationFilter.apply(to: event1))
+        let event1 = Event(stream: "test.event", name: "test.curation_filter")
+        
+        event1.page = Event.Page()
+        event1.page?.id = 1
+        event1.page?.namespaceName = "Talk"
+        
+        event1.performer = Event.Performer()
+        event1.performer?.groups = ["user", "autoconfirmed", "sysop"]
+        event1.performer?.isLoggedIn = true
+        event1.performer?.editCountBucket = "1000+ edits"
 
-        let event2 = Event(stream: "test.event", schema: "test/event")
-        event2.pageData = PageData(id: 1, namespaceText: "Talk")
-        event2.userData = UserData(groups: [], isLoggedIn: true, editCountBucket: "1000+ edits")
-        event2.deviceData = DeviceData(pixelRatio: 2.0)
-        XCTAssertFalse(curationFilter.apply(to: event2))
+        XCTAssertFalse(curationFilter!.apply(to: event1))
+
+        let event2 = Event(stream: "test.event", name: "test.curation_filter")
+        
+        event2.page = Event.Page()
+        event2.page?.id = 1
+        event2.page?.namespaceName = "Talk"
+        
+        event2.performer = Event.Performer()
+        event2.performer?.groups = []
+        event2.performer?.isLoggedIn = true
+        event2.performer?.editCountBucket = "1000+ edits"
+
+        XCTAssertFalse(curationFilter!.apply(to: event2))
     }
 
     func testEventFailsUserNotLoggedIn() {
-        let event = Event(stream: "test.event", schema: "test/event")
-        event.pageData = PageData(id: 1, namespaceText: "Talk")
-        event.userData = UserData(groups: ["user", "autoconfirmed", "steward"], isLoggedIn: false, editCountBucket: "1000+ edits")
-        event.deviceData = DeviceData(pixelRatio: 2.0)
-        XCTAssertFalse(curationFilter.apply(to: event))
+        let event = Event(stream: "test.event", name: "test.curation_filter")
+        
+        event.page = Event.Page()
+        event.page?.id = 1
+        event.page?.namespaceName = "Talk"
+        
+        event.performer = Event.Performer()
+        event.performer?.groups = ["user", "autoconfirmed", "steward"]
+        event.performer?.isLoggedIn = false
+        event.performer?.editCountBucket = "1000+ edits"
+
+        XCTAssertFalse(curationFilter!.apply(to: event))
     }
 
     func testEventFailsWrongUserEditCountBucket() {
-        let event = Event(stream: "test.event", schema: "test/event")
-        event.pageData = PageData(id: 1, namespaceText: "Talk")
-        event.userData = UserData(groups: ["user", "autoconfirmed", "steward"], isLoggedIn: true, editCountBucket: "5-99 edits")
-        event.deviceData = DeviceData(pixelRatio: 2.0)
-        XCTAssertFalse(curationFilter.apply(to: event))
-    }
+        let event = Event(stream: "test.event", name: "test.curation_filter")
+        
+        event.page = Event.Page()
+        event.page?.id = 1
+        event.page?.namespaceName = "Talk"
 
-    func testEventFailsWrongDevicePixelRatio() {
-        let event1 = Event(stream: "test.event", schema: "test/event")
-        event1.pageData = PageData(id: 1, namespaceText: "Talk")
-        event1.userData = UserData(groups: ["user", "autoconfirmed", "steward"], isLoggedIn: true, editCountBucket: "1000+ edits")
-        event1.deviceData = DeviceData(pixelRatio: 1.0)
-        XCTAssertFalse(curationFilter.apply(to: event1))
+        event.performer = Event.Performer()
+        event.performer?.groups = ["user", "autoconfirmed", "steward"]
+        event.performer?.isLoggedIn = false
+        event.performer?.editCountBucket = "5-99 edits"
 
-        let event2 = Event(stream: "test.event", schema: "test/event")
-        event2.pageData = PageData(id: 1, namespaceText: "Talk")
-        event2.userData = UserData(groups: ["user", "autoconfirmed", "steward"], isLoggedIn: true, editCountBucket: "1000+ edits")
-        event2.deviceData = DeviceData(pixelRatio: 3.0)
-        XCTAssertFalse(curationFilter.apply(to: event2))
+        XCTAssertFalse(curationFilter!.apply(to: event))
     }
 
     func testEmptyEventFailsButDoesNotThrow() {
-        let event = Event(stream: "test.event", schema: "test/event")
-        XCTAssertFalse(curationFilter.apply(to: event))
+        let event = Event(stream: "test.event", name: "test.curation_filter")
+
+        XCTAssertFalse(curationFilter!.apply(to: event))
     }
 
     static var allTests = [
@@ -136,8 +186,6 @@ final class CurationFilterTests: XCTestCase {
         ("testEventFailsWrongUserGroups", testEventFailsWrongUserGroups),
         ("testEventFailsUserNotLoggedIn", testEventFailsUserNotLoggedIn),
         ("testEventFailsWrongUserEditCountBucket", testEventFailsWrongUserEditCountBucket),
-        ("testEventFailsWrongDevicePixelRatio", testEventFailsWrongDevicePixelRatio),
         ("testEmptyEventFailsButDoesNotThrow", testEmptyEventFailsButDoesNotThrow)
     ]
-
 }
