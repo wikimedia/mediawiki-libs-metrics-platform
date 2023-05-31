@@ -16,6 +16,24 @@
       "message": "currently the revision_id is an integer in the schema\nhttps://github.com/wikimedia/schemas-event-secondary/blob/master/jsonschema/analytics/mediawiki/client/metrics_event/current.yaml#L143-L144\n\ni\u0027ll do some testing but i\u0027m not sure this would validate",
       "revId": "5ed67d8bbde928d1f67be5f4b2b5259a2aeb6ad2",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1672caf4_87e21317",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651
+      },
+      "writtenOn": "2023-05-31T19:29:06Z",
+      "side": 1,
+      "message": "As I understand it, the `integer` type in a JSON schema isn\u0027t prescriptive of any precision or bit-width; it simply means a whole number.\n\nWe use plenty of `integer` fields in other MEP schemas that are implicitly 64-bit:\nhttps://github.com/wikimedia/schemas-event-secondary/blob/master/jsonschema/analytics/mobile_apps/android_article_toc_interaction/1.0.0.yaml#L154",
+      "parentUuid": "f89af689_c5b80885",
+      "revId": "5ed67d8bbde928d1f67be5f4b2b5259a2aeb6ad2",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
