@@ -34,6 +34,41 @@
       "parentUuid": "f89af689_c5b80885",
       "revId": "5ed67d8bbde928d1f67be5f4b2b5259a2aeb6ad2",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88bfc0aa_f9dc210f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-31T22:17:17Z",
+      "side": 1,
+      "message": "you\u0027re right! just tested a long int for revision id with my local eventgate logging and it validated 🎉",
+      "parentUuid": "1672caf4_87e21317",
+      "revId": "5ed67d8bbde928d1f67be5f4b2b5259a2aeb6ad2",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12a2d962_81884242",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-31T22:17:17Z",
+      "side": 1,
+      "message": "thanks for the patch!",
+      "revId": "5ed67d8bbde928d1f67be5f4b2b5259a2aeb6ad2",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
