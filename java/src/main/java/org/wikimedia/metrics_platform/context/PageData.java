@@ -27,7 +27,7 @@ public class PageData {
     private String title;
     @SerializedName("namespace") private Integer namespace;
     @SerializedName("namespace_name") private String namespaceName;
-    @SerializedName("revision_id") private Integer revisionId;
+    @SerializedName("revision_id") private Long revisionId;
     @SerializedName("wikidata_qid") private String wikidataItemQid;
     @SerializedName("content_language") private String contentLanguage;
     @SerializedName("is_redirect") private Boolean isRedirect;

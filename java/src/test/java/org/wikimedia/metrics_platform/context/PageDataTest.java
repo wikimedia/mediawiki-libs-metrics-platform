@@ -18,7 +18,7 @@ class PageDataTest {
                 .namespace(0)
                 .namespaceName("")
                 .isRedirect(false)
-                .revisionId(1)
+                .revisionId(1L)
                 .wikidataItemQid("Q1")
                 .contentLanguage("zh")
                 .groupsAllowedToEdit(Collections.emptyList())

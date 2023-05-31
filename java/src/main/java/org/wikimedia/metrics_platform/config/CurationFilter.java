@@ -37,7 +37,7 @@ public class CurationFilter {
     @SerializedName("page_namespace") private ComparableCurationRules<Integer> pageNamespaceRules;
     @SerializedName("page_namespace_name") private CurationRules<String> pageNamespaceNameRules;
     @SerializedName("page_title") private CurationRules<String> pageTitleRules;
-    @SerializedName("page_revision_id") private ComparableCurationRules<Integer> pageRevisionIdRules;
+    @SerializedName("page_revision_id") private ComparableCurationRules<Long> pageRevisionIdRules;
     @SerializedName("page_wikidata_qid") private CurationRules<String> pageWikidataQidRules;
     @SerializedName("page_is_redirect") private CurationRules<Boolean> pageIsRedirectRules;
     @SerializedName("page_content_language") private CurationRules<String> pageContentLanguageRules;
