@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f89af689_c5b80885",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-05-31T19:09:27Z",
+      "side": 1,
+      "message": "currently the revision_id is an integer in the schema\nhttps://github.com/wikimedia/schemas-event-secondary/blob/master/jsonschema/analytics/mediawiki/client/metrics_event/current.yaml#L143-L144\n\ni\u0027ll do some testing but i\u0027m not sure this would validate",
+      "revId": "5ed67d8bbde928d1f67be5f4b2b5259a2aeb6ad2",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
