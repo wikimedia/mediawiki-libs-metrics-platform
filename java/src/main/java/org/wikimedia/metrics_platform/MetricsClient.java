@@ -51,6 +51,8 @@ public final class MetricsClient {
             .ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
             .withZone(ZoneId.of("UTC"));
 
+    private static final ScheduledExecutorService EXECUTOR_SERVICE = Executors.newScheduledThreadPool(1, new SimpleThreadFactory());
+
     public static final String METRICS_PLATFORM_VERSION = "1.2.0";
 
     private static final String METRICS_PLATFORM_SCHEMA = "/analytics/mediawiki/client/metrics_event/" + METRICS_PLATFORM_VERSION;
@@ -183,7 +185,7 @@ public final class MetricsClient {
      * application is resumed.
      */
     public void onAppPause() {
-        eventProcessor.sendEnqueuedEvents();
+        EXECUTOR_SERVICE.schedule(eventProcessor::sendEnqueuedEvents, 0, MILLISECONDS);
         sessionController.touchSession();
     }
 
@@ -202,7 +204,7 @@ public final class MetricsClient {
      * Closes the session.
      */
     public void onAppClose() {
-        eventProcessor.sendEnqueuedEvents();
+        EXECUTOR_SERVICE.schedule(eventProcessor::sendEnqueuedEvents, 0, MILLISECONDS);
         sessionController.closeSession();
     }
 
@@ -320,9 +322,7 @@ public final class MetricsClient {
         }
 
         private void startScheduledOperations(EventProcessor eventProcessor, StreamConfigFetcher streamConfigFetcher) {
-            ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1, new SimpleThreadFactory());
-
-            executorService.scheduleAtFixedRate(
+            EXECUTOR_SERVICE.scheduleAtFixedRate(
                     () -> {
                         try {
                             sourceConfigRef.set(streamConfigFetcher.fetchStreamConfigs());
@@ -332,7 +332,7 @@ public final class MetricsClient {
                     },
                     streamConfigFetchInitialDelay.toMillis(), streamConfigFetchInterval.toMillis(), MILLISECONDS);
 
-            executorService.scheduleAtFixedRate(
+            EXECUTOR_SERVICE.scheduleAtFixedRate(
                     eventProcessor::sendEnqueuedEvents,
                     sendEventsInitialDelay.toMillis(), sendEventsInterval.toMillis(), MILLISECONDS);
         }

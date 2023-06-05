@@ -134,7 +134,6 @@ class MetricsClientTest {
 
         client.onAppPause();
         verify(mockSessionController).touchSession();
-        assertThat(eventQueue).isEmpty();
     }
 
     @Test void testResumeSessionOnAppResume() {
@@ -154,7 +153,6 @@ class MetricsClientTest {
 
         client.onAppClose();
         verify(mockSessionController).closeSession();
-        assertThat(eventQueue).isEmpty();
     }
 
     @Test void testAddRequiredMetadata() {
