@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d206ae7_d826b52d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-06-05T18:50:53Z",
+      "side": 1,
+      "message": "thanks - i\u0027ll bump up MP version in the android repo to incorporate this change before config gets merged",
+      "revId": "03844767fe76fb277dcd80c8c3d3993ad58ba6a4",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
