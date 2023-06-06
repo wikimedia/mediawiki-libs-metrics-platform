@@ -37,7 +37,7 @@ public class EndToEndIT {
                         .withBody(readConfig())));
 
         // Stub response from posting event to local eventgate logging service.
-        stubFor(post("/v1/events")
+        stubFor(post("/v1/events?hasty=true")
                 .willReturn(aResponse()
                         .withBody(getExpectedEvent())));
 
@@ -57,7 +57,7 @@ public class EndToEndIT {
 
         await().atMost(5, SECONDS).until(testJavaMetricsClient::isEventQueueEmpty);
 
-        verify(postRequestedFor(urlEqualTo("/v1/events"))
+        verify(postRequestedFor(urlEqualTo("/v1/events?hasty=true"))
                 .withRequestBody(equalToJson(getExpectedEvent(), true, true)));
     }
 

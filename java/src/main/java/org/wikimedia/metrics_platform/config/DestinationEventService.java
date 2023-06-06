@@ -23,13 +23,13 @@ public enum DestinationEventService {
     ERROR_LOGGING("https://intake-logging.wikimedia.org"),
 
     @SerializedName("eventgate-logging-local")
-    LOCAL("http://localhost:8192/v1/events");
+    LOCAL("http://localhost:8192");
 
     private final URL baseUri;
 
     @SneakyThrows
     DestinationEventService(String baseUri) {
-        this.baseUri = new URL(baseUri);
+        this.baseUri = new URL(baseUri + "/v1/events?hasty=true");
     }
 
     public static DestinationEventService fromName(String name) {
