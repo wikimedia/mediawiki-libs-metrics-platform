@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5280726e_da48c9f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-06-06T22:58:58Z",
+      "side": 1,
+      "message": "Whoa - that is a radical simplification bordering on voodoo (stream api is magic to me) 😊\n\nThe only thing I can think of to make the case for manually deserializing is that there is some manipulation of the DestinationEventService (DES herein for short -- i.e. recent fix of needing to append the right path + param to the DES baseUri) in StreamConfigFetcher::parseDestinationEventService() which calls `.fromName(DESstringFromApiEndpoint)`. I\u0027m guessing there\u0027s a way to include this transform somehow?  I\u0027ll see if I can noodle on that part.\n\nFwiw I tested locally with multiple event submissions and i\u0027m seeing them validate in my local eventgate - nice! but that bypasses what DES is returned in the fetched stream config because in my current tedious testing flow, i manually return the local DES when enqueued events are processed/submitted.\n\ncc\u0027ing Guillaume too for another set of eyes",
+      "revId": "3638a28ee3354c61f6c32a8f327452cc22f0b2df",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
