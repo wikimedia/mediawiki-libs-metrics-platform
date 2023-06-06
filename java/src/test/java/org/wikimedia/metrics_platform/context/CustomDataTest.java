@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
-import org.wikimedia.metrics_platform.GsonHelper;
+import org.wikimedia.metrics_platform.json.GsonHelper;
 
 import com.google.gson.Gson;
 

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
-import org.wikimedia.metrics_platform.GsonHelper;
+import org.wikimedia.metrics_platform.json.GsonHelper;
 
 import com.google.gson.Gson;
 

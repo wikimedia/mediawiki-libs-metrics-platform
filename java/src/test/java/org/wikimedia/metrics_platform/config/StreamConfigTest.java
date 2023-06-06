@@ -6,7 +6,7 @@ import static org.wikimedia.metrics_platform.config.SampleConfig.Identifier.SESS
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
-import org.wikimedia.metrics_platform.GsonHelper;
+import org.wikimedia.metrics_platform.json.GsonHelper;
 
 import com.google.gson.Gson;
 
@@ -14,7 +14,7 @@ class StreamConfigTest {
 
     @Test void testStreamConfigDeserialization() {
         Gson gson = GsonHelper.getGson();
-        String streamConfigJson = "{\"stream_name\":\"test.event\",\"schema_title\":\"test/event\"," +
+        String streamConfigJson = "{\"stream\":\"test.event\",\"schema_title\":\"test/event\"," +
                 "\"destination_event_service\":\"eventgate-logging-local\"," +
                 "\"producers\":" +
                 "{\"metrics_platform_client\":{\"provide_values\":[\"page_id\",\"user_id\"]}}," +

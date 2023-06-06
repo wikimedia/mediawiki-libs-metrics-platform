@@ -25,6 +25,7 @@ import org.wikimedia.metrics_platform.config.StreamConfigFetcher;
 import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.PageDataFixtures;
 import org.wikimedia.metrics_platform.event.EventProcessed;
+import org.wikimedia.metrics_platform.json.GsonHelper;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

@@ -1,4 +1,4 @@
-package org.wikimedia.metrics_platform;
+package org.wikimedia.metrics_platform.json;
 
 import java.time.Instant;
 

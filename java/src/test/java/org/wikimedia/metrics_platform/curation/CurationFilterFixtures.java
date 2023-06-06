@@ -1,6 +1,6 @@
 package org.wikimedia.metrics_platform.curation;
 
-import org.wikimedia.metrics_platform.GsonHelper;
+import org.wikimedia.metrics_platform.json.GsonHelper;
 import org.wikimedia.metrics_platform.config.CurationFilter;
 
 import com.google.gson.Gson;

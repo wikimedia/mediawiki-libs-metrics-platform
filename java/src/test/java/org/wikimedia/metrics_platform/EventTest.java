@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.context.ClientDataFixtures;
 import org.wikimedia.metrics_platform.event.Event;
 import org.wikimedia.metrics_platform.event.EventProcessed;
+import org.wikimedia.metrics_platform.json.GsonHelper;
 
 import com.google.gson.Gson;
 

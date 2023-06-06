@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.wikimedia.metrics_platform.event.EventProcessed;
+import org.wikimedia.metrics_platform.json.GsonHelper;
 
 import com.google.gson.Gson;
 

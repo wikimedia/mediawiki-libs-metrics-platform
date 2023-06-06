@@ -16,7 +16,7 @@ import lombok.Value;
 @ParametersAreNullableByDefault
 public class StreamConfig {
 
-    @SerializedName("stream_name") String streamName;
+    @SerializedName("stream") String streamName;
 
     @SerializedName("schema_title") String schemaTitle;
 
