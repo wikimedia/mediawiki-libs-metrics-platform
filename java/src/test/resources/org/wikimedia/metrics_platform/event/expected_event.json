@@ -1,4 +1,4 @@
-{
+[ {
 	"$schema": "/analytics/mediawiki/client/metrics_event/1.2.0",
 	"name": "eas.test_event_name_for_end_to_end_testing",
 	"custom_data": {
@@ -32,4 +32,4 @@
 		"session_id": "eeeeeeeeeeeeeeeeeeee",
 		"pageview_id": "eeeeeeeeeeeeeeeeeeee"
 	}
-}
+} ]

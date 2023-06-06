@@ -39,9 +39,7 @@ public class EventSenderDefault implements EventSender {
             connection.setDoOutput(true);
 
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), UTF_8))) {
-                for (EventProcessed event : events) {
-                    gson.toJson(event, writer);
-                }
+                gson.toJson(events, writer);
                 log.log(FINE, "Events sent: posted data to event logging!");
             }
 

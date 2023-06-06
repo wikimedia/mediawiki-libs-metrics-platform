@@ -22,7 +22,8 @@ public final class PageDataFixtures {
     public static PageData getTestPageData(String expectedEvent) {
         Map<String, Object> pageDataMap = new HashMap<>();
 
-        JsonObject expectedEventJson = JsonParser.parseString(expectedEvent).getAsJsonObject();
+        JsonElement jsonElement = JsonParser.parseString(expectedEvent);
+        JsonObject expectedEventJson = jsonElement.isJsonArray() ? jsonElement.getAsJsonArray().get(0).getAsJsonObject() : jsonElement.getAsJsonObject();
         JsonObject pageMetadata = expectedEventJson.getAsJsonObject("page");
         Set<String> keys = pageMetadata.keySet();
 
