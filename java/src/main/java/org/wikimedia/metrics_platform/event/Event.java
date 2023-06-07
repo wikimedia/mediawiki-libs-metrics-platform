@@ -1,9 +1,6 @@
 package org.wikimedia.metrics_platform.event;
 
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.ParametersAreNullableByDefault;
 
@@ -20,7 +17,7 @@ public class Event {
     @SerializedName("$schema") protected String schema;
     @SerializedName("name") protected final String name;
     @SerializedName("dt") protected String timestamp;
-    @SerializedName("custom_data") protected Map<String, Object> customData;
+    @SerializedName("custom_data") protected Map<String, CustomData> customData;
     protected final Meta meta;
     @SerializedName("page") protected PageData pageData;
 
@@ -43,18 +40,7 @@ public class Event {
         return this.pageData;
     }
 
-    public void setCustomData(Set<CustomData>customDataSet) {
-        Map<String, Object> formattedCustomData = new HashMap<>();
-        for (CustomData customDataEach : customDataSet) {
-            Map<String, String> data = new HashMap<>();
-            data.put("data_type", customDataEach.getType().toString().toLowerCase(Locale.ROOT));
-            data.put("value", customDataEach.getValue());
-            formattedCustomData.put(customDataEach.getName(), data);
-        }
-        this.customData = formattedCustomData;
-    }
-
-    public void setCustomData(Map<String, Object> customData) {
+    public void setCustomData(Map<String, CustomData> customData) {
         this.customData = customData;
     }
 

@@ -23,6 +23,8 @@ import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.SourceConfigFixtures;
 import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.ClientDataFixtures;
+import org.wikimedia.metrics_platform.context.CustomData;
+import org.wikimedia.metrics_platform.context.CustomDataType;
 import org.wikimedia.metrics_platform.context.PageDataFixtures;
 import org.wikimedia.metrics_platform.event.Event;
 import org.wikimedia.metrics_platform.event.EventProcessed;
@@ -70,16 +72,16 @@ class MetricsClientTest {
 
         // Verify custom data
         assertThat(queuedEvent.getName()).isEqualTo("test_event");
-        Map<String, Object> customData = queuedEvent.getCustomData();
-        Map<String, String> isEditor = (Map<String, String>) customData.get("is_editor");
-        assertThat(isEditor.get("data_type")).isEqualTo("boolean");
-        assertThat(isEditor.get("value")).isEqualTo("true");
-        Map<String, String> action = (Map<String, String>) customData.get("action");
-        assertThat(action.get("data_type")).isEqualTo("string");
-        assertThat(action.get("value")).isEqualTo("click");
-        Map<String, String> screenSize = (Map<String, String>) customData.get("screen_size");
-        assertThat(screenSize.get("data_type")).isEqualTo("number");
-        assertThat(screenSize.get("value")).isEqualTo("1080");
+        Map<String, CustomData> customData = queuedEvent.getCustomData();
+        CustomData isEditor = customData.get("is_editor");
+        assertThat(isEditor.getType()).isEqualTo(CustomDataType.BOOLEAN);
+        assertThat(isEditor.getValue()).isEqualTo("true");
+        CustomData action = customData.get("action");
+        assertThat(action.getType()).isEqualTo(CustomDataType.STRING);
+        assertThat(action.getValue()).isEqualTo("click");
+        CustomData screenSize = customData.get("screen_size");
+        assertThat(screenSize.getType()).isEqualTo(CustomDataType.NUMBER);
+        assertThat(screenSize.getValue()).isEqualTo("1080");
 
         // Verify that page data is not included
         assertThat(queuedEvent.getPageData().getId()).isNull();

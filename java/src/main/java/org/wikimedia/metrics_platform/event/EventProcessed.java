@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.wikimedia.metrics_platform.context.AgentData;
 import org.wikimedia.metrics_platform.context.ClientData;
+import org.wikimedia.metrics_platform.context.CustomData;
 import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.MediawikiData;
 import org.wikimedia.metrics_platform.context.PerformerData;
@@ -22,7 +23,7 @@ public class EventProcessed extends Event {
             String schema,
             String stream,
             String name,
-            Map<String, Object> customData,
+            Map<String, CustomData> customData,
             PageData pageData) {
         super(schema, stream, name);
         this.agentData = new AgentData();

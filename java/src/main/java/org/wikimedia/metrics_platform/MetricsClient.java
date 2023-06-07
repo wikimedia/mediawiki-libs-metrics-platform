@@ -5,7 +5,6 @@ import static java.time.Instant.now;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.WARNING;
-import static java.util.stream.Collectors.toSet;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.ANALYTICS_API_ENDPOINT;
 import static org.wikimedia.metrics_platform.event.EventProcessed.fromEvent;
 
@@ -25,6 +24,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -142,34 +142,21 @@ public final class MetricsClient {
      * @param customData custom data
      */
     public void submitMetricsEvent(String eventName, PageData pageData, Map<String, Object> customData) {
-        Set<CustomData> customDataSetFormatted = customData.entrySet().stream()
-                .map(CustomData::of)
-                .collect(toSet());
-        submitMetricsEvent(eventName, pageData, customDataSetFormatted);
-    }
-
-    /**
-     * See doc comment for above submitMetricsEvent() method.
-     * <p>
-     * This particular submitMetricsEvent() method accepts formatted custom data and submits the event.
-     *
-     * @param eventName event name
-     * @param pageData page metadata
-     * @param customData custom data
-     */
-    public void submitMetricsEvent(String eventName, PageData pageData, Set<CustomData> customData) {
         SourceConfig sourceConfig = this.sourceConfig.get();
         if (sourceConfig == null) {
             log.log(Level.FINE, "Configuration not loaded yet, the submitMetricsEvent event is ignored and dropped.");
             return;
         }
 
+        Map<String, CustomData> customDataFormatted = customData.entrySet().stream()
+            .collect(Collectors.toMap(e -> e.getKey(), e -> CustomData.of(e.getValue())));
+
         Set<String> streamNames = sourceConfig.getStreamNamesByEvent(eventName);
         // Loop through stream configs to add event to pending events.
         for (String streamName : streamNames) {
             if (shouldProcessEventsForStream(streamName, sourceConfig)) {
                 Event event = new Event(METRICS_PLATFORM_SCHEMA, streamName, eventName);
-                event.setCustomData(customData);
+                event.setCustomData(customDataFormatted);
                 event.setPageData(pageData);
                 submit(event);
             }
