@@ -1,7 +1,9 @@
 package org.wikimedia.metrics_platform.context;
 
-import java.util.function.Supplier;
+import static org.wikimedia.metrics_platform.utils.Objects.firstNonNull;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNullableByDefault;
 
 import com.google.gson.annotations.SerializedName;
@@ -27,31 +29,37 @@ import lombok.NoArgsConstructor;
 @ParametersAreNullableByDefault
 public class ClientData {
     @SerializedName("agent") private AgentData agentData;
+    @SerializedName("page") private PageData pageData;
     @SerializedName("mediawiki") private MediawikiData mediawikiData;
     @SerializedName("performer") private PerformerData performerData;
     @SerializedName("domain") private String domain;
 
-    private <T> T firstNonNull(T first, Supplier<T> second) {
-        if (first != null) return first;
-        return second.get();
-    }
-
+    @Nonnull
     public AgentData getAgentData() {
-        this.agentData = firstNonNull(agentData, AgentData::new);
-        return this.agentData;
+        agentData = firstNonNull(agentData, AgentData::new);
+        return agentData;
     }
 
+    @Nonnull
+    public PageData getPageData() {
+        pageData = firstNonNull(pageData, PageData::new);
+        return pageData;
+    }
+
+    @Nonnull
     public MediawikiData getMediawikiData() {
-        this.mediawikiData = firstNonNull(mediawikiData, MediawikiData::new);
-        return this.mediawikiData;
+        mediawikiData = firstNonNull(mediawikiData, MediawikiData::new);
+        return mediawikiData;
     }
 
+    @Nonnull
     public PerformerData getPerformerData() {
-        this.performerData = firstNonNull(performerData, PerformerData::new);
-        return this.performerData;
+        performerData = firstNonNull(performerData, PerformerData::new);
+        return performerData;
     }
 
+    @Nullable
     public String getDomain() {
-        return this.domain;
+        return domain;
     }
 }

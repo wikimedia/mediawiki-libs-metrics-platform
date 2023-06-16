@@ -23,7 +23,7 @@ import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.config.StreamConfigFetcher;
 import org.wikimedia.metrics_platform.context.ClientData;
-import org.wikimedia.metrics_platform.context.PageDataFixtures;
+import org.wikimedia.metrics_platform.context.DataFixtures;
 import org.wikimedia.metrics_platform.event.EventProcessed;
 import org.wikimedia.metrics_platform.json.GsonHelper;
 
@@ -61,7 +61,7 @@ class ConsistencyIT {
 
             consistencyTestMetricsClient.submitMetricsEvent(
                     "test_consistency_event",
-                    PageDataFixtures.getTestPageData(getExpectedEventJson().toString()),
+                    DataFixtures.getTestClientData(getExpectedEventJson().toString()),
                     singletonMap("test", "consistency")
             );
 

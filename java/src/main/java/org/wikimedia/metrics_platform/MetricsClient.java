@@ -35,7 +35,6 @@ import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.config.StreamConfigFetcher;
 import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.CustomData;
-import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.event.Event;
 import org.wikimedia.metrics_platform.event.EventProcessed;
 
@@ -138,10 +137,10 @@ public final class MetricsClient {
      * stream that is interested in those events.
      *
      * @param eventName event name
-     * @param pageData page context data
+     * @param clientData client context data
      * @param customData custom data
      */
-    public void submitMetricsEvent(String eventName, PageData pageData, Map<String, Object> customData) {
+    public void submitMetricsEvent(String eventName, ClientData clientData, Map<String, Object> customData) {
         SourceConfig sourceConfig = this.sourceConfig.get();
         if (sourceConfig == null) {
             log.log(Level.FINE, "Configuration not loaded yet, the submitMetricsEvent event is ignored and dropped.");
@@ -157,7 +156,7 @@ public final class MetricsClient {
             if (shouldProcessEventsForStream(streamName, sourceConfig)) {
                 Event event = new Event(METRICS_PLATFORM_SCHEMA, streamName, eventName);
                 event.setCustomData(customDataFormatted);
-                event.setPageData(pageData);
+                event.setClientData(clientData);
                 submit(event);
             }
         }

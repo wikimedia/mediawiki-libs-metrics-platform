@@ -2,10 +2,13 @@ package org.wikimedia.metrics_platform.event;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNullableByDefault;
 
+import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.CustomData;
-import org.wikimedia.metrics_platform.context.PageData;
+import org.wikimedia.metrics_platform.utils.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -19,7 +22,7 @@ public class Event {
     @SerializedName("dt") protected String timestamp;
     @SerializedName("custom_data") protected Map<String, CustomData> customData;
     protected final Meta meta;
-    @SerializedName("page") protected PageData pageData;
+    @SerializedName("client_data") protected ClientData clientData;
 
     public Event(String schema, String stream, String name) {
         this.schema = schema;
@@ -27,20 +30,22 @@ public class Event {
         this.name = name;
     }
 
+    @Nullable
     public String getStream() {
         return meta.getStream();
     }
 
     public void setDomain(String domain) {
-        this.meta.domain = domain;
+        meta.domain = domain;
     }
 
-    public PageData getPageData() {
-        if (this.pageData == null) this.pageData = new PageData();
-        return this.pageData;
+    @Nonnull
+    public ClientData getClientData() {
+        clientData = Objects.firstNonNull(clientData, ClientData::new);
+        return clientData;
     }
 
-    public void setCustomData(Map<String, CustomData> customData) {
+    public void setCustomData(@Nonnull Map<String, CustomData> customData) {
         this.customData = customData;
     }
 

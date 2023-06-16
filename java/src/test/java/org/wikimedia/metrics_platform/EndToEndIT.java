@@ -19,7 +19,7 @@ import java.net.URL;
 
 import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.context.ClientData;
-import org.wikimedia.metrics_platform.context.PageDataFixtures;
+import org.wikimedia.metrics_platform.context.DataFixtures;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
@@ -29,7 +29,7 @@ import com.google.common.io.Resources;
 public class EndToEndIT {
     private String expectedEvent;
 
-    @Test void submitEventTimerStreamConfig(WireMockRuntimeInfo wireMockRuntimeInfo) throws IOException {
+    @Test void submitEventTimerStreamConfig(WireMockRuntimeInfo wireMockRuntimeInfo) throws IOException, ClassNotFoundException {
         // Stub fetching the stream config from api endpoint.
         stubFor(get(urlEqualTo("/config"))
                 .willReturn(aResponse()
@@ -51,7 +51,7 @@ public class EndToEndIT {
 
         testJavaMetricsClient.submitMetricsEvent(
                 "eas.test_event_name_for_end_to_end_testing",
-                PageDataFixtures.getTestPageData(getExpectedEvent()),
+                DataFixtures.getTestClientData(getExpectedEvent()),
                 singletonMap("action", "surf")
         );
 

@@ -110,15 +110,34 @@ public class ContextController {
 
                 // Page
                 case PAGE_ID:
+                    event.getPageData().setId(clientData.getPageData().getId());
+                    break;
                 case PAGE_TITLE:
+                    event.getPageData().setTitle(clientData.getPageData().getTitle());
+                    break;
                 case PAGE_NAMESPACE:
+                    event.getPageData().setNamespace(clientData.getPageData().getNamespace());
+                    break;
                 case PAGE_NAMESPACE_NAME:
+                    event.getPageData().setNamespaceName(clientData.getPageData().getNamespaceName());
+                    break;
                 case PAGE_REVISION_ID:
+                    event.getPageData().setRevisionId(clientData.getPageData().getRevisionId());
+                    break;
                 case PAGE_WIKIDATA_QID:
+                    event.getPageData().setWikidataItemQid(clientData.getPageData().getWikidataItemQid());
+                    break;
                 case PAGE_CONTENT_LANGUAGE:
+                    event.getPageData().setContentLanguage(clientData.getPageData().getContentLanguage());
+                    break;
                 case PAGE_IS_REDIRECT:
+                    event.getPageData().setIsRedirect(clientData.getPageData().getIsRedirect());
+                    break;
                 case PAGE_USER_GROUPS_ALLOWED_TO_EDIT:
+                    event.getPageData().setGroupsAllowedToEdit(clientData.getPageData().getGroupsAllowedToEdit());
+                    break;
                 case PAGE_USER_GROUPS_ALLOWED_TO_MOVE:
+                    event.getPageData().setGroupsAllowedToMove(clientData.getPageData().getGroupsAllowedToMove());
                     break;
 
                 // Performer

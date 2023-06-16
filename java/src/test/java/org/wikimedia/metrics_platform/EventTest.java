@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
-import org.wikimedia.metrics_platform.context.ClientDataFixtures;
+import org.wikimedia.metrics_platform.context.DataFixtures;
 import org.wikimedia.metrics_platform.event.Event;
 import org.wikimedia.metrics_platform.event.EventProcessed;
 import org.wikimedia.metrics_platform.json.GsonHelper;
@@ -37,9 +37,7 @@ class EventTest {
 
         event.setTimestamp("2021-08-27T12:00:00Z");
 
-        event.setAgentData(ClientDataFixtures.getTestAgentData());
-        event.setMediawikiData(ClientDataFixtures.getTestMediawikiData());
-        event.setPerformerData(ClientDataFixtures.getTestPerformerData());
+        event.setClientData(DataFixtures.getTestClientData());
 
         event.getAgentData().setAppInstallId(uuid);
 
@@ -50,6 +48,17 @@ class EventTest {
         assertThat(event.getTimestamp()).isEqualTo("2021-08-27T12:00:00Z");
         assertThat(event.getAgentData().getClientPlatform()).isEqualTo("android");
         assertThat(event.getAgentData().getClientPlatformFamily()).isEqualTo("app");
+
+        assertThat(event.getPageData().getId()).isEqualTo(1);
+        assertThat(event.getPageData().getTitle()).isEqualTo("Test Page Title");
+        assertThat(event.getPageData().getNamespace()).isEqualTo(0);
+        assertThat(event.getPageData().getNamespaceName()).isEqualTo("Main");
+        assertThat(event.getPageData().getRevisionId()).isEqualTo(1);
+        assertThat(event.getPageData().getWikidataItemQid()).isEqualTo("Q123456");
+        assertThat(event.getPageData().getContentLanguage()).isEqualTo("en");
+        assertThat(event.getPageData().getIsRedirect()).isFalse();
+        assertThat(event.getPageData().getGroupsAllowedToMove()).contains("*");
+        assertThat(event.getPageData().getGroupsAllowedToEdit()).contains("*");
 
         assertThat(event.getMediawikiData().getSkin()).isEqualTo("vector");
         assertThat(event.getMediawikiData().getVersion()).isEqualTo("1.40.0-wmf.20");
@@ -81,6 +90,18 @@ class EventTest {
                         "\"client_platform\":\"android\"," +
                         "\"client_platform_family\":\"app\"" +
                         "}," +
+                        "\"page\":{" +
+                        "\"id\":1," +
+                        "\"title\":\"Test Page Title\"," +
+                        "\"namespace\":0," +
+                        "\"namespace_name\":\"Main\"," +
+                        "\"revision_id\":1," +
+                        "\"wikidata_qid\":\"Q123456\"," +
+                        "\"content_language\":\"en\"," +
+                        "\"is_redirect\":false," +
+                        "\"user_groups_allowed_to_move\":[\"*\"]," +
+                        "\"user_groups_allowed_to_edit\":[\"*\"]" +
+                        "}," +
                         "\"mediawiki\":{" +
                         "\"skin\":\"vector\"," +
                         "\"version\":\"1.40.0-wmf.20\"," +
@@ -108,8 +129,7 @@ class EventTest {
                         "\"$schema\":\"test/event/1.0.0\"," +
                         "\"name\":\"testEvent\"," +
                         "\"dt\":\"2021-08-27T12:00:00Z\"," +
-                        "\"meta\":{\"stream\":\"test.event\"}," +
-                        "\"page\":{}" +
+                        "\"meta\":{\"stream\":\"test.event\"}" +
                         "}", uuid, uuid));
     }
 

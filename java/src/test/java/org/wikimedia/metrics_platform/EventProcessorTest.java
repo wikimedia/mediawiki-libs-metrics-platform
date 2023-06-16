@@ -37,7 +37,7 @@ import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.SourceConfigFixtures;
 import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.context.ClientData;
-import org.wikimedia.metrics_platform.context.ClientDataFixtures;
+import org.wikimedia.metrics_platform.context.DataFixtures;
 import org.wikimedia.metrics_platform.context.PerformerData;
 import org.wikimedia.metrics_platform.event.Event;
 import org.wikimedia.metrics_platform.event.EventProcessed;
@@ -58,7 +58,7 @@ class EventProcessorTest {
         sourceConfig.set(SourceConfigFixtures.getTestSourceConfig(curationFilter));
 
         eventProcessor = new EventProcessor(
-                new ContextController(ClientDataFixtures.getTestClientData()),
+                new ContextController(DataFixtures.getTestClientData()),
                 sourceConfig,
                 mockEventSender,
                 eventQueue
@@ -112,7 +112,12 @@ class EventProcessorTest {
         verify(mockEventSender).sendEvents(any(URL.class), eventCaptor.capture());
 
         EventProcessed sentEvent = eventCaptor.getValue().iterator().next();
+
+        // Verify random client data
         assertThat(sentEvent.getAgentData().getClientPlatform()).isEqualTo("android");
+        assertThat(sentEvent.getPageData().getTitle()).isEqualTo("Test Page Title");
+        assertThat(sentEvent.getMediawikiData().getDatabase()).isEqualTo("enwiki");
+        assertThat(sentEvent.getPerformerData().getSessionId()).isEqualTo("eeeeeeeeeeeeeeeeeeee");
     }
 
     @Test void eventsNotSentWhenFetchStreamConfigFails() {
@@ -130,7 +135,7 @@ class EventProcessorTest {
         // FIXME: move this to CurationFilterTest
         Event eventClient = minimalEvent();
         EventProcessed event = fromEvent(eventClient);
-        event.setClientData(ClientDataFixtures.getTestClientData());
+        event.setClientData(DataFixtures.getTestClientData());
         event.getPageData().setTitle("Test");
 
         event.setPerformerData(
@@ -145,7 +150,7 @@ class EventProcessorTest {
     @Test void testEventFailsEqualsRule() {
 
         // FIXME: move this to CurationControllerTest
-        ClientData anotherTestClientData = ClientDataFixtures.getTestClientData();
+        ClientData anotherTestClientData = DataFixtures.getTestClientData();
         anotherTestClientData.getPerformerData().setSessionId("No session");
 
         eventProcessor = new EventProcessor(

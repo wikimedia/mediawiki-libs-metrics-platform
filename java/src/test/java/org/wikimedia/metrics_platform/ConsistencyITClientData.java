@@ -6,10 +6,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.wikimedia.metrics_platform.context.AgentData;
 import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.MediawikiData;
+import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.PerformerData;
 
 import com.google.gson.JsonElement;
@@ -41,6 +44,29 @@ public class ConsistencyITClientData extends ClientData {
                 .clientPlatform(this.agentJson.get("client_platform").getAsString())
                 .clientPlatformFamily(this.agentJson.get("client_platform_family").getAsString())
                 .build();
+
+        Set<String> groupsMove = new HashSet<>();
+        Set<String> groupsEdit = new HashSet<>();
+
+        for (JsonElement jsonElementGroupsMove : this.pageJson.get("user_groups_allowed_to_move").getAsJsonArray()) {
+            groupsMove.add(jsonElementGroupsMove.getAsString());
+        }
+        for (JsonElement jsonElementGroupsEdit : this.pageJson.get("user_groups_allowed_to_edit").getAsJsonArray()) {
+            groupsEdit.add(jsonElementGroupsEdit.getAsString());
+        }
+
+        PageData pageData = PageData.builder()
+                .id(this.pageJson.get("id").getAsInt())
+                .title(this.pageJson.get("title").getAsString())
+                .namespace(this.pageJson.get("namespace").getAsInt())
+                .namespaceName(this.pageJson.get("namespace_name").getAsString())
+                .revisionId(this.pageJson.get("revision_id").getAsLong())
+                .wikidataItemQid(this.pageJson.get("wikidata_qid").getAsString())
+                .contentLanguage(this.pageJson.get("content_language").getAsString())
+                .isRedirect(this.pageJson.get("is_redirect").getAsBoolean())
+                .groupsAllowedToMove(groupsMove)
+                .groupsAllowedToEdit(groupsEdit)
+                .build();
         MediawikiData mediawikiData = MediawikiData.builder()
                 .skin(this.mediawikiJson.get("skin").getAsString())
                 .version(this.mediawikiJson.get("version").getAsString())
@@ -61,6 +87,7 @@ public class ConsistencyITClientData extends ClientData {
                 .build();
 
         this.setAgentData(agentData);
+        this.setPageData(pageData);
         this.setMediawikiData(mediawikiData);
         this.setPerformerData(performerData);
         this.setDomain(this.hostname);

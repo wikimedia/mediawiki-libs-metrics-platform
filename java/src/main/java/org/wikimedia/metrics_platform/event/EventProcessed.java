@@ -1,12 +1,16 @@
 package org.wikimedia.metrics_platform.event;
 
+import static org.wikimedia.metrics_platform.utils.Objects.firstNonNull;
+
 import java.util.Map;
+
+import javax.annotation.Nonnull;
 
 import org.wikimedia.metrics_platform.context.AgentData;
 import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.CustomData;
-import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.MediawikiData;
+import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.PerformerData;
 
 import com.google.gson.annotations.SerializedName;
@@ -16,6 +20,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class EventProcessed extends Event {
     @SerializedName("agent") private AgentData agentData;
+    @SerializedName("page") private PageData pageData;
     @SerializedName("mediawiki") private MediawikiData mediawikiData;
     @SerializedName("performer") private PerformerData performerData;
 
@@ -24,48 +29,63 @@ public class EventProcessed extends Event {
             String stream,
             String name,
             Map<String, CustomData> customData,
-            PageData pageData) {
+            ClientData clientData) {
         super(schema, stream, name);
-        this.agentData = new AgentData();
-        this.mediawikiData = new MediawikiData();
-        this.performerData = new PerformerData();
+        this.agentData = clientData.getAgentData();
+        this.pageData = clientData.getPageData();
+        this.mediawikiData = clientData.getMediawikiData();
+        this.performerData = clientData.getPerformerData();
         this.setCustomData(customData);
-        this.setPageData(pageData);
     }
 
+    @Nonnull
     public static EventProcessed fromEvent(Event event) {
         return new EventProcessed(
                 event.getSchema(),
                 event.getStream(),
                 event.getName(),
                 event.getCustomData(),
-                event.getPageData()
+                event.getClientData()
         );
     }
 
+    @Nonnull
     public AgentData getAgentData() {
-        if (this.agentData == null) this.agentData = new AgentData();
-        return this.agentData;
+        agentData = firstNonNull(agentData, AgentData::new);
+        return agentData;
     }
 
+    @Nonnull
+    public PageData getPageData() {
+        pageData = firstNonNull(pageData, PageData::new);
+        return pageData;
+    }
+
+    @Nonnull
     public MediawikiData getMediawikiData() {
-        if (this.mediawikiData == null) this.mediawikiData = new MediawikiData();
-        return this.mediawikiData;
+        mediawikiData = firstNonNull(mediawikiData, MediawikiData::new);
+        return mediawikiData;
     }
 
+    @Nonnull
     public PerformerData getPerformerData() {
-        if (this.performerData == null) this.performerData = new PerformerData();
-        return this.performerData;
+        performerData = firstNonNull(performerData, PerformerData::new);
+        return performerData;
     }
 
-    public void setClientData(ClientData clientData) {
+    @Override
+    public void setClientData(@Nonnull ClientData clientData) {
         setAgentData(clientData.getAgentData());
+        setPageData(clientData.getPageData());
         setMediawikiData(clientData.getMediawikiData());
         setPerformerData(clientData.getPerformerData());
     }
 
     public void setAgentData(AgentData agentData) {
         this.agentData = agentData;
+    }
+    public void setPageData(PageData pageData) {
+        this.pageData = pageData;
     }
     public void setMediawikiData(MediawikiData mediawikiData) {
         this.mediawikiData = mediawikiData;

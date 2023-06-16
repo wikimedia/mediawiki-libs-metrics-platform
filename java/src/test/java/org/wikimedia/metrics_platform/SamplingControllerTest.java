@@ -7,12 +7,12 @@ import static org.wikimedia.metrics_platform.config.SampleConfig.Identifier.SESS
 import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.config.SampleConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
-import org.wikimedia.metrics_platform.context.ClientDataFixtures;
+import org.wikimedia.metrics_platform.context.DataFixtures;
 
 class SamplingControllerTest {
 
     private final SamplingController samplingController = new SamplingController(
-            ClientDataFixtures.getTestClientData(),
+            DataFixtures.getTestClientData(),
             new SessionController()
     );
 

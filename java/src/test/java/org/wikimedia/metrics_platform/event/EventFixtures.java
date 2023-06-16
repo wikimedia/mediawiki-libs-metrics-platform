@@ -1,10 +1,11 @@
 package org.wikimedia.metrics_platform.event;
 
+import static org.wikimedia.metrics_platform.context.DataFixtures.getTestClientData;
 import static org.wikimedia.metrics_platform.event.EventProcessed.fromEvent;
 
 import java.util.Arrays;
 
-import org.wikimedia.metrics_platform.context.ClientDataFixtures;
+import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.PerformerData;
 
@@ -19,16 +20,16 @@ public final class EventFixtures {
 
     public static EventProcessed minimalEventProcessed() {
         EventProcessed eventProcessed = fromEvent(minimalEvent());
-        eventProcessed.setClientData(ClientDataFixtures.getTestClientData());
+        eventProcessed.setClientData(getTestClientData());
         return eventProcessed;
     }
 
     public static EventProcessed getEvent() {
         Event event = new Event("test/event", "test.event", "testEvent");
-        event.setPageData(
-                PageData.builder().id(1).namespaceName("Talk").build()
-        );
+        ClientData clientData = new ClientData();
+        clientData.setPageData(PageData.builder().id(1).namespaceName("Talk").build());
 
+        event.setClientData(clientData);
         EventProcessed eventProcessed = fromEvent(event);
         eventProcessed.setPerformerData(
                 PerformerData.builder()
