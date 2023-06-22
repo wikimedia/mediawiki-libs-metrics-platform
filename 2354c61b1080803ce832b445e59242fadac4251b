@@ -16,6 +16,23 @@
       "message": "LGTM. The only nit I have is that maybe I\u0027d document the rationale behind wrapping PageData inside ClientData.",
       "revId": "2354c61b1080803ce832b445e59242fadac4251b",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b87694e_8b554299",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/ContextController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 8700
+      },
+      "writtenOn": "2023-06-22T09:40:28Z",
+      "side": 1,
+      "message": "Are we guaranteed that this (and similar) getters will always retrun a non-null value?",
+      "revId": "2354c61b1080803ce832b445e59242fadac4251b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
