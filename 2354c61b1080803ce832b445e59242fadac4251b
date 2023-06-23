@@ -18,6 +18,24 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b97b826_2703504e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-06-23T19:49:23Z",
+      "side": 1,
+      "message": "ya - i gotta update alot of documentation -- basically in a nutshell, PageData is just a nested data object of the Client Data object which is a required parameter for instantiating the Metrics Client object\n\nSome of these nested data objects (namely PageData) aren\u0027t always available at the time of instantiation in the mobile apps context but need to be populated and passed in when the event is submitted.",
+      "parentUuid": "93ae5367_ed4987a7",
+      "revId": "2354c61b1080803ce832b445e59242fadac4251b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b87694e_8b554299",
