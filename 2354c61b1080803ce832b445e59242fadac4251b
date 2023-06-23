@@ -33,6 +33,24 @@
       "message": "Are we guaranteed that this (and similar) getters will always retrun a non-null value?",
       "revId": "2354c61b1080803ce832b445e59242fadac4251b",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e4f2b11_ce5988c1",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/ContextController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-06-23T19:44:43Z",
+      "side": 1,
+      "message": "all data parameters are nullable by default -- there could be many nulls depending on the platform (i.e. mobile app will not always have page data if the user is not on a page fragment)",
+      "parentUuid": "2b87694e_8b554299",
+      "revId": "2354c61b1080803ce832b445e59242fadac4251b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
