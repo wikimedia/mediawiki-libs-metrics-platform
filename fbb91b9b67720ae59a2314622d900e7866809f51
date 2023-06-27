@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07e6adbf_0fff391c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-06-27T18:38:32Z",
+      "side": 1,
+      "message": "thanks @Gehel -- i will update comments in a follow up and check in with you about some of the issues you brought up",
+      "revId": "fbb91b9b67720ae59a2314622d900e7866809f51",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
