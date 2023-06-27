@@ -36,6 +36,23 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2902f9bf_198323ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-06-27T09:34:37Z",
+      "side": 1,
+      "message": "I pushed an additional patch set with a few proposals.",
+      "revId": "2354c61b1080803ce832b445e59242fadac4251b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b87694e_8b554299",
@@ -140,6 +157,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "118477f9_553576be",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/context/ClientData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-06-27T09:34:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44691a41_7e170d1b",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 5
+      },
+      "revId": "2354c61b1080803ce832b445e59242fadac4251b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65e27c69_08489e51",
@@ -153,6 +194,30 @@
       "writtenOn": "2023-06-27T08:00:42Z",
       "side": 1,
       "message": "Reuse `firstNonNull`?",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 72
+      },
+      "revId": "2354c61b1080803ce832b445e59242fadac4251b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0df46e66_b645d44a",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/event/Event.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-06-27T09:34:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65e27c69_08489e51",
       "range": {
         "startLine": 39,
         "startChar": 8,
@@ -186,6 +251,30 @@
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6382225a_6b560703",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyIT.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-06-27T09:34:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07f0d0fe_f70e649f",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 9
+      },
+      "revId": "2354c61b1080803ce832b445e59242fadac4251b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3813b23_a9158674",
@@ -199,6 +288,30 @@
       "writtenOn": "2023-06-27T08:00:42Z",
       "side": 1,
       "message": "emptySet is immutable, which is conflicting with the .add() on L51 and L54",
+      "range": {
+        "startLine": 47,
+        "startChar": 33,
+        "endLine": 47,
+        "endChar": 55
+      },
+      "revId": "2354c61b1080803ce832b445e59242fadac4251b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95b24a2e_486e33ff",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/ConsistencyITClientData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-06-27T09:34:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3813b23_a9158674",
       "range": {
         "startLine": 47,
         "startChar": 33,
@@ -245,6 +358,30 @@
       "writtenOn": "2023-06-27T08:00:42Z",
       "side": 1,
       "message": "There is some naming confusion here. I would expect \"ClientDataFixture\" to only contain code to create ClientData fixtures, and rely on other *Fixtures classes to create the related PageData, MediawikiData, etc...\n\nSo either we need to keep to 1 fixture class for 1 data class, or we need to rename this class to \"DataFixtures\" (or similar).",
+      "range": {
+        "startLine": 19,
+        "startChar": 19,
+        "endLine": 19,
+        "endChar": 37
+      },
+      "revId": "2354c61b1080803ce832b445e59242fadac4251b",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "361e60d4_91930673",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/context/ClientDataFixtures.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-06-27T09:34:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bda50d1_ad4194a5",
       "range": {
         "startLine": 19,
         "startChar": 19,
