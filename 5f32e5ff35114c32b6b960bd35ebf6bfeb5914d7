@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edee11c8_1bbd729e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/EventSenderDefault.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 9097
+      },
+      "writtenOn": "2023-06-27T22:25:11Z",
+      "side": 1,
+      "message": "@dbrant I left this one as is figuring that too much logging isn\u0027t good for performance but if you think this would be useful to see, I can update to INFO.",
+      "revId": "5f32e5ff35114c32b6b960bd35ebf6bfeb5914d7",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
