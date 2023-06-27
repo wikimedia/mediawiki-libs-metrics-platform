@@ -16,11 +16,11 @@ import lombok.NoArgsConstructor;
 /**
  * Client metadata context fields.
  *
- * ClientData includes immutable contextual data from the client as opposed to PageData which is dynamic
- * with each request. This metadata is added to every event submission when queued for processing.
+ * ClientData includes immutable and mutable contextual data from the client.
+ * This metadata is added to every event submission when queued for processing.
  *
- * All fields are nullable, and boxed types are used in place of their equivalent primitive types to avoid
- * unexpected default values from being used where the true value is null.
+ * All fields of nested data objects are nullable, and boxed types are used in place of their equivalent primitive types
+ * to avoid unexpected default values from being used where the true value is null.
  */
 @Data
 @Builder
