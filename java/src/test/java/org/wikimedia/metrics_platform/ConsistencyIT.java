@@ -106,7 +106,8 @@ class ConsistencyIT {
                 contextController,
                 sourceConfigRef,
                 eventSender,
-                eventQueue
+                eventQueue,
+                true
         );
     }
 

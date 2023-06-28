@@ -61,7 +61,8 @@ class EventProcessorTest {
                 new ContextController(DataFixtures.getTestClientData()),
                 sourceConfig,
                 mockEventSender,
-                eventQueue
+                eventQueue,
+                true
         );
     }
 
@@ -157,7 +158,8 @@ class EventProcessorTest {
                 new ContextController(anotherTestClientData),
                 sourceConfig,
                 mockEventSender,
-                eventQueue
+                eventQueue,
+                true
         );
         assertThat(eventProcessor.eventPassesCurationRules(minimalEventProcessed(), getStreamConfigsMap())).isFalse();
     }

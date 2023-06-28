@@ -1,5 +1,6 @@
 package org.wikimedia.metrics_platform.config;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.google.gson.annotations.SerializedName;
@@ -29,6 +30,10 @@ public enum DestinationEventService {
 
     @SneakyThrows
     DestinationEventService(String baseUri) {
-        this.baseUri = new URL(baseUri + "/v1/events?hasty=true");
+        this.baseUri = new URL(baseUri + "/v1/events");
+    }
+
+    public URL getBaseUri(boolean isProd) throws MalformedURLException {
+        return isProd ? new URL(baseUri + "?hasty=true") : this.baseUri;
     }
 }

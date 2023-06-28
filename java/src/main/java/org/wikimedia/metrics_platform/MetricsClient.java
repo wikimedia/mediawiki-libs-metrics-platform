@@ -270,6 +270,7 @@ public final class MetricsClient {
         private Duration streamConfigFetchInterval = Duration.ofSeconds(30);
         private Duration sendEventsInitialDelay = Duration.ofSeconds(3);
         private Duration sendEventsInterval = Duration.ofSeconds(30);
+        private boolean isProd = true;
 
         public Builder(ClientData clientData) {
             this.clientData = clientData;
@@ -289,7 +290,8 @@ public final class MetricsClient {
                     new ContextController(clientData),
                     sourceConfigRef,
                     eventSender,
-                    eventQueue
+                    eventQueue,
+                    isProd
             );
 
             MetricsClient metricsClient = new MetricsClient(
