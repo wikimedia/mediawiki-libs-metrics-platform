@@ -33,7 +33,7 @@ public class EventProcessor {
     private final AtomicReference<SourceConfig> sourceConfig;
     private final BlockingQueue<EventProcessed> eventQueue;
     private final EventSender eventSender;
-    private final boolean isProd;
+    private final boolean isDebug;
 
     /**
      * EventProcessor constructor.
@@ -43,13 +43,13 @@ public class EventProcessor {
             AtomicReference<SourceConfig> sourceConfig,
             EventSender eventSender,
             BlockingQueue<EventProcessed> eventQueue,
-            boolean isProd
+            boolean isDebug
     ) {
         this.contextController = contextController;
         this.sourceConfig = sourceConfig;
         this.eventSender = eventSender;
         this.eventQueue = eventQueue;
-        this.isProd = isProd;
+        this.isDebug = isDebug;
     }
 
     /**
@@ -104,8 +104,9 @@ public class EventProcessor {
         List<EventProcessed> pendingValidEvents
     ) {
         try {
-            eventSender.sendEvents(destinationEventService.getBaseUri(isProd), pendingValidEvents);
-        } catch (IOException ignore) {
+            eventSender.sendEvents(destinationEventService.getBaseUri(isDebug), pendingValidEvents);
+        } catch (IOException e) {
+            log.log(Level.WARNING, "Failed to send " + pendingValidEvents.size() + " events. Adding back to queue.", e);
             eventQueue.addAll(pendingValidEvents);
         }
     }

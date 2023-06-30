@@ -33,7 +33,11 @@ public enum DestinationEventService {
         this.baseUri = new URL(baseUri + "/v1/events");
     }
 
-    public URL getBaseUri(boolean isProd) throws MalformedURLException {
-        return isProd ? new URL(baseUri + "?hasty=true") : this.baseUri;
+    public URL getBaseUri() throws MalformedURLException {
+        return getBaseUri(false);
+    }
+
+    public URL getBaseUri(boolean isDebug) throws MalformedURLException {
+        return isDebug ? this.baseUri : new URL(baseUri + "?hasty=true");
     }
 }

@@ -1,9 +1,7 @@
 package org.wikimedia.metrics_platform;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.INFO;
-import static java.util.logging.Level.WARNING;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -43,22 +41,20 @@ public class EventSenderDefault implements EventSender {
 
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), UTF_8))) {
                 gson.toJson(events, writer);
-                log.log(INFO, "Events sent: posted data to event logging!");
             }
 
             int status = connection.getResponseCode();
-            if (status != HttpURLConnection.HTTP_OK) {
-                log.log(WARNING, "Events NOT sent: response was " + status);
-                String unsentEvents = gson.toJson(events);
-                log.log(WARNING, "Unsent events: " + unsentEvents);
-                throw new IOException("Could not send events, response status is not HTTP/OK, but is " + status);
-            }
-
-            if (log.isLoggable(FINE)) {
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), UTF_8))) {
-                    String result = br.lines().collect(Collectors.joining());
-                    log.log(FINE, "Events sent: " + result);
+            if (status < 300) {
+                log.log(INFO, "Sent " + events.size() + " events successfully.");
+            } else {
+                String message = connection.getResponseMessage();
+                if (status < 500) {
+                    // attempt to read the error message body and pass it back.
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(connection.getErrorStream(), UTF_8))) {
+                        message += ": " + br.lines().collect(Collectors.joining());
+                    }
                 }
+                throw new IOException(message);
             }
         } finally {
             if (connection != null) connection.disconnect();

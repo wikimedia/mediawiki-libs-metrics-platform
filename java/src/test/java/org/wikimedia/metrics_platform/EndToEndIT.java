@@ -45,7 +45,7 @@ public class EndToEndIT {
         ClientData testJavaClientData = createConsistencyTestClientData();
         MetricsClient testJavaMetricsClient = MetricsClient.builder(testJavaClientData)
                 .streamConfigURL(new URL(wireMockRuntimeInfo.getHttpBaseUrl() + "/config"))
-                .isProd(true)
+                .isDebug(false)
                 .build();
 
         await().atMost(5, SECONDS).until(testJavaMetricsClient::isFullyInitialized);
