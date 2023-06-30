@@ -4,6 +4,7 @@ import static org.wikimedia.metrics_platform.context.DataFixtures.getTestClientD
 import static org.wikimedia.metrics_platform.event.EventProcessed.fromEvent;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.PageData;
@@ -35,6 +36,28 @@ public final class EventFixtures {
                 PerformerData.builder()
                         .groups(Arrays.asList("user", "autoconfirmed", "steward"))
                         .isLoggedIn(true).editCountBucket("1000+ edits")
+                        .build()
+        );
+        return eventProcessed;
+    }
+
+    public static EventProcessed getEvent(
+            Integer id,
+            String namespaceName,
+            List<String> groups,
+            boolean isLoggedIn,
+            String editCount
+    ) {
+        Event event = new Event("test/event", "test.event", "testEvent");
+        ClientData clientData = new ClientData();
+        clientData.setPageData(PageData.builder().id(id).namespaceName(namespaceName).build());
+
+        event.setClientData(clientData);
+        EventProcessed eventProcessed = fromEvent(event);
+        eventProcessed.setPerformerData(
+                PerformerData.builder()
+                        .groups(groups)
+                        .isLoggedIn(isLoggedIn).editCountBucket(editCount)
                         .build()
         );
         return eventProcessed;

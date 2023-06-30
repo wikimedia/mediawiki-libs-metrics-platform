@@ -6,7 +6,9 @@ import static java.util.Collections.singletonMap;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.METRICS_PLATFORM_SCHEMA_TITLE;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM_FAMILY;
+import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_DATABASE;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_TITLE;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_SESSION_ID;
 import static org.wikimedia.metrics_platform.curation.CurationFilterFixtures.curationFilter;
 
 import java.util.Arrays;
@@ -90,7 +92,9 @@ public final class StreamConfigFixtures {
         String[] provideValues = {
             AGENT_CLIENT_PLATFORM,
             AGENT_CLIENT_PLATFORM_FAMILY,
-            PAGE_TITLE
+            PAGE_TITLE,
+            MEDIAWIKI_DATABASE,
+            PERFORMER_SESSION_ID
         };
         Set<String> events = Collections.singleton("test_event");
         SampleConfig sampleConfig = new SampleConfig(1.0f, SampleConfig.Identifier.PAGEVIEW);

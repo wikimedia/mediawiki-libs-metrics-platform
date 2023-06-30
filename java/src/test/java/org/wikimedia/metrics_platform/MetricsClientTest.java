@@ -8,6 +8,7 @@ import static org.wikimedia.metrics_platform.config.StreamConfigFixtures.streamC
 import static org.wikimedia.metrics_platform.curation.CurationFilterFixtures.curationFilter;
 import static org.wikimedia.metrics_platform.event.EventProcessed.fromEvent;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -102,9 +103,18 @@ class MetricsClientTest {
         // Update a few client data members to confirm that the client data parameter during metrics client
         // instantiation gets overridden with the client data sent with the event.
         ClientData clientData = DataFixtures.getTestClientData();
-        PageData pageData = clientData.getPageData();
-        pageData.setId(108);
-        pageData.setTitle("Revised Page Title");
+        PageData pageData = PageData.builder()
+                .id(108)
+                .title("Revised Page Title")
+                .namespace(0)
+                .namespaceName("Main")
+                .revisionId(1L)
+                .wikidataItemQid("Q123456")
+                .contentLanguage("en")
+                .isRedirect(false)
+                .groupsAllowedToMove(Collections.singleton("*"))
+                .groupsAllowedToEdit(Collections.singleton("*"))
+                .build();
         clientData.setPageData(pageData);
 
         client.submitMetricsEvent("test_event", clientData, getTestCustomData());

@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Agent context data fields.
@@ -17,11 +16,14 @@ import lombok.NoArgsConstructor;
  */
 @Builder
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @ParametersAreNullableByDefault
 public class AgentData {
-    @SerializedName("app_install_id") private String appInstallId;
-    @SerializedName("client_platform") private String clientPlatform;
-    @SerializedName("client_platform_family") private String clientPlatformFamily;
+
+    public static final AgentData NULL_AGENT_DATA = AgentData.builder().build();
+
+    @SerializedName("app_install_id") private final String appInstallId;
+    @SerializedName("client_platform") private final String clientPlatform;
+    @SerializedName("client_platform_family") private final String clientPlatformFamily;
+
 }

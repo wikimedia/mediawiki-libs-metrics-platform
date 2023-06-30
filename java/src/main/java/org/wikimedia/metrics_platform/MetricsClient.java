@@ -35,6 +35,7 @@ import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.config.StreamConfigFetcher;
 import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.CustomData;
+import org.wikimedia.metrics_platform.context.PerformerData;
 import org.wikimedia.metrics_platform.event.Event;
 import org.wikimedia.metrics_platform.event.EventProcessed;
 
@@ -210,7 +211,10 @@ public final class MetricsClient {
      * @param event event
      */
     private void addRequiredMetadata(EventProcessed event) {
-        event.getPerformerData().setSessionId(sessionController.getSessionId());
+        event.setPerformerData(
+                PerformerData.builderFrom(event.getPerformerData())
+                        .sessionId(sessionController.getSessionId())
+                        .build());
         event.setTimestamp(DATE_FORMAT.format(now()));
     }
 

@@ -51,25 +51,25 @@ public class EventProcessed extends Event {
 
     @Nonnull
     public AgentData getAgentData() {
-        agentData = firstNonNull(agentData, AgentData::new);
+        agentData = firstNonNull(agentData, AgentData.NULL_AGENT_DATA);
         return agentData;
     }
 
     @Nonnull
     public PageData getPageData() {
-        pageData = firstNonNull(pageData, PageData::new);
+        pageData = firstNonNull(pageData, PageData.NULL_PAGE_DATA);
         return pageData;
     }
 
     @Nonnull
     public MediawikiData getMediawikiData() {
-        mediawikiData = firstNonNull(mediawikiData, MediawikiData::new);
+        mediawikiData = firstNonNull(mediawikiData, MediawikiData.NULL_MEDIAWIKI_DATA);
         return mediawikiData;
     }
 
     @Nonnull
     public PerformerData getPerformerData() {
-        performerData = firstNonNull(performerData, PerformerData::new);
+        performerData = firstNonNull(performerData, PerformerData.NULL_PERFORMER_DATA);
         return performerData;
     }
 

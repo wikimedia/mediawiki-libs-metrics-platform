@@ -12,6 +12,12 @@ public final class Objects {
     }
 
     @Nonnull
+    public static <T> T firstNonNull(@Nullable T first, @Nonnull T second) {
+        if (first != null) return first;
+        return second;
+    }
+
+    @Nonnull
     public static <T> T firstNonNull(@Nullable T first, @Nonnull Supplier<T> second) {
         if (first != null) return first;
         T result = second.get();

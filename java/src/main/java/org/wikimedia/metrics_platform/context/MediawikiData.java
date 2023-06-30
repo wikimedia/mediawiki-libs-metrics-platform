@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Mediawiki context data fields.
@@ -17,15 +16,17 @@ import lombok.NoArgsConstructor;
  */
 @Builder
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @ParametersAreNullableByDefault
 public class MediawikiData {
-    @SerializedName("skin") private String skin;
-    @SerializedName("version") private String version;
-    @SerializedName("is_production") private Boolean isProduction;
-    @SerializedName("is_debug_mode") private Boolean isDebugMode;
-    @SerializedName("database") private String database;
-    @SerializedName("site_content_language") private String siteContentLanguage;
-    @SerializedName("site_content_language_variant") private String siteContentLanguageVariant;
+
+    public static final MediawikiData NULL_MEDIAWIKI_DATA = MediawikiData.builder().build();
+
+    @SerializedName("skin") private final String skin;
+    @SerializedName("version") private final String version;
+    @SerializedName("is_production") private final Boolean isProduction;
+    @SerializedName("is_debug_mode") private final Boolean isDebugMode;
+    @SerializedName("database") private final String database;
+    @SerializedName("site_content_language") private final String siteContentLanguage;
+    @SerializedName("site_content_language_variant") private final String siteContentLanguageVariant;
 }

@@ -10,6 +10,8 @@ import java.util.Locale;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
+import org.wikimedia.metrics_platform.context.AgentData;
+import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.DataFixtures;
 import org.wikimedia.metrics_platform.event.Event;
 import org.wikimedia.metrics_platform.event.EventProcessed;
@@ -23,7 +25,6 @@ class EventTest {
         Event eventBasic = new Event("test/event/1.0.0", "test.event", "testEvent");
         EventProcessed event = fromEvent(eventBasic);
         String timestamp = DATE_FORMAT.format(Instant.EPOCH);
-        event.getAgentData().setAppInstallId("foo");
         event.setTimestamp(timestamp);
 
         assertThat(event.getStream()).isEqualTo("test.event");
@@ -38,8 +39,15 @@ class EventTest {
         event.setTimestamp("2021-08-27T12:00:00Z");
 
         event.setClientData(DataFixtures.getTestClientData());
-
-        event.getAgentData().setAppInstallId(uuid);
+        ClientData clientData = DataFixtures.getTestClientData();
+        clientData.setAgentData(
+                AgentData.builder()
+                        .appInstallId(uuid)
+                        .clientPlatform("android")
+                        .clientPlatformFamily("app")
+                        .build()
+        );
+        event.setClientData(clientData);
 
         assertThat(event.getStream()).isEqualTo("test.event");
         assertThat(event.getSchema()).isEqualTo("test/event/1.0.0");
