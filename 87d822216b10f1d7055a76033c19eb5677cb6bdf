@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a626879f_bf2b418e",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/ContextController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-08-15T14:23:38Z",
+      "side": 1,
+      "message": "Non-blocking:\n\nThat this line is a duplicate of L68 highlighted an inconsistency with the JS and PHP MPCs – that if there are no contextual attributes requested for a stream, then _all_ available client data will be added to the event, not _none_. To fix this, we only need to remove L68.\n\nThis is non-blocking because we control all streams that MPCs submit events to and none of them request no contextual attributes.\n\nPer our discussion, I\u0027ll create a task to update the MPCs to always add agent-related context attributes and another task to discuss which other context attributes should be added by default.",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 42
+      },
+      "revId": "87d822216b10f1d7055a76033c19eb5677cb6bdf",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
