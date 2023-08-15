@@ -22,6 +22,30 @@
       },
       "revId": "87d822216b10f1d7055a76033c19eb5677cb6bdf",
       "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9718b264_91a75359",
+        "filename": "java/src/main/java/org/wikimedia/metrics_platform/ContextController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1196
+      },
+      "writtenOn": "2023-08-15T14:40:01Z",
+      "side": 1,
+      "message": "https://phabricator.wikimedia.org/T344254",
+      "parentUuid": "a626879f_bf2b418e",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 42
+      },
+      "revId": "87d822216b10f1d7055a76033c19eb5677cb6bdf",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
     }
   ]
 }
