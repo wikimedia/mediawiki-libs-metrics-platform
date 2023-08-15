@@ -128,38 +128,6 @@
         "eventlogging_ElementTiming"
       ]
     },
-    "eventlogging_EchoInteraction": {
-      "schema_title": "analytics/legacy/echointeraction",
-      "topic_prefixes": null,
-      "destination_event_service": "eventgate-analytics-external",
-      "consumers": {
-        "analytics_hadoop_ingestion": {
-          "job_name": "eventlogging_legacy",
-          "enabled": true
-        }
-      },
-      "canary_events_enabled": true,
-      "stream": "eventlogging_EchoInteraction",
-      "topics": [
-        "eventlogging_EchoInteraction"
-      ]
-    },
-    "eventlogging_EchoMail": {
-      "schema_title": "analytics/legacy/echomail",
-      "topic_prefixes": null,
-      "destination_event_service": "eventgate-analytics-external",
-      "consumers": {
-        "analytics_hadoop_ingestion": {
-          "job_name": "eventlogging_legacy",
-          "enabled": true
-        }
-      },
-      "canary_events_enabled": true,
-      "stream": "eventlogging_EchoMail",
-      "topics": [
-        "eventlogging_EchoMail"
-      ]
-    },
     "eventlogging_EditAttemptStep": {
       "schema_title": "analytics/legacy/editattemptstep",
       "topic_prefixes": null,
