@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40bf5f05_091a7ca0",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EventProcessorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-08-17T13:47:31Z",
+      "side": 1,
+      "message": "Unrelated (please ignore for this CR): we should really not have a debug flag on the EventProcessor, this should be configuration on the DestinationService. We can have more discussion around this if you have time one of these days.",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 21
+      },
+      "revId": "99f048f8bc22f625c6a8bdec74801f0f183af8f9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f726854c_5183a60d",
+        "filename": "java/src/test/java/org/wikimedia/metrics_platform/EventTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 2974
+      },
+      "writtenOn": "2023-08-17T13:47:31Z",
+      "side": 1,
+      "message": "unrelated: I might have mentioned it already, but there are extensions to AssertJ that support nicer ways to assert on JSON",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 18
+      },
+      "revId": "99f048f8bc22f625c6a8bdec74801f0f183af8f9",
+      "serverId": "e9e9afe9-4712-486d-8885-f54b72dd1951"
+    }
+  ]
+}
