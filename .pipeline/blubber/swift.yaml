@@ -1,7 +1,7 @@
 version: v4
 variants:
   test:
-    base: docker-registry.wikimedia.org/dev/buster-swift53
+    base: docker-registry.wikimedia.org/dev/buster-swift53:0.2.0
     copies: [local]
     runs:
       insecurely: true
