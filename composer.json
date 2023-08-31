@@ -33,7 +33,7 @@
 		"phpunit/phpunit": "9.5.28",
 		"symfony/process": "^5.4",
 		"wikimedia/testing-access-wrapper": "2.0.0",
-		"wikimedia/timestamp": "3.0.0"
+		"wikimedia/timestamp": "4.1.0"
 	},
 	"autoload": {
 		"psr-4": {
