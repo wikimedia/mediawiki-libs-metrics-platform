@@ -24,10 +24,10 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:https://gerrit.wikimedia.org/r/mediawiki/libs/metrics-platform</connection>
-        <developerConnection>scm:git:ssh://gerrit.wikimedia.org:29418/mediawiki/libs/metrics-platform</developerConnection>
+        <connection>scm:git:https://gitlab.wikimedia.org/repos/data-engineering/metrics-platform.git</connection>
+        <developerConnection>scm:git:git@gitlab.wikimedia.org:repos/data-engineering/metrics-platform.git</developerConnection>
         <tag>metrics-platform-1.0</tag>
-        <url>https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/libs/metrics-platform</url>
+        <url>https://gitlab.wikimedia.org/repos/data-engineering/metrics-platform</url>
     </scm>
 
     <dependencies>
