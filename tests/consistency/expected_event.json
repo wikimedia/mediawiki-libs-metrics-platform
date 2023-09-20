@@ -1,5 +1,5 @@
 {
-	"$schema": "/analytics/mediawiki/client/metrics_event/1.2.0",
+	"$schema": "/analytics/mediawiki/client/metrics_event/2.0.0",
 	"name": "test_consistency_event",
 	"custom_data": {
 		"test": {
