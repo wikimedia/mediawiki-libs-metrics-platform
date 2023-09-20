@@ -53,7 +53,7 @@ public final class MetricsClient {
 
     private static final ScheduledExecutorService EXECUTOR_SERVICE = Executors.newScheduledThreadPool(1, new SimpleThreadFactory());
 
-    public static final String METRICS_PLATFORM_VERSION = "1.2.0";
+    public static final String METRICS_PLATFORM_VERSION = "2.0.0";
 
     private static final String METRICS_PLATFORM_SCHEMA = "/analytics/mediawiki/client/metrics_event/" + METRICS_PLATFORM_VERSION;
 
