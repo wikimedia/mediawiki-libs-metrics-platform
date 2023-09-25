@@ -92,3 +92,15 @@ interface EventPerformerData {
 }
 
 type SampleData = StreamSamplingConfig;
+
+interface Interaction {
+    action: string;
+    action_subtype?: string;
+    action_source?: string;
+    action_context?: string;
+}
+
+interface ElementInteraction extends Interaction {
+    element_id: string;
+    element_friendly_name: string;
+}

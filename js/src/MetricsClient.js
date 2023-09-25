@@ -405,5 +405,74 @@ MetricsClient.prototype.processDispatchCall = function (
 	}
 };
 
+/**
+ * Submit an interaction event to a stream.
+ *
+ * An interaction event (E) MUST validate against the
+ * /analytics/metrics_platform/interaction/common/1.0.0 schema. At the time of writing, this means
+ * that E MUST have the `action` property and MAY have the following properties:
+ *
+ * * `action_subtype`
+ * * `action_source`
+ * * `action_context`
+ *
+ * If E does not have the `action` property, then a warning is logged.
+ *
+ * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/Implementations
+ * @todo Should we create an Implementations subpage?
+ *
+ * @unstable
+ *
+ * @param {string} streamName
+ * @param {Interaction} interactionData
+ * @param {Object} [instrumentData]
+ */
+MetricsClient.prototype.submitInteraction = function (
+	streamName,
+	interactionData,
+	instrumentData
+) {
+	if ( !interactionData || !interactionData.action ) {
+		var message = 'submitInteraction( ' + streamName + ', interactionData';
+
+		if ( instrumentData ) {
+			message += ', instrumentData';
+		}
+
+		message += ' ) called with interactionData missing required field "action". No event will be produced.';
+
+		this.integration.logWarning( message );
+
+		return;
+	}
+
+	// eslint-disable-next-line es/no-object-assign
+	var event = Object.assign(
+		{},
+		interactionData,
+		instrumentData || {}
+	);
+
+	this.submit( streamName, event );
+};
+
+var CLICK_SCHEMA_ID = '/analytics/metrics_platform/web/click/1.0.0';
+
+/**
+ * See `MetricsClient#submitInteraction()`.
+ *
+ * @unstable
+ *
+ * @param {string} streamName
+ * @param {ElementInteraction} interactionData
+ * @param {Object} instrumentData
+ */
+MetricsClient.prototype.submitClick = function ( streamName, interactionData, instrumentData ) {
+	interactionData.$schema = CLICK_SCHEMA_ID;
+	interactionData.action = 'click';
+
+	this.submitInteraction( streamName, interactionData, instrumentData );
+};
+
 module.exports = MetricsClient;
 module.exports.SCHEMA = SCHEMA;
