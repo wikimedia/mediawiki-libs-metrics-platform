@@ -7,8 +7,8 @@
 	"compilerOptions": {
 		"strict": true,
 		"noImplicitReturns": true,
-		"target": "es5",
-		"lib": [ "es5", "dom" ],
+		"target": "es6",
+		"lib": [ "es6", "dom" ],
 		"allowJs": true,
 		"checkJs": true,
 		"noEmit": true

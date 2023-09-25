@@ -2,12 +2,12 @@
 // (see https://github.com/microsoft/TypeScript/issues/18609).
 // @ts-nocheck
 
-var MetricsClient = require( './MetricsClient.js' );
+const MetricsClient = require( './MetricsClient.js' );
 
-var STATE_FETCHING_STREAM_CONFIGS = 1;
-var STATE_FETCHED_STREAM_CONFIGS = 2;
+const STATE_FETCHING_STREAM_CONFIGS = 1;
+const STATE_FETCHED_STREAM_CONFIGS = 2;
 
-var CALL_QUEUE_MAX_LENGTH = 128;
+const CALL_QUEUE_MAX_LENGTH = 128;
 
 /**
  * @param {Integration} integration
@@ -34,7 +34,7 @@ ExternalMetricsClient.prototype.constructor = ExternalMetricsClient;
  * @ignore
  */
 ExternalMetricsClient.prototype.fetchStreamConfigs = function () {
-	var that = this;
+	const that = this;
 
 	that.integration.fetchStreamConfigs()
 		.then( function ( /** @type {StreamConfigs} */ streamConfigs ) {
@@ -60,10 +60,10 @@ ExternalMetricsClient.prototype.queueCall = function ( call ) {
 	this.callQueue.push( call );
 
 	if ( this.callQueue.length > CALL_QUEUE_MAX_LENGTH ) {
-		var droppedCall = this.callQueue.shift();
+		const droppedCall = this.callQueue.shift();
 
 		if ( droppedCall ) {
-			var callString = [
+			const callString = [
 				droppedCall[ 0 ],
 				'( ',
 				droppedCall[ 2 ],
@@ -91,7 +91,7 @@ ExternalMetricsClient.prototype.processCallQueue = function () {
 	}
 
 	while ( this.callQueue.length ) {
-		var call = this.callQueue.shift();
+		const call = this.callQueue.shift();
 
 		if ( !call ) {
 			// NOTE: This should never happen.
@@ -114,7 +114,7 @@ ExternalMetricsClient.prototype.processCallQueue = function () {
  * processed immediately.
  */
 ExternalMetricsClient.prototype.submit = function ( streamName, eventData ) {
-	var result = this.validateSubmitCall( streamName, eventData );
+	const result = this.validateSubmitCall( streamName, eventData );
 
 	if ( result ) {
 		this.queueCall( [
@@ -134,7 +134,7 @@ ExternalMetricsClient.prototype.submit = function ( streamName, eventData ) {
  * processed immediately.
  */
 ExternalMetricsClient.prototype.dispatch = function ( eventName, customData ) {
-	var result = this.validateDispatchCall( eventName, customData );
+	const result = this.validateDispatchCall( eventName, customData );
 
 	if ( result ) {
 		this.queueCall( [

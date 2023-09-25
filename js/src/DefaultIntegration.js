@@ -1,16 +1,16 @@
 /* eslint-disable jsdoc/require-returns-check,no-unused-vars */
 
-var copyAttributes = require( './ContextUtils.js' ).copyAttributes;
+const copyAttributes = require( './ContextUtils.js' ).copyAttributes;
 
-var DEFAULT_STREAM_CONFIGS_ORIGIN = 'https://meta.wikimedia.org';
-var DEFAULT_EVENTGATE_ORIGIN = 'https://intake-analytics.wikimedia.org';
+const DEFAULT_STREAM_CONFIGS_ORIGIN = 'https://meta.wikimedia.org';
+const DEFAULT_EVENTGATE_ORIGIN = 'https://intake-analytics.wikimedia.org';
 
 /**
  * @param {string} origin
  * @return {string}
  */
 function getStreamConfigsUrl( origin ) {
-	var result = new URL( origin );
+	const result = new URL( origin );
 
 	result.pathname = '/w/api.php';
 
@@ -33,7 +33,7 @@ function getStreamConfigsUrl( origin ) {
  * @return {string}
  */
 function getEventGateUrl( origin ) {
-	var result = new URL( origin );
+	const result = new URL( origin );
 
 	result.pathname = '/v1/events';
 	result.searchParams.set( 'hasty', 'true' );

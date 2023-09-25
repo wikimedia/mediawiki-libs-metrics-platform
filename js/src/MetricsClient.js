@@ -1,8 +1,8 @@
-var ContextController = require( './ContextController.js' );
-var SamplingController = require( './SamplingController.js' );
-var CurationController = require( './CurationController.js' );
+const ContextController = require( './ContextController.js' );
+const SamplingController = require( './SamplingController.js' );
+const CurationController = require( './CurationController.js' );
 
-var SCHEMA = '/analytics/mediawiki/client/metrics_event/2.0.0';
+const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.0.0';
 
 /**
  * Client for producing events to [the Event Platform](https://wikitech.wikimedia.org/wiki/Event_Platform) and
@@ -62,7 +62,7 @@ function getStreamConfigInternal( streamConfigs, streamName ) {
  * @return {StreamConfig|undefined}
  */
 MetricsClient.prototype.getStreamConfig = function ( streamName ) {
-	var streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
+	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
 
 	return streamConfig ? this.integration.clone( streamConfig ) : streamConfig;
 };
@@ -73,10 +73,10 @@ MetricsClient.prototype.getStreamConfig = function ( streamName ) {
  */
 function getEventNameToStreamNamesMap( streamConfigs ) {
 	/** @type Record<string, string[]> */
-	var result = {};
+	const result = {};
 
-	for ( var streamName in streamConfigs ) {
-		var streamConfig = streamConfigs[ streamName ];
+	for ( const streamName in streamConfigs ) {
+		const streamConfig = streamConfigs[ streamName ];
 
 		if (
 			!streamConfig.producers ||
@@ -86,13 +86,13 @@ function getEventNameToStreamNamesMap( streamConfigs ) {
 			continue;
 		}
 
-		var events = streamConfig.producers.metrics_platform_client.events;
+		let events = streamConfig.producers.metrics_platform_client.events;
 
 		if ( typeof events === 'string' ) {
 			events = [ events ];
 		}
 
-		for ( var i = 0; i < events.length; ++i ) {
+		for ( let i = 0; i < events.length; ++i ) {
 			if ( !result[ events[ i ] ] ) {
 				result[ events[ i ] ] = [];
 			}
@@ -136,9 +136,9 @@ MetricsClient.prototype.getStreamNamesForEvent = function ( eventName ) {
 	}
 
 	/** @type string[] */
-	var result = [];
+	let result = [];
 
-	for ( var key in this.eventNameToStreamNamesMap ) {
+	for ( const key in this.eventNameToStreamNamesMap ) {
 		if ( eventName.indexOf( key ) === 0 ) {
 			result = result.concat( this.eventNameToStreamNamesMap[ key ] );
 		}
@@ -203,7 +203,7 @@ MetricsClient.prototype.addRequiredMetadata = function ( eventData, streamName )
  * @param {BaseEventData} eventData The event data
  */
 MetricsClient.prototype.submit = function ( streamName, eventData ) {
-	var result = this.validateSubmitCall( streamName, eventData );
+	const result = this.validateSubmitCall( streamName, eventData );
 
 	if ( result ) {
 		this.processSubmitCall( new Date().toISOString(), streamName, eventData );
@@ -243,7 +243,7 @@ MetricsClient.prototype.validateSubmitCall = function ( streamName, eventData ) 
 MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, eventData ) {
 	eventData.dt = timestamp;
 
-	var streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
+	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
 
 	if ( !streamConfig ) {
 		return;
@@ -268,19 +268,19 @@ MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, ev
  */
 function getFormattedCustomData( customData ) {
 	/** @type {Record<string,EventCustomDatum>} */
-	var result = {};
+	const result = {};
 
 	if ( !customData ) {
 		return result;
 	}
 
-	for ( var key in customData ) {
+	for ( const key in customData ) {
 		if ( !key.match( /^[$a-z]+[a-z0-9_]*$/ ) ) {
 			throw new Error( 'The key "' + key + '" is not snake_case.' );
 		}
 
-		var value = customData[ key ];
-		var type = value === null ? 'null' : typeof value;
+		const value = customData[ key ];
+		const type = value === null ? 'null' : typeof value;
 
 		result[ key ] = {
 			// eslint-disable-next-line camelcase
@@ -309,7 +309,7 @@ function getFormattedCustomData( customData ) {
  * @param {Record<string, any>} [customData]
  */
 MetricsClient.prototype.dispatch = function ( eventName, customData ) {
-	var result = this.validateDispatchCall( eventName, customData );
+	const result = this.validateDispatchCall( eventName, customData );
 
 	if ( result ) {
 		this.processDispatchCall( new Date().toISOString(), eventName, result );
@@ -367,13 +367,13 @@ MetricsClient.prototype.processDispatchCall = function (
 	eventName,
 	formattedCustomData
 ) {
-	var streamNames = this.getStreamNamesForEvent( eventName );
+	const streamNames = this.getStreamNamesForEvent( eventName );
 
 	// Produce the event(s)
-	for ( var i = 0; i < streamNames.length; ++i ) {
+	for ( let i = 0; i < streamNames.length; ++i ) {
 		/* eslint-disable camelcase */
 		/** @type {MetricsPlatformEventData} */
-		var eventData = {
+		const eventData = {
 			$schema: SCHEMA,
 			dt: timestamp,
 			name: eventName
@@ -384,8 +384,8 @@ MetricsClient.prototype.processDispatchCall = function (
 		}
 		/* eslint-enable camelcase */
 
-		var streamName = streamNames[ i ];
-		var streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
+		const streamName = streamNames[ i ];
+		const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
 
 		if ( !streamConfig ) {
 			// NOTE: This SHOULD never happen.
@@ -412,9 +412,9 @@ MetricsClient.prototype.processDispatchCall = function (
  * /analytics/metrics_platform/interaction/common/1.0.0 schema. At the time of writing, this means
  * that E MUST have the `action` property and MAY have the following properties:
  *
- * * `action_subtype`
- * * `action_source`
- * * `action_context`
+ * `action_subtype`
+ * `action_source`
+ * `action_context`
  *
  * If E does not have the `action` property, then a warning is logged.
  *
@@ -433,7 +433,7 @@ MetricsClient.prototype.submitInteraction = function (
 	instrumentData
 ) {
 	if ( !interactionData || !interactionData.action ) {
-		var message = 'submitInteraction( ' + streamName + ', interactionData';
+		let message = 'submitInteraction( ' + streamName + ', interactionData';
 
 		if ( instrumentData ) {
 			message += ', instrumentData';
@@ -446,8 +446,7 @@ MetricsClient.prototype.submitInteraction = function (
 		return;
 	}
 
-	// eslint-disable-next-line es/no-object-assign
-	var event = Object.assign(
+	const event = Object.assign(
 		{},
 		interactionData,
 		instrumentData || {}
@@ -456,7 +455,7 @@ MetricsClient.prototype.submitInteraction = function (
 	this.submit( streamName, event );
 };
 
-var CLICK_SCHEMA_ID = '/analytics/metrics_platform/web/click/1.0.0';
+const CLICK_SCHEMA_ID = '/analytics/metrics_platform/web/click/1.0.0';
 
 /**
  * See `MetricsClient#submitInteraction()`.

@@ -1,6 +1,6 @@
-var isValidSample = require( './StreamConfigUtils.js' ).isValidSample;
+const isValidSample = require( './StreamConfigUtils.js' ).isValidSample;
 
-var UINT32_MAX = 4294967295; // (2^32) - 1
+const UINT32_MAX = 4294967295; // (2^32) - 1
 
 /**
  * Evaluate events for presence in sample based on the stream configuration.
@@ -33,7 +33,7 @@ SamplingController.prototype.streamInSample = function ( streamConfig ) {
 		return false;
 	}
 
-	var id;
+	let id;
 	switch ( streamConfig.sample.unit ) {
 		case 'pageview':
 			id = this.integration.getPageviewId();
