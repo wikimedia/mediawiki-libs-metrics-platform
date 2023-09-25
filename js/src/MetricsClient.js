@@ -408,6 +408,10 @@ MetricsClient.prototype.processDispatchCall = function (
 /**
  * Submit an interaction event to a stream.
  *
+ * An interaction event is meant to represent a basic interaction with some target or some event
+ * occurring, e.g. the user (**performer**) tapping/clicking a UI element, or an app notifying the
+ * server of its current state.
+ *
  * An interaction event (E) MUST validate against the
  * /analytics/metrics_platform/interaction/common/1.0.0 schema. At the time of writing, this means
  * that E MUST have the `action` property and MAY have the following properties:
@@ -419,7 +423,8 @@ MetricsClient.prototype.processDispatchCall = function (
  * If E does not have the `action` property, then a warning is logged.
  *
  * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/Implementations
- * @todo Should we create an Implementations subpage?
+ * @todo Should we create an API subpage?
+ * @todo Link to the page created as part of https://phabricator.wikimedia.org/T345906
  *
  * @unstable
  *
