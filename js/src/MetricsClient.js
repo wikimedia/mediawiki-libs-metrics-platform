@@ -430,7 +430,7 @@ MetricsClient.prototype.processDispatchCall = function (
  *
  * @param {string} streamName
  * @param {string} schemaID
- * @param {Interaction} interactionData
+ * @param {InteractionData} interactionData
  * @param {Object} [instrumentData]
  */
 MetricsClient.prototype.submitInteraction = function (
