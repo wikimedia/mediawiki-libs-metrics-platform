@@ -429,11 +429,13 @@ MetricsClient.prototype.processDispatchCall = function (
  * @unstable
  *
  * @param {string} streamName
+ * @param {string} schemaID
  * @param {Interaction} interactionData
  * @param {Object} [instrumentData]
  */
 MetricsClient.prototype.submitInteraction = function (
 	streamName,
+	schemaID,
 	interactionData,
 	instrumentData
 ) {
@@ -454,7 +456,10 @@ MetricsClient.prototype.submitInteraction = function (
 	const event = Object.assign(
 		{},
 		interactionData,
-		instrumentData || {}
+		instrumentData || {},
+		{
+			$schema: schemaID
+		}
 	);
 
 	this.submit( streamName, event );
@@ -472,10 +477,9 @@ const CLICK_SCHEMA_ID = '/analytics/metrics_platform/web/click/1.0.0';
  * @param {Object} instrumentData
  */
 MetricsClient.prototype.submitClick = function ( streamName, interactionData, instrumentData ) {
-	interactionData.$schema = CLICK_SCHEMA_ID;
 	interactionData.action = 'click';
 
-	this.submitInteraction( streamName, interactionData, instrumentData );
+	this.submitInteraction( streamName, CLICK_SCHEMA_ID, interactionData, instrumentData );
 };
 
 module.exports = MetricsClient;

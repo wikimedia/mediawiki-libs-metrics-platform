@@ -282,10 +282,13 @@ QUnit.test( 'dispatch() - warn/do not produce event when streamConfigs is false'
 } );
 
 QUnit.test( 'submitInteraction() - warn/do not produce for interactionData without action', function ( assert ) {
-	// @ts-ignore TS2345
-	metricsClient.submitInteraction( 'metrics.platform.test6', {
-		$schema: '/analytics/metrics_platform/interaction/common/1.0.0'
-	} );
+	metricsClient.submitInteraction(
+		'metrics.platform.test6',
+		'/analytics/metrics_platform/interaction/common/1.0.0',
+
+		// @ts-ignore TS2345
+		{}
+	);
 
 	assert.strictEqual( logWarningStub.callCount, 1, 'logWarning() should be called' );
 	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
