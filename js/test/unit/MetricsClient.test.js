@@ -294,3 +294,41 @@ QUnit.test( 'submitInteraction() - warn/do not produce for interactionData witho
 	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
 	assert.strictEqual( onSubmitStub.callCount, 0, 'onSubmit() should not be called' );
 } );
+
+QUnit.test( 'submitInteraction() - produce event correctly', function ( assert ) {
+	metricsClient.submitInteraction(
+		'metrics.platform.test6',
+		'/analytics/metrics_platform/interaction/common/1.0.0',
+		{
+			action: 'foo'
+		}
+	);
+
+	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
+	assert.strictEqual( enqueueEventStub.callCount, 1, 'enqueueEvent() should be called' );
+	assert.strictEqual( onSubmitStub.callCount, 1, 'onSubmit() should be called' );
+
+	var event = enqueueEventStub.args[ 0 ][ 0 ];
+
+	// @ts-ignore TS2345
+	assert.strictEqual( event.meta.stream, 'metrics.platform.test6' );
+	assert.strictEqual( event.$schema, '/analytics/metrics_platform/interaction/common/1.0.0' );
+	assert.strictEqual( event.action, 'foo' );
+} );
+
+QUnit.test( 'submitInteraction() - disallow $schema overriding', function ( assert ) {
+	metricsClient.submitInteraction(
+		'metrics.platform.test6',
+		'/analytics/metrics_platform/interaction/common/1.0.0',
+		{
+			// @ts-ignore TS2345
+			$schema: '/foo/bar/1.0.0',
+
+			action: 'baz'
+		}
+	);
+
+	var event = enqueueEventStub.args[ 0 ][ 0 ];
+
+	assert.strictEqual( event.$schema, '/analytics/metrics_platform/interaction/common/1.0.0' );
+} );
