@@ -413,8 +413,8 @@ MetricsClient.prototype.processDispatchCall = function (
  * server of its current state.
  *
  * An interaction event (E) MUST validate against the
- * /analytics/metrics_platform/interaction/common/1.0.0 schema. At the time of writing, this means
- * that E MUST have the `action` property and MAY have the following properties:
+ * /fragment/analytics/metrics_platform/interaction/common/1.0.0 schema. At the time of writing,
+ * this means that E MUST have the `action` property and MAY have the following properties:
  *
  * `action_subtype`
  * `action_source`

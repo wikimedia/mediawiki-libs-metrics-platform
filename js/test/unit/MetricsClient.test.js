@@ -284,7 +284,7 @@ QUnit.test( 'dispatch() - warn/do not produce event when streamConfigs is false'
 QUnit.test( 'submitInteraction() - warn/do not produce for interactionData without action', function ( assert ) {
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
-		'/analytics/metrics_platform/interaction/common/1.0.0',
+		'/fragment/analytics/metrics_platform/interaction/common/1.0.0',
 
 		// @ts-ignore TS2345
 		{}
@@ -298,7 +298,7 @@ QUnit.test( 'submitInteraction() - warn/do not produce for interactionData witho
 QUnit.test( 'submitInteraction() - produce event correctly', function ( assert ) {
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
-		'/analytics/metrics_platform/interaction/common/1.0.0',
+		'/fragment/analytics/metrics_platform/interaction/common/1.0.0',
 		{
 			action: 'foo'
 		}
@@ -312,14 +312,14 @@ QUnit.test( 'submitInteraction() - produce event correctly', function ( assert )
 
 	// @ts-ignore TS2345
 	assert.strictEqual( event.meta.stream, 'metrics.platform.test6' );
-	assert.strictEqual( event.$schema, '/analytics/metrics_platform/interaction/common/1.0.0' );
+	assert.strictEqual( event.$schema, '/fragment/analytics/metrics_platform/interaction/common/1.0.0' );
 	assert.strictEqual( event.action, 'foo' );
 } );
 
 QUnit.test( 'submitInteraction() - disallow $schema overriding', function ( assert ) {
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
-		'/analytics/metrics_platform/interaction/common/1.0.0',
+		'/fragment/analytics/metrics_platform/interaction/common/1.0.0',
 		{
 			// @ts-ignore TS2345
 			$schema: '/foo/bar/1.0.0',
@@ -330,5 +330,5 @@ QUnit.test( 'submitInteraction() - disallow $schema overriding', function ( asse
 
 	var event = enqueueEventStub.args[ 0 ][ 0 ];
 
-	assert.strictEqual( event.$schema, '/analytics/metrics_platform/interaction/common/1.0.0' );
+	assert.strictEqual( event.$schema, '/fragment/analytics/metrics_platform/interaction/common/1.0.0' );
 } );
