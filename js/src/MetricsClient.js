@@ -453,7 +453,7 @@ MetricsClient.prototype.submitInteraction = function (
 		return;
 	}
 
-	const event = Object.assign(
+	const eventData = Object.assign(
 		{},
 		interactionData,
 		instrumentData || {},
@@ -462,7 +462,7 @@ MetricsClient.prototype.submitInteraction = function (
 		}
 	);
 
-	this.submit( streamName, event );
+	this.submit( streamName, eventData );
 };
 
 const CLICK_SCHEMA_ID = '/analytics/metrics_platform/web/click/1.0.0';
