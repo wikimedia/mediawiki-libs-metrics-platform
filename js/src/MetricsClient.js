@@ -462,6 +462,14 @@ MetricsClient.prototype.submitInteraction = function (
 		}
 	);
 
+	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
+
+	if ( !streamConfig ) {
+		return;
+	}
+
+	this.contextController.addRequestedValues( eventData, streamConfig );
+
 	this.submit( streamName, eventData );
 };
 
