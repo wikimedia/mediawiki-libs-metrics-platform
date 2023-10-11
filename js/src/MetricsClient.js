@@ -469,8 +469,7 @@ MetricsClient.prototype.submitInteraction = function (
 	this.submit( streamName, eventData );
 };
 
-// TODO: /web/click -> /web/base
-const CLICK_SCHEMA_ID = '/analytics/metrics_platform/web/click/1.0.0';
+const CLICK_SCHEMA_ID = '/analytics/metrics_platform/web/base/1.0.0';
 
 /**
  * See `MetricsClient#submitInteraction()`.
