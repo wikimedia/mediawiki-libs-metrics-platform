@@ -105,8 +105,7 @@ interface InteractionData extends InteractionContextData {
     action: InteractionAction;
 }
 
-// TODO: Rename this to ElementInteractionData
-interface ElementInteraction extends InteractionContextData {
+interface ElementInteractionData extends InteractionContextData {
     element_id: string;
     element_friendly_name: string;
 }
