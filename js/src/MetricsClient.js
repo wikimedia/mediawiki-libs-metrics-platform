@@ -413,8 +413,8 @@ MetricsClient.prototype.processDispatchCall = function (
  * server of its current state.
  *
  * An interaction event (E) MUST validate against the
- * /fragment/analytics/metrics_platform/interaction/common/1.0.0 schema. At the time of writing,
- * this means that E MUST have the `action` property and MAY have the following properties:
+ * /analytics/metrics_platform/web/base/1.0.0 schema. At the time of writing, this means that E
+ * MUST have the `action` property and MAY have the following properties:
  *
  * `action_subtype`
  * `action_source`
@@ -430,33 +430,29 @@ MetricsClient.prototype.processDispatchCall = function (
  *
  * @param {string} streamName
  * @param {string} schemaID
- * @param {InteractionData} interactionData
- * @param {Object} [instrumentData]
+ * @param {InteractionAction} action
+ * @param {InteractionContextData} [interactionData]
  */
 MetricsClient.prototype.submitInteraction = function (
 	streamName,
 	schemaID,
-	interactionData,
-	instrumentData
+	action,
+	interactionData
 ) {
-	if ( !interactionData || !interactionData.action ) {
-		let message = 'submitInteraction( ' + streamName + ', interactionData';
-
-		if ( instrumentData ) {
-			message += ', instrumentData';
-		}
-
-		message += ' ) called with interactionData missing required field "action". No event will be produced.';
-
-		this.integration.logWarning( message );
+	if ( !action ) {
+		this.integration.logWarning(
+			'submitInteraction( ' + streamName + ', ..., action ) ' +
+			'called without required field "action". No event will be produced.'
+		);
 
 		return;
 	}
 
 	const eventData = Object.assign(
-		{},
-		interactionData,
-		instrumentData || {},
+		{
+			action
+		},
+		interactionData || {},
 		{
 			$schema: schemaID
 		}
@@ -473,6 +469,7 @@ MetricsClient.prototype.submitInteraction = function (
 	this.submit( streamName, eventData );
 };
 
+// TODO: /web/click -> /web/base
 const CLICK_SCHEMA_ID = '/analytics/metrics_platform/web/click/1.0.0';
 
 /**
@@ -482,12 +479,9 @@ const CLICK_SCHEMA_ID = '/analytics/metrics_platform/web/click/1.0.0';
  *
  * @param {string} streamName
  * @param {ElementInteraction} interactionData
- * @param {Object} instrumentData
  */
-MetricsClient.prototype.submitClick = function ( streamName, interactionData, instrumentData ) {
-	interactionData.action = 'click';
-
-	this.submitInteraction( streamName, CLICK_SCHEMA_ID, interactionData, instrumentData );
+MetricsClient.prototype.submitClick = function ( streamName, interactionData ) {
+	this.submitInteraction( streamName, CLICK_SCHEMA_ID, 'click', interactionData );
 };
 
 module.exports = MetricsClient;

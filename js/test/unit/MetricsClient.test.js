@@ -282,12 +282,10 @@ QUnit.test( 'dispatch() - warn/do not produce event when streamConfigs is false'
 } );
 
 QUnit.test( 'submitInteraction() - warn/do not produce for interactionData without action', function ( assert ) {
+	// @ts-ignore TS2345
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
-		'/fragment/analytics/metrics_platform/interaction/common/1.0.0',
-
-		// @ts-ignore TS2345
-		{}
+		'/fragment/analytics/metrics_platform/interaction/common/1.0.0'
 	);
 
 	assert.strictEqual( logWarningStub.callCount, 1, 'logWarning() should be called' );
@@ -298,10 +296,8 @@ QUnit.test( 'submitInteraction() - warn/do not produce for interactionData witho
 QUnit.test( 'submitInteraction() - produce event correctly', function ( assert ) {
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
-		'/fragment/analytics/metrics_platform/interaction/common/1.0.0',
-		{
-			action: 'foo'
-		}
+		'/analytics/metrics_platform/web/base/1.0.0',
+		'foo'
 	);
 
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
@@ -312,23 +308,22 @@ QUnit.test( 'submitInteraction() - produce event correctly', function ( assert )
 
 	// @ts-ignore TS2345
 	assert.strictEqual( event.meta.stream, 'metrics.platform.test6' );
-	assert.strictEqual( event.$schema, '/fragment/analytics/metrics_platform/interaction/common/1.0.0' );
+	assert.strictEqual( event.$schema, '/analytics/metrics_platform/web/base/1.0.0' );
 	assert.strictEqual( event.action, 'foo' );
 } );
 
 QUnit.test( 'submitInteraction() - disallow $schema overriding', function ( assert ) {
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
-		'/fragment/analytics/metrics_platform/interaction/common/1.0.0',
+		'/analytics/metrics_platform/web/base/1.0.0',
+		'foo',
 		{
 			// @ts-ignore TS2345
-			$schema: '/foo/bar/1.0.0',
-
-			action: 'baz'
+			$schema: '/bar/baz/1.0.0'
 		}
 	);
 
 	var event = enqueueEventStub.args[ 0 ][ 0 ];
 
-	assert.strictEqual( event.$schema, '/fragment/analytics/metrics_platform/interaction/common/1.0.0' );
+	assert.strictEqual( event.$schema, '/analytics/metrics_platform/web/base/1.0.0' );
 } );

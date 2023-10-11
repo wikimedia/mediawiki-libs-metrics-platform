@@ -93,14 +93,20 @@ interface EventPerformerData {
 
 type SampleData = StreamSamplingConfig;
 
-interface InteractionData {
-    action: string;
+interface InteractionContextData {
     action_subtype?: string;
     action_source?: string;
     action_context?: string;
 }
 
-interface ElementInteraction extends InteractionData {
+type InteractionAction = string;
+
+interface InteractionData extends InteractionContextData {
+    action: InteractionAction;
+}
+
+// TODO: Rename this to ElementInteractionData
+interface ElementInteraction extends InteractionContextData {
     element_id: string;
     element_friendly_name: string;
 }
