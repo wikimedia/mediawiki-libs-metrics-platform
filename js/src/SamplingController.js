@@ -1,3 +1,5 @@
+var isValidSample = require( './StreamConfigUtils.js' ).isValidSample;
+
 var UINT32_MAX = 4294967295; // (2^32) - 1
 
 /**
@@ -27,12 +29,7 @@ SamplingController.prototype.streamInSample = function ( streamConfig ) {
 		return true;
 	}
 
-	if (
-		( !streamConfig.sample.rate || !streamConfig.sample.unit ) ||
-		( streamConfig.sample.rate < 0 || streamConfig.sample.rate > 1 )
-	) {
-		// If the stream does specify sampling, but it is malformed,
-		// it is not in-sample.
+	if ( !isValidSample( streamConfig.sample ) ) {
 		return false;
 	}
 

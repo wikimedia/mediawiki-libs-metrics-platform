@@ -22,6 +22,11 @@ interface EventData extends BaseEventData {
 
 type FormattedCustomData = Record<string, EventCustomDatum>;
 
+interface EventCustomDatum {
+    data_type: string;
+    value: string;
+}
+
 interface MetricsPlatformEventData extends BaseEventData, ContextAttributes {
     name?: string;
     custom_data?: FormattedCustomData;
@@ -37,6 +42,7 @@ interface ContextAttributes {
 	page?: EventPageData;
 	mediawiki?: EventMediaWikiData;
 	performer?: EventPerformerData;
+	sample?: SampleData;
 }
 
 interface EventAgentData {
@@ -85,7 +91,4 @@ interface EventPerformerData {
     registration_dt?: number;
 }
 
-interface EventCustomDatum {
-    data_type: string;
-    value: string;
-}
+type SampleData = StreamSamplingConfig;

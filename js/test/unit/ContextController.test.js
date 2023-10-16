@@ -47,11 +47,19 @@ var streamConfig = {
 	}
 };
 
+/** @type StreamConfig */
+var streamConfig2 = {
+	sample: {
+		unit: 'pageview',
+		rate: 0.5
+	}
+};
+
 QUnit.module( 'ContextController' );
 
 QUnit.test( 'addRequestedValues()', function ( assert ) {
 	var clientDt = new Date().toISOString();
-	var event = contextController.addRequestedValues(
+	var eventData = contextController.addRequestedValues(
 		{
 			$schema: '/analytics/mediawiki/metrics_platform/event/1.0.0',
 			dt: clientDt,
@@ -60,7 +68,7 @@ QUnit.test( 'addRequestedValues()', function ( assert ) {
 		streamConfig
 	);
 
-	assert.deepEqual( event, {
+	assert.deepEqual( eventData, {
 
 		// $schema, dt, and client_dt are unchanged
 		$schema: '/analytics/mediawiki/metrics_platform/event/1.0.0',
@@ -109,5 +117,31 @@ QUnit.test( 'addRequestedValues()', function ( assert ) {
 			// null values returned by Integration::getContextAttributes() should not be set by
 			// ContextController::addRequestedValues().
 		}
+	} );
+} );
+
+QUnit.test( 'addRequestedValues() - mixes in sampling config', function ( assert ) {
+	var clientDt = new Date().toISOString();
+	var eventData = contextController.addRequestedValues(
+		{
+			$schema: '/analytics/mediawiki/metrics_platform/event/1.0.0',
+			dt: clientDt,
+			client_dt: clientDt
+		},
+		streamConfig2
+	);
+
+	assert.deepEqual( eventData, {
+
+		// $schema, dt, and client_dt are unchanged
+		$schema: '/analytics/mediawiki/metrics_platform/event/1.0.0',
+		dt: clientDt,
+		client_dt: clientDt,
+
+		agent: {
+			client_platform: 'mediawiki_js',
+			client_platform_family: 'desktop_browser'
+		},
+		sample: streamConfig2.sample
 	} );
 } );

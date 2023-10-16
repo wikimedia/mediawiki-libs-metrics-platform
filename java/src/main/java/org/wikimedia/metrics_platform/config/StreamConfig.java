@@ -10,6 +10,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.NonNull;
 import lombok.Value;
 
 @Value @ThreadSafe
@@ -107,6 +108,21 @@ public class StreamConfig {
 
     public DestinationEventService getDestinationEventService() {
         return destinationEventService != null ? destinationEventService : DestinationEventService.ANALYTICS;
+    }
+
+    public boolean hasCurationFilter() {
+        return producerConfig != null &&
+            producerConfig.metricsPlatformClientConfig != null &&
+            producerConfig.metricsPlatformClientConfig.curationFilter != null;
+    }
+
+    @NonNull
+    public CurationFilter getCurationFilter() {
+        if (hasCurationFilter()) {
+            return producerConfig.metricsPlatformClientConfig.curationFilter;
+        }
+
+        return CurationFilter.builder().build();
     }
 
     @Value @ThreadSafe

@@ -101,9 +101,11 @@ class ConsistencyIT {
             BlockingQueue<EventProcessed> eventQueue
     ) {
         ContextController contextController = new ContextController(consistencyTestClientData);
+        CurationController curationController = new CurationController();
         EventSender eventSender = new TestEventSender();
         return new EventProcessor(
                 contextController,
+                curationController,
                 sourceConfigRef,
                 eventSender,
                 eventQueue,
@@ -119,6 +121,7 @@ class ConsistencyIT {
 
     private static void removeExtraProperties(JsonObject eventJsonObject) {
         eventJsonObject.remove("dt");
+        eventJsonObject.remove("sample");
         eventJsonObject.getAsJsonObject("performer").remove("registration_dt");
     }
 
