@@ -13,7 +13,6 @@ import java.util.logging.Level;
 
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.wikimedia.metrics_platform.config.CurationFilter;
 import org.wikimedia.metrics_platform.config.DestinationEventService;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
@@ -29,6 +28,7 @@ public class EventProcessor {
      * Enriches event data with context data requested in the stream configuration.
      */
     private final ContextController contextController;
+    private final CurationController curationController;
 
     private final AtomicReference<SourceConfig> sourceConfig;
     private final BlockingQueue<EventProcessed> eventQueue;
@@ -40,12 +40,14 @@ public class EventProcessor {
      */
     public EventProcessor(
             ContextController contextController,
+            CurationController curationController,
             AtomicReference<SourceConfig> sourceConfig,
             EventSender eventSender,
             BlockingQueue<EventProcessed> eventQueue,
             boolean isDebug
     ) {
         this.contextController = contextController;
+        this.curationController = curationController;
         this.sourceConfig = sourceConfig;
         this.eventSender = eventSender;
         this.eventQueue = eventQueue;
@@ -82,16 +84,8 @@ public class EventProcessor {
     protected boolean eventPassesCurationRules(EventProcessed event, Map<String, StreamConfig> streamConfigMap) {
         StreamConfig streamConfig = streamConfigMap.get(event.getStream());
         contextController.enrichEvent(event, streamConfig);
-        StreamConfig.ProducerConfig producerConfig = streamConfig.getProducerConfig();
-        if (producerConfig == null) return true;
 
-        StreamConfig.MetricsPlatformClientConfig metricsPlatformClientConfig = producerConfig.getMetricsPlatformClientConfig();
-        if (metricsPlatformClientConfig == null) return true;
-
-        CurationFilter curationFilter = metricsPlatformClientConfig.getCurationFilter();
-        if (curationFilter == null) return true;
-
-        return curationFilter.apply(event);
+        return curationController.shouldProduceEvent(event, streamConfig);
     }
 
     private DestinationEventService destinationEventService(EventProcessed event, Map<String, StreamConfig> streamConfigMap) {

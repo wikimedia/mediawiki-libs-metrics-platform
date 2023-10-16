@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNullableByDefault;
 
+import org.wikimedia.metrics_platform.config.SampleConfig;
 import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.CustomData;
 import org.wikimedia.metrics_platform.utils.Objects;
@@ -23,6 +24,7 @@ public class Event {
     @SerializedName("custom_data") protected Map<String, CustomData> customData;
     protected final Meta meta;
     @SerializedName("client_data") protected ClientData clientData;
+    @SerializedName("sample") protected SampleConfig sample;
 
     public Event(String schema, String stream, String name) {
         this.schema = schema;
@@ -47,6 +49,10 @@ public class Event {
 
     public void setCustomData(@Nonnull Map<String, CustomData> customData) {
         this.customData = customData;
+    }
+
+    public void setSample(@Nonnull SampleConfig sample) {
+        this.sample = sample;
     }
 
     @Data

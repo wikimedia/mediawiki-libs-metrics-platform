@@ -1,4 +1,5 @@
 var copyAttributeByName = require( './ContextUtils.js' ).copyAttributeByName;
+var isValidSample = require( './StreamConfigUtils.js' ).isValidSample;
 
 /**
  * Add context attributes requested in stream configuration.
@@ -36,6 +37,12 @@ ContextController.prototype.addRequestedValues = function ( eventData, streamCon
 		.forEach( function ( requestedValue ) {
 			copyAttributeByName( contextAttributes, eventData, requestedValue );
 		} );
+
+	// Record sampling unit and rate. See https://phabricator.wikimedia.org/T310693 for more
+	// detail.
+	if ( streamConfig.sample && isValidSample( streamConfig.sample ) ) {
+		eventData.sample = streamConfig.sample;
+	}
 
 	return eventData;
 };

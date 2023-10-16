@@ -2,8 +2,8 @@ package org.wikimedia.metrics_platform.config;
 
 import java.util.Arrays;
 
-import org.wikimedia.metrics_platform.curation.CollectionCurationRules;
-import org.wikimedia.metrics_platform.curation.CurationRules;
+import org.wikimedia.metrics_platform.config.curation.CollectionCurationRules;
+import org.wikimedia.metrics_platform.config.curation.CurationRules;
 
 public final class CurationFilterFixtures {
 

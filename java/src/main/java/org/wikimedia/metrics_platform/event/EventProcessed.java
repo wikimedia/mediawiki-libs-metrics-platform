@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import org.wikimedia.metrics_platform.config.SampleConfig;
 import org.wikimedia.metrics_platform.context.AgentData;
 import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.CustomData;
@@ -29,13 +30,16 @@ public class EventProcessed extends Event {
             String stream,
             String name,
             Map<String, CustomData> customData,
-            ClientData clientData) {
+            ClientData clientData,
+            SampleConfig sample
+    ) {
         super(schema, stream, name);
         this.agentData = clientData.getAgentData();
         this.pageData = clientData.getPageData();
         this.mediawikiData = clientData.getMediawikiData();
         this.performerData = clientData.getPerformerData();
         this.setCustomData(customData);
+        this.sample = sample;
     }
 
     @Nonnull
@@ -45,7 +49,8 @@ public class EventProcessed extends Event {
                 event.getStream(),
                 event.getName(),
                 event.getCustomData(),
-                event.getClientData()
+                event.getClientData(),
+                event.getSample()
         );
     }
 

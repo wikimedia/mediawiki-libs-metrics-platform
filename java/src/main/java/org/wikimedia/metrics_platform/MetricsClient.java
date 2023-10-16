@@ -154,12 +154,25 @@ public final class MetricsClient {
         Set<String> streamNames = sourceConfig.getStreamNamesByEvent(eventName);
         // Loop through stream configs to add event to pending events.
         for (String streamName : streamNames) {
-            if (shouldProcessEventsForStream(streamName, sourceConfig)) {
-                Event event = new Event(METRICS_PLATFORM_SCHEMA, streamName, eventName);
-                event.setCustomData(customDataFormatted);
-                event.setClientData(clientData);
-                submit(event);
+            StreamConfig streamConfig = this.sourceConfig.get().getStreamConfigByName(streamName);
+
+            if (streamConfig == null) {
+                continue;
             }
+
+            if (!this.samplingController.isInSample(streamConfig)) {
+                continue;
+            }
+
+            Event event = new Event(METRICS_PLATFORM_SCHEMA, streamName, eventName);
+            event.setCustomData(customDataFormatted);
+            event.setClientData(clientData);
+
+            if (streamConfig.hasSampleConfig()) {
+                event.setSample(streamConfig.getSampleConfig());
+            }
+
+            submit(event);
         }
     }
 
@@ -237,14 +250,6 @@ public final class MetricsClient {
         }
     }
 
-    /**
-     * Returns true if the specified stream is configured and in sample.
-     */
-    private boolean shouldProcessEventsForStream(String streamName, SourceConfig sourceConfig) {
-        StreamConfig streamConfig = sourceConfig.getStreamConfigByName(streamName);
-        return streamConfig != null && samplingController.isInSample(streamConfig);
-    }
-
     public boolean isFullyInitialized() {
         return sourceConfig.get() != null;
     }
@@ -265,6 +270,8 @@ public final class MetricsClient {
         private AtomicReference<SourceConfig> sourceConfigRef = new AtomicReference<>();
         private BlockingQueue<EventProcessed> eventQueue = new LinkedBlockingQueue<>(10);
         private SessionController sessionController = new SessionController();
+
+        private CurationController curationController = new CurationController();
 
         @Nullable
         private SamplingController samplingController;
@@ -292,6 +299,7 @@ public final class MetricsClient {
 
             EventProcessor eventProcessor = new EventProcessor(
                     new ContextController(clientData),
+                    curationController,
                     sourceConfigRef,
                     eventSender,
                     eventQueue,

@@ -1,7 +1,5 @@
 package org.wikimedia.metrics_platform.config;
 
-import static org.wikimedia.metrics_platform.config.StreamConfigFixtures.streamConfigMap;
-
 public final class SourceConfigFixtures {
 
     private SourceConfigFixtures() {
@@ -13,9 +11,5 @@ public final class SourceConfigFixtures {
      */
     public static SourceConfig getTestSourceConfig() {
         return new SourceConfig(StreamConfigFixtures.streamConfigMap());
-    }
-
-    public static SourceConfig getTestSourceConfig(CurationFilter curationFilter) {
-        return new SourceConfig(streamConfigMap(curationFilter));
     }
 }

@@ -1,6 +1,7 @@
 package org.wikimedia.metrics_platform;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.stream;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.METRICS_PLATFORM_SCHEMA_TITLE;
@@ -22,6 +23,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.SourceConfigFixtures;
+import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.DataFixtures;
 import org.wikimedia.metrics_platform.context.CustomData;
@@ -169,6 +171,21 @@ class MetricsClientTest {
         assertThat(queuedEvent.getPerformerData().getEditCount()).isEqualTo(10);
         assertThat(queuedEvent.getPerformerData().getEditCountBucket()).isEqualTo("5-99 edits");
         assertThat(queuedEvent.getPerformerData().getRegistrationDt()).isEqualTo("2023-03-01T01:08:30Z");
+    }
+
+    @Test void testSubmitMetricsEventIncludesSample() {
+        StreamConfig streamConfig = streamConfig(curationFilter());
+
+        when(mockSamplingController.isInSample(streamConfig)).thenReturn(true);
+
+        Map<String, Object> customDataMap = getTestCustomData();
+        client.submitMetricsEvent("test_event", customDataMap);
+
+        assertThat(eventQueue).isNotEmpty();
+
+        EventProcessed queuedEvent = eventQueue.remove();
+
+        assertThat(queuedEvent.getSample()).isEqualTo(streamConfig.getSampleConfig());
     }
 
     @Test void testSubmitWhenEventQueueIsFull() {
