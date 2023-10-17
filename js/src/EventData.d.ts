@@ -92,3 +92,34 @@ interface EventPerformerData {
 }
 
 type SampleData = StreamSamplingConfig;
+
+/**
+ * Optional contextual data for the interaction.
+ */
+interface InteractionContextData {
+    action_subtype?: string;
+    action_source?: string;
+    action_context?: string;
+}
+
+// TODO: Could this be limited?
+type InteractionAction = string;
+
+/**
+ * Data for the interaction.
+ *
+ * Note well that this data cannot be submitted without being combined with some/all of the data
+ * described above.
+ *
+ * This interface and the `InteractionContextData` interface allow for the creation of many
+ * convenience methods that fill the `action` property (and/or other properties in future), e.g.
+ * `MetricsClient#submitClick()`.
+ */
+interface InteractionData extends InteractionContextData {
+    action: InteractionAction;
+}
+
+interface ElementInteractionData extends InteractionContextData {
+    element_id: string;
+    element_friendly_name: string;
+}

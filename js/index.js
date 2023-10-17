@@ -1,5 +1,5 @@
-var DefaultIntegration = require( './src/DefaultIntegration.js' );
-var MetricsClient = require( './src/ExternalMetricsClient.js' );
+const DefaultIntegration = require( './src/DefaultIntegration.js' );
+const MetricsClient = require( './src/ExternalMetricsClient.js' );
 
 /**
  * @param {string} [streamConfigsOrigin]
