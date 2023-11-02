@@ -37,7 +37,8 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Wikimedia\\MetricsPlatform\\": "php/src/"
+			"Wikimedia\\MetricsPlatform\\": "php/src/",
+			"Wikimedia\\MetricsPlatform\\Tests\\": "php/tests/"
 		}
 	},
 	"scripts": {

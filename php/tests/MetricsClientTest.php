@@ -18,6 +18,7 @@ use Wikimedia\Timestamp\ConvertibleTimestamp;
  * @covers \Wikimedia\MetricsPlatform\MetricsClient
  */
 class MetricsClientTest extends TestCase {
+	use TestHelperTrait;
 
 	/** @var TestEventSubmitter */
 	private $eventSubmitter;
@@ -50,6 +51,20 @@ class MetricsClientTest extends TestCase {
 				'metrics_platform_client' => [
 					'events' => [
 						'bar',
+					],
+				],
+			],
+		],
+		'test.metrics_platform.interactions' => [
+			'schema_title' => 'analytics/metrics_platform/web/base',
+			'destination_event_service' => 'eventgate-analytics-external',
+			'producers' => [
+				'metrics_platform_client' => [
+					'events' => [
+						'test.',
+					],
+					'provide_values' => [
+						'mediawiki_skin',
 					],
 				],
 			],
@@ -189,6 +204,40 @@ class MetricsClientTest extends TestCase {
 			$submissions[0][1]['dt'],
 			$submissions[1][1]['dt'],
 			'All events are submitted with the same timestamp.'
+		);
+	}
+
+	public function testSubmitInteraction(): void {
+		$eventName = 'test_action';
+
+		$this->client->submitInteraction(
+			$this->testStreamName,
+			MetricsClient::BASE_SCHEMA,
+			$eventName,
+			$this->getTestInteractionData()
+		);
+		$submission = $this->eventSubmitter->getSubmissions()[0];
+		$event = $this->getTestInteractionEvent( $eventName );
+
+		$this->assertEquals(
+			$this->getFormattedTestInteractionEvent( $event, $submission ),
+			$submission,
+			'#submitInteraction() submits event correctly.'
+		);
+	}
+
+	public function testSubmitClick(): void {
+		$this->client->submitClick(
+			$this->testStreamName,
+			$this->getTestInteractionData()
+		);
+		$submission = $this->eventSubmitter->getSubmissions()[0];
+		$event = $this->getTestInteractionEvent( 'click' );
+
+		$this->assertEquals(
+			$this->getFormattedTestInteractionEvent( $event, $submission ),
+			$submission,
+			'#submitClick() submits event correctly.'
 		);
 	}
 }
