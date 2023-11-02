@@ -10,6 +10,7 @@ use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
 
 class MetricsClient implements LoggerAwareInterface {
 	use LoggerAwareTrait;
+	use InteractionDataTrait;
 
 	/**
 	 * The ID of the mediawiki/client/metrics_event schema in the schemas/event/secondary
@@ -17,7 +18,14 @@ class MetricsClient implements LoggerAwareInterface {
 	 *
 	 * @var string
 	 */
-	public const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.0.0';
+	public const MONO_SCHEMA = '/analytics/mediawiki/client/metrics_event/2.0.0';
+
+	/**
+	 * The ID of the Metrics Platform base schema in the schemas/event/secondary repository.
+	 *
+	 * @var string
+	 */
+	public const BASE_SCHEMA = '/analytics/metrics_platform/web/base/1.0.0';
 
 	/** @var EventSubmitter */
 	private $eventSubmitter;
@@ -68,6 +76,39 @@ class MetricsClient implements LoggerAwareInterface {
 	}
 
 	/**
+	 * Submit an interaction event to a stream.
+	 *
+	 * @param string $streamName
+	 * @param string $schemaId
+	 * @param string $action
+	 * @param array $interactionData
+	 */
+	public function submitInteraction(
+		string $streamName,
+		string $schemaId,
+		string $action,
+		array $interactionData
+	): void {
+		$event = $this->createEvent( $action, $schemaId );
+		$formattedInteractionData = $this->getInteractionData( $action, $interactionData );
+		$eventData = array_merge( $event, $formattedInteractionData );
+		$this->eventSubmitter->submit( $streamName, $eventData );
+	}
+
+	/**
+	 * Submit a click event to a stream.
+	 *
+	 * @param string $streamName
+	 * @param array $interactionData
+	 */
+	public function submitClick(
+		string $streamName,
+		array $interactionData
+	): void {
+		$this->submitInteraction( $streamName, self::BASE_SCHEMA, 'click', $interactionData );
+	}
+
+	/**
 	 * Get an ISO 8601 timestamp for the current time, e.g. 2022-05-03T14:00:41.000Z.
 	 *
 	 * Note well that the timestamp contains milliseconds for consistency with other Metrics
@@ -101,16 +142,10 @@ class MetricsClient implements LoggerAwareInterface {
 	 */
 	public function dispatch( string $eventName, array $customData = [] ): void {
 		$customData = $this->formatCustomData( $customData );
-		$timestamp = $this->getTimestamp();
-
 		$streamNames = $this->streamConfigFactory->getStreamNamesForEvent( $eventName );
 
 		foreach ( $streamNames as $streamName ) {
-			$event = [
-				'$schema' => self::SCHEMA,
-				'name' => $eventName,
-				'dt' => $timestamp,
-			];
+			$event = $this->createEvent( $eventName );
 
 			if ( $customData ) {
 				$event['custom_data'] = $customData;
@@ -123,6 +158,22 @@ class MetricsClient implements LoggerAwareInterface {
 				$this->submit( $streamName, $event );
 			}
 		}
+	}
+
+	/**
+	 * @param string $eventName
+	 * @param string|null $schemaId
+	 */
+	private function createEvent( string $eventName, string $schemaId = null ): array {
+		$event = [
+			'$schema' => $schemaId ?? self::MONO_SCHEMA,
+			'dt' => $this->getTimestamp()
+		];
+		// Add the "name" key if monoschema is being used.
+		if ( $event['$schema'] === self::MONO_SCHEMA ) {
+			$event['name'] = $eventName;
+		}
+		return $event;
 	}
 
 	/**
