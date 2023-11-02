@@ -61,6 +61,11 @@ public final class DataFixtures {
                 .appInstallId("ffffffff-ffff-ffff-ffff-ffffffffffff")
                 .clientPlatform("android")
                 .clientPlatformFamily("app")
+                .appFlavor("giraffe")
+                .appVersion("982734")
+                .appTheme("flamingo")
+                .deviceLanguage("en")
+                .releaseStatus("beta")
                 .build();
     }
 
@@ -68,26 +73,17 @@ public final class DataFixtures {
         return PageData.builder()
                 .id(1)
                 .title("Test Page Title")
-                .namespace(0)
+                .namespaceId(0)
                 .namespaceName("Main")
                 .revisionId(1L)
                 .wikidataItemQid("Q123456")
                 .contentLanguage("en")
-                .isRedirect(false)
-                .groupsAllowedToMove(Collections.singleton("*"))
-                .groupsAllowedToEdit(Collections.singleton("*"))
                 .build();
     }
 
     public static MediawikiData getTestMediawikiData() {
         return MediawikiData.builder()
-                .skin("vector")
-                .version("1.40.0-wmf.20")
-                .isProduction(true)
-                .isDebugMode(false)
                 .database("enwiki")
-                .siteContentLanguage("en")
-                .siteContentLanguageVariant("en-zh")
                 .build();
     }
 
@@ -96,16 +92,34 @@ public final class DataFixtures {
                 .id(1)
                 .name("TestPerformer")
                 .isLoggedIn(true)
+                .isTemp(false)
                 .sessionId("eeeeeeeeeeeeeeeeeeee")
                 .pageviewId("eeeeeeeeeeeeeeeeeeee")
                 .groups(Collections.singletonList("*"))
-                .isBot(false)
-                .language("zh")
-                .languageVariant("zh-tw")
-                .canProbablyEditPage(true)
-                .editCount(10)
-                .editCountBucket("5-99 edits")
+                .languageGroups("zh, en")
+                .languagePrimary("zh-tw")
                 .registrationDt(Instant.parse("2023-03-01T01:08:30Z"))
                 .build();
+    }
+
+    public static InteractionData getTestInteractionData(String action) {
+        return InteractionData.builder()
+                .action(action)
+                .actionSubtype("TestActionSubtype")
+                .actionSource("TestActionSource")
+                .actionContext("TestActionContext")
+                .elementId("TestElementId")
+                .elementFriendlyName("TestElementFriendlyName")
+                .funnelEntryToken("TestFunnelEntryToken")
+                .funnelEventSequencePosition(8)
+                .build();
+    }
+
+    public static Map<String, Object> getTestCustomData() {
+        Map<String, Object> customData = new HashMap<String, Object>();
+        customData.put("font_size", "small");
+        customData.put("is_full_width", true);
+        customData.put("screen_size", 1080);
+        return customData;
     }
 }

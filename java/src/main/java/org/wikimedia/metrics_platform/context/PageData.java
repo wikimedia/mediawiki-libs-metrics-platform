@@ -1,7 +1,5 @@
 package org.wikimedia.metrics_platform.context;
 
-import java.util.Collection;
-
 import javax.annotation.ParametersAreNullableByDefault;
 
 import com.google.gson.annotations.SerializedName;
@@ -27,12 +25,9 @@ public class PageData {
 
     private final Integer id;
     private final String title;
-    @SerializedName("namespace") private final Integer namespace;
+    @SerializedName("namespace_id") private final Integer namespaceId;
     @SerializedName("namespace_name") private final String namespaceName;
     @SerializedName("revision_id") private final Long revisionId;
     @SerializedName("wikidata_qid") private final String wikidataItemQid;
     @SerializedName("content_language") private final String contentLanguage;
-    @SerializedName("is_redirect") private final Boolean isRedirect;
-    @SerializedName("user_groups_allowed_to_move") private final Collection<String> groupsAllowedToMove;
-    @SerializedName("user_groups_allowed_to_edit") private final Collection<String> groupsAllowedToEdit;
 }

@@ -1,16 +1,14 @@
 package org.wikimedia.metrics_platform;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.stream;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.METRICS_PLATFORM_SCHEMA_TITLE;
+import static org.wikimedia.metrics_platform.MetricsClient.METRICS_PLATFORM_SCHEMA_BASE;
 import static org.wikimedia.metrics_platform.config.StreamConfigFixtures.streamConfig;
+import static org.wikimedia.metrics_platform.context.DataFixtures.getTestCustomData;
 import static org.wikimedia.metrics_platform.curation.CurationFilterFixtures.curationFilter;
 import static org.wikimedia.metrics_platform.event.EventProcessed.fromEvent;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -26,8 +24,7 @@ import org.wikimedia.metrics_platform.config.SourceConfigFixtures;
 import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.DataFixtures;
-import org.wikimedia.metrics_platform.context.CustomData;
-import org.wikimedia.metrics_platform.context.CustomDataType;
+import org.wikimedia.metrics_platform.context.InteractionData;
 import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.event.Event;
 import org.wikimedia.metrics_platform.event.EventProcessed;
@@ -56,7 +53,7 @@ class MetricsClientTest {
     }
 
     @Test void testSubmit() {
-        Event event = new Event(METRICS_PLATFORM_SCHEMA_TITLE, "test_stream", "test_event");
+        Event event = new Event(METRICS_PLATFORM_SCHEMA_BASE, "test_stream", "test_event");
         client.submit(event);
         EventProcessed eventProcessed = eventQueue.peek();
         String stream = eventProcessed.getStream();
@@ -67,7 +64,7 @@ class MetricsClientTest {
         when(mockSamplingController.isInSample(streamConfig(curationFilter()))).thenReturn(true);
 
         Map<String, Object> customDataMap = getTestCustomData();
-        client.submitMetricsEvent("test_event", customDataMap);
+        client.submitMetricsEvent(METRICS_PLATFORM_SCHEMA_BASE, "test_event", customDataMap);
 
         assertThat(eventQueue).isNotEmpty();
 
@@ -75,27 +72,21 @@ class MetricsClientTest {
 
         // Verify custom data
         assertThat(queuedEvent.getName()).isEqualTo("test_event");
-        Map<String, CustomData> customData = queuedEvent.getCustomData();
-        CustomData isEditor = customData.get("is_editor");
-        assertThat(isEditor.getType()).isEqualTo(CustomDataType.BOOLEAN);
-        assertThat(isEditor.getValue()).isEqualTo("true");
-        CustomData action = customData.get("action");
-        assertThat(action.getType()).isEqualTo(CustomDataType.STRING);
-        assertThat(action.getValue()).isEqualTo("click");
-        CustomData screenSize = customData.get("screen_size");
-        assertThat(screenSize.getType()).isEqualTo(CustomDataType.NUMBER);
-        assertThat(screenSize.getValue()).isEqualTo("1080");
+        Map<String, Object> customData = queuedEvent.getCustomData();
+        assertThat(customData.get("font_size")).isEqualTo("small");
+        assertThat(customData.get("is_full_width")).isEqualTo(true);
+        assertThat(customData.get("screen_size")).isEqualTo(1080);
 
         // Verify that client data is not included
         assertThat(queuedEvent.getAgentData().getClientPlatform()).isNull();
         assertThat(queuedEvent.getPageData().getId()).isNull();
         assertThat(queuedEvent.getPageData().getTitle()).isNull();
-        assertThat(queuedEvent.getPageData().getNamespace()).isNull();
+        assertThat(queuedEvent.getPageData().getNamespaceId()).isNull();
         assertThat(queuedEvent.getPageData().getNamespaceName()).isNull();
         assertThat(queuedEvent.getPageData().getRevisionId()).isNull();
         assertThat(queuedEvent.getPageData().getWikidataItemQid()).isNull();
         assertThat(queuedEvent.getPageData().getContentLanguage()).isNull();
-        assertThat(queuedEvent.getMediawikiData().getSkin()).isNull();
+        assertThat(queuedEvent.getMediawikiData().getDatabase()).isNull();
         assertThat(queuedEvent.getPerformerData().getId()).isNull();
     }
 
@@ -108,18 +99,15 @@ class MetricsClientTest {
         PageData pageData = PageData.builder()
                 .id(108)
                 .title("Revised Page Title")
-                .namespace(0)
+                .namespaceId(0)
                 .namespaceName("Main")
                 .revisionId(1L)
                 .wikidataItemQid("Q123456")
                 .contentLanguage("en")
-                .isRedirect(false)
-                .groupsAllowedToMove(Collections.singleton("*"))
-                .groupsAllowedToEdit(Collections.singleton("*"))
                 .build();
         clientData.setPageData(pageData);
 
-        client.submitMetricsEvent("test_event", clientData, getTestCustomData());
+        client.submitMetricsEvent(METRICS_PLATFORM_SCHEMA_BASE, "test_event", clientData, getTestCustomData());
 
         assertThat(eventQueue).isNotEmpty();
 
@@ -127,16 +115,10 @@ class MetricsClientTest {
 
         // Verify custom data
         assertThat(queuedEvent.getName()).isEqualTo("test_event");
-        Map<String, CustomData> customData = queuedEvent.getCustomData();
-        CustomData isEditor = customData.get("is_editor");
-        assertThat(isEditor.getType()).isEqualTo(CustomDataType.BOOLEAN);
-        assertThat(isEditor.getValue()).isEqualTo("true");
-        CustomData action = customData.get("action");
-        assertThat(action.getType()).isEqualTo(CustomDataType.STRING);
-        assertThat(action.getValue()).isEqualTo("click");
-        CustomData screenSize = customData.get("screen_size");
-        assertThat(screenSize.getType()).isEqualTo(CustomDataType.NUMBER);
-        assertThat(screenSize.getValue()).isEqualTo("1080");
+        Map<String, Object> customData = queuedEvent.getCustomData();
+        assertThat(customData.get("font_size")).isEqualTo("small");
+        assertThat(customData.get("is_full_width")).isEqualTo(true);
+        assertThat(customData.get("screen_size")).isEqualTo(1080);
 
         // Verify client data
         assertThat(queuedEvent.getAgentData().getAppInstallId()).isEqualTo("ffffffff-ffff-ffff-ffff-ffffffffffff");
@@ -145,32 +127,45 @@ class MetricsClientTest {
 
         assertThat(queuedEvent.getPageData().getId()).isEqualTo(108);
         assertThat(queuedEvent.getPageData().getTitle()).isEqualTo("Revised Page Title");
-        assertThat(queuedEvent.getPageData().getNamespace()).isEqualTo(0);
+        assertThat(queuedEvent.getPageData().getNamespaceId()).isEqualTo(0);
         assertThat(queuedEvent.getPageData().getNamespaceName()).isEqualTo("Main");
         assertThat(queuedEvent.getPageData().getRevisionId()).isEqualTo(1L);
         assertThat(queuedEvent.getPageData().getWikidataItemQid()).isEqualTo("Q123456");
         assertThat(queuedEvent.getPageData().getContentLanguage()).isEqualTo("en");
 
-        assertThat(queuedEvent.getMediawikiData().getSkin()).isEqualTo("vector");
-        assertThat(queuedEvent.getMediawikiData().getVersion()).isEqualTo("1.40.0-wmf.20");
-        assertThat(queuedEvent.getMediawikiData().getIsProduction()).isTrue();
-        assertThat(queuedEvent.getMediawikiData().getIsDebugMode()).isFalse();
         assertThat(queuedEvent.getMediawikiData().getDatabase()).isEqualTo("enwiki");
-        assertThat(queuedEvent.getMediawikiData().getSiteContentLanguage()).isEqualTo("en");
-        assertThat(queuedEvent.getMediawikiData().getSiteContentLanguageVariant()).isEqualTo("en-zh");
 
         assertThat(queuedEvent.getPerformerData().getId()).isEqualTo(1);
         assertThat(queuedEvent.getPerformerData().getName()).isEqualTo("TestPerformer");
         assertThat(queuedEvent.getPerformerData().getIsLoggedIn()).isTrue();
+        assertThat(queuedEvent.getPerformerData().getIsTemp()).isFalse();
         assertThat(queuedEvent.getPerformerData().getPageviewId()).isEqualTo("eeeeeeeeeeeeeeeeeeee");
         assertThat(queuedEvent.getPerformerData().getGroups()).contains("*");
-        assertThat(queuedEvent.getPerformerData().getIsBot()).isFalse();
-        assertThat(queuedEvent.getPerformerData().getLanguage()).isEqualTo("zh");
-        assertThat(queuedEvent.getPerformerData().getLanguageVariant()).isEqualTo("zh-tw");
-        assertThat(queuedEvent.getPerformerData().getCanProbablyEditPage()).isTrue();
-        assertThat(queuedEvent.getPerformerData().getEditCount()).isEqualTo(10);
-        assertThat(queuedEvent.getPerformerData().getEditCountBucket()).isEqualTo("5-99 edits");
+        assertThat(queuedEvent.getPerformerData().getLanguageGroups()).isEqualTo("zh, en");
+        assertThat(queuedEvent.getPerformerData().getLanguagePrimary()).isEqualTo("zh-tw");
         assertThat(queuedEvent.getPerformerData().getRegistrationDt()).isEqualTo("2023-03-01T01:08:30Z");
+    }
+
+    @Test void testSubmitMetricsEventWithInteractionData() {
+        when(mockSamplingController.isInSample(streamConfig(curationFilter()))).thenReturn(true);
+
+        ClientData clientData = DataFixtures.getTestClientData();
+        Map<String, Object> customDataMap = getTestCustomData();
+        InteractionData interactionData = DataFixtures.getTestInteractionData("TestAction");
+        client.submitMetricsEvent(METRICS_PLATFORM_SCHEMA_BASE, "test_event", clientData, customDataMap, interactionData);
+
+        assertThat(eventQueue).isNotEmpty();
+
+        EventProcessed queuedEvent = eventQueue.remove();
+
+        assertThat(queuedEvent.getAction()).isEqualTo("TestAction");
+        assertThat(queuedEvent.getActionSource()).isEqualTo("TestActionSource");
+        assertThat(queuedEvent.getActionContext()).isEqualTo("TestActionContext");
+        assertThat(queuedEvent.getActionSubtype()).isEqualTo("TestActionSubtype");
+        assertThat(queuedEvent.getElementId()).isEqualTo("TestElementId");
+        assertThat(queuedEvent.getElementFriendlyName()).isEqualTo("TestElementFriendlyName");
+        assertThat(queuedEvent.getFunnelEntryToken()).isEqualTo("TestFunnelEntryToken");
+        assertThat(queuedEvent.getFunnelEventSequencePosition()).isEqualTo(8);
     }
 
     @Test void testSubmitMetricsEventIncludesSample() {
@@ -179,7 +174,7 @@ class MetricsClientTest {
         when(mockSamplingController.isInSample(streamConfig)).thenReturn(true);
 
         Map<String, Object> customDataMap = getTestCustomData();
-        client.submitMetricsEvent("test_event", customDataMap);
+        client.submitMetricsEvent(METRICS_PLATFORM_SCHEMA_BASE, "test_event", customDataMap);
 
         assertThat(eventQueue).isNotEmpty();
 
@@ -245,22 +240,9 @@ class MetricsClientTest {
         verify(mockSessionController).getSessionId();
     }
 
-    /**
-     * Convenience method for adding test custom data.
-     */
-    private Map<String, Object> getTestCustomData() {
-        Map<String, Object> customData = new HashMap<>();
-
-        customData.put("action", "click");
-        customData.put("is_editor", true);
-        customData.put("screen_size", 1080);
-
-        return customData;
-    }
-
     private void fillEventQueue() {
         for (int i = 1; i <= 10; i++) {
-            client.submitMetricsEvent("test_event", getTestCustomData());
+            client.submitMetricsEvent(METRICS_PLATFORM_SCHEMA_BASE, "test_event", getTestCustomData());
         }
     }
 }

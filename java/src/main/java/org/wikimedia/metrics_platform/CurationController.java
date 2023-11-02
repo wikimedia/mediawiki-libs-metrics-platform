@@ -37,29 +37,19 @@ public class CurationController {
     }
 
     private static boolean applyMediaWikiRules(@NonNull MediawikiData data, @NonNull CurationFilter rules) {
-        return applyRules(rules.getMediawikiSkin(), data.getSkin()) &&
-            applyRules(rules.getMediawikiVersion(), data.getVersion()) &&
-            applyRules(rules.getMediawikiIsProduction(), data.getIsProduction()) &&
-            applyRules(rules.getMediawikiIsDebugMode(), data.getIsDebugMode()) &&
-            applyRules(rules.getMediawikiDatabase(), data.getDatabase()) &&
-            applyRules(rules.getMediawikiSiteContentLanguage(), data.getSiteContentLanguage()) &&
-            applyRules(rules.getMediawikiSiteContentLanguageVariant(), data.getSiteContentLanguageVariant());
+        return applyRules(rules.getMediawikiDatabase(), data.getDatabase());
     }
 
     private static boolean applyPageRules(@NonNull PageData data, @NonNull CurationFilter rules) {
         return applyRules(rules.getPageIdRules(), data.getId()) &&
-            applyRules(rules.getPageNamespaceRules(), data.getNamespace()) &&
+            applyRules(rules.getPageNamespaceIdRules(), data.getNamespaceId()) &&
             applyRules(rules.getPageNamespaceNameRules(), data.getNamespaceName()) &&
             applyRules(rules.getPageTitleRules(), data.getTitle()) &&
             applyRules(rules.getPageRevisionIdRules(), data.getRevisionId()) &&
             applyRules(rules.getPageWikidataQidRules(), data.getWikidataItemQid()) &&
-            applyRules(rules.getPageIsRedirectRules(), data.getIsRedirect()) &&
-            applyRules(rules.getPageContentLanguageRules(), data.getContentLanguage()) &&
-            applyRules(rules.getPageUserGroupsAllowedToEditRules(), data.getGroupsAllowedToEdit()) &&
-            applyRules(rules.getPageUserGroupsAllowedToMoveRules(), data.getGroupsAllowedToMove());
+            applyRules(rules.getPageContentLanguageRules(), data.getContentLanguage());
     }
 
-    @SuppressWarnings("checkstyle:CyclomaticComplexity")
     private static boolean applyPerformerRules(@NonNull PerformerData data, @NonNull CurationFilter rules) {
         return applyRules(rules.getPerformerIdRules(), data.getId()) &&
             applyRules(rules.getPerformerNameRules(), data.getName()) &&
@@ -67,13 +57,10 @@ public class CurationController {
             applyRules(rules.getPerformerPageviewIdRules(), data.getPageviewId()) &&
             applyRules(rules.getPerformerGroupsRules(), data.getGroups()) &&
             applyRules(rules.getPerformerIsLoggedInRules(), data.getIsLoggedIn()) &&
-            applyRules(rules.getPerformerIsBotRules(), data.getIsBot()) &&
-            applyRules(rules.getPerformerCanProbablyEditPageRules(), data.getCanProbablyEditPage()) &&
-            applyRules(rules.getPerformerEditCountRules(), data.getEditCount()) &&
-            applyRules(rules.getPerformerEditCountBucketRules(), data.getEditCountBucket()) &&
+            applyRules(rules.getPerformerIsTempRules(), data.getIsTemp()) &&
             applyRules(rules.getPerformerRegistrationDtRules(), data.getRegistrationDt()) &&
-            applyRules(rules.getPerformerLanguageRules(), data.getLanguage()) &&
-            applyRules(rules.getPerformerLanguageVariantRules(), data.getLanguageVariant());
+            applyRules(rules.getPerformerLanguageGroupsRules(), data.getLanguageGroups()) &&
+            applyRules(rules.getPerformerLanguagePrimaryRules(), data.getLanguagePrimary());
     }
 
     private static <T> boolean applyRules(CollectionCurationRules<T> rules, Collection<T> value) {

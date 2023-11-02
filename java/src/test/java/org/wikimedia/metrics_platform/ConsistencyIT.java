@@ -4,6 +4,7 @@ import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.wikimedia.metrics_platform.ConsistencyITClientData.createConsistencyTestClientData;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.ANALYTICS_API_ENDPOINT;
+import static org.wikimedia.metrics_platform.MetricsClient.METRICS_PLATFORM_SCHEMA_BASE;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,7 +36,7 @@ class ConsistencyIT {
     private JsonObject expectedEvent;
 
     @Test void testConsistency() throws IOException {
-        Path pathStreamConfigs = Paths.get("../tests/consistency/stream_configs.json");
+        Path pathStreamConfigs = Paths.get("../tests/consistency/stream_configs_apps.json");
 
         try (BufferedReader reader = Files.newBufferedReader(pathStreamConfigs)) {
 
@@ -60,6 +61,7 @@ class ConsistencyIT {
             );
 
             consistencyTestMetricsClient.submitMetricsEvent(
+                    METRICS_PLATFORM_SCHEMA_BASE,
                     "test_consistency_event",
                     DataFixtures.getTestClientData(getExpectedEventJson().toString()),
                     singletonMap("test", "consistency")
@@ -127,7 +129,7 @@ class ConsistencyIT {
 
     private JsonObject getExpectedEventJson() throws IOException {
         if (this.expectedEvent == null) {
-            Path pathExpectedEvent = Paths.get("../tests/consistency/expected_event.json");
+            Path pathExpectedEvent = Paths.get("../tests/consistency/expected_event_apps.json");
             try (BufferedReader expectedEventReader = Files.newBufferedReader(pathExpectedEvent)) {
                 this.expectedEvent = JsonParser.parseReader(expectedEventReader).getAsJsonObject();
             }

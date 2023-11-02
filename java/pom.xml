@@ -30,6 +30,11 @@
         <url>https://gitlab.wikimedia.org/repos/data-engineering/metrics-platform</url>
     </scm>
 
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.github.spotbugs</groupId>
@@ -113,6 +118,9 @@
                             <rules>
                                 <NoPackageCyclesRule implementation="de.andrena.tools.nopackagecycles.NoPackageCyclesRule">
                                     <includeTests>false</includeTests>
+                                    <excludedPackages>
+                                        <excludedPackage>org.wikimedia.metrics_platform.json</excludedPackage>
+                                    </excludedPackages>
                                 </NoPackageCyclesRule>
                             </rules>
                         </configuration>

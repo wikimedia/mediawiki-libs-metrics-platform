@@ -42,9 +42,14 @@ class EventTest {
         ClientData clientData = DataFixtures.getTestClientData();
         clientData.setAgentData(
                 AgentData.builder()
+                        .appFlavor("flamingo")
                         .appInstallId(uuid)
+                        .appTheme("giraffe")
+                        .appVersion("elephant")
                         .clientPlatform("android")
                         .clientPlatformFamily("app")
+                        .deviceLanguage("en")
+                        .releaseStatus("beta")
                         .build()
         );
         event.setClientData(clientData);
@@ -52,90 +57,95 @@ class EventTest {
         assertThat(event.getStream()).isEqualTo("test.event");
         assertThat(event.getSchema()).isEqualTo("test/event/1.0.0");
         assertThat(event.getName()).isEqualTo("testEvent");
+        assertThat(event.getAgentData().getAppFlavor()).isEqualTo("flamingo");
         assertThat(event.getAgentData().getAppInstallId()).isEqualTo(uuid);
+        assertThat(event.getAgentData().getAppTheme()).isEqualTo("giraffe");
+        assertThat(event.getAgentData().getAppVersion()).isEqualTo("elephant");
         assertThat(event.getTimestamp()).isEqualTo("2021-08-27T12:00:00Z");
         assertThat(event.getAgentData().getClientPlatform()).isEqualTo("android");
         assertThat(event.getAgentData().getClientPlatformFamily()).isEqualTo("app");
+        assertThat(event.getAgentData().getDeviceLanguage()).isEqualTo("en");
+        assertThat(event.getAgentData().getReleaseStatus()).isEqualTo("beta");
 
         assertThat(event.getPageData().getId()).isEqualTo(1);
         assertThat(event.getPageData().getTitle()).isEqualTo("Test Page Title");
-        assertThat(event.getPageData().getNamespace()).isEqualTo(0);
+        assertThat(event.getPageData().getNamespaceId()).isEqualTo(0);
         assertThat(event.getPageData().getNamespaceName()).isEqualTo("Main");
         assertThat(event.getPageData().getRevisionId()).isEqualTo(1);
         assertThat(event.getPageData().getWikidataItemQid()).isEqualTo("Q123456");
         assertThat(event.getPageData().getContentLanguage()).isEqualTo("en");
-        assertThat(event.getPageData().getIsRedirect()).isFalse();
-        assertThat(event.getPageData().getGroupsAllowedToMove()).contains("*");
-        assertThat(event.getPageData().getGroupsAllowedToEdit()).contains("*");
 
-        assertThat(event.getMediawikiData().getSkin()).isEqualTo("vector");
-        assertThat(event.getMediawikiData().getVersion()).isEqualTo("1.40.0-wmf.20");
-        assertThat(event.getMediawikiData().getIsProduction()).isTrue();
-        assertThat(event.getMediawikiData().getIsDebugMode()).isFalse();
         assertThat(event.getMediawikiData().getDatabase()).isEqualTo("enwiki");
-        assertThat(event.getMediawikiData().getSiteContentLanguage()).isEqualTo("en");
-        assertThat(event.getMediawikiData().getSiteContentLanguageVariant()).isEqualTo("en-zh");
 
         assertThat(event.getPerformerData().getId()).isEqualTo(1);
         assertThat(event.getPerformerData().getName()).isEqualTo("TestPerformer");
         assertThat(event.getPerformerData().getIsLoggedIn()).isTrue();
+        assertThat(event.getPerformerData().getIsTemp()).isFalse();
         assertThat(event.getPerformerData().getSessionId()).isEqualTo("eeeeeeeeeeeeeeeeeeee");
         assertThat(event.getPerformerData().getPageviewId()).isEqualTo("eeeeeeeeeeeeeeeeeeee");
         assertThat(event.getPerformerData().getGroups()).isEqualTo(Collections.singletonList("*"));
-        assertThat(event.getPerformerData().getIsBot()).isFalse();
-        assertThat(event.getPerformerData().getLanguage()).isEqualTo("zh");
-        assertThat(event.getPerformerData().getLanguageVariant()).isEqualTo("zh-tw");
-        assertThat(event.getPerformerData().getCanProbablyEditPage()).isTrue();
-        assertThat(event.getPerformerData().getEditCount()).isEqualTo(10);
+        assertThat(event.getPerformerData().getLanguageGroups()).isEqualTo("zh, en");
+        assertThat(event.getPerformerData().getLanguagePrimary()).isEqualTo("zh-tw");
         assertThat(event.getPerformerData().getRegistrationDt()).isEqualTo("2023-03-01T01:08:30Z");
+
+        event.setInteractionData(DataFixtures.getTestInteractionData("TestAction"));
+
+        assertThat(event.getAction()).isEqualTo("TestAction");
+        assertThat(event.getActionSource()).isEqualTo("TestActionSource");
+        assertThat(event.getActionContext()).isEqualTo("TestActionContext");
+        assertThat(event.getActionSubtype()).isEqualTo("TestActionSubtype");
+        assertThat(event.getElementId()).isEqualTo("TestElementId");
+        assertThat(event.getElementFriendlyName()).isEqualTo("TestElementFriendlyName");
+        assertThat(event.getFunnelEntryToken()).isEqualTo("TestFunnelEntryToken");
+        assertThat(event.getFunnelEventSequencePosition()).isEqualTo(8);
 
         Gson gson = GsonHelper.getGson();
         String json = gson.toJson(event);
         assertThat(json).isEqualTo(String.format(Locale.ROOT,
                 "{" +
                         "\"agent\":{" +
+                        "\"app_flavor\":\"flamingo\"," +
                         "\"app_install_id\":\"%s\"," +
+                        "\"app_theme\":\"giraffe\"," +
+                        "\"app_version\":\"elephant\"," +
                         "\"client_platform\":\"android\"," +
-                        "\"client_platform_family\":\"app\"" +
+                        "\"client_platform_family\":\"app\"," +
+                        "\"device_language\":\"en\"," +
+                        "\"release_status\":\"beta\"" +
                         "}," +
                         "\"page\":{" +
                         "\"id\":1," +
                         "\"title\":\"Test Page Title\"," +
-                        "\"namespace\":0," +
+                        "\"namespace_id\":0," +
                         "\"namespace_name\":\"Main\"," +
                         "\"revision_id\":1," +
                         "\"wikidata_qid\":\"Q123456\"," +
-                        "\"content_language\":\"en\"," +
-                        "\"is_redirect\":false," +
-                        "\"user_groups_allowed_to_move\":[\"*\"]," +
-                        "\"user_groups_allowed_to_edit\":[\"*\"]" +
+                        "\"content_language\":\"en\"" +
                         "}," +
                         "\"mediawiki\":{" +
-                        "\"skin\":\"vector\"," +
-                        "\"version\":\"1.40.0-wmf.20\"," +
-                        "\"is_production\":true," +
-                        "\"is_debug_mode\":false," +
-                        "\"database\":\"enwiki\"," +
-                        "\"site_content_language\":\"en\"," +
-                        "\"site_content_language_variant\":\"en-zh\"" +
+                        "\"database\":\"enwiki\"" +
                         "}," +
                         "\"performer\":{" +
+                        "\"id\":1," +
                         "\"name\":\"TestPerformer\"," +
                         "\"is_logged_in\":true," +
-                        "\"id\":1," +
+                        "\"is_temp\":false," +
                         "\"session_id\":\"eeeeeeeeeeeeeeeeeeee\"," +
                         "\"pageview_id\":\"eeeeeeeeeeeeeeeeeeee\"," +
                         "\"groups\":[\"*\"]," +
-                        "\"is_bot\":false," +
-                        "\"language\":\"zh\"," +
-                        "\"language_variant\":\"zh-tw\"," +
-                        "\"can_probably_edit_page\":true," +
-                        "\"edit_count\":10," +
-                        "\"edit_count_bucket\":\"5-99 edits\"," +
+                        "\"language_groups\":\"zh, en\"," +
+                        "\"language_primary\":\"zh-tw\"," +
                         "\"registration_dt\":\"2023-03-01T01:08:30Z\"" +
                         "}," +
+                        "\"action\":\"TestAction\"," +
+                        "\"action_subtype\":\"TestActionSubtype\"," +
+                        "\"action_source\":\"TestActionSource\"," +
+                        "\"action_context\":\"TestActionContext\"," +
+                        "\"element_id\":\"TestElementId\"," +
+                        "\"element_friendly_name\":\"TestElementFriendlyName\"," +
+                        "\"funnel_entry_token\":\"TestFunnelEntryToken\"," +
+                        "\"funnel_event_sequence_position\":8," +
                         "\"$schema\":\"test/event/1.0.0\"," +
-                        "\"name\":\"testEvent\"," +
                         "\"dt\":\"2021-08-27T12:00:00Z\"," +
                         "\"meta\":{\"stream\":\"test.event\"}" +
                         "}", uuid, uuid));

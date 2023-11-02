@@ -1,0 +1,36 @@
+{
+	"$schema": "/analytics/metrics_platform/app/base/1.0.0",
+	"test": "consistency",
+	"meta": {
+		"stream": "test.consistency",
+		"domain": "en.wikipedia.org"
+	},
+	"agent": {
+		"app_install_id": "ffffffff-ffff-ffff-ffff-ffffffffffff",
+		"client_platform": "android",
+		"client_platform_family": "app"
+	},
+	"page": {
+		"id": 30715282,
+		"title": "Dark_Souls",
+		"namespace_id": 0,
+		"namespace_name": "",
+		"revision_id": 1084793259,
+		"wikidata_qid": "Q1166232",
+		"content_language": "en"
+	},
+	"mediawiki": {
+		"database": "enwiki"
+	},
+	"performer": {
+		"is_logged_in": false,
+		"id": 0,
+		"session_id": "eeeeeeeeeeeeeeeeeeee",
+		"pageview_id": "eeeeeeeeeeeeeeeeeeee",
+		"groups": [
+			"*"
+		],
+		"language_primary": "en",
+		"language_groups": "zh, zh-tw"
+	}
+}

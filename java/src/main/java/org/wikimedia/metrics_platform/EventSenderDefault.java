@@ -35,7 +35,7 @@ public class EventSenderDefault implements EventSender {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Content-Type", "application/json");
-            String agent = MetricsClient.METRICS_PLATFORM_VERSION + " Java";
+            String agent = MetricsClient.METRICS_PLATFORM_BASE_VERSION + " Java";
             connection.setRequestProperty("User-Agent", "Metrics Platform Client/" + agent);
             connection.setDoOutput(true);
 

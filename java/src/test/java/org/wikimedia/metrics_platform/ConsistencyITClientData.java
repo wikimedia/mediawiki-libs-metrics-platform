@@ -6,8 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.wikimedia.metrics_platform.context.AgentData;
 import org.wikimedia.metrics_platform.context.ClientData;
@@ -45,35 +43,17 @@ public class ConsistencyITClientData extends ClientData {
                 .clientPlatformFamily(this.agentJson.get("client_platform_family").getAsString())
                 .build();
 
-        Set<String> groupsMove = new HashSet<>();
-        Set<String> groupsEdit = new HashSet<>();
-
-        for (JsonElement jsonElementGroupsMove : this.pageJson.get("user_groups_allowed_to_move").getAsJsonArray()) {
-            groupsMove.add(jsonElementGroupsMove.getAsString());
-        }
-        for (JsonElement jsonElementGroupsEdit : this.pageJson.get("user_groups_allowed_to_edit").getAsJsonArray()) {
-            groupsEdit.add(jsonElementGroupsEdit.getAsString());
-        }
-
         PageData pageData = PageData.builder()
                 .id(this.pageJson.get("id").getAsInt())
                 .title(this.pageJson.get("title").getAsString())
-                .namespace(this.pageJson.get("namespace").getAsInt())
+                .namespaceId(this.pageJson.get("namespace_id").getAsInt())
                 .namespaceName(this.pageJson.get("namespace_name").getAsString())
                 .revisionId(this.pageJson.get("revision_id").getAsLong())
                 .wikidataItemQid(this.pageJson.get("wikidata_qid").getAsString())
                 .contentLanguage(this.pageJson.get("content_language").getAsString())
-                .isRedirect(this.pageJson.get("is_redirect").getAsBoolean())
-                .groupsAllowedToMove(groupsMove)
-                .groupsAllowedToEdit(groupsEdit)
                 .build();
         MediawikiData mediawikiData = MediawikiData.builder()
-                .skin(this.mediawikiJson.get("skin").getAsString())
-                .version(this.mediawikiJson.get("version").getAsString())
-                .isProduction(this.mediawikiJson.get("is_production").getAsBoolean())
-                .isDebugMode(this.mediawikiJson.get("is_debug_mode").getAsBoolean())
                 .database(this.mediawikiJson.get("database").getAsString())
-                .siteContentLanguage(this.mediawikiJson.get("site_content_language").getAsString())
                 .build();
         PerformerData performerData = PerformerData.builder()
                 .id(this.performerJson.get("id").getAsInt())
@@ -81,9 +61,8 @@ public class ConsistencyITClientData extends ClientData {
                 .sessionId(this.performerJson.get("session_id").getAsString())
                 .pageviewId(this.performerJson.get("pageview_id").getAsString())
                 .groups(Collections.singleton(this.performerJson.get("groups").getAsString()))
-                .isBot(this.performerJson.get("is_bot").getAsBoolean())
-                .language(this.performerJson.get("language").getAsString())
-                .canProbablyEditPage(this.performerJson.get("can_probably_edit_page").getAsBoolean())
+                .languagePrimary(this.performerJson.get("language_primary").getAsString())
+                .languageGroups(this.performerJson.get("language_groups").getAsString())
                 .build();
 
         this.setAgentData(agentData);
@@ -115,7 +94,7 @@ public class ConsistencyITClientData extends ClientData {
     }
 
     private static JsonObject getIntegrationData() throws IOException {
-        Path pathIntegration = Paths.get("../tests/consistency/integration_data.json");
+        Path pathIntegration = Paths.get("../tests/consistency/integration_data_apps.json");
         try (BufferedReader reader = Files.newBufferedReader(pathIntegration)) {
             JsonElement jsonElement = JsonParser.parseReader(reader);
             return jsonElement.getAsJsonObject();

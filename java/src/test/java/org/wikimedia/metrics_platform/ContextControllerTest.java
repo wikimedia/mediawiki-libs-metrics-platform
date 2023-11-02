@@ -35,35 +35,23 @@ class ContextControllerTest {
         assertThat(agentData.getClientPlatform()).isEqualTo("android");
         assertThat(agentData.getClientPlatformFamily()).isEqualTo("app");
 
-        assertThat(mediawikiData.getSkin()).isEqualTo("vector");
-        assertThat(mediawikiData.getVersion()).isEqualTo("1.40.0-wmf.20");
-        assertThat(mediawikiData.getIsProduction()).isEqualTo(true);
-        assertThat(mediawikiData.getIsDebugMode()).isEqualTo(false);
         assertThat(mediawikiData.getDatabase()).isEqualTo("enwiki");
-        assertThat(mediawikiData.getSiteContentLanguage()).isEqualTo("en");
-        assertThat(mediawikiData.getSiteContentLanguageVariant()).isEqualTo("en-zh");
 
         assertThat(pageData.getId()).isEqualTo(1);
-        assertThat(pageData.getNamespace()).isEqualTo(0);
+        assertThat(pageData.getNamespaceId()).isEqualTo(0);
         assertThat(pageData.getNamespaceName()).isEqualTo("Main");
         assertThat(pageData.getTitle()).isEqualTo("Test Page Title");
-        assertThat(pageData.getIsRedirect()).isFalse();
         assertThat(pageData.getRevisionId()).isEqualTo(1L);
         assertThat(pageData.getContentLanguage()).isEqualTo("en");
         assertThat(pageData.getWikidataItemQid()).isEqualTo("Q123456");
-        assertThat(pageData.getGroupsAllowedToEdit()).contains("*");
-        assertThat(pageData.getGroupsAllowedToMove()).contains("*");
 
         assertThat(performerData.getId()).isEqualTo(1);
         assertThat(performerData.getIsLoggedIn()).isTrue();
+        assertThat(performerData.getIsTemp()).isFalse();
         assertThat(performerData.getName()).isEqualTo("TestPerformer");
         assertThat(performerData.getGroups()).containsExactly("*");
-        assertThat(performerData.getEditCount()).isEqualTo(10);
-        assertThat(performerData.getEditCountBucket()).isEqualTo("5-99 edits");
         assertThat(performerData.getRegistrationDt()).isEqualTo("2023-03-01T01:08:30Z");
-        assertThat(performerData.getLanguage()).isEqualTo("zh");
-        assertThat(performerData.getLanguageVariant()).isEqualTo("zh-tw");
-        assertThat(performerData.getIsBot()).isFalse();
-        assertThat(performerData.getCanProbablyEditPage()).isTrue();
+        assertThat(performerData.getLanguageGroups()).isEqualTo("zh, en");
+        assertThat(performerData.getLanguagePrimary()).isEqualTo("zh-tw");
     }
 }

@@ -22,8 +22,13 @@ public class AgentData {
 
     public static final AgentData NULL_AGENT_DATA = AgentData.builder().build();
 
+    @SerializedName("app_flavor") private final String appFlavor;
     @SerializedName("app_install_id") private final String appInstallId;
+    @SerializedName("app_theme") private final String appTheme;
+    @SerializedName("app_version") private final String appVersion;
     @SerializedName("client_platform") private final String clientPlatform;
     @SerializedName("client_platform_family") private final String clientPlatformFamily;
+    @SerializedName("device_language") private final String deviceLanguage;
+    @SerializedName("release_status") private final String releaseStatus;
 
 }
