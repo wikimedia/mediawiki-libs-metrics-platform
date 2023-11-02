@@ -35,7 +35,7 @@ public final class EventFixtures {
         eventProcessed.setPerformerData(
                 PerformerData.builder()
                         .groups(Arrays.asList("user", "autoconfirmed", "steward"))
-                        .isLoggedIn(true).editCountBucket("1000+ edits")
+                        .isLoggedIn(true)
                         .build()
         );
         return eventProcessed;
@@ -57,7 +57,7 @@ public final class EventFixtures {
         eventProcessed.setPerformerData(
                 PerformerData.builder()
                         .groups(groups)
-                        .isLoggedIn(isLoggedIn).editCountBucket(editCount)
+                        .isLoggedIn(isLoggedIn)
                         .build()
         );
         return eventProcessed;

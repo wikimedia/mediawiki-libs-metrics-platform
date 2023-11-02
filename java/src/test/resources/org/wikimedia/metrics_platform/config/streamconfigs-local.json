@@ -1711,16 +1711,13 @@
             "agent_client_platform_family",
             "page_id",
             "page_title",
-            "page_namespace",
+            "page_namespace_id",
             "page_revision_id",
-            "mediawiki_version",
-            "mediawiki_is_debug_mode",
             "mediawiki_database",
             "performer_is_logged_in",
             "performer_id",
             "performer_session_id",
-            "performer_pageview_id",
-            "performer_edit_count"
+            "performer_pageview_id"
           ]
         }
       },
@@ -1743,6 +1740,186 @@
       "topics": [
         "eqiad.mediawiki.edit_attempt",
         "codfw.mediawiki.edit_attempt"
+      ]
+    },
+    "mediawiki.metrics_platform.click": {
+      "schema_title": "analytics/metrics_platform/app/base",
+      "destination_event_service": "eventgate-logging-local",
+      "producers": {
+        "metrics_platform_client": {
+          "events": [
+            "click",
+            "click."
+          ],
+          "provide_values": [
+            "agent_app_install_id",
+            "agent_client_platform_family",
+            "page_id",
+            "page_title",
+            "page_namespace_id",
+            "page_revision_id",
+            "mediawiki_database",
+            "performer_is_logged_in",
+            "performer_id",
+            "performer_session_id",
+            "performer_pageview_id"
+          ]
+        }
+      },
+      "sample": {
+        "unit": "pageview",
+        "rate": 1
+      },
+      "topic_prefixes": [
+        "eqiad.",
+        "codfw."
+      ],
+      "canary_events_enabled": true,
+      "consumers": {
+        "analytics_hadoop_ingestion": {
+          "job_name": "event_default",
+          "enabled": true
+        }
+      },
+      "stream": "mediawiki.metrics_platform.click",
+      "topics": [
+        "eqiad.mediawiki.metrics_platform.click",
+        "codfw.mediawiki.metrics_platform.click"
+      ]
+    },
+    "mediawiki.metrics_platform.click_custom": {
+      "schema_title": "analytics/metrics_platform/app/click_custom",
+      "destination_event_service": "eventgate-logging-local",
+      "producers": {
+        "metrics_platform_client": {
+          "events": [
+            "click",
+            "click."
+          ],
+          "provide_values": [
+            "agent_app_install_id",
+            "agent_client_platform_family",
+            "page_id",
+            "page_title",
+            "page_namespace_id",
+            "page_revision_id",
+            "mediawiki_database",
+            "performer_is_logged_in",
+            "performer_id",
+            "performer_session_id",
+            "performer_pageview_id"
+          ]
+        }
+      },
+      "sample": {
+        "unit": "pageview",
+        "rate": 1
+      },
+      "topic_prefixes": [
+        "eqiad.",
+        "codfw."
+      ],
+      "canary_events_enabled": true,
+      "consumers": {
+        "analytics_hadoop_ingestion": {
+          "job_name": "event_default",
+          "enabled": true
+        }
+      },
+      "stream": "mediawiki.metrics_platform.click_custom",
+      "topics": [
+        "eqiad.mediawiki.metrics_platform.click_custom",
+        "codfw.mediawiki.metrics_platform.click_custom"
+      ]
+    },
+    "mediawiki.metrics_platform.interaction": {
+      "schema_title": "analytics/metrics_platform/app/base",
+      "destination_event_service": "eventgate-logging-local",
+      "producers": {
+        "metrics_platform_client": {
+          "events": [
+            "interaction",
+            "interaction."
+          ],
+          "provide_values": [
+            "agent_app_install_id",
+            "agent_client_platform_family",
+            "page_id",
+            "page_title",
+            "page_namespace_id",
+            "page_revision_id",
+            "mediawiki_database",
+            "performer_is_logged_in",
+            "performer_id",
+            "performer_session_id",
+            "performer_pageview_id"
+          ]
+        }
+      },
+      "sample": {
+        "unit": "pageview",
+        "rate": 1
+      },
+      "topic_prefixes": [
+        "eqiad.",
+        "codfw."
+      ],
+      "canary_events_enabled": true,
+      "consumers": {
+        "analytics_hadoop_ingestion": {
+          "job_name": "event_default",
+          "enabled": true
+        }
+      },
+      "stream": "mediawiki.metrics_platform.interaction",
+      "topics": [
+        "eqiad.mediawiki.metrics_platform.interaction",
+        "codfw.mediawiki.metrics_platform.interaction"
+      ]
+    },
+    "mediawiki.metrics_platform.view": {
+      "schema_title": "analytics/metrics_platform/app/base",
+      "destination_event_service": "eventgate-logging-local",
+      "producers": {
+        "metrics_platform_client": {
+          "events": [
+            "view",
+            "view."
+          ],
+          "provide_values": [
+            "agent_app_install_id",
+            "agent_client_platform_family",
+            "page_id",
+            "page_title",
+            "page_namespace_id",
+            "page_revision_id",
+            "mediawiki_database",
+            "performer_is_logged_in",
+            "performer_id",
+            "performer_session_id",
+            "performer_pageview_id"
+          ]
+        }
+      },
+      "sample": {
+        "unit": "pageview",
+        "rate": 1
+      },
+      "topic_prefixes": [
+        "eqiad.",
+        "codfw."
+      ],
+      "canary_events_enabled": true,
+      "consumers": {
+        "analytics_hadoop_ingestion": {
+          "job_name": "event_default",
+          "enabled": true
+        }
+      },
+      "stream": "mediawiki.metrics_platform.view",
+      "topics": [
+        "eqiad.mediawiki.metrics_platform.view",
+        "codfw.mediawiki.metrics_platform.view"
       ]
     },
     "mediawiki.visual_editor_feature_use": {

@@ -1,6 +1,5 @@
 package org.wikimedia.metrics_platform.config;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
@@ -39,22 +38,13 @@ public class StreamConfig {
         // Page
         "page_id",
         "page_title",
-        "page_namespace",
+        "page_namespace_id",
         "page_namespace_name",
         "page_revision_id",
         "page_wikidata_qid",
         "page_content_language",
-        "page_is_redirect",
-        "page_user_groups_allowed_to_move",
-        "page_user_groups_allowed_to_edit",
         // MediaWiki
-        "mediawiki_skin",
-        "mediawiki_version",
-        "mediawiki_is_production",
-        "mediawiki_is_debug_mode",
         "mediawiki_database",
-        "mediawiki_site_content_language",
-        "mediawiki_site_content_language_variant",
         // Performer
         "performer_is_logged_in",
         "performer_id",
@@ -62,12 +52,8 @@ public class StreamConfig {
         "performer_session_id",
         "performer_pageview_id",
         "performer_groups",
-        "performer_is_bot",
-        "performer_language",
-        "performer_language_variant",
-        "performer_can_probably_edit_page",
-        "performer_edit_count",
-        "performer_edit_count_bucket",
+        "performer_language_primary",
+        "performer_language_groups",
         "performer_registration_dt",
     };
 
@@ -134,7 +120,7 @@ public class StreamConfig {
     @Value @ThreadSafe
     public static class MetricsPlatformClientConfig {
         @SerializedName("events") Set<String> events;
-        @SerializedName("provide_values") Collection<String> requestedValues;
+        @SerializedName("provide_values") Set<String> requestedValues;
         @SerializedName("curation") CurationFilter curationFilter;
     }
 

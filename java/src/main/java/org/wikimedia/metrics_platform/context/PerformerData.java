@@ -26,18 +26,15 @@ public class PerformerData {
 
     public static final PerformerData NULL_PERFORMER_DATA = PerformerData.builder().build();
 
+    private final Integer id;
     @SerializedName("name") private final String name;
     @SerializedName("is_logged_in") private final Boolean isLoggedIn;
-    private final Integer id;
+    @SerializedName("is_temp") private final Boolean isTemp;
     @SerializedName("session_id") private final String sessionId;
     @SerializedName("pageview_id") private final String pageviewId;
     @SerializedName("groups") private final Collection<String> groups;
-    @SerializedName("is_bot") private final Boolean isBot;
-    @SerializedName("language") private final String language;
-    @SerializedName("language_variant") private final String languageVariant;
-    @SerializedName("can_probably_edit_page") private final Boolean canProbablyEditPage;
-    @SerializedName("edit_count") private final Integer editCount;
-    @SerializedName("edit_count_bucket") private final String editCountBucket;
+    @SerializedName("language_groups") private final String languageGroups;
+    @SerializedName("language_primary") private final String languagePrimary;
     @SerializedName("registration_dt") private final Instant registrationDt;
 
     public static PerformerDataBuilder builderFrom(@Nonnull PerformerData performerData) {
@@ -48,12 +45,9 @@ public class PerformerData {
                 .sessionId(performerData.getSessionId())
                 .pageviewId(performerData.getPageviewId())
                 .groups(performerData.getGroups())
-                .isBot(performerData.getIsBot())
-                .language(performerData.getLanguage())
-                .languageVariant(performerData.getLanguageVariant())
-                .canProbablyEditPage(performerData.getCanProbablyEditPage())
-                .editCount(performerData.getEditCount())
-                .editCountBucket(performerData.getEditCountBucket())
+                .isTemp(performerData.getIsTemp())
+                .languageGroups(performerData.getLanguageGroups())
+                .languagePrimary(performerData.getLanguagePrimary())
                 .registrationDt(performerData.getRegistrationDt());
     }
 }

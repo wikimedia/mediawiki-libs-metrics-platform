@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,36 +38,24 @@ public final class StreamConfigFixtures {
             "agent_app_install_id",
             "agent_client_platform",
             "agent_client_platform_family",
-            "mediawiki_skin",
-            "mediawiki_version",
-            "mediawiki_is_production",
-            "mediawiki_is_debug_mode",
             "mediawiki_database",
-            "mediawiki_site_content_language",
-            "mediawiki_site_content_language_variant",
             "page_id",
-            "page_namespace",
+            "page_namespace_id",
             "page_namespace_name",
             "page_title",
-            "page_is_redirect",
             "page_revision_id",
             "page_content_language",
             "page_wikidata_qid",
-            "page_user_groups_allowed_to_edit",
-            "page_user_groups_allowed_to_move",
             "performer_id",
             "performer_is_logged_in",
+            "performer_is_temp",
             "performer_name",
             "performer_session_id",
             "performer_pageview_id",
             "performer_groups",
-            "performer_edit_count",
-            "performer_edit_count_bucket",
             "performer_registration_dt",
-            "performer_language",
-            "performer_language_variant",
-            "performer_is_bot",
-            "performer_can_probably_edit_page"
+            "performer_language_groups",
+            "performer_language_primary"
         ));
         SampleConfig sampleConfig = new SampleConfig(1.0, SampleConfig.Identifier.PAGEVIEW);
 
@@ -78,7 +67,7 @@ public final class StreamConfigFixtures {
                 new StreamConfig.MetricsPlatformClientConfig(
                     events,
                     requestedValuesSet,
-                        CurationFilterFixtures.getCurationFilter()
+                    CurationFilterFixtures.getCurationFilter()
                 )
             ),
             sampleConfig
@@ -106,7 +95,7 @@ public final class StreamConfigFixtures {
             new StreamConfig.ProducerConfig(
                 new StreamConfig.MetricsPlatformClientConfig(
                     events,
-                    Arrays.asList(provideValues),
+                    new HashSet<>(List.of(provideValues)),
                     curationFilter
                 )
             ),

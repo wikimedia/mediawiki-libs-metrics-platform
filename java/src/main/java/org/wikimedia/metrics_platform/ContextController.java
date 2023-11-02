@@ -3,39 +3,35 @@ package org.wikimedia.metrics_platform;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_INSTALL_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_PLATFORM_FAMILY;
-import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_SKIN;
-import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_VERSION;
-import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_IS_PRODUCTION;
-import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_IS_DEBUG_MODE;
+import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_FLAVOR;
+import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_THEME;
+import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_VERSION;
+import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_DEVICE_LANGUAGE;
+import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_RELEASE_STATUS;
 import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_DATABASE;
-import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_SITE_CONTENT_LANGUAGE;
-import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_SITE_CONTENT_LANGUAGE_VARIANT;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_TITLE;
-import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_NAMESPACE;
+import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_NAMESPACE_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_NAMESPACE_NAME;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_REVISION_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_WIKIDATA_QID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_CONTENT_LANGUAGE;
-import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_IS_REDIRECT;
-import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_USER_GROUPS_ALLOWED_TO_EDIT;
-import static org.wikimedia.metrics_platform.context.ContextValue.PAGE_USER_GROUPS_ALLOWED_TO_MOVE;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_NAME;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_IS_LOGGED_IN;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_IS_TEMP;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_SESSION_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_PAGEVIEW_ID;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_GROUPS;
-import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_IS_BOT;
-import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_LANGUAGE;
-import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_LANGUAGE_VARIANT;
-import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_CAN_PROBABLY_EDIT_PAGE;
-import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_EDIT_COUNT;
-import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_EDIT_COUNT_BUCKET;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_LANGUAGE_GROUPS;
+import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_LANGUAGE_PRIMARY;
 import static org.wikimedia.metrics_platform.context.ContextValue.PERFORMER_REGISTRATION_DT;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -58,6 +54,11 @@ public class ContextController {
     @Nonnull
     private final ClientData clientData;
 
+    private static final Collection<String> REQUIRED_PROPERTIES = List.of(
+            "agent_client_platform",
+            "agent_client_platform_family"
+    );
+
     public ContextController(ClientData clientData) {
         this.clientData = clientData;
     }
@@ -72,8 +73,11 @@ public class ContextController {
         }
 
         // Check stream config for which contextual values should be added to the event.
-        Collection<String> requestedValues = streamConfig.getProducerConfig()
+        Collection<String> requestedValuesFromConfig = streamConfig.getProducerConfig()
                 .getMetricsPlatformClientConfig().getRequestedValues();
+        // Add required properties.
+        Set<String> requestedValues = new HashSet<>(requestedValuesFromConfig);
+        requestedValues.addAll(REQUIRED_PROPERTIES);
         ClientData filteredData = filterClientData(clientData, requestedValues);
         event.setClientData(filteredData);
     }
@@ -102,14 +106,29 @@ public class ContextController {
                 case AGENT_CLIENT_PLATFORM_FAMILY:
                     agentBuilder.clientPlatformFamily(agentData.getClientPlatformFamily());
                     break;
+                case AGENT_APP_FLAVOR:
+                    agentBuilder.appFlavor(agentData.getAppFlavor());
+                    break;
+                case AGENT_APP_THEME:
+                    agentBuilder.appTheme(agentData.getAppTheme());
+                    break;
+                case AGENT_APP_VERSION:
+                    agentBuilder.appVersion(agentData.getAppVersion());
+                    break;
+                case AGENT_DEVICE_LANGUAGE:
+                    agentBuilder.deviceLanguage(agentData.getDeviceLanguage());
+                    break;
+                case AGENT_RELEASE_STATUS:
+                    agentBuilder.releaseStatus(agentData.getReleaseStatus());
+                    break;
                 case PAGE_ID:
                     pageBuilder.id(pageData.getId());
                     break;
                 case PAGE_TITLE:
                     pageBuilder.title(pageData.getTitle());
                     break;
-                case PAGE_NAMESPACE:
-                    pageBuilder.namespace(pageData.getNamespace());
+                case PAGE_NAMESPACE_ID:
+                    pageBuilder.namespaceId(pageData.getNamespaceId());
                     break;
                 case PAGE_NAMESPACE_NAME:
                     pageBuilder.namespaceName(pageData.getNamespaceName());
@@ -123,35 +142,8 @@ public class ContextController {
                 case PAGE_CONTENT_LANGUAGE:
                     pageBuilder.contentLanguage(pageData.getContentLanguage());
                     break;
-                case PAGE_IS_REDIRECT:
-                    pageBuilder.isRedirect(pageData.getIsRedirect());
-                    break;
-                case PAGE_USER_GROUPS_ALLOWED_TO_MOVE:
-                    pageBuilder.groupsAllowedToMove(pageData.getGroupsAllowedToMove());
-                    break;
-                case PAGE_USER_GROUPS_ALLOWED_TO_EDIT:
-                    pageBuilder.groupsAllowedToEdit(pageData.getGroupsAllowedToEdit());
-                    break;
-                case MEDIAWIKI_SKIN:
-                    mediawikiBuilder.skin(mediawikiData.getSkin());
-                    break;
-                case MEDIAWIKI_VERSION:
-                    mediawikiBuilder.version(mediawikiData.getVersion());
-                    break;
-                case MEDIAWIKI_IS_PRODUCTION:
-                    mediawikiBuilder.isProduction(mediawikiData.getIsProduction());
-                    break;
-                case MEDIAWIKI_IS_DEBUG_MODE:
-                    mediawikiBuilder.isDebugMode(mediawikiData.getIsDebugMode());
-                    break;
                 case MEDIAWIKI_DATABASE:
                     mediawikiBuilder.database(mediawikiData.getDatabase());
-                    break;
-                case MEDIAWIKI_SITE_CONTENT_LANGUAGE:
-                    mediawikiBuilder.siteContentLanguage(mediawikiData.getSiteContentLanguage());
-                    break;
-                case MEDIAWIKI_SITE_CONTENT_LANGUAGE_VARIANT:
-                    mediawikiBuilder.siteContentLanguageVariant(mediawikiData.getSiteContentLanguageVariant());
                     break;
                 case PERFORMER_ID:
                     performerBuilder.id(performerData.getId());
@@ -162,6 +154,9 @@ public class ContextController {
                 case PERFORMER_IS_LOGGED_IN:
                     performerBuilder.isLoggedIn(performerData.getIsLoggedIn());
                     break;
+                case PERFORMER_IS_TEMP:
+                    performerBuilder.isTemp(performerData.getIsTemp());
+                    break;
                 case PERFORMER_SESSION_ID:
                     performerBuilder.sessionId(performerData.getSessionId());
                     break;
@@ -171,23 +166,11 @@ public class ContextController {
                 case PERFORMER_GROUPS:
                     performerBuilder.groups(performerData.getGroups());
                     break;
-                case PERFORMER_IS_BOT:
-                    performerBuilder.isBot(performerData.getIsBot());
+                case PERFORMER_LANGUAGE_GROUPS:
+                    performerBuilder.languageGroups(performerData.getLanguageGroups());
                     break;
-                case PERFORMER_LANGUAGE:
-                    performerBuilder.language(performerData.getLanguage());
-                    break;
-                case PERFORMER_LANGUAGE_VARIANT:
-                    performerBuilder.languageVariant(performerData.getLanguageVariant());
-                    break;
-                case PERFORMER_CAN_PROBABLY_EDIT_PAGE:
-                    performerBuilder.canProbablyEditPage(performerData.getCanProbablyEditPage());
-                    break;
-                case PERFORMER_EDIT_COUNT:
-                    performerBuilder.editCount(performerData.getEditCount());
-                    break;
-                case PERFORMER_EDIT_COUNT_BUCKET:
-                    performerBuilder.editCountBucket(performerData.getEditCountBucket());
+                case PERFORMER_LANGUAGE_PRIMARY:
+                    performerBuilder.languagePrimary(performerData.getLanguagePrimary());
                     break;
                 case PERFORMER_REGISTRATION_DT:
                     performerBuilder.registrationDt(performerData.getRegistrationDt());

@@ -3,7 +3,7 @@ package org.wikimedia.metrics_platform.config;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.wikimedia.metrics_platform.config.SampleConfig.Identifier.SESSION;
 
-import java.util.Arrays;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.wikimedia.metrics_platform.json.GsonHelper;
@@ -25,7 +25,7 @@ class StreamConfigTest {
         assertThat(streamConfig.getSampleConfig().getRate()).isEqualTo(0.5);
         assertThat(streamConfig.getSampleConfig().getIdentifier()).isEqualTo(SESSION);
         assertThat(streamConfig.getProducerConfig().getMetricsPlatformClientConfig().getRequestedValues())
-                .isEqualTo(Arrays.asList("page_id", "user_id"));
+                .isEqualTo(Set.of("page_id", "user_id"));
         assertThat(streamConfig.getDestinationEventService()).isEqualTo(DestinationEventService.LOCAL);
     }
 }

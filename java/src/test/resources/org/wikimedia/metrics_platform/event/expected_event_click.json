@@ -1,0 +1,35 @@
+[ {
+	"$schema": "/analytics/metrics_platform/app/base/1.0.0",
+	"meta": {
+		"stream": "mediawiki.metrics_platform.click",
+		"domain": "en.wikipedia.org"
+	},
+	"agent": {
+		"app_install_id": "ffffffff-ffff-ffff-ffff-ffffffffffff",
+		"client_platform_family": "app"
+	},
+	"page": {
+		"id": 30715282,
+		"title": "Dark_Souls",
+		"namespace_id": 0,
+		"revision_id": 1084793259
+	},
+	"mediawiki": {
+		"database": "enwiki"
+	},
+	"performer": {
+		"is_logged_in": false,
+		"id": 0,
+		"session_id": "eeeeeeeeeeeeeeeeeeee",
+		"pageview_id": "eeeeeeeeeeeeeeeeeeee"
+	},
+	"action" : "TestClick",
+	"action_subtype" : "TestActionSubtype",
+	"action_source" : "TestActionSource",
+	"action_context" : "TestActionContext",
+	"element_id" : "TestElementId",
+	"element_friendly_name" : "TestElementFriendlyName",
+	"funnel_entry_token" : "TestFunnelEntryToken",
+	"funnel_event_sequence_position" : 8,
+	"dt" : "${json-unit.ignore}"
+} ]

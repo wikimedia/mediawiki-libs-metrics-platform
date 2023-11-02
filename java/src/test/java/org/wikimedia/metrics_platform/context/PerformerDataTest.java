@@ -17,45 +17,37 @@ class PerformerDataTest {
                 .id(1)
                 .name("TestPerformer")
                 .isLoggedIn(true)
+                .isTemp(false)
                 .sessionId("eeeeeeeeeeeeeeeeeeee")
                 .pageviewId("eeeeeeeeeeeeeeeeeeee")
                 .groups(Collections.singletonList("*"))
-                .isBot(false)
-                .language("zh")
-                .languageVariant("zh-tw")
-                .canProbablyEditPage(true)
-                .editCount(10)
-                .editCountBucket("5-99 edits")
+                .languageGroups("zh, en")
+                .languagePrimary("zh-tw")
                 .registrationDt(Instant.parse("2023-03-01T01:08:30Z"))
                 .build();
 
         assertThat(performerData.getId()).isEqualTo(1);
         assertThat(performerData.getName()).isEqualTo("TestPerformer");
         assertThat(performerData.getIsLoggedIn()).isTrue();
+        assertThat(performerData.getIsTemp()).isFalse();
         assertThat(performerData.getGroups()).isEqualTo(Collections.singletonList("*"));
-        assertThat(performerData.getIsBot()).isFalse();
-        assertThat(performerData.getLanguage()).isEqualTo("zh");
-        assertThat(performerData.getLanguageVariant()).isEqualTo("zh-tw");
-        assertThat(performerData.getCanProbablyEditPage()).isTrue();
-        assertThat(performerData.getEditCount()).isEqualTo(10);
-        assertThat(performerData.getEditCountBucket()).isEqualTo("5-99 edits");
+        assertThat(performerData.getLanguageGroups()).isEqualTo("zh, en");
+        assertThat(performerData.getLanguagePrimary()).isEqualTo("zh-tw");
         assertThat(performerData.getRegistrationDt()).isEqualTo("2023-03-01T01:08:30Z");
 
         Gson gson = GsonHelper.getGson();
 
         String json = gson.toJson(performerData);
-        assertThat(json).isEqualTo("{\"name\":\"TestPerformer\"," +
-                "\"is_logged_in\":true," +
+        assertThat(json).isEqualTo("{" +
                 "\"id\":1," +
+                "\"name\":\"TestPerformer\"," +
+                "\"is_logged_in\":true," +
+                "\"is_temp\":false," +
                 "\"session_id\":\"eeeeeeeeeeeeeeeeeeee\"," +
                 "\"pageview_id\":\"eeeeeeeeeeeeeeeeeeee\"," +
                 "\"groups\":[\"*\"]," +
-                "\"is_bot\":false," +
-                "\"language\":\"zh\"," +
-                "\"language_variant\":\"zh-tw\"," +
-                "\"can_probably_edit_page\":true," +
-                "\"edit_count\":10," +
-                "\"edit_count_bucket\":\"5-99 edits\"," +
+                "\"language_groups\":\"zh, en\"," +
+                "\"language_primary\":\"zh-tw\"," +
                 "\"registration_dt\":\"2023-03-01T01:08:30Z\"" +
                 "}");
     }

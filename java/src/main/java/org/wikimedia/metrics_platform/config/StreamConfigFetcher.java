@@ -36,7 +36,6 @@ public class StreamConfigFetcher {
     // Visible For Testing
     public Map<String, StreamConfig> parseConfig(Reader reader) {
         return GsonHelper.getGson().fromJson(reader, StreamConfigCollection.class).streamConfigs.entrySet().stream()
-            .filter(e -> e.getValue().getSchemaTitle().equals(METRICS_PLATFORM_SCHEMA_TITLE))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }

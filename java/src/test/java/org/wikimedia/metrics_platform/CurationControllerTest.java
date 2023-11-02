@@ -68,17 +68,12 @@ class CurationControllerTest {
         assertThat(curationController.shouldProduceEvent(event, streamConfig)).isFalse();
     }
 
-    @Test void testEventFailsWrongUserEditCountBucket() {
-        EventProcessed event = getEvent(1, "Talk", groups, true, "5-99 edits");
-        assertThat(curationController.shouldProduceEvent(event, streamConfig)).isFalse();
-    }
-
     @Test void testEventPassesPerformerRegistrationDtDeserializes() {
         EventProcessed event = getEvent();
         event.setPerformerData(
                 PerformerData.builder()
                         .groups(groups)
-                        .isLoggedIn(true).editCountBucket("1000+ edits")
+                        .isLoggedIn(true)
                         .registrationDt(Instant.parse("2023-03-01T01:08:30Z"))
                         .build()
         );
