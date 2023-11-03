@@ -67,12 +67,15 @@ class MetricsClient implements LoggerAwareInterface {
 	}
 
 	/**
+	 * Submit an event to a stream.
 	 *
 	 * @param string $streamName
-	 * @param array $event
+	 * @param array $eventData
+	 *
+	 * @stable
 	 */
-	public function submit( string $streamName, array $event ): void {
-		$this->eventSubmitter->submit( $streamName, $event );
+	public function submit( string $streamName, array $eventData ): void {
+		$this->eventSubmitter->submit( $streamName, $eventData );
 	}
 
 	/**
@@ -122,7 +125,7 @@ class MetricsClient implements LoggerAwareInterface {
 
 	/**
 	 * Constructs a "Metrics Platform Event" event given the event name and custom data. The event
-	 * is submitted to all streams that is interested in the event.
+	 * is submitted to all streams that are interested in the event.
 	 *
 	 * An event (E) is constructed for a stream (S) by:
 	 *
@@ -139,6 +142,9 @@ class MetricsClient implements LoggerAwareInterface {
 	 *
 	 * @param string $eventName
 	 * @param array $customData
+	 *
+	 * @unstable
+	 * @deprecated
 	 */
 	public function dispatch( string $eventName, array $customData = [] ): void {
 		$customData = $this->formatCustomData( $customData );

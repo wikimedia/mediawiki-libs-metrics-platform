@@ -152,6 +152,7 @@ class MetricsClientTest extends TestCase {
 	 * @dataProvider provideDispatch
 	 */
 	public function testDispatch( $customData, $expectedCustomData ): void {
+		// @phan-suppress-next-line PhanDeprecatedFunction
 		$this->client->dispatch( 'foo', $customData );
 
 		list( $streamName, $event ) = $this->eventSubmitter->getSubmissions()[0];
@@ -189,6 +190,7 @@ class MetricsClientTest extends TestCase {
 			$context, $curation
 		);
 
+		// @phan-suppress-next-line PhanDeprecatedFunction
 		$client->dispatch( 'bar' );
 
 		$submissions = $this->eventSubmitter->getSubmissions();
