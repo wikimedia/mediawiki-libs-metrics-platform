@@ -201,6 +201,8 @@ MetricsClient.prototype.addRequiredMetadata = function ( eventData, streamName )
  *
  * @param {string} streamName The name of the stream to send the event data to
  * @param {BaseEventData} eventData The event data
+ *
+ * @stable
  */
 MetricsClient.prototype.submit = function ( streamName, eventData ) {
 	const result = this.validateSubmitCall( streamName, eventData );
@@ -213,6 +215,8 @@ MetricsClient.prototype.submit = function ( streamName, eventData ) {
 /**
  * If `eventData` is falsy or does not have the `$schema` property set, then a warning is logged
  * and `false` is returned. Otherwise, `true` is returned.
+ *
+ * @ignore
  *
  * @param {string} streamName
  * @param {BaseEventData} eventData
@@ -307,6 +311,9 @@ function getFormattedCustomData( customData ) {
  *
  * @param {string} eventName
  * @param {Record<string, any>} [customData]
+ *
+ * @unstable
+ * @deprecated
  */
 MetricsClient.prototype.dispatch = function ( eventName, customData ) {
 	const result = this.validateDispatchCall( eventName, customData );
