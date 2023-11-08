@@ -85,6 +85,15 @@ public class EventProcessedSerializer  implements JsonSerializer<EventProcessed>
          */
         jsonObject.remove("name");
         jsonObject.remove("sample");
+
+        /*
+         * Remove the top level data objects from EventProcessed which are
+         * inherited from its superclass Event. The values in "client_data"
+         * and "interaction_data" are set as top level properties in
+         * EventProcessed's constructor.
+         */
+        jsonObject.remove("client_data");
+        jsonObject.remove("interaction_data");
         return jsonObject;
     }
 }
