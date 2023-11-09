@@ -1,5 +1,5 @@
 [ {
-	"$schema": "/analytics/metrics_platform/app/base/1.0.0",
+	"$schema": "/analytics/product_metrics/app/base/1.0.0",
 	"meta": {
 		"stream": "mediawiki.metrics_platform.view",
 		"domain": "en.wikipedia.org"

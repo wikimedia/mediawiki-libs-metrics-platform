@@ -56,7 +56,7 @@ class MetricsClientTest extends TestCase {
 			],
 		],
 		'test.metrics_platform.interactions' => [
-			'schema_title' => 'analytics/metrics_platform/web/base',
+			'schema_title' => 'analytics/product_metrics/web/base',
 			'destination_event_service' => 'eventgate-analytics-external',
 			'producers' => [
 				'metrics_platform_client' => [

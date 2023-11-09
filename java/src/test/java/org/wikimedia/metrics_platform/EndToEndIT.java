@@ -74,7 +74,7 @@ public class EndToEndIT {
                         .withBody(getExpectedEventClickCustom())));
 
         testMetricsClient.submitClick(
-                "/analytics/metrics_platform/app/click_custom/1.0.0",
+                "/analytics/product_metrics/app/click_custom/1.0.0",
                 "click.test_event_name_for_end_to_end_testing",
                 DataFixtures.getTestClientData(getExpectedEventClickCustom()),
                 getTestCustomData(),
