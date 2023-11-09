@@ -52,7 +52,7 @@ public final class MetricsClient {
 
     private static final ScheduledExecutorService EXECUTOR_SERVICE = Executors.newScheduledThreadPool(1, new SimpleThreadFactory());
     public static final String METRICS_PLATFORM_BASE_VERSION = "1.0.0";
-    public static final String METRICS_PLATFORM_SCHEMA_BASE = "/analytics/metrics_platform/app/base/" + METRICS_PLATFORM_BASE_VERSION;
+    public static final String METRICS_PLATFORM_SCHEMA_BASE = "/analytics/product_metrics/app/base/" + METRICS_PLATFORM_BASE_VERSION;
     private final AtomicReference<SourceConfig> sourceConfig;
 
     /**

@@ -8,7 +8,7 @@
  *
  * $wgEventStreams = [
  *   'test.metrics_platform.metrics_events' => [
- *     'schema_title' => 'fragment/analytics/metrics_platform/interaction/common',
+ *     'schema_title' => 'fragment/analytics/product_metrics/interaction/common',
  *     'destination_event_service' => 'eventgate-analytics-external',
  *     'producers' => [
  *     'metrics_platform_client' => [
@@ -21,7 +21,7 @@
  *     ],
  *   ],
  *   'test.metrics_platform.interactions' => [
- *     'schema_title' => 'fragment/analytics/metrics_platform/interaction/common',
+ *     'schema_title' => 'fragment/analytics/product_metrics/interaction/common',
  *     'destination_event_service' => 'eventgate-analytics-external',
  *   ],
  * ];
@@ -55,7 +55,7 @@ metricsClient.dispatch( 'test.click', {
 // @ts-ignore TS2339
 metricsClient.submitInteraction(
 	'test.metrics_platform.interactions',
-	'/fragment/analytics/metrics_platform/interaction/common/1.0.0',
+	'/fragment/analytics/product_metrics/interaction/common/1.0.0',
 	{
 		action: 'init'
 	}
@@ -64,7 +64,7 @@ metricsClient.submitInteraction(
 // @ts-ignore TS2339
 metricsClient.submitInteraction(
 	'test.metrics_platform.interactions',
-	'/fragment/analytics/metrics_platform/interaction/common/1.0.0',
+	'/fragment/analytics/product_metrics/interaction/common/1.0.0',
 	{
 		action: 'click',
 		element_id: 'ca-edit'
@@ -74,7 +74,7 @@ metricsClient.submitInteraction(
 // @ts-ignore TS2339
 metricsClient.submitInteraction(
 	'test.metrics_platform.interactions',
-	'/fragment/analytics/metrics_platform/interaction/common/1.0.0',
+	'/fragment/analytics/product_metrics/interaction/common/1.0.0',
 	{
 		action: 'click',
 		element_id: 'ca-talk'

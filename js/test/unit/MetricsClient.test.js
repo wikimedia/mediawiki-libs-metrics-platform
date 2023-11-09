@@ -49,7 +49,7 @@ var streamConfigs = {
 		}
 	},
 	'metrics.platform.test6': {
-		schema_title: '/analytics/metrics_platform/interaction/common'
+		schema_title: '/analytics/product_metrics/interaction/common'
 	}
 };
 
@@ -285,7 +285,7 @@ QUnit.test( 'submitInteraction() - warn/do not produce for interactionData witho
 	// @ts-ignore TS2345
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
-		'/fragment/analytics/metrics_platform/interaction/common/1.0.0'
+		'/fragment/analytics/product_metrics/interaction/common/1.0.0'
 	);
 
 	assert.strictEqual( logWarningStub.callCount, 1, 'logWarning() should be called' );
@@ -296,7 +296,7 @@ QUnit.test( 'submitInteraction() - warn/do not produce for interactionData witho
 QUnit.test( 'submitInteraction() - produce event correctly', function ( assert ) {
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
-		'/analytics/metrics_platform/web/base/1.0.0',
+		'/analytics/product_metrics/web/base/1.0.0',
 		'foo'
 	);
 
@@ -308,14 +308,14 @@ QUnit.test( 'submitInteraction() - produce event correctly', function ( assert )
 
 	// @ts-ignore TS2345
 	assert.strictEqual( event.meta.stream, 'metrics.platform.test6' );
-	assert.strictEqual( event.$schema, '/analytics/metrics_platform/web/base/1.0.0' );
+	assert.strictEqual( event.$schema, '/analytics/product_metrics/web/base/1.0.0' );
 	assert.strictEqual( event.action, 'foo' );
 } );
 
 QUnit.test( 'submitInteraction() - disallow $schema overriding', function ( assert ) {
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
-		'/analytics/metrics_platform/web/base/1.0.0',
+		'/analytics/product_metrics/web/base/1.0.0',
 		'foo',
 		{
 			// @ts-ignore TS2345
@@ -325,5 +325,5 @@ QUnit.test( 'submitInteraction() - disallow $schema overriding', function ( asse
 
 	var event = enqueueEventStub.args[ 0 ][ 0 ];
 
-	assert.strictEqual( event.$schema, '/analytics/metrics_platform/web/base/1.0.0' );
+	assert.strictEqual( event.$schema, '/analytics/product_metrics/web/base/1.0.0' );
 } );

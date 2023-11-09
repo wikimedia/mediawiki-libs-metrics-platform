@@ -1743,7 +1743,7 @@
       ]
     },
     "mediawiki.metrics_platform.click": {
-      "schema_title": "analytics/metrics_platform/app/base",
+      "schema_title": "analytics/product_metrics/app/base",
       "destination_event_service": "eventgate-logging-local",
       "producers": {
         "metrics_platform_client": {
@@ -1788,7 +1788,7 @@
       ]
     },
     "mediawiki.metrics_platform.click_custom": {
-      "schema_title": "analytics/metrics_platform/app/click_custom",
+      "schema_title": "analytics/product_metrics/app/click_custom",
       "destination_event_service": "eventgate-logging-local",
       "producers": {
         "metrics_platform_client": {
@@ -1833,7 +1833,7 @@
       ]
     },
     "mediawiki.metrics_platform.interaction": {
-      "schema_title": "analytics/metrics_platform/app/base",
+      "schema_title": "analytics/product_metrics/app/base",
       "destination_event_service": "eventgate-logging-local",
       "producers": {
         "metrics_platform_client": {
@@ -1878,7 +1878,7 @@
       ]
     },
     "mediawiki.metrics_platform.view": {
-      "schema_title": "analytics/metrics_platform/app/base",
+      "schema_title": "analytics/product_metrics/app/base",
       "destination_event_service": "eventgate-logging-local",
       "producers": {
         "metrics_platform_client": {
