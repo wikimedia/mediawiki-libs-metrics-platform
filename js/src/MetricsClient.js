@@ -2,7 +2,7 @@ const ContextController = require( './ContextController.js' );
 const SamplingController = require( './SamplingController.js' );
 const CurationController = require( './CurationController.js' );
 
-const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.0.0';
+const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
 
 /**
  * Client for producing events to [the Event Platform](https://wikitech.wikimedia.org/wiki/Event_Platform) and
