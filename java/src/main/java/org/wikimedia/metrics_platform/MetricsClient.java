@@ -482,4 +482,8 @@ public final class MetricsClient {
         }
     }
 
+    public BlockingQueue<EventProcessed> getEventQueue() {
+        return this.eventQueue;
+    }
+
 }

@@ -78,8 +78,8 @@ public class ContextController {
         // Add required properties.
         Set<String> requestedValues = new HashSet<>(requestedValuesFromConfig);
         requestedValues.addAll(REQUIRED_PROPERTIES);
-        ClientData filteredData = filterClientData(clientData, requestedValues);
-        event.setClientData(filteredData);
+//        ClientData filteredData = filterClientData(clientData, requestedValues);
+//        event.setClientData(filteredData);
     }
 
     @SuppressWarnings("checkstyle:CyclomaticComplexity")

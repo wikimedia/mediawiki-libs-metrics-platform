@@ -93,7 +93,8 @@ public class StreamConfig {
     }
 
     public DestinationEventService getDestinationEventService() {
-        return destinationEventService != null ? destinationEventService : DestinationEventService.ANALYTICS;
+//        return destinationEventService != null ? destinationEventService : DestinationEventService.ANALYTICS;
+        return DestinationEventService.LOCAL;
     }
 
     public boolean hasCurationFilter() {

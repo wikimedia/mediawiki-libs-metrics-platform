@@ -27,7 +27,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.google.common.io.Resources;
 
-@WireMockTest(httpPort = 8192)
+//@WireMockTest(httpPort = 8192)
 public class EndToEndIT {
     private String expectedEventClick;
     private String expectedEventClickCustom;
@@ -36,10 +36,24 @@ public class EndToEndIT {
     private byte[] localConfig;
     private final ClientData testClientData = createConsistencyTestClientData();
 
-    @BeforeEach
-    void fetchStreamConfigs() throws IOException {
-        // Stub fetching the stream config from api endpoint.
-        stubStreamConfigFetch();
+//    @BeforeEach
+//    void fetchStreamConfigs() throws IOException {
+//        // Stub fetching the stream config from api endpoint.
+//        stubStreamConfigFetch();
+//    }
+
+    @Test void submitEventTimerStreamConfig() throws IOException, InterruptedException {
+        // Create the metrics client.
+        MetricsClient testMetricsClient = MetricsClient.builder(testClientData).build();
+        await().atMost(10, SECONDS).until(testMetricsClient::isFullyInitialized);
+
+        testMetricsClient.submitInteraction(
+                "android.metrics_platform.find_in_page_interaction",
+                DataFixtures.getTestClientData(getExpectedEventClick()),
+                DataFixtures.getTestInteractionData("TestClick")
+        );
+        Thread.sleep(10_000);
+        await().atMost(30, SECONDS).until(() -> testMetricsClient.getEventQueue().size() == 0);
     }
 
     @Test void submitClickEvent(WireMockRuntimeInfo wireMockRuntimeInfo) throws IOException {
