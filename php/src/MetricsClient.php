@@ -16,6 +16,16 @@ class MetricsClient implements LoggerAwareInterface {
 	 * The ID of the mediawiki/client/metrics_event schema in the schemas/event/secondary
 	 * repository.
 	 *
+	 * @deprecated
+	 *
+	 * @var string
+	 */
+	public const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.0.0';
+
+	/**
+	 * The ID of the mediawiki/client/metrics_event schema in the schemas/event/secondary
+	 * repository.
+	 *
 	 * @var string
 	 */
 	public const MONO_SCHEMA = '/analytics/mediawiki/client/metrics_event/2.0.0';
