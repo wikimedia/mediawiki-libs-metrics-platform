@@ -93,6 +93,7 @@ public class EventProcessor {
         return streamConfig.getDestinationEventService();
     }
 
+    @SuppressWarnings("checkstyle:IllegalCatch")
     private void sendEventsToDestination(
         DestinationEventService destinationEventService,
         List<EventProcessed> pendingValidEvents
@@ -102,6 +103,8 @@ public class EventProcessor {
         } catch (IOException e) {
             log.log(Level.WARNING, "Failed to send " + pendingValidEvents.size() + " events. Adding back to queue.", e);
             eventQueue.addAll(pendingValidEvents);
+        } catch (Exception e) {
+            log.log(Level.WARNING, "Failed to send " + pendingValidEvents.size() + " events.", e);
         }
     }
 }
