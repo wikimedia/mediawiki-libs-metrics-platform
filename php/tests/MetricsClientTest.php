@@ -168,6 +168,8 @@ class MetricsClientTest extends TestCase {
 	}
 
 	public function testDispatchToMultipleStreams(): void {
+		ConvertibleTimestamp::setFakeTime( strtotime( '2012-12-12T12:12:12Z' ) );
+
 		// It should call addRequestedValues for each event being submitted
 		$context = $this->createMock( ContextController::class );
 		$context->expects( $this->exactly( 2 ) )
