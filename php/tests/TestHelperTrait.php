@@ -3,6 +3,7 @@
 namespace Wikimedia\MetricsPlatform\Tests;
 
 use Wikimedia\MetricsPlatform\MetricsClient;
+use Wikimedia\Timestamp\ConvertibleTimestamp;
 
 trait TestHelperTrait {
 	/** @var string */
@@ -11,7 +12,7 @@ trait TestHelperTrait {
 	private function createTestInteractionEvent(): array {
 		return [
 			'$schema' => MetricsClient::BASE_SCHEMA,
-			'dt' => gmdate( 'Y-m-d\TH:i:s.v\Z' )
+			'dt' => ConvertibleTimeStamp::now( TS_ISO_8601 )
 		];
 	}
 

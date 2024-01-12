@@ -7,6 +7,7 @@ use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
+use Wikimedia\Timestamp\ConvertibleTimestamp;
 
 class MetricsClient implements LoggerAwareInterface {
 	use LoggerAwareTrait;
@@ -130,7 +131,7 @@ class MetricsClient implements LoggerAwareInterface {
 	 * @return string
 	 */
 	private function getTimestamp(): string {
-		return gmdate( 'Y-m-d\TH:i:s.v\Z' );
+		return ConvertibleTimeStamp::now( TS_ISO_8601 );
 	}
 
 	/**
