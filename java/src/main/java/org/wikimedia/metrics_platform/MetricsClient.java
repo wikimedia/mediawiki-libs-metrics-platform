@@ -15,7 +15,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -109,6 +108,23 @@ public final class MetricsClient {
     /**
      * Construct and submits a Metrics Platform Event from the event name and custom data for each
      * stream that is interested in those events.
+     * @deprecated
+     * This method is no longer acceptable to submit a Metrics Platform event since stream name is required.
+     * <p> Use {@link MetricsClient#submitMetricsEvent(String, String, String, ClientData, Map, InteractionData)}  instead.
+     *
+     * @param schemaId  schema id
+     * @param eventName event name
+     * @param customData custom data
+     */
+
+    @Deprecated
+    public void submitMetricsEvent(String schemaId, String eventName, Map<String, Object> customData) {
+        submitMetricsEvent(null, schemaId, eventName, null, customData, null);
+    }
+
+    /**
+     * Construct and submits a Metrics Platform Event from the event name and custom data for each
+     * stream specified.
      * <p>
      * The Metrics Platform Event for a stream (S) is constructed by: first initializing the minimum
      * valid event (E) that can be submitted to S; and, second mixing the context attributes requested
@@ -122,35 +138,68 @@ public final class MetricsClient {
      * <p>
      * @see <a href="https://wikitech.wikimedia.org/wiki/Metrics_Platform">Metrics Platform</a>
      *
+     * @param streamName stream name
      * @param schemaId  schema id
      * @param eventName event name
      * @param customData custom data
      */
-    public void submitMetricsEvent(String schemaId, String eventName, Map<String, Object> customData) {
-        submitMetricsEvent(schemaId, eventName, null, customData, null);
+    public void submitMetricsEvent(
+            String streamName,
+            String schemaId,
+            String eventName,
+            Map<String, Object> customData
+    ) {
+        submitMetricsEvent(streamName, schemaId, eventName, null, customData, null);
     }
 
     /**
      * Construct and submits a Metrics Platform Event from the schema id, event name, page metadata, and custom data for
      * the stream that is interested in those events.
+     * @deprecated
+     * This method is no longer acceptable to submit a Metrics Platform event since stream name is required.
+     * <p> Use {@link MetricsClient#submitMetricsEvent(String, String, String, ClientData, Map)} instead.
      *
      * @param schemaId  schema id
      * @param eventName event name
      * @param clientData client context data
      * @param customData custom data
      */
+    @Deprecated
     public void submitMetricsEvent(
             String schemaId,
             String eventName,
             ClientData clientData,
             Map<String, Object> customData
     ) {
-        submitMetricsEvent(schemaId, eventName, clientData, customData, null);
+        submitMetricsEvent(null, schemaId, eventName, clientData, customData, null);
     }
 
     /**
      * Construct and submits a Metrics Platform Event from the schema id, event name, page metadata, and custom data for
      * the stream that is interested in those events.
+     *
+     * @param streamName stream name
+     * @param schemaId  schema id
+     * @param eventName event name
+     * @param clientData client context data
+     * @param customData custom data
+     */
+    public void submitMetricsEvent(
+            String streamName,
+            String schemaId,
+            String eventName,
+            ClientData clientData,
+            Map<String, Object> customData
+    ) {
+        submitMetricsEvent(streamName, schemaId, eventName, clientData, customData, null);
+    }
+
+    /**
+     * Construct and submits a Metrics Platform Event from the schema id, stream name, event name, client data, custom
+     * data, and interaction data of a given event.
+     * @deprecated
+     * This method is no longer acceptable to submit a Metrics Platform event since stream name is required.
+     * <p> Use {@link MetricsClient#submitMetricsEvent(String, String, String, ClientData, Map, InteractionData)} instead.
      *
      * @param schemaId  schema id
      * @param eventName event name
@@ -158,7 +207,30 @@ public final class MetricsClient {
      * @param customData custom data
      * @param interactionData common data for an interaction schema
      */
+    @Deprecated
     public void submitMetricsEvent(
+            String schemaId,
+            String eventName,
+            ClientData clientData,
+            Map<String, Object> customData,
+            InteractionData interactionData
+    ) {
+        submitMetricsEvent(null, schemaId, eventName, clientData, customData, interactionData);
+    }
+
+    /**
+     * Construct and submits a Metrics Platform Event from the schema id, stream name, event name, page metadata, custom
+     * data, and interaction data for the specified stream.
+     *
+     * @param streamName stream name
+     * @param schemaId  schema id
+     * @param eventName event name
+     * @param clientData client context data
+     * @param customData custom data
+     * @param interactionData common data for an interaction schema
+     */
+    public void submitMetricsEvent(
+            String streamName,
             String schemaId,
             String eventName,
             ClientData clientData,
@@ -171,59 +243,84 @@ public final class MetricsClient {
             return;
         }
 
-        Set<String> streamNames = sourceConfig.getStreamNamesByEvent(eventName);
-        // Loop through stream configs to add event to pending events.
-        for (String streamName : streamNames) {
-            StreamConfig streamConfig = this.sourceConfig.get().getStreamConfigByName(streamName);
-
-            if (streamConfig == null) {
-                continue;
-            }
-
-            if (!this.samplingController.isInSample(streamConfig)) {
-                continue;
-            }
-
-            Event event = new Event(schemaId, streamName, eventName);
-            event.setClientData(clientData);
-
-            if (customData != null) {
-                event.setCustomData(customData);
-            }
-
-            event.setInteractionData(interactionData);
-
-            if (streamConfig.hasSampleConfig()) {
-                event.setSample(streamConfig.getSampleConfig());
-            }
-
-            submit(event);
+        if (streamName == null) {
+            log.log(Level.FINE, "No stream has been specified, the submitMetricsEvent event is ignored and dropped.");
+            return;
         }
+
+        StreamConfig streamConfig = this.sourceConfig.get().getStreamConfigByName(streamName);
+
+        if (streamConfig == null) {
+            log.log(Level.FINE, "No stream config exists for this stream, the submitMetricsEvent event is ignored and dropped.");
+            return;
+        }
+
+        if (!this.samplingController.isInSample(streamConfig)) {
+            log.log(Level.FINE, "Not in sample, the submitMetricsEvent event is ignored and dropped.");
+            return;
+        }
+
+        Event event = new Event(schemaId, streamName, eventName);
+        event.setClientData(clientData);
+
+        if (customData != null) {
+            event.setCustomData(customData);
+        }
+
+        event.setInteractionData(interactionData);
+
+        if (streamConfig.hasSampleConfig()) {
+            event.setSample(streamConfig.getSampleConfig());
+        }
+
+        submit(event);
     }
 
     /**
      * Submit an interaction event to a stream.
-     *
-     * An interaction event is meant to represent a basic interaction with some target or some event
-     * occurring, e.g. the user (**performer**) tapping/clicking a UI element, or an app notifying the
-     * server of its current state.
+     * @deprecated
+     * This method is no longer acceptable to submit a Metrics Platform interaction event since stream name is required.
+     * <p> Use {@link MetricsClient#submitInteraction(String, String, ClientData, InteractionData)}  instead.
      *
      * @param eventName event name
      * @param clientData client context data
      * @param interactionData common data for the base interaction schema
      */
+    @Deprecated
     public void submitInteraction(
             String eventName,
             ClientData clientData,
             InteractionData interactionData
     ) {
-        submitMetricsEvent(METRICS_PLATFORM_SCHEMA_BASE, eventName, clientData, null, interactionData);
+        submitInteraction(null, eventName, clientData, interactionData);
     }
 
     /**
      * Submit an interaction event to a stream.
+     * <p>
+     * An interaction event is meant to represent a basic interaction with some target or some event
+     * occurring, e.g. the user (**performer**) tapping/clicking a UI element, or an app notifying the
+     * server of its current state.
      *
-     * See above - takes additional parameters (custom data + custom schema id) to submit an interaction event.
+     * @param streamName stream name
+     * @param eventName event name
+     * @param clientData client context data
+     * @param interactionData common data for the base interaction schema
+     */
+    public void submitInteraction(
+            String streamName,
+            String eventName,
+            ClientData clientData,
+            InteractionData interactionData
+    ) {
+        submitMetricsEvent(streamName, METRICS_PLATFORM_SCHEMA_BASE, eventName, clientData, null, interactionData);
+    }
+
+    /**
+     * Submit an interaction event to a stream.
+     * @deprecated
+     * This method is no longer acceptable to submit a Metrics Platform interaction event since stream name is required.
+     * <p> Use {@link MetricsClient#submitInteraction(String, String, String, ClientData, InteractionData, Map)} instead.
      *
      * @param schemaId schema id
      * @param eventName event name
@@ -231,6 +328,7 @@ public final class MetricsClient {
      * @param interactionData common data for the base interaction schema
      * @param customData custom data for the interaction
      */
+    @Deprecated
     public void submitInteraction(
             String schemaId,
             String eventName,
@@ -238,25 +336,51 @@ public final class MetricsClient {
             InteractionData interactionData,
             Map<String, Object> customData
     ) {
-        submitMetricsEvent(schemaId, eventName, clientData, customData, interactionData);
+        submitMetricsEvent(null, schemaId, eventName, clientData, customData, interactionData);
+    }
+
+    /**
+     * Submit an interaction event to a stream.
+     * <p>
+     * See above - takes additional parameters (custom data + custom schema id) to submit an interaction event.
+     *
+     * @param streamName stream name
+     * @param schemaId schema id
+     * @param eventName event name
+     * @param clientData client context data
+     * @param interactionData common data for the base interaction schema
+     * @param customData custom data for the interaction
+     */
+    public void submitInteraction(
+            String streamName,
+            String schemaId,
+            String eventName,
+            ClientData clientData,
+            InteractionData interactionData,
+            Map<String, Object> customData
+    ) {
+        submitMetricsEvent(streamName, schemaId, eventName, clientData, customData, interactionData);
     }
 
     /**
      * Submit a click event to a stream.
      *
+     * @param streamName stream name
      * @param clientData client context data
      * @param interactionData common data for the base interaction schema
      */
     public void submitClick(
+            String streamName,
             ClientData clientData,
             InteractionData interactionData
     ) {
-        submitMetricsEvent(METRICS_PLATFORM_SCHEMA_BASE, "click", clientData, null, interactionData);
+        submitMetricsEvent(streamName, METRICS_PLATFORM_SCHEMA_BASE, "click", clientData, null, interactionData);
     }
 
     /**
      * Submit a click event to a stream with custom data.
      *
+     * @param streamName stream name
      * @param schemaId schema id
      * @param eventName event name
      * @param clientData client context data
@@ -264,31 +388,35 @@ public final class MetricsClient {
      * @param interactionData common data for the base interaction schema
      */
     public void submitClick(
+            String streamName,
             String schemaId,
             String eventName,
             ClientData clientData,
             Map<String, Object> customData,
             InteractionData interactionData
     ) {
-        submitMetricsEvent(schemaId, eventName, clientData, customData, interactionData);
+        submitMetricsEvent(streamName, schemaId, eventName, clientData, customData, interactionData);
     }
 
     /**
      * Submit a view event to a stream.
      *
+     * @param streamName stream name
      * @param clientData client context data
      * @param interactionData common data for the base interaction schema
      */
     public void submitView(
+            String streamName,
             ClientData clientData,
             InteractionData interactionData
     ) {
-        submitMetricsEvent(METRICS_PLATFORM_SCHEMA_BASE, "view", clientData, null, interactionData);
+        submitMetricsEvent(streamName, METRICS_PLATFORM_SCHEMA_BASE, "view", clientData, null, interactionData);
     }
 
     /**
      * Submit a view event to a stream with custom data.
      *
+     * @param streamName stream name
      * @param schemaId schema id
      * @param eventName event name
      * @param clientData client context data
@@ -296,13 +424,14 @@ public final class MetricsClient {
      * @param interactionData common data for the base interaction schema
      */
     public void submitView(
+            String streamName,
             String schemaId,
             String eventName,
             ClientData clientData,
             Map<String, Object> customData,
             InteractionData interactionData
     ) {
-        submitMetricsEvent(schemaId, eventName, clientData, customData, interactionData);
+        submitMetricsEvent(streamName, schemaId, eventName, clientData, customData, interactionData);
     }
 
     /**

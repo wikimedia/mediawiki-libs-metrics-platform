@@ -64,7 +64,7 @@ class MetricsClientTest {
         when(mockSamplingController.isInSample(streamConfig(curationFilter()))).thenReturn(true);
 
         Map<String, Object> customDataMap = getTestCustomData();
-        client.submitMetricsEvent(METRICS_PLATFORM_SCHEMA_BASE, "test_event", customDataMap);
+        client.submitMetricsEvent("test_stream", METRICS_PLATFORM_SCHEMA_BASE, "test_event", customDataMap);
 
         assertThat(eventQueue).isNotEmpty();
 
@@ -107,7 +107,7 @@ class MetricsClientTest {
                 .build();
         clientData.setPageData(pageData);
 
-        client.submitMetricsEvent(METRICS_PLATFORM_SCHEMA_BASE, "test_event", clientData, getTestCustomData());
+        client.submitMetricsEvent("test_stream", METRICS_PLATFORM_SCHEMA_BASE, "test_event", clientData, getTestCustomData());
 
         assertThat(eventQueue).isNotEmpty();
 
@@ -152,7 +152,7 @@ class MetricsClientTest {
         ClientData clientData = DataFixtures.getTestClientData();
         Map<String, Object> customDataMap = getTestCustomData();
         InteractionData interactionData = DataFixtures.getTestInteractionData("TestAction");
-        client.submitMetricsEvent(METRICS_PLATFORM_SCHEMA_BASE, "test_event", clientData, customDataMap, interactionData);
+        client.submitMetricsEvent("test_stream", METRICS_PLATFORM_SCHEMA_BASE, "test_event", clientData, customDataMap, interactionData);
 
         assertThat(eventQueue).isNotEmpty();
 
@@ -174,7 +174,7 @@ class MetricsClientTest {
         when(mockSamplingController.isInSample(streamConfig)).thenReturn(true);
 
         Map<String, Object> customDataMap = getTestCustomData();
-        client.submitMetricsEvent(METRICS_PLATFORM_SCHEMA_BASE, "test_event", customDataMap);
+        client.submitMetricsEvent("test_stream", METRICS_PLATFORM_SCHEMA_BASE, "test_event", customDataMap);
 
         assertThat(eventQueue).isNotEmpty();
 
@@ -242,7 +242,7 @@ class MetricsClientTest {
 
     private void fillEventQueue() {
         for (int i = 1; i <= 10; i++) {
-            client.submitMetricsEvent(METRICS_PLATFORM_SCHEMA_BASE, "test_event", getTestCustomData());
+            client.submitMetricsEvent("test_stream", METRICS_PLATFORM_SCHEMA_BASE, "test_event", getTestCustomData());
         }
     }
 }

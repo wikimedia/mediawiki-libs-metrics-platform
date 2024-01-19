@@ -61,6 +61,7 @@ class ConsistencyIT {
             );
 
             consistencyTestMetricsClient.submitMetricsEvent(
+                    "test.consistency",
                     METRICS_PLATFORM_SCHEMA_BASE,
                     "test_consistency_event",
                     DataFixtures.getTestClientData(getExpectedEventJson().toString()),

@@ -122,4 +122,8 @@ public final class DataFixtures {
         customData.put("screen_size", 1080);
         return customData;
     }
+
+    public static String getTestStream(String streamNameFragment) {
+        return "mediawiki.metrics_platform." + streamNameFragment;
+    }
 }
