@@ -53,6 +53,7 @@ public class EndToEndIT {
                         .withBody(getExpectedEventClick())));
 
         testMetricsClient.submitClick(
+                DataFixtures.getTestStream("click"),
                 DataFixtures.getTestClientData(getExpectedEventClick()),
                 DataFixtures.getTestInteractionData("TestClick")
         );
@@ -74,6 +75,7 @@ public class EndToEndIT {
                         .withBody(getExpectedEventClickCustom())));
 
         testMetricsClient.submitClick(
+                DataFixtures.getTestStream("click_custom"),
                 "/analytics/product_metrics/app/click_custom/1.0.0",
                 "click.test_event_name_for_end_to_end_testing",
                 DataFixtures.getTestClientData(getExpectedEventClickCustom()),
@@ -98,6 +100,7 @@ public class EndToEndIT {
                         .withBody(getExpectedEventView())));
 
         testMetricsClient.submitView(
+                DataFixtures.getTestStream("view"),
                 DataFixtures.getTestClientData(getExpectedEventView()),
                 DataFixtures.getTestInteractionData("TestView")
         );
@@ -119,6 +122,7 @@ public class EndToEndIT {
                         .withBody(getExpectedEventInteraction())));
 
         testMetricsClient.submitInteraction(
+                DataFixtures.getTestStream("interaction"),
                 "interaction.test_event_name_for_end_to_end_testing",
                 DataFixtures.getTestClientData(getExpectedEventInteraction()),
                 DataFixtures.getTestInteractionData("TestInteraction")
