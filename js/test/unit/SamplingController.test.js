@@ -6,7 +6,7 @@ var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' 
 
 QUnit.module( 'SamplingController' );
 
-QUnit.test( 'isStreamInSample() - valid and invalid stream configs', function ( assert ) {
+QUnit.test( 'streamInSample() - valid and invalid stream configs', function ( assert ) {
 	var conf = {
 		emptyConfig: {},
 		nonemptyConfigNoSample: {
@@ -96,11 +96,11 @@ QUnit.test( 'isStreamInSample() - valid and invalid stream configs', function ( 
 		[ conf.missingRateInvalidUnit, false ],
 		[ conf.missingRateMissingUnit, false ]
 	].forEach( function ( value ) {
-		assert.strictEqual( samplingController.isStreamInSample( value[ 0 ] ), value[ 1 ] );
+		assert.strictEqual( samplingController.streamInSample( value[ 0 ] ), value[ 1 ] );
 	} );
 } );
 
-QUnit.test( 'isStreamInSample() - session sampling is deterministic', function ( assert ) {
+QUnit.test( 'streamInSample() - session sampling is deterministic', function ( assert ) {
 	/** @type StreamConfig */
 	var conf = {
 		sample: {
@@ -109,14 +109,14 @@ QUnit.test( 'isStreamInSample() - session sampling is deterministic', function (
 		}
 	};
 
-	var x0 = samplingController.isStreamInSample( conf );
+	var x0 = samplingController.streamInSample( conf );
 
 	for ( var i = 0; i < 5; i++ ) {
-		assert.strictEqual( x0, samplingController.isStreamInSample( conf ) );
+		assert.strictEqual( x0, samplingController.streamInSample( conf ) );
 	}
 } );
 
-QUnit.test( 'isStreamInSample() - pageview sampling is deterministic', function ( assert ) {
+QUnit.test( 'streamInSample() - pageview sampling is deterministic', function ( assert ) {
 	/** @type StreamConfig */
 	var conf = {
 		sample: {
@@ -125,10 +125,10 @@ QUnit.test( 'isStreamInSample() - pageview sampling is deterministic', function 
 		}
 	};
 
-	var x0 = samplingController.isStreamInSample( conf );
+	var x0 = samplingController.streamInSample( conf );
 
 	for ( var i = 0; i < 5; i++ ) {
-		assert.strictEqual( x0, samplingController.isStreamInSample( conf ) );
+		assert.strictEqual( x0, samplingController.streamInSample( conf ) );
 	}
 } );
 
