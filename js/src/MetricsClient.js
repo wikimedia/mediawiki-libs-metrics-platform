@@ -255,7 +255,7 @@ MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, ev
 
 	this.addRequiredMetadata( eventData, streamName );
 
-	if ( this.samplingController.isStreamInSample( streamConfig ) ) {
+	if ( this.samplingController.streamInSample( streamConfig ) ) {
 		this.integration.enqueueEvent( eventData );
 		this.integration.onSubmit( streamName, eventData );
 	}
@@ -403,7 +403,7 @@ MetricsClient.prototype.processDispatchCall = function (
 		this.contextController.addRequestedValues( eventData, streamConfig );
 
 		if (
-			this.samplingController.isStreamInSample( streamConfig ) &&
+			this.samplingController.streamInSample( streamConfig ) &&
 			this.curationController.shouldProduceEvent( eventData, streamConfig )
 		) {
 			this.integration.enqueueEvent( eventData );

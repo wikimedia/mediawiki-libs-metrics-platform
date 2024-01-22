@@ -14,11 +14,11 @@ function SamplingController( integration ) {
 
 /**
  * Determine whether a stream is in or out of sample.
- * Function name changed wrt https://phabricator.wikimedia.org/T352966
+ *
  * @param {?StreamConfig} streamConfig stream configuration
  * @return {boolean} true if in-sample, false if out-sample.
  */
-SamplingController.prototype.isStreamInSample = function ( streamConfig ) {
+SamplingController.prototype.streamInSample = function ( streamConfig ) {
 	if ( !streamConfig ) {
 		// If a stream is not defined, it is not in sample.
 		return false;
