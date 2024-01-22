@@ -67,6 +67,12 @@ MetricsClient.prototype.getStreamConfig = function ( streamName ) {
 	return streamConfig ? this.integration.clone( streamConfig ) : streamConfig;
 };
 
+MetricsClient.prototype.isStreamInSample = function ( streamName ) {
+	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
+  
+	return streamConfig ? this.samplingController.isStreamInSample( streamName ) : false;
+  };
+
 /**
  * @param {StreamConfigs} streamConfigs
  * @return {Record<string, string[]>}
@@ -255,7 +261,7 @@ MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, ev
 
 	this.addRequiredMetadata( eventData, streamName );
 
-	if ( this.samplingController.streamInSample( streamConfig ) ) {
+	if ( this.samplingController.isStreamInSample( streamConfig ) ) {
 		this.integration.enqueueEvent( eventData );
 		this.integration.onSubmit( streamName, eventData );
 	}
@@ -403,7 +409,7 @@ MetricsClient.prototype.processDispatchCall = function (
 		this.contextController.addRequestedValues( eventData, streamConfig );
 
 		if (
-			this.samplingController.streamInSample( streamConfig ) &&
+			this.samplingController.isStreamInSample( streamConfig ) &&
 			this.curationController.shouldProduceEvent( eventData, streamConfig )
 		) {
 			this.integration.enqueueEvent( eventData );
