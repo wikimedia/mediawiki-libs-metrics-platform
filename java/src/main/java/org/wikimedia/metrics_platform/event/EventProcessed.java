@@ -53,6 +53,7 @@ public class EventProcessed extends Event {
             ClientData clientData
     ) {
         super(schema, stream, name);
+        this.clientData = clientData;
         this.agentData = clientData.getAgentData();
         this.pageData = clientData.getPageData();
         this.mediawikiData = clientData.getMediawikiData();
@@ -87,6 +88,7 @@ public class EventProcessed extends Event {
             InteractionData interactionData
     ) {
         super(schema, stream, name);
+        this.clientData = clientData;
         this.agentData = clientData.getAgentData();
         this.pageData = clientData.getPageData();
         this.mediawikiData = clientData.getMediawikiData();
@@ -140,6 +142,7 @@ public class EventProcessed extends Event {
         setPageData(clientData.getPageData());
         setMediawikiData(clientData.getMediawikiData());
         setPerformerData(clientData.getPerformerData());
+        this.clientData = clientData;
     }
 
     @Override

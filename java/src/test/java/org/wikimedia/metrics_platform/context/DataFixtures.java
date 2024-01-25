@@ -51,6 +51,9 @@ public final class DataFixtures {
             dataMap.put(dataObjectName, dataMapEach);
         }
 
+        String domain = expectedEventJson.get("meta").getAsJsonObject().get("domain").getAsString();
+        dataMap.put("domain", domain);
+
         Gson gson = GsonHelper.getGson();
         JsonElement jsonClientData = gson.toJsonTree(dataMap);
         return gson.fromJson(jsonClientData, ClientData.class);

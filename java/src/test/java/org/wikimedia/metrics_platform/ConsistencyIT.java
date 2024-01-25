@@ -49,7 +49,6 @@ class ConsistencyIT {
             ClientData consistencyTestClientData = createConsistencyTestClientData();
 
             EventProcessor consistencyTestEventProcessor = getTestEventProcessor(
-                    consistencyTestClientData,
                     sourceConfigRef,
                     eventQueue
             );
@@ -99,11 +98,10 @@ class ConsistencyIT {
     }
 
     private static EventProcessor getTestEventProcessor(
-            ClientData consistencyTestClientData,
             AtomicReference<SourceConfig> sourceConfigRef,
             BlockingQueue<EventProcessed> eventQueue
     ) {
-        ContextController contextController = new ContextController(consistencyTestClientData);
+        ContextController contextController = new ContextController();
         CurationController curationController = new CurationController();
         EventSender eventSender = new TestEventSender();
         return new EventProcessor(

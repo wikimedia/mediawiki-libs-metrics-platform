@@ -69,6 +69,7 @@ public class EventProcessedSerializer  implements JsonSerializer<EventProcessed>
             }
 
             jsonObject.remove("custom_data");
+            jsonObject.remove("client_data");
         }
 
         /*

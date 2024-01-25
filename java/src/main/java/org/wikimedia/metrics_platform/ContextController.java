@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -51,34 +50,22 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @ParametersAreNonnullByDefault
 public class ContextController {
 
-    @Nonnull
-    private final ClientData clientData;
-
     private static final Collection<String> REQUIRED_PROPERTIES = List.of(
             "agent_client_platform",
             "agent_client_platform_family"
     );
 
-    public ContextController(ClientData clientData) {
-        this.clientData = clientData;
-    }
-
     public void enrichEvent(EventProcessed event, StreamConfig streamConfig) {
-        // Add required metadata to the event.
-        event.setDomain(clientData.getDomain());
-        event.setClientData(clientData);
-
         if (!streamConfig.hasRequestedContextValuesConfig()) {
             return;
         }
-
         // Check stream config for which contextual values should be added to the event.
         Collection<String> requestedValuesFromConfig = streamConfig.getProducerConfig()
                 .getMetricsPlatformClientConfig().getRequestedValues();
         // Add required properties.
         Set<String> requestedValues = new HashSet<>(requestedValuesFromConfig);
         requestedValues.addAll(REQUIRED_PROPERTIES);
-        ClientData filteredData = filterClientData(clientData, requestedValues);
+        ClientData filteredData = filterClientData(event.getClientData(), requestedValues);
         event.setClientData(filteredData);
     }
 

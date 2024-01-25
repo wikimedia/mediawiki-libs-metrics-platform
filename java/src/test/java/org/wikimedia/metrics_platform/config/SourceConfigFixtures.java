@@ -7,9 +7,16 @@ public final class SourceConfigFixtures {
     }
 
     /**
-     * Convenience method for getting source config.
+     * Convenience method for getting source config with minimum provided values.
      */
-    public static SourceConfig getTestSourceConfig() {
-        return new SourceConfig(StreamConfigFixtures.streamConfigMap());
+    public static SourceConfig getTestSourceConfigMin() {
+        return new SourceConfig(StreamConfigFixtures.streamConfigMap(StreamConfigFixtures.provideValuesMinimum()));
+    }
+
+    /**
+     * Convenience method for getting source config with extended provided values.
+     */
+    public static SourceConfig getTestSourceConfigMax() {
+        return new SourceConfig(StreamConfigFixtures.streamConfigMap(StreamConfigFixtures.provideValuesExtended()));
     }
 }
