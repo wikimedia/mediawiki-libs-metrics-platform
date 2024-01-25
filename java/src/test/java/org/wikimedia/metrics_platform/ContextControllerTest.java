@@ -18,7 +18,7 @@ import org.wikimedia.metrics_platform.event.EventProcessed;
 class ContextControllerTest {
 
     @Test void testAddRequestedValues() {
-        ContextController contextController = new ContextController(DataFixtures.getTestClientData());
+        ContextController contextController = new ContextController();
         Event eventBasic = new Event("test/event", "test.stream", "testEvent");
         EventProcessed event = fromEvent(eventBasic);
         ClientData clientDataSample = DataFixtures.getTestClientData();

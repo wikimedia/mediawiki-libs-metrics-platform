@@ -41,7 +41,7 @@ class MetricsClientTest {
 
     @BeforeEach void createEventProcessorMetricsClient() {
         eventQueue = new LinkedBlockingQueue<>(10);
-        sourceConfig = new AtomicReference<>(SourceConfigFixtures.getTestSourceConfig());
+        sourceConfig = new AtomicReference<>(SourceConfigFixtures.getTestSourceConfigMin());
         clientData = DataFixtures.getTestClientData();
 
         client = MetricsClient.builder(clientData)
@@ -144,6 +144,8 @@ class MetricsClientTest {
         assertThat(queuedEvent.getPerformerData().getLanguageGroups()).isEqualTo("zh, en");
         assertThat(queuedEvent.getPerformerData().getLanguagePrimary()).isEqualTo("zh-tw");
         assertThat(queuedEvent.getPerformerData().getRegistrationDt()).isEqualTo("2023-03-01T01:08:30Z");
+
+        assertThat(queuedEvent.getClientData().getDomain()).isEqualTo("en.wikipedia.org");
     }
 
     @Test void testSubmitMetricsEventWithInteractionData() {

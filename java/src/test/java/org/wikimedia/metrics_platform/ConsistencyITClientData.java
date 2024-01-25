@@ -22,20 +22,18 @@ public class ConsistencyITClientData extends ClientData {
     public JsonObject pageJson;
     public JsonObject mediawikiJson;
     public JsonObject performerJson;
-    public String hostname;
 
     public ConsistencyITClientData(
             JsonObject agent,
             JsonObject page,
             JsonObject mediawiki,
             JsonObject performer,
-            String hostname
+            String domain
     ) {
         this.agentJson = agent;
         this.pageJson = page;
         this.mediawikiJson = mediawiki;
         this.performerJson = performer;
-        this.hostname = hostname;
 
         AgentData agentData = AgentData.builder()
                 .appInstallId(this.agentJson.get("app_install_id").getAsString())
@@ -69,7 +67,7 @@ public class ConsistencyITClientData extends ClientData {
         this.setPageData(pageData);
         this.setMediawikiData(mediawikiData);
         this.setPerformerData(performerData);
-        this.setDomain(this.hostname);
+        this.setDomain(domain);
     }
 
     public static ConsistencyITClientData createConsistencyTestClientData() {
@@ -79,14 +77,14 @@ public class ConsistencyITClientData extends ClientData {
             JsonObject page = data.getAsJsonObject("page");
             JsonObject mediawiki = data.getAsJsonObject("mediawiki");
             JsonObject performer = data.getAsJsonObject("performer");
-            String hostname = data.get("hostname").getAsString();
+            String domain = data.get("hostname").getAsString();
 
             return new ConsistencyITClientData(
                     agent,
                     page,
                     mediawiki,
                     performer,
-                    hostname
+                    domain
             );
         } catch (IOException e) {
             throw new RuntimeException(e);

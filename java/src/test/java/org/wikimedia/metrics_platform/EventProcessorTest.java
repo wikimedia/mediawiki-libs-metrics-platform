@@ -27,7 +27,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.SourceConfigFixtures;
 import org.wikimedia.metrics_platform.config.StreamConfig;
-import org.wikimedia.metrics_platform.context.DataFixtures;
 import org.wikimedia.metrics_platform.event.EventProcessed;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,10 +42,10 @@ class EventProcessorTest {
     }
 
     @BeforeEach void createEventProcessor() {
-        sourceConfig.set(SourceConfigFixtures.getTestSourceConfig());
+        sourceConfig.set(SourceConfigFixtures.getTestSourceConfigMax());
 
         eventProcessor = new EventProcessor(
-                new ContextController(DataFixtures.getTestClientData()),
+                new ContextController(),
                 mockCurationController,
                 sourceConfig,
                 mockEventSender,
@@ -104,7 +103,7 @@ class EventProcessorTest {
 
         EventProcessed sentEvent = eventCaptor.getValue().iterator().next();
 
-        // Verify client data based on provided values in StreamConfigFixtures.
+        // Verify client data based on minimum provided values in StreamConfigFixtures.
         assertThat(sentEvent.getAgentData().getClientPlatform()).isEqualTo("android");
         assertThat(sentEvent.getAgentData().getClientPlatformFamily()).isEqualTo("app");
         assertThat(sentEvent.getPageData().getTitle()).isEqualTo("Test Page Title");
@@ -119,6 +118,34 @@ class EventProcessorTest {
         eventProcessor.sendEnqueuedEvents();
 
         assertThat(eventQueue).isNotEmpty();
+    }
+
+    @Test void testSentEventsHaveClientData() throws IOException {
+        whenEventsArePassingCurationFilter();
+
+        eventQueue.offer(minimalEventProcessed());
+        eventProcessor.sendEnqueuedEvents();
+
+        @SuppressWarnings("unchecked")
+        ArgumentCaptor<Collection<EventProcessed>> eventCaptor = ArgumentCaptor.forClass(Collection.class);
+        verify(mockEventSender).sendEvents(any(URL.class), eventCaptor.capture());
+
+        EventProcessed sentEvent = eventCaptor.getValue().iterator().next();
+
+        // Verify client data based on extended provided values in StreamConfigFixtures.
+        assertThat(sentEvent.getAgentData().getAppFlavor()).isEqualTo("giraffe");
+        assertThat(sentEvent.getAgentData().getAppVersion()).isEqualTo("982734");
+        assertThat(sentEvent.getAgentData().getAppTheme()).isEqualTo("flamingo");
+        assertThat(sentEvent.getAgentData().getDeviceLanguage()).isEqualTo("en");
+        assertThat(sentEvent.getAgentData().getReleaseStatus()).isEqualTo("beta");
+
+        assertThat(sentEvent.getPageData().getId()).isEqualTo(1);
+        assertThat(sentEvent.getPageData().getNamespaceId()).isEqualTo(0);
+        assertThat(sentEvent.getPageData().getWikidataItemQid()).isEqualTo("Q123456");
+
+        assertThat(sentEvent.getPerformerData().getPageviewId()).isEqualTo("eeeeeeeeeeeeeeeeeeee");
+        assertThat(sentEvent.getPerformerData().getLanguageGroups()).isEqualTo("zh, en");
+        assertThat(sentEvent.getPerformerData().getLanguagePrimary()).isEqualTo("zh-tw");
     }
 
     private void whenEventsArePassingCurationFilter() {
