@@ -255,7 +255,7 @@ MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, ev
 
 	this.addRequiredMetadata( eventData, streamName );
 
-	if ( this.samplingController.streamInSample( streamConfig ) ) {
+	if ( this.samplingController.isStreamInSample( streamConfig ) ) {
 		this.integration.enqueueEvent( eventData );
 		this.integration.onSubmit( streamName, eventData );
 	}
@@ -403,7 +403,7 @@ MetricsClient.prototype.processDispatchCall = function (
 		this.contextController.addRequestedValues( eventData, streamConfig );
 
 		if (
-			this.samplingController.streamInSample( streamConfig ) &&
+			this.samplingController.isStreamInSample( streamConfig ) &&
 			this.curationController.shouldProduceEvent( eventData, streamConfig )
 		) {
 			this.integration.enqueueEvent( eventData );
@@ -488,6 +488,18 @@ const CLICK_SCHEMA_ID = '/analytics/product_metrics/web/base/1.0.0';
  */
 MetricsClient.prototype.submitClick = function ( streamName, interactionData ) {
 	this.submitInteraction( streamName, CLICK_SCHEMA_ID, 'click', interactionData );
+};
+
+/**
+ *  Checks if a stream is in or out of sample.
+ *
+ * @param {string} streamName
+ * @return {boolean}
+ */
+MetricsClient.prototype.isStreamInSample = function ( streamName ) {
+	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
+
+	return streamConfig ? this.samplingController.isStreamInSample( streamConfig ) : false;
 };
 
 module.exports = MetricsClient;
