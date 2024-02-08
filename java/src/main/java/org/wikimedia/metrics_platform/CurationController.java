@@ -81,21 +81,9 @@ public class CurationController {
         ComparableCurationRules<T> rules,
         T value
     ) {
-        if (rules == null) {
-            return true;
-        }
-        if (value == null) {
-            return false;
-        }
+        if (rules == null) return true;
 
-        return applyGreaterThanRule(rules.getGreaterThan(), value) &&
-            applyLessThanRule(rules.getLessThan(), value) &&
-            applyGreaterThanOrEqualsRule(rules.getGreaterThanOrEquals(), value) &&
-            applyLessThanOrEquals(rules.getLessThanOrEquals(), value) &&
-            applyIsEqualsRule(rules.getIsEquals(), value) &&
-            applyIsNotEqualsRule(rules.getIsNotEquals(), value) &&
-            applyInRule(rules.getIn(), value) &&
-            applyNotInRule(rules.getNotIn(), value);
+        return rules.test(value);
     }
 
     private static <T> boolean applyRules(CurationRules<T> rules, T value) {
