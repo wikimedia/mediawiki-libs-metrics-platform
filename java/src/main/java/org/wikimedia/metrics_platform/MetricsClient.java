@@ -50,6 +50,7 @@ public final class MetricsClient {
             .withZone(ZoneId.of("UTC"));
 
     private static final ScheduledExecutorService EXECUTOR_SERVICE = Executors.newScheduledThreadPool(1, new SimpleThreadFactory());
+    public static final String METRICS_PLATFORM_LIBRARY_VERSION = "2.2";
     public static final String METRICS_PLATFORM_BASE_VERSION = "1.0.0";
     public static final String METRICS_PLATFORM_SCHEMA_BASE = "/analytics/product_metrics/app/base/" + METRICS_PLATFORM_BASE_VERSION;
     private final AtomicReference<SourceConfig> sourceConfig;
