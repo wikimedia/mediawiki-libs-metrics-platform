@@ -99,17 +99,9 @@ public class CurationController {
     }
 
     private static <T> boolean applyRules(CurationRules<T> rules, T value) {
-        if (rules == null) {
-            return true;
-        }
-        if (value == null) {
-            return false;
-        }
+        if (rules == null) return true;
 
-        return applyIsEqualsRule(rules.getIsEquals(), value) &&
-            applyIsNotEqualsRule(rules.getIsNotEquals(), value) &&
-            applyInRule(rules.getIn(), value) &&
-            applyNotInRule(rules.getNotIn(), value);
+        return rules.test(value);
     }
 
     private static <T> boolean applyIsEqualsRule(T rule, @NonNull T value) {
