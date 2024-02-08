@@ -10,7 +10,7 @@
 
     <groupId>org.wikimedia.metrics</groupId>
     <artifactId>metrics-platform</artifactId>
-    <version>2.2-SNAPSHOT</version>
+    <version>2.2</version>
 
     <name>Metrics Platform</name>
     <description>The Java Metrics Platform Client.</description>
@@ -26,7 +26,7 @@
     <scm>
         <connection>scm:git:https://gitlab.wikimedia.org/repos/data-engineering/metrics-platform.git</connection>
         <developerConnection>scm:git:git@gitlab.wikimedia.org:repos/data-engineering/metrics-platform.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>metrics-platform-2.2</tag>
         <url>https://gitlab.wikimedia.org/repos/data-engineering/metrics-platform</url>
     </scm>
 
