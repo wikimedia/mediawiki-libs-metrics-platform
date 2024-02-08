@@ -1,17 +1,16 @@
 package org.wikimedia.metrics_platform;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.wikimedia.metrics_platform.config.CurationFilter;
 import org.wikimedia.metrics_platform.config.StreamConfig;
+import org.wikimedia.metrics_platform.config.curation.CollectionCurationRules;
+import org.wikimedia.metrics_platform.config.curation.ComparableCurationRules;
+import org.wikimedia.metrics_platform.config.curation.CurationRules;
 import org.wikimedia.metrics_platform.context.AgentData;
 import org.wikimedia.metrics_platform.context.MediawikiData;
 import org.wikimedia.metrics_platform.context.PageData;
 import org.wikimedia.metrics_platform.context.PerformerData;
-import org.wikimedia.metrics_platform.config.curation.CollectionCurationRules;
-import org.wikimedia.metrics_platform.config.curation.ComparableCurationRules;
-import org.wikimedia.metrics_platform.config.curation.CurationRules;
 import org.wikimedia.metrics_platform.event.EventProcessed;
 
 import lombok.NonNull;
@@ -64,17 +63,9 @@ public class CurationController {
     }
 
     private static <T> boolean applyRules(CollectionCurationRules<T> rules, Collection<T> value) {
-        if (rules == null) {
-            return true;
-        }
-        if (value == null) {
-            return false;
-        }
+        if (rules == null) return true;
 
-        return applyContainsRule(rules.getContains(), value) &&
-            applyDoesNotContainRule(rules.getDoesNotContain(), value) &&
-            applyContainsAllRule(rules.getContainsAll(), value) &&
-            applyContainsAnyRule(rules.getContainsAny(), value);
+        return rules.test(value);
     }
 
     private static <T extends Comparable<T>> boolean applyRules(
@@ -92,58 +83,4 @@ public class CurationController {
         return rules.test(value);
     }
 
-    private static <T> boolean applyIsEqualsRule(T rule, @NonNull T value) {
-        return rule == null || value.equals(rule);
-    }
-
-    private static <T> boolean applyIsNotEqualsRule(T rule, @NonNull T value) {
-        return rule == null || !value.equals(rule);
-    }
-
-    private static <T> boolean applyInRule(Collection<T> rule, @NonNull T value) {
-        return rule == null || rule.contains(value);
-    }
-
-    private static <T> boolean applyNotInRule(Collection<T> rule, @NonNull T value) {
-        return rule == null || !rule.contains(value);
-    }
-
-    private static <T extends Comparable<T>> boolean applyGreaterThanRule(T rule, @NonNull T value) {
-        return rule == null || value.compareTo(rule) > 0;
-    }
-
-    private static <T extends Comparable<T>> boolean applyLessThanRule(T rule, @NonNull T value) {
-        return rule == null || value.compareTo(rule) < 0;
-    }
-
-    private static <T extends Comparable<T>> boolean applyGreaterThanOrEqualsRule(T rule, @NonNull T value) {
-        return rule == null || value.compareTo(rule) >= 0;
-    }
-
-    private static <T extends Comparable<T>> boolean applyLessThanOrEquals(T rule, @NonNull T value) {
-        return rule == null || value.compareTo(rule) <= 0;
-    }
-
-    private static <T> boolean applyContainsRule(T rule, @NonNull Collection<T> value) {
-        return rule == null || value.contains(rule);
-    }
-
-    private static <T> boolean applyDoesNotContainRule(T rule, @NonNull Collection<T> value) {
-        return rule == null || !value.contains(rule);
-    }
-
-    private static <T> boolean applyContainsAllRule(Collection<T> rule, @NonNull Collection<T> value) {
-        return rule == null || value.containsAll(rule);
-    }
-
-    private static <T> boolean applyContainsAnyRule(Collection<T> rule, @NonNull Collection<T> value) {
-        if (rule == null) {
-            return true;
-        }
-
-        Collection<T> t = new ArrayList<>(value);
-        t.retainAll(rule);
-
-        return !t.isEmpty();
-    }
 }
