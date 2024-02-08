@@ -134,7 +134,7 @@ class EventProcessorTest {
 
         // Verify client data based on extended provided values in StreamConfigFixtures.
         assertThat(sentEvent.getAgentData().getAppFlavor()).isEqualTo("giraffe");
-        assertThat(sentEvent.getAgentData().getAppVersion()).isEqualTo("982734");
+        assertThat(sentEvent.getAgentData().getAppVersion()).isEqualTo(982734);
         assertThat(sentEvent.getAgentData().getAppTheme()).isEqualTo("flamingo");
         assertThat(sentEvent.getAgentData().getDeviceLanguage()).isEqualTo("en");
         assertThat(sentEvent.getAgentData().getReleaseStatus()).isEqualTo("beta");

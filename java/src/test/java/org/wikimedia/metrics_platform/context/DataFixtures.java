@@ -65,7 +65,7 @@ public final class DataFixtures {
                 .clientPlatform("android")
                 .clientPlatformFamily("app")
                 .appFlavor("giraffe")
-                .appVersion("982734")
+                .appVersion(982734)
                 .appTheme("flamingo")
                 .deviceLanguage("en")
                 .releaseStatus("beta")

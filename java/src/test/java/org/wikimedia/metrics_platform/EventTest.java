@@ -45,7 +45,7 @@ class EventTest {
                         .appFlavor("flamingo")
                         .appInstallId(uuid)
                         .appTheme("giraffe")
-                        .appVersion("elephant")
+                        .appVersion(123456789)
                         .clientPlatform("android")
                         .clientPlatformFamily("app")
                         .deviceLanguage("en")
@@ -60,7 +60,7 @@ class EventTest {
         assertThat(event.getAgentData().getAppFlavor()).isEqualTo("flamingo");
         assertThat(event.getAgentData().getAppInstallId()).isEqualTo(uuid);
         assertThat(event.getAgentData().getAppTheme()).isEqualTo("giraffe");
-        assertThat(event.getAgentData().getAppVersion()).isEqualTo("elephant");
+        assertThat(event.getAgentData().getAppVersion()).isEqualTo(123456789);
         assertThat(event.getTimestamp()).isEqualTo("2021-08-27T12:00:00Z");
         assertThat(event.getAgentData().getClientPlatform()).isEqualTo("android");
         assertThat(event.getAgentData().getClientPlatformFamily()).isEqualTo("app");
@@ -107,7 +107,7 @@ class EventTest {
                         "\"app_flavor\":\"flamingo\"," +
                         "\"app_install_id\":\"%s\"," +
                         "\"app_theme\":\"giraffe\"," +
-                        "\"app_version\":\"elephant\"," +
+                        "\"app_version\":123456789," +
                         "\"client_platform\":\"android\"," +
                         "\"client_platform_family\":\"app\"," +
                         "\"device_language\":\"en\"," +
