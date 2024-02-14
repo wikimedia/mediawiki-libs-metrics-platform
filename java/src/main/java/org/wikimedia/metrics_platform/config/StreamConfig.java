@@ -7,6 +7,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNullableByDefault;
 import javax.annotation.concurrent.ThreadSafe;
 
+import org.wikimedia.metrics_platform.config.sampling.SampleConfig;
+
 import com.google.gson.annotations.SerializedName;
 
 import lombok.NonNull;
@@ -25,7 +27,8 @@ public class StreamConfig {
 
     @SerializedName("producers") ProducerConfig producerConfig;
 
-    @SerializedName("sample") SampleConfig sampleConfig;
+    @SerializedName("sample")
+    SampleConfig sampleConfig;
 
     /**
      * The context attributes that the Metrics Platform Client can add to an event.

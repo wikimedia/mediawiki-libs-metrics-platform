@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import org.wikimedia.metrics_platform.config.SampleConfig;
+import org.wikimedia.metrics_platform.config.sampling.SampleConfig;
 import org.wikimedia.metrics_platform.context.AgentData;
 import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.InteractionData;
