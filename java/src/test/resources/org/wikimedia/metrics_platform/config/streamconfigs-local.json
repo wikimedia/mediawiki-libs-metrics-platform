@@ -1288,7 +1288,6 @@
             "performer_language_groups",
             "performer_language_primary",
             "performer_groups",
-            "agent_app_install_id"
           ]
         }
       },
@@ -1333,7 +1332,6 @@
             "performer_language_groups",
             "performer_language_primary",
             "performer_groups",
-            "agent_app_install_id"
           ]
         }
       },
@@ -1378,7 +1376,6 @@
             "performer_language_groups",
             "performer_language_primary",
             "performer_groups",
-            "agent_app_install_id"
           ]
         }
       },
@@ -1423,7 +1420,6 @@
             "performer_language_groups",
             "performer_language_primary",
             "performer_groups",
-            "agent_app_install_id"
           ]
         }
       },

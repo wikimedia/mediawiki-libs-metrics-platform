@@ -64,11 +64,12 @@ public final class DataFixtures {
                 .appInstallId("ffffffff-ffff-ffff-ffff-ffffffffffff")
                 .clientPlatform("android")
                 .clientPlatformFamily("app")
-                .appFlavor("giraffe")
+                .appFlavor("devdebug")
                 .appVersion(982734)
-                .appTheme("flamingo")
+                .appVersionName("2.7.50470-dev-2024-02-14")
+                .appTheme("LIGHT")
                 .deviceLanguage("en")
-                .releaseStatus("beta")
+                .releaseStatus("dev")
                 .build();
     }
 

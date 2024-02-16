@@ -6,6 +6,7 @@ import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_CLIENT_P
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_FLAVOR;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_THEME;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_VERSION;
+import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_VERSION_NAME;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_DEVICE_LANGUAGE;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_RELEASE_STATUS;
 import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_DATABASE;
@@ -51,8 +52,15 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public class ContextController {
 
     private static final Collection<String> REQUIRED_PROPERTIES = List.of(
+            "agent_app_flavor",
+            "agent_app_install_id",
+            "agent_app_theme",
+            "agent_app_version",
+            "agent_app_version_name",
             "agent_client_platform",
-            "agent_client_platform_family"
+            "agent_client_platform_family",
+            "agent_device_language",
+            "agent_release_status"
     );
 
     public void enrichEvent(EventProcessed event, StreamConfig streamConfig) {
@@ -101,6 +109,9 @@ public class ContextController {
                     break;
                 case AGENT_APP_VERSION:
                     agentBuilder.appVersion(agentData.getAppVersion());
+                    break;
+                case AGENT_APP_VERSION_NAME:
+                    agentBuilder.appVersionName(agentData.getAppVersionName());
                     break;
                 case AGENT_DEVICE_LANGUAGE:
                     agentBuilder.deviceLanguage(agentData.getDeviceLanguage());

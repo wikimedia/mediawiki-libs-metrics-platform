@@ -31,9 +31,15 @@ class ContextControllerTest {
         PageData pageData = event.getPageData();
         PerformerData performerData = event.getPerformerData();
 
+        assertThat(agentData.getAppFlavor()).isEqualTo("devdebug");
         assertThat(agentData.getAppInstallId()).isEqualTo("ffffffff-ffff-ffff-ffff-ffffffffffff");
+        assertThat(agentData.getAppTheme()).isEqualTo("LIGHT");
+        assertThat(agentData.getAppVersion()).isEqualTo(982734);
+        assertThat(agentData.getAppVersionName()).isEqualTo("2.7.50470-dev-2024-02-14");
         assertThat(agentData.getClientPlatform()).isEqualTo("android");
         assertThat(agentData.getClientPlatformFamily()).isEqualTo("app");
+        assertThat(agentData.getDeviceLanguage()).isEqualTo("en");
+        assertThat(agentData.getReleaseStatus()).isEqualTo("dev");
 
         assertThat(mediawikiData.getDatabase()).isEqualTo("enwiki");
 

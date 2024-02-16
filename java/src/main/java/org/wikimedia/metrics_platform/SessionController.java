@@ -2,7 +2,8 @@ package org.wikimedia.metrics_platform;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.UUID;
+import java.util.Locale;
+import java.util.Random;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -26,6 +27,7 @@ public class SessionController {
     @GuardedBy("this")
     @Nonnull
     private Instant sessionTouched;
+    private static final Random RANDOM = new Random();
 
     SessionController() {
         this(Instant.now());
@@ -69,6 +71,9 @@ public class SessionController {
 
     @Nonnull
     private static String generateSessionId() {
-        return UUID.randomUUID().toString();
+        Random random = RANDOM;
+        return String.format(Locale.US, "%08x", random.nextInt()) +
+                String.format(Locale.US, "%08x", random.nextInt()) +
+                String.format(Locale.US, "%04x", random.nextInt() + 0xFFFF);
     }
 }
