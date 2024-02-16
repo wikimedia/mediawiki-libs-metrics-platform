@@ -133,11 +133,15 @@ class EventProcessorTest {
         EventProcessed sentEvent = eventCaptor.getValue().iterator().next();
 
         // Verify client data based on extended provided values in StreamConfigFixtures.
-        assertThat(sentEvent.getAgentData().getAppFlavor()).isEqualTo("giraffe");
+        assertThat(sentEvent.getAgentData().getAppFlavor()).isEqualTo("devdebug");
+        assertThat(sentEvent.getAgentData().getAppInstallId()).isEqualTo("ffffffff-ffff-ffff-ffff-ffffffffffff");
+        assertThat(sentEvent.getAgentData().getAppTheme()).isEqualTo("LIGHT");
         assertThat(sentEvent.getAgentData().getAppVersion()).isEqualTo(982734);
-        assertThat(sentEvent.getAgentData().getAppTheme()).isEqualTo("flamingo");
+        assertThat(sentEvent.getAgentData().getAppVersionName()).isEqualTo("2.7.50470-dev-2024-02-14");
+        assertThat(sentEvent.getAgentData().getClientPlatform()).isEqualTo("android");
+        assertThat(sentEvent.getAgentData().getClientPlatformFamily()).isEqualTo("app");
         assertThat(sentEvent.getAgentData().getDeviceLanguage()).isEqualTo("en");
-        assertThat(sentEvent.getAgentData().getReleaseStatus()).isEqualTo("beta");
+        assertThat(sentEvent.getAgentData().getReleaseStatus()).isEqualTo("dev");
 
         assertThat(sentEvent.getPageData().getId()).isEqualTo(1);
         assertThat(sentEvent.getPageData().getNamespaceId()).isEqualTo(0);

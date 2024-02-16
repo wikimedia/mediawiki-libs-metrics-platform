@@ -1,12 +1,19 @@
 [ {
-	"$schema": "/analytics/product_metrics/app/base/1.0.0",
+	"$schema": "/analytics/product_metrics/app/base/1.2.0",
 	"meta": {
 		"stream": "mediawiki.metrics_platform.view",
 		"domain": "en.wikipedia.org"
 	},
 	"agent": {
+		"app_flavor": "devdebug",
 		"app_install_id": "ffffffff-ffff-ffff-ffff-ffffffffffff",
-		"client_platform_family": "app"
+		"app_theme": "LIGHT",
+		"app_version": 123456,
+		"app_version_name": "2.7.50470-dev-2024-02-14",
+		"client_platform": "android",
+		"client_platform_family": "app",
+		"device_language": "en",
+		"release_status": "dev"
 	},
 	"page": {
 		"id": 30715282,

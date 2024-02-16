@@ -15,6 +15,7 @@ public class AgentDataTest {
                 .appInstallId("ffffffff-ffff-ffff-ffff-ffffffffffff")
                 .appTheme("giraffe")
                 .appVersion(123456789)
+                .appVersionName("2.7.50470-dev-2024-02-14")
                 .clientPlatform("android")
                 .clientPlatformFamily("app")
                 .deviceLanguage("en")
@@ -25,6 +26,7 @@ public class AgentDataTest {
         assertThat(agentData.getAppInstallId()).isEqualTo("ffffffff-ffff-ffff-ffff-ffffffffffff");
         assertThat(agentData.getAppTheme()).isEqualTo("giraffe");
         assertThat(agentData.getAppVersion()).isEqualTo(123456789);
+        assertThat(agentData.getAppVersionName()).isEqualTo("2.7.50470-dev-2024-02-14");
         assertThat(agentData.getClientPlatform()).isEqualTo("android");
         assertThat(agentData.getClientPlatformFamily()).isEqualTo("app");
         assertThat(agentData.getDeviceLanguage()).isEqualTo("en");
@@ -37,6 +39,7 @@ public class AgentDataTest {
                 "\"app_install_id\":\"ffffffff-ffff-ffff-ffff-ffffffffffff\"," +
                 "\"app_theme\":\"giraffe\"," +
                 "\"app_version\":123456789," +
+                "\"app_version_name\":\"2.7.50470-dev-2024-02-14\"," +
                 "\"client_platform\":\"android\"," +
                 "\"client_platform_family\":\"app\"," +
                 "\"device_language\":\"en\"," +

@@ -8,8 +8,15 @@
 	"is_full_width": true,
 	"screen_size": 1080,
 	"agent": {
+		"app_flavor": "devdebug",
 		"app_install_id": "ffffffff-ffff-ffff-ffff-ffffffffffff",
-		"client_platform_family": "app"
+		"app_theme": "LIGHT",
+		"app_version": 123456,
+		"app_version_name": "2.7.50470-dev-2024-02-14",
+		"client_platform": "android",
+		"client_platform_family": "app",
+		"device_language": "en",
+		"release_status": "dev"
 	},
 	"page": {
 		"id": 30715282,
