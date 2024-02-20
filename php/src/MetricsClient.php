@@ -17,16 +17,6 @@ class MetricsClient implements LoggerAwareInterface {
 	 * The ID of the mediawiki/client/metrics_event schema in the schemas/event/secondary
 	 * repository.
 	 *
-	 * @deprecated
-	 *
-	 * @var string
-	 */
-	public const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.0.0';
-
-	/**
-	 * The ID of the mediawiki/client/metrics_event schema in the schemas/event/secondary
-	 * repository.
-	 *
 	 * @var string
 	 */
 	public const MONO_SCHEMA = '/analytics/mediawiki/client/metrics_event/2.0.0';
@@ -135,49 +125,6 @@ class MetricsClient implements LoggerAwareInterface {
 	}
 
 	/**
-	 * Constructs a "Metrics Platform Event" event given the event name and custom data. The event
-	 * is submitted to all streams that are interested in the event.
-	 *
-	 * An event (E) is constructed for a stream (S) by:
-	 *
-	 * 1. Initializing the minimum valid event E that can be submitted to S
-	 * 2. If it is given, adding the formatted custom data as the `custom_data` property of E
-	 * 3. Mixing the context attributes requested in the configuration for S into E
-	 *
-	 * After which, E is submitted to S.
-	 *
-	 * Note well that all events are submitted with the same client-side event timestamp (the `dt`
-	 * property) for consistency.
-	 *
-	 * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform
-	 *
-	 * @param string $eventName
-	 * @param array $customData
-	 *
-	 * @unstable
-	 * @deprecated
-	 */
-	public function dispatch( string $eventName, array $customData = [] ): void {
-		$customData = $this->formatCustomData( $customData );
-		$streamNames = $this->streamConfigFactory->getStreamNamesForEvent( $eventName );
-
-		foreach ( $streamNames as $streamName ) {
-			$event = $this->createEvent( $eventName );
-
-			if ( $customData ) {
-				$event['custom_data'] = $customData;
-			}
-
-			$streamConfig = $this->streamConfigFactory->getStreamConfig( $streamName );
-			$event = $this->contextController->addRequestedValues( $event, $streamConfig );
-
-			if ( $this->curationController->shouldProduceEvent( $event, $streamConfig ) ) {
-				$this->submit( $streamName, $event );
-			}
-		}
-	}
-
-	/**
 	 * @param string $eventName
 	 * @param string|null $schemaId
 	 */
@@ -191,30 +138,5 @@ class MetricsClient implements LoggerAwareInterface {
 			$event['name'] = $eventName;
 		}
 		return $event;
-	}
-
-	/**
-	 * @param array $customData
-	 * @return array
-	 */
-	private function formatCustomData( array $customData ): array {
-		return array_map( static function ( $value ) {
-			$type = strtolower( gettype( $value ) );
-
-			// TODO: Should the JavaScript impl. be updated to distinguish between integers and
-			// floating-point numbers?
-			if ( $type === 'integer' || $type === 'double' ) {
-				$type = 'number';
-			} elseif ( $type === 'boolean' ) {
-				$value = $value ? 'true' : 'false';
-			} elseif ( $type === 'null' ) {
-				$value = 'null';
-			}
-
-			return [
-				'data_type' => $type,
-				'value' => (string)$value,
-			];
-		}, $customData );
 	}
 }
