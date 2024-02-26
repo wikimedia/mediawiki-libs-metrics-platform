@@ -139,3 +139,131 @@ QUnit.test( 'probability in sample is a number in [0,1]', function ( assert ) {
 
 	assert.strictEqual( probabilityInSample >= 0 && probabilityInSample <= 1, true );
 } );
+
+QUnit.test( 'a pageview/session/device that is in-sample at 1% is also in-sample at any greater rate', function ( assert ) {
+	// A pageviewId value that is in-sample at 1% as a starting point
+	integration.pageviewId = '00000000000000000ddd';
+
+	var pageviewConf = {
+		empty: {},
+		sample1: {
+			sample: {
+				rate: 0.01,
+				unit: 'pageview'
+			}
+		},
+		sample5: {
+			sample: {
+				rate: 0.05,
+				unit: 'pageview'
+			}
+		},
+		sample10: {
+			sample: {
+				rate: 0.1,
+				unit: 'pageview'
+			}
+		},
+		sample25: {
+			sample: {
+				rate: 0.25,
+				unit: 'pageview'
+			}
+		},
+		sample50: {
+			sample: {
+				rate: 0.5,
+				unit: 'pageview'
+			}
+		},
+		sample75: {
+			sample: {
+				rate: 0.75,
+				unit: 'pageview'
+			}
+		},
+		sample100: {
+			sample: {
+				rate: 1,
+				unit: 'pageview'
+			}
+		}
+	};
+
+	[
+		// @ts-ignore TS2339
+		[ pageviewConf.empty, true ],
+		[ pageviewConf.sample1, true ],
+		[ pageviewConf.sample5, true ],
+		[ pageviewConf.sample10, true ],
+		[ pageviewConf.sample25, true ],
+		[ pageviewConf.sample50, true ],
+		[ pageviewConf.sample75, true ],
+		[ pageviewConf.sample100, true ]
+	].forEach( function ( value ) {
+		assert.strictEqual( samplingController.isStreamInSample( value[ 0 ] ), value[ 1 ] );
+	} );
+
+	// A sessionId value that is in-sample at 1% as a starting point
+	integration.sessionId = '00000000000000000ddd';
+
+	var sessionConf = {
+		empty: {},
+		sample1: {
+			sample: {
+				rate: 0.01,
+				unit: 'session'
+			}
+		},
+		sample5: {
+			sample: {
+				rate: 0.05,
+				unit: 'session'
+			}
+		},
+		sample10: {
+			sample: {
+				rate: 0.1,
+				unit: 'session'
+			}
+		},
+		sample25: {
+			sample: {
+				rate: 0.25,
+				unit: 'session'
+			}
+		},
+		sample50: {
+			sample: {
+				rate: 0.5,
+				unit: 'session'
+			}
+		},
+		sample75: {
+			sample: {
+				rate: 0.75,
+				unit: 'session'
+			}
+		},
+		sample100: {
+			sample: {
+				rate: 1,
+				unit: 'session'
+			}
+		}
+	};
+
+	[
+		// @ts-ignore TS2339
+		[ sessionConf.empty, true ],
+		[ sessionConf.sample1, true ],
+		[ sessionConf.sample5, true ],
+		[ sessionConf.sample10, true ],
+		[ sessionConf.sample25, true ],
+		[ sessionConf.sample50, true ],
+		[ sessionConf.sample75, true ],
+		[ sessionConf.sample100, true ]
+	].forEach( function ( value ) {
+		assert.strictEqual( samplingController.isStreamInSample( value[ 0 ] ), value[ 1 ] );
+	} );
+} );
