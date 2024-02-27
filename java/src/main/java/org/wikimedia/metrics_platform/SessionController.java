@@ -74,6 +74,6 @@ public class SessionController {
         Random random = RANDOM;
         return String.format(Locale.US, "%08x", random.nextInt()) +
                 String.format(Locale.US, "%08x", random.nextInt()) +
-                String.format(Locale.US, "%04x", random.nextInt() + 0xFFFF);
+                String.format(Locale.US, "%04x", random.nextInt() & 0xFFFF);
     }
 }
