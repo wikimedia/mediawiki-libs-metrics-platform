@@ -26,4 +26,11 @@ class SessionControllerTest {
 
         assertThat(sessionId1).isNotEqualTo(sessionId2);
     }
+
+    @Test void testSessionIdLength() {
+        Instant twoHoursAgo = Instant.now().minus(2, HOURS);
+        SessionController sessionController = new SessionController(twoHoursAgo);
+        String sessionId = sessionController.getSessionId();
+        assertThat(sessionId.length()).isEqualTo(20);
+    }
 }
