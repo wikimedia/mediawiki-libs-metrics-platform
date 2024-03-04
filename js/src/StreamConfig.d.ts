@@ -62,6 +62,7 @@ type StreamProducerContextAttribute =
     | "performer_id"
     | "performer_name"
     | "performer_session_id"
+    | "performer_activity_token"
     | "performer_pageview_id"
     | "performer_groups"
     | "performer_is_bot"
