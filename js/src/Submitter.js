@@ -13,6 +13,10 @@ function Submitter( metricsClient, streamName, streamID, init ) {
 	this.streamName = streamName;
 	this.streamID = streamID;
 	this.i = 0;
+
+	if ( init ) {
+		this.submitInteraction( 'init' );
+	}
 }
 
 /**

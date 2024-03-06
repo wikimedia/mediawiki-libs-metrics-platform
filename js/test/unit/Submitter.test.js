@@ -12,6 +12,8 @@ const submitter = new Submitter( metricsClient, 'fooStreamName', 'fooSchemaID' )
 
 const sandbox = sinon.createSandbox();
 
+const submitInteractionStub = sandbox.stub( metricsClient, 'submitInteraction' );
+
 QUnit.module( 'Submitter', {
 	afterEach: () => {
 		sandbox.reset();
@@ -31,8 +33,6 @@ QUnit.test( 'isStreamInSample()', ( assert ) => {
 } );
 
 QUnit.test( 'submitInteraction()', ( assert ) => {
-	const submitInteractionStub = sandbox.stub( metricsClient, 'submitInteraction' );
-
 	submitter.submitInteraction( 'init' );
 	submitter.submitInteraction( 'scroll', {
 		action_subtype: 'up'
@@ -62,13 +62,9 @@ QUnit.test( 'submitInteraction()', ( assert ) => {
 			}
 		]
 	);
-
-	submitInteractionStub.restore();
 } );
 
 QUnit.test( 'submitInteraction() - disallow FESP overriding', ( assert ) => {
-	const submitInteractionStub = sandbox.stub( metricsClient, 'submitInteraction' );
-
 	submitter.submitInteraction( 'scroll', {
 		action_subtype: 'up',
 		funnel_event_sequence_position: 42
@@ -78,6 +74,23 @@ QUnit.test( 'submitInteraction() - disallow FESP overriding', ( assert ) => {
 		action_subtype: 'up',
 		funnel_event_sequence_position: 2
 	} );
+} );
 
-	submitInteractionStub.restore();
+QUnit.test( 'constructor()', ( assert ) => {
+
+	// eslint-disable-next-line no-unused-vars
+	const submitter2 = new Submitter( metricsClient, 'barStreamName', 'barSchemaID', true );
+
+	assert.strictEqual( submitInteractionStub.callCount, 1 );
+	assert.deepEqual(
+		submitInteractionStub.args[ 0 ],
+		[
+			'barStreamName',
+			'barSchemaID',
+			'init',
+			{
+				funnel_event_sequence_position: 0
+			}
+		]
+	);
 } );
