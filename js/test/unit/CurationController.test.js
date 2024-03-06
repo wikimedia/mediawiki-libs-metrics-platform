@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-var curationController = new ( require( './../../src/CurationController.js' ) )();
+const curationController = new ( require( './../../src/CurationController.js' ) )();
 
 QUnit.module( 'CurationController', function () {
 
@@ -60,10 +60,10 @@ QUnit.module( 'CurationController', function () {
 	} );
 
 	QUnit.test( 'shouldProduceEvent()', function ( assert ) {
-		var event;
+		let event;
 
 		/** @type StreamConfig */
-		var streamConfig = {
+		const streamConfig = {
 			producers: {
 				metrics_platform_client: {
 					curation: {

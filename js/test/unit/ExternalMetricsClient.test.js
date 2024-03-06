@@ -3,13 +3,13 @@
 // @ts-nocheck
 
 /* eslint-disable camelcase */
-var sinon = require( 'sinon' );
+const sinon = require( 'sinon' );
 
-var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
-var MetricsClient = require( '../../src/ExternalMetricsClient.js' );
+const TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
+const MetricsClient = require( '../../src/ExternalMetricsClient.js' );
 
 /** @type StreamConfigs */
-var streamConfigs = {
+const streamConfigs = {
 	'metrics.platform.test': {
 		schema_title: 'metrics/platform/test',
 		producers: {
@@ -54,11 +54,11 @@ var streamConfigs = {
 	}
 };
 
-var integration = new TestMetricsClientIntegration();
+const integration = new TestMetricsClientIntegration();
 
-var sandbox = sinon.createSandbox();
-var enqueueEventStub = sandbox.stub( integration, 'enqueueEvent' );
-var logWarningStub = sandbox.stub( integration, 'logWarning' );
+const sandbox = sinon.createSandbox();
+const enqueueEventStub = sandbox.stub( integration, 'enqueueEvent' );
+const logWarningStub = sandbox.stub( integration, 'logWarning' );
 
 sandbox.stub( integration, 'onSubmit' );
 
@@ -69,9 +69,9 @@ QUnit.module( 'ExternalMetricsClient', {
 } );
 
 QUnit.test( 'constructor() - fetches stream configs when they are not given', function ( assert ) {
-	var fetchStreamConfigsSpy = sandbox.spy( integration, 'fetchStreamConfigs' );
+	const fetchStreamConfigsSpy = sandbox.spy( integration, 'fetchStreamConfigs' );
 
-	var metricsClient = new MetricsClient( integration );
+	const metricsClient = new MetricsClient( integration );
 
 	assert.deepEqual( metricsClient.streamConfigs, {}, 'Initializes streamConfigs to an empty object' );
 	assert.strictEqual( fetchStreamConfigsSpy.callCount, 1, 'fetchStreamConfigs() should not be called' );
@@ -80,17 +80,17 @@ QUnit.test( 'constructor() - fetches stream configs when they are not given', fu
 } );
 
 QUnit.test( 'fetchStreamConfigs() - invalidates eventNameToStreamNames map', function ( assert ) {
-	var fetchStreamConfigsStub = sandbox.stub( integration, 'fetchStreamConfigs' );
+	const fetchStreamConfigsStub = sandbox.stub( integration, 'fetchStreamConfigs' );
 
 	// @ts-ignore TS2585
 	fetchStreamConfigsStub.onFirstCall().returns( Promise.resolve( streamConfigs ) );
 
-	var metricsClient = new MetricsClient( integration );
+	const metricsClient = new MetricsClient( integration );
 	metricsClient.getStreamNamesForEvent( 'widgetClick' );
 
 	assert.deepEqual( metricsClient.eventNameToStreamNamesMap, {} );
 
-	var done = assert.async();
+	const done = assert.async();
 
 	// Because Integration#fetchStreamConfigs() returns an instance of Promise, we have to wait for
 	// the microtask queue to be drained before making an assertion.
@@ -111,7 +111,7 @@ QUnit.test( 'fetchStreamConfigs() - invalidates eventNameToStreamNames map', fun
 } );
 
 QUnit.test( 'submit()/dispatch() - does not produce an event until streamConfigs are fetched', function ( assert ) {
-	var streamConfigsPromise = new Promise( function ( resolve ) {
+	const streamConfigsPromise = new Promise( function ( resolve ) {
 		setTimeout(
 			function () {
 				resolve( streamConfigs );
@@ -120,12 +120,12 @@ QUnit.test( 'submit()/dispatch() - does not produce an event until streamConfigs
 		);
 	} );
 
-	var fetchStreamConfigsStub = sandbox.stub( integration, 'fetchStreamConfigs' );
+	const fetchStreamConfigsStub = sandbox.stub( integration, 'fetchStreamConfigs' );
 
 	// @ts-ignore TS2585
 	fetchStreamConfigsStub.onFirstCall().returns( streamConfigsPromise );
 
-	var metricsClient = new MetricsClient( integration );
+	const metricsClient = new MetricsClient( integration );
 
 	metricsClient.submit( 'metrics.platform.test', { $schema: 'metrics/platform/test' } );
 	metricsClient.dispatch( 'click' );
@@ -133,7 +133,7 @@ QUnit.test( 'submit()/dispatch() - does not produce an event until streamConfigs
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
 	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
 
-	var done = assert.async();
+	const done = assert.async();
 
 	streamConfigsPromise.then( function () {
 		assert.strictEqual( enqueueEventStub.callCount, 2, 'enqueueEvent() should be called' );
@@ -145,7 +145,7 @@ QUnit.test( 'submit()/dispatch() - does not produce an event until streamConfigs
 } );
 
 QUnit.test( 'logs a warning if too many calls are enqueued before stream configs are fetched', function ( assert ) {
-	var streamConfigsPromise = new Promise( function ( resolve ) {
+	const streamConfigsPromise = new Promise( function ( resolve ) {
 		setTimeout(
 			function () {
 				resolve( streamConfigs );
@@ -154,14 +154,14 @@ QUnit.test( 'logs a warning if too many calls are enqueued before stream configs
 		);
 	} );
 
-	var fetchStreamConfigsStub = sandbox.stub( integration, 'fetchStreamConfigs' );
+	const fetchStreamConfigsStub = sandbox.stub( integration, 'fetchStreamConfigs' );
 
 	// @ts-ignore TS2585
 	fetchStreamConfigsStub.onFirstCall().returns( streamConfigsPromise );
 
-	var metricsClient = new MetricsClient( integration );
+	const metricsClient = new MetricsClient( integration );
 
-	for ( var i = 0; i < 132; i += 2 ) {
+	for ( let i = 0; i < 132; i += 2 ) {
 		metricsClient.submit( 'metrics.platform.test', { $schema: 'metrics/platform/test' } );
 		metricsClient.dispatch( 'click' );
 	}
@@ -174,7 +174,7 @@ QUnit.test( 'logs a warning if too many calls are enqueued before stream configs
 
 	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
 
-	var done = assert.async();
+	const done = assert.async();
 
 	streamConfigsPromise.then( function () {
 		assert.strictEqual( enqueueEventStub.callCount, 128, 'enqueueEvent() should be called' );
