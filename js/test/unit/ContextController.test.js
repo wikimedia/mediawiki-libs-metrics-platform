@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
-var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
-var ContextController = require( './../../src/ContextController.js' );
+const TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
+const ContextController = require( './../../src/ContextController.js' );
 
-var integration = new TestMetricsClientIntegration();
-var contextController = new ContextController( integration );
+const integration = new TestMetricsClientIntegration();
+const contextController = new ContextController( integration );
 
 /** @type StreamConfig */
-var streamConfig = {
+const streamConfig = {
 	producers: {
 		metrics_platform_client: {
 			provide_values: [
@@ -48,7 +48,7 @@ var streamConfig = {
 };
 
 /** @type StreamConfig */
-var streamConfig2 = {
+const streamConfig2 = {
 	sample: {
 		unit: 'pageview',
 		rate: 0.5
@@ -58,8 +58,8 @@ var streamConfig2 = {
 QUnit.module( 'ContextController' );
 
 QUnit.test( 'addRequestedValues()', function ( assert ) {
-	var clientDt = new Date().toISOString();
-	var eventData = contextController.addRequestedValues(
+	const clientDt = new Date().toISOString();
+	const eventData = contextController.addRequestedValues(
 		{
 			$schema: '/analytics/mediawiki/metrics_platform/event/1.0.0',
 			dt: clientDt,
@@ -121,8 +121,8 @@ QUnit.test( 'addRequestedValues()', function ( assert ) {
 } );
 
 QUnit.test( 'addRequestedValues() - mixes in sampling config', function ( assert ) {
-	var clientDt = new Date().toISOString();
-	var eventData = contextController.addRequestedValues(
+	const clientDt = new Date().toISOString();
+	const eventData = contextController.addRequestedValues(
 		{
 			$schema: '/analytics/mediawiki/metrics_platform/event/1.0.0',
 			dt: clientDt,

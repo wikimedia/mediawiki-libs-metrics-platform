@@ -1,9 +1,9 @@
-var DefaultIntegration = require( './../../src/DefaultIntegration.js' );
+const DefaultIntegration = require( './../../src/DefaultIntegration.js' );
 
 QUnit.module( 'DefaultIntegration' );
 
 QUnit.test( 'constructor() - sets streamConfigsUrl', function ( assert ) {
-	var integration = new DefaultIntegration();
+	let integration = new DefaultIntegration();
 
 	assert.strictEqual(
 		integration.streamConfigsUrl,
@@ -20,7 +20,7 @@ QUnit.test( 'constructor() - sets streamConfigsUrl', function ( assert ) {
 } );
 
 QUnit.test( 'constructor() - sets eventGateUrl', function ( assert ) {
-	var integration = new DefaultIntegration();
+	let integration = new DefaultIntegration();
 
 	assert.strictEqual(
 		integration.eventGateUrl,
@@ -37,7 +37,7 @@ QUnit.test( 'constructor() - sets eventGateUrl', function ( assert ) {
 
 QUnit.test( 'getContextAttributes()/setContextAttributes()', function ( assert ) {
 	/* eslint-disable camelcase */
-	var integration = new DefaultIntegration();
+	const integration = new DefaultIntegration();
 
 	assert.deepEqual(
 		integration.getContextAttributes(),

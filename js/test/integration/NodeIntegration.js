@@ -1,6 +1,6 @@
-var crypto = require( 'crypto' );
+const crypto = require( 'crypto' );
 
-var NodeIntegration = require( './../../src/DefaultIntegration' );
+const NodeIntegration = require( './../../src/DefaultIntegration' );
 
 /**
  * @param {EventData} eventData
@@ -29,7 +29,7 @@ NodeIntegration.prototype.getHostname = function () {
  * @return {string}
  */
 function generateRandomId() {
-	var rnds = new Uint16Array( 5 );
+	const rnds = new Uint16Array( 5 );
 
 	crypto.webcrypto.getRandomValues( rnds );
 

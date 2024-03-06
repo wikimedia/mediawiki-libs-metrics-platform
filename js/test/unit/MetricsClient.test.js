@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
-var sinon = require( 'sinon' );
+const sinon = require( 'sinon' );
 
-var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
-var MetricsClient = require( './../../src/MetricsClient.js' );
+const TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
+const MetricsClient = require( './../../src/MetricsClient.js' );
 
 /** @type StreamConfigs */
-var streamConfigs = {
+const streamConfigs = {
 	'metrics.platform.test': {
 		schema_title: 'metrics/platform/test',
 		producers: {
@@ -54,14 +54,14 @@ var streamConfigs = {
 };
 
 /** @type EventData */
-var modernEvent = {
+let modernEvent = {
 	$schema: '/test/event/1.0.0',
 	volcano: 'Nyiragongo',
 	Explosivity: 1
 };
 
 /** @type EventData */
-var legacyEvent = {
+let legacyEvent = {
 	$schema: '/test/event/1.0.0',
 	volcano: 'Nyiragongo',
 	Explosivity: 1,
@@ -69,13 +69,13 @@ var legacyEvent = {
 	dt: '2021-05-12T00:00:00.000Z'
 };
 
-var integration = new TestMetricsClientIntegration();
-var metricsClient = new MetricsClient( integration, streamConfigs );
+const integration = new TestMetricsClientIntegration();
+const metricsClient = new MetricsClient( integration, streamConfigs );
 
-var sandbox = sinon.createSandbox();
-var enqueueEventStub = sandbox.stub( integration, 'enqueueEvent' );
-var logWarningStub = sandbox.stub( integration, 'logWarning' );
-var onSubmitStub = sandbox.stub( integration, 'onSubmit' );
+const sandbox = sinon.createSandbox();
+const enqueueEventStub = sandbox.stub( integration, 'enqueueEvent' );
+const logWarningStub = sandbox.stub( integration, 'logWarning' );
+const onSubmitStub = sandbox.stub( integration, 'onSubmit' );
 
 QUnit.module( 'MetricsClient', {
 	beforeEach: function () {
@@ -101,7 +101,7 @@ QUnit.test( 'submit() - produce an event correctly', function ( assert ) {
 } );
 
 QUnit.test( 'streamConfig() - disallow modification', function ( assert ) {
-	var streamConfig = metricsClient.getStreamConfig( 'metrics.platform.test' ) || {};
+	let streamConfig = metricsClient.getStreamConfig( 'metrics.platform.test' ) || {};
 	streamConfig.schema_title = 'fake/title';
 
 	streamConfig = metricsClient.getStreamConfig( 'metrics.platform.test' ) || {};
@@ -110,7 +110,7 @@ QUnit.test( 'streamConfig() - disallow modification', function ( assert ) {
 } );
 
 QUnit.test( 'addRequiredMetadata() - modern event', function ( assert ) {
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	const hasOwnProperty = Object.prototype.hasOwnProperty;
 
 	modernEvent = metricsClient.addRequiredMetadata( modernEvent, 'metrics.platform.test' );
 	assert.true( hasOwnProperty.call( modernEvent, 'dt' ), 'dt should be set' );
@@ -121,7 +121,7 @@ QUnit.test( 'addRequiredMetadata() - modern event', function ( assert ) {
 } );
 
 QUnit.test( 'addRequiredMetadata() - legacy event', function ( assert ) {
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	const hasOwnProperty = Object.prototype.hasOwnProperty;
 
 	legacyEvent = metricsClient.addRequiredMetadata( legacyEvent, 'metrics.platform.test' );
 	assert.true( hasOwnProperty.call( legacyEvent, 'client_dt' ), 'client_dt should be set' );
@@ -134,7 +134,7 @@ QUnit.test( 'addRequiredMetadata() - legacy event', function ( assert ) {
 
 QUnit.test( 'getStreamNamesForEvent() ', function ( assert ) {
 	/** @type {[string, string[], string][]} */
-	var cases = [
+	const cases = [
 		[
 			'widgetClick', // eventName
 			[ 'metrics.platform.test2', 'metrics.platform.test3' ], // expected
@@ -183,7 +183,7 @@ QUnit.test( 'getStreamNamesForEvent() - prefix matching', function ( assert ) {
 
 QUnit.test( 'getStreamNamesForEvent() - streamConfigs is falsy', function ( assert ) {
 	// eslint-disable-next-line no-shadow
-	var metricsClient = new MetricsClient( integration, false );
+	const metricsClient = new MetricsClient( integration, false );
 
 	assert.deepEqual( metricsClient.getStreamNamesForEvent( 'foo' ), [] );
 	assert.strictEqual(
@@ -199,8 +199,8 @@ QUnit.test( 'dispatch() - produce events correctly', function ( assert ) {
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
 	assert.strictEqual( enqueueEventStub.callCount, 2, 'enqueueEvent() should be called' );
 
-	var event1 = enqueueEventStub.args[ 0 ][ 0 ];
-	var event2 = enqueueEventStub.args[ 1 ][ 0 ];
+	const event1 = enqueueEventStub.args[ 0 ][ 0 ];
+	const event2 = enqueueEventStub.args[ 1 ][ 0 ];
 
 	// Test that the first event was constructed and produced correctly
 	assert.strictEqual( event1.$schema, MetricsClient.SCHEMA );
@@ -237,7 +237,7 @@ QUnit.test( 'dispatch() - constructs the bespoke_data property', function ( asse
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
 	assert.strictEqual( enqueueEventStub.callCount, 1, 'enqueueEvent() should be called' );
 
-	var customData = enqueueEventStub.args[ 0 ][ 0 ].custom_data;
+	const customData = enqueueEventStub.args[ 0 ][ 0 ].custom_data;
 
 	assert.deepEqual(
 		customData,
@@ -273,7 +273,7 @@ QUnit.test( 'dispatch() - warn/do not produce event when bespokeData properties 
 
 QUnit.test( 'dispatch() - warn/do not produce event when streamConfigs is false', function ( assert ) {
 	// eslint-disable-next-line no-shadow
-	var metricsClient = new MetricsClient( integration, false );
+	const metricsClient = new MetricsClient( integration, false );
 
 	metricsClient.dispatch( 'otherWidgetClick' );
 
@@ -304,7 +304,7 @@ QUnit.test( 'submitInteraction() - produce event correctly', function ( assert )
 	assert.strictEqual( enqueueEventStub.callCount, 1, 'enqueueEvent() should be called' );
 	assert.strictEqual( onSubmitStub.callCount, 1, 'onSubmit() should be called' );
 
-	var event = enqueueEventStub.args[ 0 ][ 0 ];
+	const event = enqueueEventStub.args[ 0 ][ 0 ];
 
 	// @ts-ignore TS2345
 	assert.strictEqual( event.meta.stream, 'metrics.platform.test6' );
@@ -323,7 +323,7 @@ QUnit.test( 'submitInteraction() - disallow $schema overriding', function ( asse
 		}
 	);
 
-	var event = enqueueEventStub.args[ 0 ][ 0 ];
+	const event = enqueueEventStub.args[ 0 ][ 0 ];
 
 	assert.strictEqual( event.$schema, '/analytics/product_metrics/web/base/1.0.0' );
 } );
