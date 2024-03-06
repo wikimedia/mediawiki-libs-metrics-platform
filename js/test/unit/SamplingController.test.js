@@ -6,7 +6,7 @@ const TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js
 
 QUnit.module( 'SamplingController' );
 
-QUnit.test( 'isStreamInSample() - valid and invalid stream configs', function ( assert ) {
+QUnit.test( 'isStreamInSample() - valid and invalid stream configs', ( assert ) => {
 	const conf = {
 		emptyConfig: {},
 		nonemptyConfigNoSample: {
@@ -95,12 +95,12 @@ QUnit.test( 'isStreamInSample() - valid and invalid stream configs', function ( 
 		[ conf.missingRateValidUnit, false ],
 		[ conf.missingRateInvalidUnit, false ],
 		[ conf.missingRateMissingUnit, false ]
-	].forEach( function ( value ) {
+	].forEach( ( value ) => {
 		assert.strictEqual( samplingController.isStreamInSample( value[ 0 ] ), value[ 1 ] );
 	} );
 } );
 
-QUnit.test( 'isStreamInSample() - session sampling is deterministic', function ( assert ) {
+QUnit.test( 'isStreamInSample() - session sampling is deterministic', ( assert ) => {
 	/** @type StreamConfig */
 	const conf = {
 		sample: {
@@ -116,7 +116,7 @@ QUnit.test( 'isStreamInSample() - session sampling is deterministic', function (
 	}
 } );
 
-QUnit.test( 'isStreamInSample() - pageview sampling is deterministic', function ( assert ) {
+QUnit.test( 'isStreamInSample() - pageview sampling is deterministic', ( assert ) => {
 	/** @type StreamConfig */
 	const conf = {
 		sample: {
@@ -140,7 +140,7 @@ QUnit.test( 'probability in sample is a number in [0,1]', function ( assert ) {
 	assert.strictEqual( probabilityInSample >= 0 && probabilityInSample <= 1, true );
 } );
 
-QUnit.test( 'a pageview/session/device that is in-sample at 1% is also in-sample at any greater rate', function ( assert ) {
+QUnit.test( 'a pageview/session/device that is in-sample at 1% is also in-sample at any greater rate', ( assert ) => {
 	// A pageviewId value that is in-sample at 1% as a starting point
 	integration.pageviewId = '00000000000000000ddd';
 
@@ -200,7 +200,7 @@ QUnit.test( 'a pageview/session/device that is in-sample at 1% is also in-sample
 		[ pageviewConf.sample50, true ],
 		[ pageviewConf.sample75, true ],
 		[ pageviewConf.sample100, true ]
-	].forEach( function ( value ) {
+	].forEach( ( value ) => {
 		assert.strictEqual( samplingController.isStreamInSample( value[ 0 ] ), value[ 1 ] );
 	} );
 
@@ -263,7 +263,7 @@ QUnit.test( 'a pageview/session/device that is in-sample at 1% is also in-sample
 		[ sessionConf.sample50, true ],
 		[ sessionConf.sample75, true ],
 		[ sessionConf.sample100, true ]
-	].forEach( function ( value ) {
+	].forEach( ( value ) => {
 		assert.strictEqual( samplingController.isStreamInSample( value[ 0 ] ), value[ 1 ] );
 	} );
 } );

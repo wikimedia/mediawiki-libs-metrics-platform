@@ -63,12 +63,12 @@ const logWarningStub = sandbox.stub( integration, 'logWarning' );
 sandbox.stub( integration, 'onSubmit' );
 
 QUnit.module( 'ExternalMetricsClient', {
-	beforeEach: function () {
+	beforeEach: () => {
 		sandbox.reset();
 	}
 } );
 
-QUnit.test( 'constructor() - fetches stream configs when they are not given', function ( assert ) {
+QUnit.test( 'constructor() - fetches stream configs when they are not given', ( assert ) => {
 	const fetchStreamConfigsSpy = sandbox.spy( integration, 'fetchStreamConfigs' );
 
 	const metricsClient = new MetricsClient( integration );
@@ -79,7 +79,7 @@ QUnit.test( 'constructor() - fetches stream configs when they are not given', fu
 	fetchStreamConfigsSpy.restore();
 } );
 
-QUnit.test( 'fetchStreamConfigs() - invalidates eventNameToStreamNames map', function ( assert ) {
+QUnit.test( 'fetchStreamConfigs() - invalidates eventNameToStreamNames map', ( assert ) => {
 	const fetchStreamConfigsStub = sandbox.stub( integration, 'fetchStreamConfigs' );
 
 	// @ts-ignore TS2585
@@ -96,7 +96,7 @@ QUnit.test( 'fetchStreamConfigs() - invalidates eventNameToStreamNames map', fun
 	// the microtask queue to be drained before making an assertion.
 	//
 	// @ts-ignore TS2580
-	process.nextTick( function () {
+	process.nextTick( () => {
 		assert.strictEqual( metricsClient.streamConfigs, streamConfigs );
 		assert.strictEqual(
 			metricsClient.eventNameToStreamNamesMap,
@@ -110,8 +110,8 @@ QUnit.test( 'fetchStreamConfigs() - invalidates eventNameToStreamNames map', fun
 	} );
 } );
 
-QUnit.test( 'submit()/dispatch() - does not produce an event until streamConfigs are fetched', function ( assert ) {
-	const streamConfigsPromise = new Promise( function ( resolve ) {
+QUnit.test( 'submit()/dispatch() - does not produce an event until streamConfigs are fetched', ( assert ) => {
+	const streamConfigsPromise = new Promise( ( resolve ) => {
 		setTimeout(
 			function () {
 				resolve( streamConfigs );
@@ -135,7 +135,7 @@ QUnit.test( 'submit()/dispatch() - does not produce an event until streamConfigs
 
 	const done = assert.async();
 
-	streamConfigsPromise.then( function () {
+	streamConfigsPromise.then( () => {
 		assert.strictEqual( enqueueEventStub.callCount, 2, 'enqueueEvent() should be called' );
 
 		fetchStreamConfigsStub.restore();
@@ -144,8 +144,8 @@ QUnit.test( 'submit()/dispatch() - does not produce an event until streamConfigs
 	} );
 } );
 
-QUnit.test( 'logs a warning if too many calls are enqueued before stream configs are fetched', function ( assert ) {
-	const streamConfigsPromise = new Promise( function ( resolve ) {
+QUnit.test( 'logs a warning if too many calls are enqueued before stream configs are fetched', ( assert ) => {
+	const streamConfigsPromise = new Promise( ( resolve ) => {
 		setTimeout(
 			function () {
 				resolve( streamConfigs );
@@ -176,7 +176,7 @@ QUnit.test( 'logs a warning if too many calls are enqueued before stream configs
 
 	const done = assert.async();
 
-	streamConfigsPromise.then( function () {
+	streamConfigsPromise.then( () => {
 		assert.strictEqual( enqueueEventStub.callCount, 128, 'enqueueEvent() should be called' );
 
 		fetchStreamConfigsStub.restore();

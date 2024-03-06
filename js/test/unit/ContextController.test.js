@@ -57,7 +57,7 @@ const streamConfig2 = {
 
 QUnit.module( 'ContextController' );
 
-QUnit.test( 'addRequestedValues()', function ( assert ) {
+QUnit.test( 'addRequestedValues()', ( assert ) => {
 	const clientDt = new Date().toISOString();
 	const eventData = contextController.addRequestedValues(
 		{
@@ -120,7 +120,7 @@ QUnit.test( 'addRequestedValues()', function ( assert ) {
 	} );
 } );
 
-QUnit.test( 'addRequestedValues() - mixes in sampling config', function ( assert ) {
+QUnit.test( 'addRequestedValues() - mixes in sampling config', ( assert ) => {
 	const clientDt = new Date().toISOString();
 	const eventData = contextController.addRequestedValues(
 		{
