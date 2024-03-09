@@ -330,3 +330,33 @@ QUnit.test( 'submitInteraction() - disallow $schema overriding', function ( asse
 
 	assert.strictEqual( event.$schema, '/analytics/product_metrics/web/base/1.0.0' );
 } );
+
+QUnit.test( 'addTags()', ( assert ) => {
+	metricsClient.addTags( 'metrics.platform.test6', 'bar' );
+	metricsClient.addTags( 'metrics.platform.test6', [ 'bar', 'baz', 'qux' ] );
+
+	metricsClient.submitInteraction(
+		'metrics.platform.test6',
+		'metrics/platform/test5/1.0.0',
+		'foo'
+	);
+
+	const event = enqueueEventStub.args[ 0 ][ 0 ];
+
+	assert.deepEqual( event.tags, [ 'bar', 'baz', 'qux' ], 'Unique tags are added to the list' );
+} );
+
+QUnit.test( 'addTagsIf()', ( assert ) => {
+	metricsClient.addTagsIf( 'metrics.platform.test6', 'bar', false );
+	metricsClient.addTagsIf( 'metrics.platform.test6', 'baz', true );
+
+	metricsClient.submitInteraction(
+		'metrics.platform.test6',
+		'/metrics/platform/test6/1.0.0',
+		'foo'
+	);
+
+	const event = enqueueEventStub.args[ 0 ][ 0 ];
+
+	assert.deepEqual( event.tags, [ 'baz' ], 'Unique tags are added to the list' );
+} );
