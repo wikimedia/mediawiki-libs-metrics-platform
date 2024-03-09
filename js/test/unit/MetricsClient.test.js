@@ -36,10 +36,10 @@ var streamConfigs = {
 		}
 	},
 	'metrics.platform.test4': {
-		schema_title: 'metrics/platform/test4'
+		schema_title: '/metrics/platform/test4'
 	},
 	'metrics.platform.test5': {
-		schema_title: 'metrics/platform/test5',
+		schema_title: '/metrics/platform/test5',
 		producers: {
 			metrics_platform_client: {
 				events: [
@@ -49,7 +49,7 @@ var streamConfigs = {
 		}
 	},
 	'metrics.platform.test6': {
-		schema_title: '/analytics/product_metrics/interaction/common'
+		schema_title: '/metrics/platform/test6'
 	}
 };
 
@@ -78,7 +78,10 @@ var logWarningStub = sandbox.stub( integration, 'logWarning' );
 var onSubmitStub = sandbox.stub( integration, 'onSubmit' );
 
 QUnit.module( 'MetricsClient', {
-	beforeEach: function () {
+	beforeEach: () => {
+		metricsClient = new MetricsClient( integration, streamConfigs );
+	},
+	afterEach: () => {
 		sandbox.reset();
 	}
 } );
