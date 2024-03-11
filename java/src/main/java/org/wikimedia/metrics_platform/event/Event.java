@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNullableByDefault;
 
-import org.wikimedia.metrics_platform.config.SampleConfig;
+import org.wikimedia.metrics_platform.config.sampling.SampleConfig;
 import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.InteractionData;
 import org.wikimedia.metrics_platform.utils.Objects;

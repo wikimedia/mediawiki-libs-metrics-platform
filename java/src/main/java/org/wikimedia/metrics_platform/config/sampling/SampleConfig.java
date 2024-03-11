@@ -1,4 +1,4 @@
-package org.wikimedia.metrics_platform.config;
+package org.wikimedia.metrics_platform.config.sampling;
 
 import javax.annotation.Nonnull;
 
