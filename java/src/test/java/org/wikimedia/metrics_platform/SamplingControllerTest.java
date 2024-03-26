@@ -1,11 +1,11 @@
 package org.wikimedia.metrics_platform;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.wikimedia.metrics_platform.config.SampleConfig.Identifier.DEVICE;
-import static org.wikimedia.metrics_platform.config.SampleConfig.Identifier.SESSION;
+import static org.wikimedia.metrics_platform.config.sampling.SampleConfig.Identifier.DEVICE;
+import static org.wikimedia.metrics_platform.config.sampling.SampleConfig.Identifier.SESSION;
 
 import org.junit.jupiter.api.Test;
-import org.wikimedia.metrics_platform.config.SampleConfig;
+import org.wikimedia.metrics_platform.config.sampling.SampleConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.context.DataFixtures;
 

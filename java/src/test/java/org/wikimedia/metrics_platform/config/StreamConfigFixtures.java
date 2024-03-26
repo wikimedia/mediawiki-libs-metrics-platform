@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.wikimedia.metrics_platform.config.sampling.SampleConfig;
+
 public final class StreamConfigFixtures {
 
     public static final Map<String, StreamConfig> STREAM_CONFIGS_WITH_EVENTS = new HashMap<String, StreamConfig>() {{

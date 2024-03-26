@@ -1,7 +1,7 @@
 package org.wikimedia.metrics_platform.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.wikimedia.metrics_platform.config.SampleConfig.Identifier.SESSION;
+import static org.wikimedia.metrics_platform.config.sampling.SampleConfig.Identifier.SESSION;
 
 import java.util.Set;
 
