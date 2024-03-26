@@ -21,6 +21,7 @@ import org.wikimedia.metrics_platform.utils.ServerErrorException;
 
 import com.google.gson.Gson;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.extern.java.Log;
 
 @Log
@@ -28,6 +29,9 @@ public class EventSenderDefault implements EventSender {
 
     private final Gson gson = GsonHelper.getGson();
 
+    @SuppressFBWarnings(
+            value = "URLCONNECTION_SSRF_FD",
+            justification = "baseUri comes from DestinationEventService and can be trusted")
     @Override
     public void sendEvents(URL baseUri, Collection<EventProcessed> events) throws IOException {
         HttpURLConnection connection = null;

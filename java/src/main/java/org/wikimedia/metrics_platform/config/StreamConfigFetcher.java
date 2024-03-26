@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 import org.wikimedia.metrics_platform.json.GsonHelper;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 public class StreamConfigFetcher {
     public static final String ANALYTICS_API_ENDPOINT = "https://meta.wikimedia.org/w/api.php?" +
             "action=streamconfigs&format=json&formatversion=2&" +
@@ -27,6 +29,9 @@ public class StreamConfigFetcher {
     /**
      * Fetch stream configs from analytics endpoint.
      */
+    @SuppressFBWarnings(
+            value = "URLCONNECTION_SSRF_FD",
+            justification = "Current implementation always uses ANALYTICS_API_ENDPOINT (see above) as a URL outside of unit tests.")
     public SourceConfig fetchStreamConfigs() throws IOException {
         try (InputStreamReader inputStreamReader = new InputStreamReader(url.openStream(), UTF_8)) {
             return new SourceConfig(parseConfig(inputStreamReader));
