@@ -4,14 +4,14 @@ const MetricsClient = require( './MetricsClient.js' );
 /**
  * @param {MetricsClient} metricsClient
  * @param {string} streamName
- * @param {string} streamID
+ * @param {string} schemaID
  * @param {boolean} [init=false]
  * @constructor
  */
-function Submitter( metricsClient, streamName, streamID, init ) {
+function Submitter( metricsClient, streamName, schemaID, init ) {
 	this.metricsClient = metricsClient;
 	this.streamName = streamName;
-	this.streamID = streamID;
+	this.schemaID = schemaID;
 	this.i = 0;
 
 	if ( init ) {
@@ -42,7 +42,7 @@ Submitter.prototype.submitInteraction = function ( action, interactionData ) {
 
 	this.metricsClient.submitInteraction(
 		this.streamName,
-		this.streamID,
+		this.schemaID,
 		action,
 		interactionData
 	);
