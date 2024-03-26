@@ -499,7 +499,7 @@ public final class MetricsClient {
         }
     }
 
-    private static class SimpleThreadFactory implements ThreadFactory {
+    private static final class SimpleThreadFactory implements ThreadFactory {
 
         private final AtomicLong counter = new AtomicLong();
 

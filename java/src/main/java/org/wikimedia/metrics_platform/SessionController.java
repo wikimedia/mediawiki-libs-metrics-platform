@@ -1,5 +1,6 @@
 package org.wikimedia.metrics_platform;
 
+import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Locale;
@@ -27,7 +28,7 @@ public class SessionController {
     @GuardedBy("this")
     @Nonnull
     private Instant sessionTouched;
-    private static final Random RANDOM = new Random();
+    private static final Random RANDOM = new SecureRandom();
 
     SessionController() {
         this(Instant.now());
