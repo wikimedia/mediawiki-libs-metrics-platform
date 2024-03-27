@@ -6,7 +6,9 @@ interface BaseEventData {
     // http: ...;
 
     client_dt?: string;
-    dt?: string;
+    dt?: string
+
+    tags?: string[];
 }
 
 interface EventMetaData {

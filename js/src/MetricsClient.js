@@ -23,6 +23,9 @@ function MetricsClient(
 	this.integration = integration;
 	this.streamConfigs = streamConfigs;
 	this.eventNameToStreamNamesMap = null;
+
+	/** @type Record<string,Set<string>> */
+	this.streamNameToTagsMap = {};
 }
 
 /**
@@ -254,6 +257,13 @@ MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, ev
 	}
 
 	this.addRequiredMetadata( eventData, streamName );
+
+	// Add tags.
+	//
+	// TODO: Should this be extracted to TagController?
+	if ( this.streamNameToTagsMap[ streamName ] ) {
+		eventData.tags = Array.from( this.streamNameToTagsMap[ streamName ] );
+	}
 
 	if ( this.samplingController.isStreamInSample( streamConfig ) ) {
 		this.integration.enqueueEvent( eventData );
@@ -500,6 +510,39 @@ MetricsClient.prototype.isStreamInSample = function ( streamName ) {
 	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
 
 	return streamConfig ? this.samplingController.isStreamInSample( streamConfig ) : false;
+};
+
+/**
+ * @param {string} streamName
+ * @param {string[]|string} tags
+ */
+MetricsClient.prototype.addTags = function ( streamName, tags ) {
+	if ( !Array.isArray( tags ) ) {
+		tags = [ tags ];
+	}
+
+	if ( !this.streamNameToTagsMap[ streamName ] ) {
+		this.streamNameToTagsMap[ streamName ] = new Set( tags );
+
+		return;
+	}
+
+	const entry = this.streamNameToTagsMap[ streamName ];
+
+	tags.forEach( function ( tag ) {
+		entry.add( tag );
+	} );
+};
+
+/**
+ * @param {string} streamName
+ * @param {string[]|string} tags
+ * @param {boolean} condition
+ */
+MetricsClient.prototype.addTagsIf = function ( streamName, tags, condition ) {
+	if ( condition ) {
+		this.addTags( streamName, tags );
+	}
 };
 
 module.exports = MetricsClient;
