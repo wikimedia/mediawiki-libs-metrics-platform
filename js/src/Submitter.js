@@ -12,7 +12,7 @@ function Submitter( metricsClient, streamName, schemaID, init ) {
 	this.metricsClient = metricsClient;
 	this.streamName = streamName;
 	this.schemaID = schemaID;
-	this.i = 0;
+	this.eventSequencePosition = 0;
 
 	if ( init ) {
 		this.submitInteraction( 'init' );
@@ -36,7 +36,7 @@ Submitter.prototype.submitInteraction = function ( action, interactionData ) {
 		interactionData || {},
 		{
 			// eslint-disable-next-line camelcase
-			funnel_event_sequence_position: this.i++
+			funnel_event_sequence_position: this.eventSequencePosition++
 		}
 	);
 
@@ -54,7 +54,7 @@ Submitter.prototype.submitInteraction = function ( action, interactionData ) {
 Submitter.prototype.submitClick = function ( interactionData ) {
 
 	// eslint-disable-next-line camelcase
-	interactionData.funnel_event_sequence_position = this.i++;
+	interactionData.funnel_event_sequence_position = this.eventSequencePosition++;
 
 	this.metricsClient.submitClick( this.streamName, interactionData );
 };
