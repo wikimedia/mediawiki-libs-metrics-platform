@@ -513,6 +513,10 @@ MetricsClient.prototype.isStreamInSample = function ( streamName ) {
 };
 
 /**
+ * Add a tag to all events submitted to the stream.
+ *
+ * If an event has already been submitted to the stream, then the tag is not added to that event.
+ *
  * @param {string} streamName
  * @param {string} tag
  */
@@ -527,6 +531,10 @@ MetricsClient.prototype.addTag = function ( streamName, tag ) {
 };
 
 /**
+ * Add tags to all events submitted to the stream.
+ *
+ * @see MetricsClient#addTag
+ *
  * @param {string} streamName
  * @param {string[]|string} tags
  */
@@ -541,6 +549,10 @@ MetricsClient.prototype.addTags = function ( streamName, tags ) {
 };
 
 /**
+ * Tags all events submitted to the stream if the condition is met.
+ *
+ * @see MetricsClient#addTag
+ *
  * @param {string} streamName
  * @param {string} tag
  * @param {boolean} condition
@@ -552,8 +564,23 @@ MetricsClient.prototype.addTagIf = function ( streamName, tag, condition ) {
 };
 
 /**
+ * Adds all tags submitted to the stream if the conditions are met.
+ *
+ * @see MetricsClient#addTagIf
+ *
  * @param {string} streamName
  * @param {Record<string, boolean>} conditionalTags
+ *
+ * @example
+ * const m = createMetricsClient();
+ *
+ * m.addTagsIf(
+ *   'my_example_stream',
+ *   {
+ *     foo: fooCondition,
+ *     bar: barCondition
+ *   }
+ * );
  */
 MetricsClient.prototype.addTagsIf = function ( streamName, conditionalTags ) {
 	for ( const tag in conditionalTags ) {
