@@ -331,6 +331,27 @@ QUnit.test( 'submitInteraction() - disallow $schema overriding', function ( asse
 	assert.strictEqual( event.$schema, '/analytics/product_metrics/web/base/1.0.0' );
 } );
 
+QUnit.test( 'addTag()', ( assert ) => {
+	[
+		'bar',
+		'bar',
+		'baz',
+		'qux'
+	].forEach(
+		( tag ) => metricsClient.addTag( 'metrics.platform.test6', tag )
+	);
+
+	metricsClient.submitInteraction(
+		'metrics.platform.test6',
+		'metrics/platform/test6/1.0.0',
+		'foo'
+	);
+
+	const event = enqueueEventStub.args[ 0 ][ 0 ];
+
+	assert.deepEqual( event.tags, [ 'bar', 'baz', 'qux' ], 'Unique tags are added to the list' );
+} );
+
 QUnit.test( 'addTags()', ( assert ) => {
 	metricsClient.addTags( 'metrics.platform.test6', 'bar' );
 	metricsClient.addTags( 'metrics.platform.test6', [ 'bar', 'baz', 'qux' ] );
@@ -346,9 +367,9 @@ QUnit.test( 'addTags()', ( assert ) => {
 	assert.deepEqual( event.tags, [ 'bar', 'baz', 'qux' ], 'Unique tags are added to the list' );
 } );
 
-QUnit.test( 'addTagsIf()', ( assert ) => {
-	metricsClient.addTagsIf( 'metrics.platform.test6', 'bar', false );
-	metricsClient.addTagsIf( 'metrics.platform.test6', 'baz', true );
+QUnit.test( 'addTagIf()', ( assert ) => {
+	metricsClient.addTagIf( 'metrics.platform.test6', 'bar', false );
+	metricsClient.addTagIf( 'metrics.platform.test6', 'baz', true );
 
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
@@ -358,5 +379,23 @@ QUnit.test( 'addTagsIf()', ( assert ) => {
 
 	const event = enqueueEventStub.args[ 0 ][ 0 ];
 
-	assert.deepEqual( event.tags, [ 'baz' ], 'Unique tags are added to the list' );
+	assert.deepEqual( event.tags, [ 'baz' ], 'Tags are added to the list' );
+} );
+
+QUnit.test( 'addTagsIf()', ( assert ) => {
+	metricsClient.addTagsIf( 'metrics.platform.test6', {
+		bar: false,
+		baz: true,
+		qux: true
+	} );
+
+	metricsClient.submitInteraction(
+		'metrics.platform.test6',
+		'/metrics/platform/test6/1.0.0',
+		'foo'
+	);
+
+	const event = enqueueEventStub.args[ 0 ][ 0 ];
+
+	assert.deepEqual( event.tags, [ 'baz', 'qux' ], 'Tags are added to the list' );
 } );

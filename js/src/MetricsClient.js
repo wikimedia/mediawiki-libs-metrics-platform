@@ -514,6 +514,20 @@ MetricsClient.prototype.isStreamInSample = function ( streamName ) {
 
 /**
  * @param {string} streamName
+ * @param {string} tag
+ */
+MetricsClient.prototype.addTag = function ( streamName, tag ) {
+	if ( !this.streamNameToTagsMap[ streamName ] ) {
+		this.streamNameToTagsMap[ streamName ] = new Set( [ tag ] );
+
+		return;
+	}
+
+	this.streamNameToTagsMap[ streamName ].add( tag );
+};
+
+/**
+ * @param {string} streamName
  * @param {string[]|string} tags
  */
 MetricsClient.prototype.addTags = function ( streamName, tags ) {
@@ -521,27 +535,29 @@ MetricsClient.prototype.addTags = function ( streamName, tags ) {
 		tags = [ tags ];
 	}
 
-	if ( !this.streamNameToTagsMap[ streamName ] ) {
-		this.streamNameToTagsMap[ streamName ] = new Set( tags );
-
-		return;
+	for ( let i = 0; i < tags.length; ++i ) {
+		this.addTag( streamName, tags[ i ] );
 	}
-
-	const entry = this.streamNameToTagsMap[ streamName ];
-
-	tags.forEach( function ( tag ) {
-		entry.add( tag );
-	} );
 };
 
 /**
  * @param {string} streamName
- * @param {string[]|string} tags
+ * @param {string} tag
  * @param {boolean} condition
  */
-MetricsClient.prototype.addTagsIf = function ( streamName, tags, condition ) {
+MetricsClient.prototype.addTagIf = function ( streamName, tag, condition ) {
 	if ( condition ) {
-		this.addTags( streamName, tags );
+		this.addTag( streamName, tag );
+	}
+};
+
+/**
+ * @param {string} streamName
+ * @param {Record<string, boolean>} conditionalTags
+ */
+MetricsClient.prototype.addTagsIf = function ( streamName, conditionalTags ) {
+	for ( const tag in conditionalTags ) {
+		this.addTagIf( streamName, tag, conditionalTags[ tag ] );
 	}
 };
 
