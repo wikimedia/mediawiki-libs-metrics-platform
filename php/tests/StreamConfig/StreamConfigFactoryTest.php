@@ -75,11 +75,11 @@ class StreamConfigFactoryTest extends TestCase {
 			],
 		] );
 
-		$this->assertEquals( [ 'test.stream2' ], $factory->getStreamNamesForEvent( 'foo' ) );
-		$this->assertEquals( [ 'test.stream2', 'test.stream3' ], $factory->getStreamNamesForEvent( 'bar' ) );
-		$this->assertEquals( [], $factory->getStreamNamesForEvent( 'baz' ) );
+		$this->assertSame( [ 'test.stream2' ], $factory->getStreamNamesForEvent( 'foo' ) );
+		$this->assertSame( [ 'test.stream2', 'test.stream3' ], $factory->getStreamNamesForEvent( 'bar' ) );
+		$this->assertSame( [], $factory->getStreamNamesForEvent( 'baz' ) );
 
-		$this->assertEquals(
+		$this->assertSame(
 			[ 'test.stream2', 'test.stream3' ],
 			$factory->getStreamNamesForEvent( 'barBaz' )
 		);

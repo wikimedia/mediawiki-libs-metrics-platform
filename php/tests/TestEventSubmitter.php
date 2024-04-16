@@ -7,7 +7,7 @@ use Wikimedia\MetricsPlatform\EventSubmitter;
 class TestEventSubmitter implements EventSubmitter {
 
 	/** @var array */
-	private $submissions;
+	private $submissions = [];
 
 	/** @inheritDoc */
 	public function submit( string $streamName, array $event ): void {

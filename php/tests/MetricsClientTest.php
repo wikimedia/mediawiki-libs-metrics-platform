@@ -8,8 +8,6 @@ require_once __DIR__ . '/TestEventSubmitter.php';
 use PHPUnit\Framework\TestCase;
 use Wikimedia\MetricsPlatform\MetricsClient;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
-use Wikimedia\TestingAccessWrapper;
-use Wikimedia\Timestamp\ConvertibleTimestamp;
 
 /**
  * @covers \Wikimedia\MetricsPlatform\MetricsClient
@@ -32,34 +30,11 @@ class MetricsClientTest extends TestCase {
 	/** @var array */
 	private $streamConfigs = [
 		'test.event' => [],
-		'test.event.legacy' => [],
-		'test.event.mpc1' => [
-			'producers' => [
-				'metrics_platform_client' => [
-					'events' => [
-						'foo',
-						'bar',
-					],
-				],
-			],
-		],
-		'test.event.mpc2' => [
-			'producers' => [
-				'metrics_platform_client' => [
-					'events' => [
-						'bar',
-					],
-				],
-			],
-		],
 		'test.metrics_platform.interactions' => [
 			'schema_title' => 'analytics/product_metrics/web/base',
 			'destination_event_service' => 'eventgate-analytics-external',
 			'producers' => [
 				'metrics_platform_client' => [
-					'events' => [
-						'test.',
-					],
 					'provide_values' => [
 						'mediawiki_skin',
 					],
@@ -94,17 +69,11 @@ class MetricsClientTest extends TestCase {
 
 		$submission = $this->eventSubmitter->getSubmissions()[0];
 
-		$this->assertEquals(
+		$this->assertSame(
 			[ $streamName, $event ],
 			$submission,
 			'#submit() should proxy to EventSubmitter#submit()'
 		);
-	}
-
-	private function assertIsValidTimestamp( string $timestamp ) {
-		$ts = TestingAccessWrapper::newFromClass( ConvertibleTimestamp::class );
-		$this->assertMatchesRegularExpression( $ts->regexes['TS_ISO_8601'], $timestamp );
-		$this->assertStringEndsWith( 'Z', $timestamp );
 	}
 
 	public function testSubmitInteraction(): void {
@@ -116,14 +85,41 @@ class MetricsClientTest extends TestCase {
 			$eventName,
 			$this->getTestInteractionData()
 		);
-		$submission = $this->eventSubmitter->getSubmissions()[0];
-		$event = $this->getTestInteractionEvent( $eventName );
+		list( $actualStreamName, $actualEvent ) = $this->eventSubmitter->getSubmissions()[0];
+		$expectedEvent = $this->getTestInteractionEvent( $eventName );
 
-		$this->assertEquals(
-			$this->getFormattedTestInteractionEvent( $event, $submission ),
-			$submission,
+		$this->assertSame( $this->testStreamName, $actualStreamName );
+		$this->assertEventSame(
+			$expectedEvent,
+			$actualEvent,
+			true,
 			'#submitInteraction() submits event correctly.'
 		);
+	}
+
+	public function testSubmitInteractionWithUndefinedStream(): void {
+		$this->client->submitInteraction(
+			'undefined_stream',
+			MetricsClient::BASE_SCHEMA,
+			'test_action',
+			[]
+		);
+
+		$this->assertSame( [], $this->eventSubmitter->getSubmissions() );
+	}
+
+	public function testSubmitInteractionAddsRequestedValues(): void {
+		$this->client->submitInteraction(
+			'test.metrics_platform.interactions',
+			MetricsClient::BASE_SCHEMA,
+			'test_action',
+			[]
+		);
+
+		list( , $event ) = $this->eventSubmitter->getSubmissions()[0];
+
+		$this->assertArrayHasKey( 'agent', $event );
+		$this->assertArrayHasKey( 'mediawiki', $event );
 	}
 
 	public function testSubmitClick(): void {
@@ -131,13 +127,39 @@ class MetricsClientTest extends TestCase {
 			$this->testStreamName,
 			$this->getTestInteractionData()
 		);
-		$submission = $this->eventSubmitter->getSubmissions()[0];
-		$event = $this->getTestInteractionEvent( 'click' );
+		list( $actualStreamName, $actualEvent ) = $this->eventSubmitter->getSubmissions()[0];
+		$expectedEvent = $this->getTestInteractionEvent( 'click' );
 
-		$this->assertEquals(
-			$this->getFormattedTestInteractionEvent( $event, $submission ),
-			$submission,
+		$this->assertSame( $this->testStreamName, $actualStreamName );
+		$this->assertEventSame(
+			$expectedEvent,
+			$actualEvent,
+			true,
 			'#submitClick() submits event correctly.'
 		);
+	}
+
+	private function assertEventSame(
+		array $expectedEvent,
+		array $actualEvent,
+		bool $ignoreContextAttributes = false,
+		string $message = ''
+	): void {
+		$keys = [ 'dt' ];
+
+		if ( $ignoreContextAttributes ) {
+			$keys = array_merge( $keys, [
+				'agent',
+				'page',
+				'mediawiki',
+				'performer',
+			] );
+		}
+
+		foreach ( $keys as $key ) {
+			unset( $expectedEvent[$key], $actualEvent[$key] );
+		}
+
+		$this->assertEquals( $expectedEvent, $actualEvent, $message );
 	}
 }

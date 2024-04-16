@@ -38,14 +38,4 @@ trait TestHelperTrait {
 			'funnel_event_sequence_position' => 108
 		];
 	}
-
-	/**
-	 * @param array $event
-	 * @param array $submission
-	 */
-	private function getFormattedTestInteractionEvent( array $event, array $submission ): array {
-		// Set timestamps equal for assertion.
-		$event['dt'] = $submission[1]['dt'];
-		return [ $this->testStreamName, $event ];
-	}
 }
