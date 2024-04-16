@@ -6,6 +6,7 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigException;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
 use Wikimedia\Timestamp\ConvertibleTimestamp;
 
@@ -96,6 +97,15 @@ class MetricsClient implements LoggerAwareInterface {
 		$event = $this->createEvent( $action, $schemaId );
 		$formattedInteractionData = $this->getInteractionData( $action, $interactionData );
 		$eventData = array_merge( $event, $formattedInteractionData );
+
+		try {
+			$streamConfig = $this->streamConfigFactory->getStreamConfig( $streamName );
+
+			$eventData = $this->contextController->addRequestedValues( $eventData, $streamConfig );
+		} catch ( StreamConfigException $e ) {
+			return;
+		}
+
 		$this->eventSubmitter->submit( $streamName, $eventData );
 	}
 
