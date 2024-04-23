@@ -30,11 +30,10 @@
 
 const MetricsClient = require( './../../src/ExternalMetricsClient' );
 const Integration = require( './NodeIntegration' );
+const DefaultEventSubmitter = require( './../../src/DefaultEventSubmitter' );
 
-const integration = new Integration(
-	'http://localhost:8080',
-	'http://localhost:8192'
-);
+const integration = new Integration( 'http://localhost:8080' );
+const eventSubmitter = new DefaultEventSubmitter( 'http://localhost:8192' );
 
 integration.setContextAttributes( {
 	mediawiki: {
@@ -42,7 +41,7 @@ integration.setContextAttributes( {
 	}
 } );
 
-const metricsClient = new MetricsClient( integration );
+const metricsClient = new MetricsClient( integration, eventSubmitter );
 
 metricsClient.dispatch( 'test.init' );
 metricsClient.dispatch( 'test.click', {
