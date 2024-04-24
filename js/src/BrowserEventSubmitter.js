@@ -1,5 +1,7 @@
 const DefaultEventSubmitter = require( './DefaultEventSubmitter.js' );
 
+const DELAYED_SUBMIT_TIMEOUT = 5; // (s)
+
 /**
  * @param {string} [eventGateOrigin] The origin of the EventGate event intake service to send
  *  events to. `https://intake-analytics.wikimedia.org` by default
@@ -28,6 +30,9 @@ function BrowserEventSubmitter( eventGateOrigin ) {
 			eventSubmitter.doSubmitEvents();
 		}
 	} );
+
+	/** @type {?ReturnType<typeof setTimeout>} */
+	this.delayedSubmitTimeoutID = null;
 }
 
 /**
@@ -41,6 +46,8 @@ BrowserEventSubmitter.prototype.submitEvent = function ( eventData ) {
 
 	if ( this.isDocumentUnloading ) {
 		this.doSubmitEvents();
+	} else {
+		this.doDelayedSubmit();
 	}
 
 	// @ts-ignore TS2551
@@ -48,20 +55,42 @@ BrowserEventSubmitter.prototype.submitEvent = function ( eventData ) {
 };
 
 /**
- * Submits all queued events to the event ingestion service.
+ * Submits all queued events to the event ingestion service immediately and clears the queue.
+ *
+ * @ignore
  */
 BrowserEventSubmitter.prototype.doSubmitEvents = function () {
 	if ( this.events ) {
+		navigator.sendBeacon(
+			// @ts-ignore TS2339
+			this.eventGateUrl,
+			JSON.stringify( this.events )
+		);
+	}
+
+	this.events = [];
+	this.delayedSubmitTimeoutID = null;
+};
+
+/**
+ * Schedules a call to {@link BrowserEventSubmitter#doSubmitEvents} in 5 seconds, if a call is not
+ * already scheduled.
+ *
+ * @ignore
+ */
+BrowserEventSubmitter.prototype.doDelayedSubmit = function () {
+	if ( this.delayedSubmitTimeoutID ) {
 		return;
 	}
 
-	navigator.sendBeacon(
-		// @ts-ignore TS2339
-		this.eventGateUrl,
-		JSON.stringify( this.events )
-	);
+	const eventSubmitter = this;
 
-	this.events = [];
+	this.delayedSubmitTimeoutID = setTimeout(
+		function () {
+			eventSubmitter.doSubmitEvents();
+		},
+		DELAYED_SUBMIT_TIMEOUT * 1000
+	);
 };
 
 module.exports = BrowserEventSubmitter;
