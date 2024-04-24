@@ -8,6 +8,8 @@ require_once __DIR__ . '/TestEventSubmitter.php';
 use PHPUnit\Framework\TestCase;
 use Wikimedia\MetricsPlatform\MetricsClient;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
+use Wikimedia\TestingAccessWrapper;
+use Wikimedia\Timestamp\ConvertibleTimestamp;
 
 /**
  * @covers \Wikimedia\MetricsPlatform\MetricsClient
@@ -76,6 +78,12 @@ class MetricsClientTest extends TestCase {
 		);
 	}
 
+	private function assertIsValidTimestamp( string $timestamp ) {
+		$ts = TestingAccessWrapper::newFromClass( ConvertibleTimestamp::class );
+		$this->assertMatchesRegularExpression( $ts->regexes['TS_ISO_8601'], $timestamp );
+		$this->assertStringEndsWith( 'Z', $timestamp );
+	}
+
 	public function testSubmitInteraction(): void {
 		$eventName = 'test_action';
 
@@ -95,6 +103,26 @@ class MetricsClientTest extends TestCase {
 			true,
 			'#submitInteraction() submits event correctly.'
 		);
+	}
+
+	public function testSubmitInteractionCannotOverrideSchemaDt(): void {
+		$eventName = 'test_action';
+
+		$this->client->submitInteraction(
+			$this->testStreamName,
+			MetricsClient::BASE_SCHEMA,
+			$eventName,
+			[
+				'$schema' => 'foo',
+				'dt' => 'bar',
+			]
+		);
+		list( , $actualEvent ) = $this->eventSubmitter->getSubmissions()[0];
+
+		$this->assertSame( MetricsClient::BASE_SCHEMA, $actualEvent['$schema'] );
+
+		$this->assertNotSame( 'bar', $actualEvent['dt'] );
+		$this->assertIsValidTimestamp( $actualEvent['dt'] );
 	}
 
 	public function testSubmitInteractionWithUndefinedStream(): void {
