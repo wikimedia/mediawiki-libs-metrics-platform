@@ -3,7 +3,6 @@
 namespace Wikimedia\MetricsPlatform\Tests\Consistency;
 
 use PHPUnit\Framework\TestCase;
-use Swaggest\JsonDiff\JsonDiff;
 use Symfony\Component\Process\Process;
 
 class ConsistencyTest extends TestCase {
