@@ -15,9 +15,9 @@ class ConsistencyTestIntegration implements Integration {
 		$this->data = json_decode( $rawContents, true );
 	}
 
-    public function getContextAttribute( string $name ) {
-        list( $primaryKey, $secondaryKey ) = explode( '_', $name, 2 );
+	public function getContextAttribute( string $name ) {
+		list( $primaryKey, $secondaryKey ) = explode( '_', $name, 2 );
 
-        return $this->data[$primaryKey][$secondaryKey] ?? null;
-    }
+		return $this->data[$primaryKey][$secondaryKey] ?? null;
+	}
 }
