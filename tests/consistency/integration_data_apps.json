@@ -3,7 +3,8 @@
 	"agent": {
 		"app_install_id": "ffffffff-ffff-ffff-ffff-ffffffffffff",
 		"client_platform": "android",
-		"client_platform_family": "app"
+		"client_platform_family": "app",
+		"device_family": "samsung"
 	},
 	"page": {
 		"id": 30715282,

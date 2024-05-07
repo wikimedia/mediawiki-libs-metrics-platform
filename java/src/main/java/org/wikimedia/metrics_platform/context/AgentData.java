@@ -29,6 +29,7 @@ public class AgentData {
     @SerializedName("app_version_name") private final String appVersionName;
     @SerializedName("client_platform") private final String clientPlatform;
     @SerializedName("client_platform_family") private final String clientPlatformFamily;
+    @SerializedName("device_family") private final String deviceFamily;
     @SerializedName("device_language") private final String deviceLanguage;
     @SerializedName("release_status") private final String releaseStatus;
 

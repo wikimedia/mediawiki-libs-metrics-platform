@@ -18,6 +18,7 @@ public class AgentDataTest {
                 .appVersionName("2.7.50470-dev-2024-02-14")
                 .clientPlatform("android")
                 .clientPlatformFamily("app")
+                .deviceFamily("Samsung SM-G960F")
                 .deviceLanguage("en")
                 .releaseStatus("beta")
                 .build();
@@ -29,6 +30,7 @@ public class AgentDataTest {
         assertThat(agentData.getAppVersionName()).isEqualTo("2.7.50470-dev-2024-02-14");
         assertThat(agentData.getClientPlatform()).isEqualTo("android");
         assertThat(agentData.getClientPlatformFamily()).isEqualTo("app");
+        assertThat(agentData.getDeviceFamily()).isEqualTo("Samsung SM-G960F");
         assertThat(agentData.getDeviceLanguage()).isEqualTo("en");
         assertThat(agentData.getReleaseStatus()).isEqualTo("beta");
 
@@ -42,6 +44,7 @@ public class AgentDataTest {
                 "\"app_version_name\":\"2.7.50470-dev-2024-02-14\"," +
                 "\"client_platform\":\"android\"," +
                 "\"client_platform_family\":\"app\"," +
+                "\"device_family\":\"Samsung SM-G960F\"," +
                 "\"device_language\":\"en\"," +
                 "\"release_status\":\"beta\"" +
                 "}");

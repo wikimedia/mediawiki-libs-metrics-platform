@@ -15,6 +15,7 @@
 		"app_version_name": "2.7.50470-dev-2024-02-14",
 		"client_platform": "android",
 		"client_platform_family": "app",
+		"device_family": "samsung",
 		"device_language": "en",
 		"release_status": "dev"
 	},

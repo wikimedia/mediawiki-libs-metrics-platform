@@ -7,6 +7,7 @@ import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_FLAV
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_THEME;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_VERSION;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_APP_VERSION_NAME;
+import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_DEVICE_FAMILY;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_DEVICE_LANGUAGE;
 import static org.wikimedia.metrics_platform.context.ContextValue.AGENT_RELEASE_STATUS;
 import static org.wikimedia.metrics_platform.context.ContextValue.MEDIAWIKI_DATABASE;
@@ -59,6 +60,7 @@ public class ContextController {
             "agent_app_version_name",
             "agent_client_platform",
             "agent_client_platform_family",
+            "agent_device_family",
             "agent_device_language",
             "agent_release_status"
     );
@@ -112,6 +114,9 @@ public class ContextController {
                     break;
                 case AGENT_APP_VERSION_NAME:
                     agentBuilder.appVersionName(agentData.getAppVersionName());
+                    break;
+                case AGENT_DEVICE_FAMILY:
+                    agentBuilder.deviceFamily(agentData.getDeviceFamily());
                     break;
                 case AGENT_DEVICE_LANGUAGE:
                     agentBuilder.deviceLanguage(agentData.getDeviceLanguage());
