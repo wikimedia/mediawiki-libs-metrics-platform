@@ -16,6 +16,7 @@
 						"agent_app_install_id",
 						"agent_client_platform",
 						"agent_client_platform_family",
+						"agent_device_family",
 
 						"page_id",
 						"page_title",

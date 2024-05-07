@@ -11,6 +11,7 @@ public final class ContextValue {
     public static final String AGENT_APP_THEME = "agent_app_theme";
     public static final String AGENT_APP_VERSION = "agent_app_version";
     public static final String AGENT_APP_VERSION_NAME = "agent_app_version_name";
+    public static final String AGENT_DEVICE_FAMILY = "agent_device_family";
     public static final String AGENT_DEVICE_LANGUAGE = "agent_device_language";
     public static final String AGENT_RELEASE_STATUS = "agent_release_status";
 

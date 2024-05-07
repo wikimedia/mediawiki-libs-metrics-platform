@@ -39,6 +39,7 @@ public class ConsistencyITClientData extends ClientData {
                 .appInstallId(this.agentJson.get("app_install_id").getAsString())
                 .clientPlatform(this.agentJson.get("client_platform").getAsString())
                 .clientPlatformFamily(this.agentJson.get("client_platform_family").getAsString())
+                .deviceFamily(this.agentJson.get("device_family").getAsString())
                 .build();
 
         PageData pageData = PageData.builder()

@@ -38,6 +38,7 @@ class ContextControllerTest {
         assertThat(agentData.getAppVersionName()).isEqualTo("2.7.50470-dev-2024-02-14");
         assertThat(agentData.getClientPlatform()).isEqualTo("android");
         assertThat(agentData.getClientPlatformFamily()).isEqualTo("app");
+        assertThat(agentData.getDeviceFamily()).isEqualTo("Samsung SM-G960F");
         assertThat(agentData.getDeviceLanguage()).isEqualTo("en");
         assertThat(agentData.getReleaseStatus()).isEqualTo("dev");
 

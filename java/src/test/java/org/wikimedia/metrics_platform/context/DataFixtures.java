@@ -68,6 +68,7 @@ public final class DataFixtures {
                 .appVersion(982734)
                 .appVersionName("2.7.50470-dev-2024-02-14")
                 .appTheme("LIGHT")
+                .deviceFamily("Samsung SM-G960F")
                 .deviceLanguage("en")
                 .releaseStatus("dev")
                 .build();
