@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.wikimedia.metrics_platform.MetricsClient.METRICS_PLATFORM_SCHEMA_BASE;
 import static org.wikimedia.metrics_platform.config.StreamConfigFixtures.streamConfig;
+import static org.wikimedia.metrics_platform.context.DataFixtures.getTestClientData;
 import static org.wikimedia.metrics_platform.context.DataFixtures.getTestCustomData;
 import static org.wikimedia.metrics_platform.curation.CurationFilterFixtures.curationFilter;
 import static org.wikimedia.metrics_platform.event.EventProcessed.fromEvent;
@@ -26,6 +27,7 @@ import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.context.DataFixtures;
 import org.wikimedia.metrics_platform.context.InteractionData;
 import org.wikimedia.metrics_platform.context.PageData;
+import org.wikimedia.metrics_platform.context.PerformerData;
 import org.wikimedia.metrics_platform.event.Event;
 import org.wikimedia.metrics_platform.event.EventProcessed;
 
@@ -240,6 +242,23 @@ class MetricsClientTest {
 
         assertThat(queuedEvent.getTimestamp()).isNotNull();
         verify(mockSessionController).getSessionId();
+    }
+
+    @Test void testPerformerDataLanguageGroups() {
+        Event event = new Event("test/event/1.0.0", "test_event", "testEvent");
+        ClientData clientData = getTestClientData();
+        PerformerData performerData = event.getClientData().getPerformerData();
+        clientData.setPerformerData(PerformerData.builderFrom(performerData)
+                .languageGroups("[zh-hant, zh-hans, ja, en, zh-yue, ko, fr, de, it, es, pt, da, tr, ru, nl, sv, cs, " +
+                        "fi, uk, el, pl, hu, vi, id, ca, mk, sl, ms, tl, avk, lt, sr-el, eu, nb, ceb, als, uz-latn, " +
+                        "az, af, nn, et, eo, la, br, jv, io, bg, ro, nrm, pcd, tg-latn, lmo, gl, cy, sq, is, ha, gd, " +
+                        "ku-latn, hr, lv, sk, bar, pms, lld, ga, war]")
+                .build());
+        event.setClientData(clientData);
+
+        client.submit(event);
+        EventProcessed queuedEvent = eventQueue.remove();
+        assertThat(queuedEvent.getPerformerData().getLanguageGroups().length()).isEqualTo(255);
     }
 
     private void fillEventQueue() {

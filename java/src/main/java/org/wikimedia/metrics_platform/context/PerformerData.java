@@ -50,4 +50,18 @@ public class PerformerData {
                 .languagePrimary(performerData.getLanguagePrimary())
                 .registrationDt(performerData.getRegistrationDt());
     }
+
+    public static class PerformerDataBuilder {
+        public PerformerDataBuilder languageGroups(String languageGroups) {
+
+            // Ensure that a performer's language groups do not exceed 255 characters. See T361265.
+            if (languageGroups != null && languageGroups.length() > 255) {
+                languageGroups = languageGroups.substring(0, 255);
+            }
+
+            this.languageGroups = languageGroups;
+
+            return this;
+        }
+    }
 }
