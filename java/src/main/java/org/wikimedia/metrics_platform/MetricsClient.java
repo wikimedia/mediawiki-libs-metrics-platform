@@ -175,27 +175,23 @@ public final class MetricsClient {
             Map<String, Object> customData,
             InteractionData interactionData
     ) {
-        SourceConfig sourceConfig = this.sourceConfig.get();
-        if (sourceConfig == null) {
-            log.log(Level.FINE, "Configuration not loaded yet, the submitMetricsEvent event is ignored and dropped.");
-            return;
-        }
-
         if (streamName == null) {
             log.log(Level.FINE, "No stream has been specified, the submitMetricsEvent event is ignored and dropped.");
             return;
         }
 
-        StreamConfig streamConfig = this.sourceConfig.get().getStreamConfigByName(streamName);
-
-        if (streamConfig == null) {
-            log.log(Level.FINE, "No stream config exists for this stream, the submitMetricsEvent event is ignored and dropped.");
-            return;
-        }
-
-        if (!this.samplingController.isInSample(streamConfig)) {
-            log.log(Level.FINE, "Not in sample, the submitMetricsEvent event is ignored and dropped.");
-            return;
+        // If we already have stream configs, then we can pre-validate certain conditions and exclude the event from the queue entirely.
+        StreamConfig streamConfig = null;
+        if (sourceConfig.get() != null) {
+            streamConfig = sourceConfig.get().getStreamConfigByName(streamName);
+            if (streamConfig == null) {
+                log.log(Level.FINE, "No stream config exists for this stream, the submitMetricsEvent event is ignored and dropped.");
+                return;
+            }
+            if (!samplingController.isInSample(streamConfig)) {
+                log.log(Level.FINE, "Not in sample, the submitMetricsEvent event is ignored and dropped.");
+                return;
+            }
         }
 
         Event event = new Event(schemaId, streamName, eventName);
@@ -207,7 +203,7 @@ public final class MetricsClient {
 
         event.setInteractionData(interactionData);
 
-        if (streamConfig.hasSampleConfig()) {
+        if (streamConfig != null && streamConfig.hasSampleConfig()) {
             event.setSample(streamConfig.getSampleConfig());
         }
 
@@ -457,6 +453,7 @@ public final class MetricsClient {
                     new ContextController(),
                     curationController,
                     sourceConfigRef,
+                    samplingController,
                     eventSender,
                     eventQueue,
                     isDebug
