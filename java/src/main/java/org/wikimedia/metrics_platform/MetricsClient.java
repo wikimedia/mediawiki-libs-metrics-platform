@@ -8,7 +8,6 @@ import static java.util.logging.Level.WARNING;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.ANALYTICS_API_ENDPOINT;
 import static org.wikimedia.metrics_platform.event.EventProcessed.fromEvent;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.ZoneId;
@@ -439,6 +438,22 @@ public final class MetricsClient {
         private Duration sendEventsInterval = Duration.ofSeconds(30);
         private boolean isDebug;
 
+        private Runnable configFetchRunnable = new Runnable() {
+            @SuppressWarnings("checkstyle:IllegalCatch")
+            public void run() {
+                long nextFetchMillis = streamConfigFetchInterval.toMillis();
+                try {
+                    StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(streamConfigURL);
+                    sourceConfigRef.set(streamConfigFetcher.fetchStreamConfigs());
+                } catch (Exception e) {
+                    log.log(WARNING, "Could not fetch configuration. Will retry sooner.", e);
+                    nextFetchMillis = Duration.ofMinutes(1).toMillis();
+                } finally {
+                    EXECUTOR_SERVICE.schedule(this, nextFetchMillis, MILLISECONDS);
+                }
+            }
+        };
+
         public Builder(ClientData clientData) {
             this.clientData = clientData;
         }
@@ -470,23 +485,13 @@ public final class MetricsClient {
                     eventProcessor
             );
 
-            StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(streamConfigURL);
-
-            startScheduledOperations(eventProcessor, streamConfigFetcher);
+            startScheduledOperations(eventProcessor);
 
             return metricsClient;
         }
 
-        private void startScheduledOperations(EventProcessor eventProcessor, StreamConfigFetcher streamConfigFetcher) {
-            EXECUTOR_SERVICE.scheduleAtFixedRate(
-                    () -> {
-                        try {
-                            sourceConfigRef.set(streamConfigFetcher.fetchStreamConfigs());
-                        } catch (IOException e) {
-                            log.log(WARNING, "Could not fetch configuration.", e);
-                        }
-                    },
-                    streamConfigFetchInitialDelay.toMillis(), streamConfigFetchInterval.toMillis(), MILLISECONDS);
+        private void startScheduledOperations(EventProcessor eventProcessor) {
+            EXECUTOR_SERVICE.schedule(configFetchRunnable, streamConfigFetchInitialDelay.toMillis(), MILLISECONDS);
 
             EXECUTOR_SERVICE.scheduleAtFixedRate(
                     eventProcessor::sendEnqueuedEvents,
