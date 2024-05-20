@@ -47,9 +47,11 @@ class ConsistencyIT {
             sourceConfigRef.set(sourceConfig);
             BlockingQueue<EventProcessed> eventQueue = new LinkedBlockingQueue<>(10);
             ClientData consistencyTestClientData = createConsistencyTestClientData();
+            SamplingController samplingController = new SamplingController(consistencyTestClientData, new SessionController());
 
             EventProcessor consistencyTestEventProcessor = getTestEventProcessor(
                     sourceConfigRef,
+                    samplingController,
                     eventQueue
             );
 
@@ -99,6 +101,7 @@ class ConsistencyIT {
 
     private static EventProcessor getTestEventProcessor(
             AtomicReference<SourceConfig> sourceConfigRef,
+            SamplingController samplingController,
             BlockingQueue<EventProcessed> eventQueue
     ) {
         ContextController contextController = new ContextController();
@@ -108,6 +111,7 @@ class ConsistencyIT {
                 contextController,
                 curationController,
                 sourceConfigRef,
+                samplingController,
                 eventSender,
                 eventQueue,
                 true

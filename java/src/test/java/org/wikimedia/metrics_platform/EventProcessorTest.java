@@ -27,6 +27,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.SourceConfigFixtures;
 import org.wikimedia.metrics_platform.config.StreamConfig;
+import org.wikimedia.metrics_platform.context.ClientData;
 import org.wikimedia.metrics_platform.event.EventProcessed;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,6 +36,8 @@ class EventProcessorTest {
     @Mock private CurationController mockCurationController;
     private final AtomicReference<SourceConfig> sourceConfig = new AtomicReference<>();
     private final BlockingQueue<EventProcessed> eventQueue = new LinkedBlockingQueue<>(10);
+    private final ClientData consistencyTestClientData = ConsistencyITClientData.createConsistencyTestClientData();
+    private final SamplingController samplingController = new SamplingController(consistencyTestClientData, new SessionController());
     private EventProcessor eventProcessor;
 
     @BeforeEach void clearEventQueue() {
@@ -48,6 +51,7 @@ class EventProcessorTest {
                 new ContextController(),
                 mockCurationController,
                 sourceConfig,
+                samplingController,
                 mockEventSender,
                 eventQueue,
                 false

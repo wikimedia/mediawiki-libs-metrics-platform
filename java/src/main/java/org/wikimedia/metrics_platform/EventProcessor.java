@@ -31,6 +31,7 @@ public class EventProcessor {
     private final CurationController curationController;
 
     private final AtomicReference<SourceConfig> sourceConfig;
+    private final SamplingController samplingController;
     private final BlockingQueue<EventProcessed> eventQueue;
     private final EventSender eventSender;
     private final boolean isDebug;
@@ -42,6 +43,7 @@ public class EventProcessor {
             ContextController contextController,
             CurationController curationController,
             AtomicReference<SourceConfig> sourceConfig,
+            SamplingController samplingController,
             EventSender eventSender,
             BlockingQueue<EventProcessed> eventQueue,
             boolean isDebug
@@ -49,6 +51,7 @@ public class EventProcessor {
         this.contextController = contextController;
         this.curationController = curationController;
         this.sourceConfig = sourceConfig;
+        this.samplingController = samplingController;
         this.eventSender = eventSender;
         this.eventQueue = eventQueue;
         this.isDebug = isDebug;
@@ -76,6 +79,14 @@ public class EventProcessor {
         Map<String, StreamConfig> streamConfigsMap = config.getStreamConfigsMap();
 
         pending.stream()
+                .filter(event -> streamConfigsMap.containsKey(event.getStream()))
+                .filter(event -> {
+                    StreamConfig cfg = streamConfigsMap.get(event.getStream());
+                    if (cfg.hasSampleConfig()) {
+                        event.setSample(cfg.getSampleConfig());
+                    }
+                    return samplingController.isInSample(cfg);
+                })
                 .filter(event -> eventPassesCurationRules(event, streamConfigsMap))
                 .collect(groupingBy(event -> destinationEventService(event, streamConfigsMap), toList()))
                 .forEach(this::sendEventsToDestination);
