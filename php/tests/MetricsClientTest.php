@@ -93,7 +93,7 @@ class MetricsClientTest extends TestCase {
 			$eventName,
 			$this->getTestInteractionData()
 		);
-		list( $actualStreamName, $actualEvent ) = $this->eventSubmitter->getSubmissions()[0];
+		[ $actualStreamName, $actualEvent ] = $this->eventSubmitter->getSubmissions()[0];
 		$expectedEvent = $this->getTestInteractionEvent( $eventName );
 
 		$this->assertSame( $this->testStreamName, $actualStreamName );
@@ -117,7 +117,7 @@ class MetricsClientTest extends TestCase {
 				'dt' => 'bar',
 			]
 		);
-		list( , $actualEvent ) = $this->eventSubmitter->getSubmissions()[0];
+		[ , $actualEvent ] = $this->eventSubmitter->getSubmissions()[0];
 
 		$this->assertSame( MetricsClient::BASE_SCHEMA, $actualEvent['$schema'] );
 
@@ -144,7 +144,7 @@ class MetricsClientTest extends TestCase {
 			[]
 		);
 
-		list( , $event ) = $this->eventSubmitter->getSubmissions()[0];
+		[ , $event ] = $this->eventSubmitter->getSubmissions()[0];
 
 		$this->assertArrayHasKey( 'agent', $event );
 		$this->assertArrayHasKey( 'mediawiki', $event );
@@ -155,7 +155,7 @@ class MetricsClientTest extends TestCase {
 			$this->testStreamName,
 			$this->getTestInteractionData()
 		);
-		list( $actualStreamName, $actualEvent ) = $this->eventSubmitter->getSubmissions()[0];
+		[ $actualStreamName, $actualEvent ] = $this->eventSubmitter->getSubmissions()[0];
 		$expectedEvent = $this->getTestInteractionEvent( 'click' );
 
 		$this->assertSame( $this->testStreamName, $actualStreamName );
