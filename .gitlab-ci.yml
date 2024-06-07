@@ -5,15 +5,14 @@ include:
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-    
+
 stages:
 - test
 
 test-java:
   extends: .kokkuri:build-and-run-image
   rules:
-  - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
-    changes:
+    - changes:
       - .mvn/**/*
       - java/**/*
       - mvnw
@@ -26,8 +25,7 @@ test-java:
 test-js:
   extends: .kokkuri:build-and-run-image
   rules:
-  - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
-    changes:
+    - changes:
       - js/**/*
   stage: test
   variables:
@@ -37,8 +35,7 @@ test-js:
 test-php:
   extends: .kokkuri:build-and-run-image
   rules:
-  - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
-    changes:
+    - changes:
       - .phan/**/*
       - php/**/*
       - tests/consistency/*.php
@@ -54,8 +51,7 @@ test-php:
 test-swift:
   extends: .kokkuri:build-and-run-image
   rules:
-  - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
-    changes:
+    - changes:
       - swift/**/*
   stage: test
   variables:
