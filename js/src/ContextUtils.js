@@ -90,9 +90,7 @@ function copyAttributeByName( from, to, name ) {
  * @param {ContextAttributes} to
  */
 function copyAttributes( from, to ) {
-	VALID_ATTRIBUTE_NAMES.forEach( function ( name ) {
-		copyAttributeByName( from, to, name );
-	} );
+	VALID_ATTRIBUTE_NAMES.forEach( ( name ) => copyAttributeByName( from, to, name ) );
 }
 
 module.exports = {
