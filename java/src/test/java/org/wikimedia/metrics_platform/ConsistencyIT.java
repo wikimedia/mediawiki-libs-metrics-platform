@@ -32,6 +32,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import okhttp3.OkHttpClient;
+
 class ConsistencyIT {
     private JsonObject expectedEvent;
 
@@ -119,9 +121,8 @@ class ConsistencyIT {
     }
 
     private static Map<String, StreamConfig> getTestStreamConfigs(Reader reader) throws MalformedURLException {
-        StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT));
+        StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT), new OkHttpClient());
         return streamConfigFetcher.parseConfig(reader);
-
     }
 
     private static void removeExtraProperties(JsonObject eventJsonObject) {

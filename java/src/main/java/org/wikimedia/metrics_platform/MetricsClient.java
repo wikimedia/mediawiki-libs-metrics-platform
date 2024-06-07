@@ -35,11 +35,13 @@ import org.wikimedia.metrics_platform.context.InteractionData;
 import org.wikimedia.metrics_platform.context.PerformerData;
 import org.wikimedia.metrics_platform.event.Event;
 import org.wikimedia.metrics_platform.event.EventProcessed;
+import org.wikimedia.metrics_platform.json.GsonHelper;
 
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.experimental.Accessors;
 import lombok.extern.java.Log;
+import okhttp3.OkHttpClient;
 
 @Log
 public final class MetricsClient {
@@ -67,6 +69,7 @@ public final class MetricsClient {
 
     private final BlockingQueue<EventProcessed> eventQueue;
     private final EventProcessor eventProcessor;
+    private final OkHttpClient httpClient;
 
     /**
      * MetricsClient constructor.
@@ -76,13 +79,15 @@ public final class MetricsClient {
             SamplingController samplingController,
             AtomicReference<SourceConfig> sourceConfig,
             BlockingQueue<EventProcessed> eventQueue,
-            EventProcessor eventProcessor
+            EventProcessor eventProcessor,
+            OkHttpClient httpClient
     ) {
         this.sessionController = sessionController;
         this.samplingController = samplingController;
         this.sourceConfig = sourceConfig;
         this.eventQueue = eventQueue;
         this.eventProcessor = eventProcessor;
+        this.httpClient = httpClient;
     }
 
     /**
@@ -426,7 +431,8 @@ public final class MetricsClient {
 
         @Nullable
         private SamplingController samplingController;
-        private EventSender eventSender = new EventSenderDefault();
+
+        private OkHttpClient httpClient = new OkHttpClient();
         private URL streamConfigURL = safeURL(ANALYTICS_API_ENDPOINT);
         private Duration streamConfigFetchInitialDelay = Duration.ofSeconds(0);
         private Duration streamConfigFetchInterval = Duration.ofSeconds(30);
@@ -439,7 +445,7 @@ public final class MetricsClient {
             public void run() {
                 long nextFetchMillis = streamConfigFetchInterval.toMillis();
                 try {
-                    StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(streamConfigURL);
+                    StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(streamConfigURL, httpClient);
                     sourceConfigRef.set(streamConfigFetcher.fetchStreamConfigs());
                 } catch (Exception e) {
                     log.log(WARNING, "Could not fetch configuration. Will retry sooner.", e);
@@ -469,7 +475,7 @@ public final class MetricsClient {
                     curationController,
                     sourceConfigRef,
                     samplingController,
-                    eventSender,
+                    new EventSenderDefault(GsonHelper.getGson(), httpClient),
                     eventQueue,
                     isDebug
             );
@@ -479,7 +485,8 @@ public final class MetricsClient {
                     samplingController,
                     sourceConfigRef,
                     eventQueue,
-                    eventProcessor
+                    eventProcessor,
+                    httpClient
             );
 
             startScheduledOperations(eventProcessor);

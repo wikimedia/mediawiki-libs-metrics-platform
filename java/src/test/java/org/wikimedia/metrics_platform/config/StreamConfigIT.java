@@ -14,6 +14,8 @@ import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.google.common.io.Resources;
 
+import okhttp3.OkHttpClient;
+
 @WireMockTest
 class StreamConfigIT {
 
@@ -24,7 +26,7 @@ class StreamConfigIT {
                 )
         );
 
-        StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(wmRuntimeInfo.getHttpBaseUrl() + "/streamConfig"));
+        StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(wmRuntimeInfo.getHttpBaseUrl() + "/streamConfig"), new OkHttpClient());
 
         SourceConfig sourceConfig = streamConfigFetcher.fetchStreamConfigs();
 

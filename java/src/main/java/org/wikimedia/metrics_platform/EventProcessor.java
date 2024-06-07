@@ -3,7 +3,8 @@ package org.wikimedia.metrics_platform;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
-import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -111,8 +112,8 @@ public class EventProcessor {
     ) {
         try {
             eventSender.sendEvents(destinationEventService.getBaseUri(isDebug), pendingValidEvents);
-        } catch (IOException e) {
-            log.log(Level.WARNING, "Failed to send " + pendingValidEvents.size() + " events. Adding back to queue.", e);
+        } catch (UnknownHostException | SocketTimeoutException e) {
+            log.log(Level.WARNING, "Network error while sending " + pendingValidEvents.size() + " events. Adding back to queue.", e);
             eventQueue.addAll(pendingValidEvents);
         } catch (Exception e) {
             log.log(Level.WARNING, "Failed to send " + pendingValidEvents.size() + " events.", e);
