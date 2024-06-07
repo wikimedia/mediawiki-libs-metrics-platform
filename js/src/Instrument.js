@@ -8,7 +8,7 @@ const MetricsClient = require( './MetricsClient.js' );
  * @param {boolean} [init=false]
  * @constructor
  */
-function Submitter( metricsClient, streamName, schemaID, init ) {
+function Instrument( metricsClient, streamName, schemaID, init ) {
 	this.metricsClient = metricsClient;
 	this.streamName = streamName;
 	this.schemaID = schemaID;
@@ -22,7 +22,7 @@ function Submitter( metricsClient, streamName, schemaID, init ) {
 /**
  * @return {boolean}
  */
-Submitter.prototype.isStreamInSample = function () {
+Instrument.prototype.isStreamInSample = function () {
 	return this.metricsClient.isStreamInSample( this.streamName );
 };
 
@@ -30,7 +30,7 @@ Submitter.prototype.isStreamInSample = function () {
  * @param {string} action
  * @param {InteractionContextData} [interactionData]
  */
-Submitter.prototype.submitInteraction = function ( action, interactionData ) {
+Instrument.prototype.submitInteraction = function ( action, interactionData ) {
 	interactionData = Object.assign(
 		{},
 		interactionData || {},
@@ -51,7 +51,7 @@ Submitter.prototype.submitInteraction = function ( action, interactionData ) {
 /**
  * @param {ElementInteractionData} interactionData
  */
-Submitter.prototype.submitClick = function ( interactionData ) {
+Instrument.prototype.submitClick = function ( interactionData ) {
 
 	// eslint-disable-next-line camelcase
 	interactionData.funnel_event_sequence_position = this.eventSequencePosition++;
@@ -59,4 +59,4 @@ Submitter.prototype.submitClick = function ( interactionData ) {
 	this.metricsClient.submitClick( this.streamName, interactionData );
 };
 
-module.exports = Submitter;
+module.exports = Instrument;
