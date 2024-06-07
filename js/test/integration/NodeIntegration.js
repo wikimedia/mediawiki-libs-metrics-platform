@@ -6,7 +6,6 @@ var NodeIntegration = require( './../../src/DefaultIntegration' );
  * @param {EventData} eventData
  */
 NodeIntegration.prototype.enqueueEvent = function ( eventData ) {
-	// eslint-disable-next-line no-undef
 	fetch( this.eventGateUrl, {
 		method: 'POST',
 		body: JSON.stringify( eventData )
