@@ -1,11 +1,14 @@
-/* eslint-disable camelcase */
-var sinon = require( 'sinon' );
+'use strict';
 
-var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
-var MetricsClient = require( './../../src/MetricsClient.js' );
+/* eslint-disable camelcase */
+
+const sinon = require( 'sinon' );
+
+const TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
+const MetricsClient = require( './../../src/MetricsClient.js' );
 
 /** @type StreamConfigs */
-var streamConfigs = {
+const streamConfigs = {
 	'metrics.platform.test': {
 		schema_title: 'metrics/platform/test',
 		producers: {
@@ -54,14 +57,14 @@ var streamConfigs = {
 };
 
 /** @type EventData */
-var modernEvent = {
+let modernEvent = {
 	$schema: '/test/event/1.0.0',
 	volcano: 'Nyiragongo',
 	Explosivity: 1
 };
 
 /** @type EventData */
-var legacyEvent = {
+let legacyEvent = {
 	$schema: '/test/event/1.0.0',
 	volcano: 'Nyiragongo',
 	Explosivity: 1,
@@ -69,13 +72,13 @@ var legacyEvent = {
 	dt: '2021-05-12T00:00:00.000Z'
 };
 
-var integration = new TestMetricsClientIntegration();
-var metricsClient = new MetricsClient( integration, streamConfigs );
+const integration = new TestMetricsClientIntegration();
+const metricsClient = new MetricsClient( integration, streamConfigs );
 
-var sandbox = sinon.createSandbox();
-var enqueueEventStub = sandbox.stub( integration, 'enqueueEvent' );
-var logWarningStub = sandbox.stub( integration, 'logWarning' );
-var onSubmitStub = sandbox.stub( integration, 'onSubmit' );
+const sandbox = sinon.createSandbox();
+const enqueueEventStub = sandbox.stub( integration, 'enqueueEvent' );
+const logWarningStub = sandbox.stub( integration, 'logWarning' );
+const onSubmitStub = sandbox.stub( integration, 'onSubmit' );
 
 QUnit.module( 'MetricsClient', {
 	beforeEach: function () {
@@ -83,7 +86,7 @@ QUnit.module( 'MetricsClient', {
 	}
 } );
 
-QUnit.test( 'submit() - warn/do not produce for event without $schema', function ( assert ) {
+QUnit.test( 'submit() - warn/do not produce for event without $schema', ( assert ) => {
 	// @ts-ignore TS2345
 	metricsClient.submit( 'metrics.platform.test', {} );
 
@@ -92,7 +95,7 @@ QUnit.test( 'submit() - warn/do not produce for event without $schema', function
 	assert.strictEqual( onSubmitStub.callCount, 0, 'onSubmit() should not be called' );
 } );
 
-QUnit.test( 'submit() - produce an event correctly', function ( assert ) {
+QUnit.test( 'submit() - produce an event correctly', ( assert ) => {
 	metricsClient.submit( 'metrics.platform.test', { $schema: 'metrics/platform/test' } );
 
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
@@ -100,8 +103,8 @@ QUnit.test( 'submit() - produce an event correctly', function ( assert ) {
 	assert.strictEqual( onSubmitStub.callCount, 1, 'onSubmit() should be called' );
 } );
 
-QUnit.test( 'streamConfig() - disallow modification', function ( assert ) {
-	var streamConfig = metricsClient.getStreamConfig( 'metrics.platform.test' ) || {};
+QUnit.test( 'streamConfig() - disallow modification', ( assert ) => {
+	let streamConfig = metricsClient.getStreamConfig( 'metrics.platform.test' ) || {};
 	streamConfig.schema_title = 'fake/title';
 
 	streamConfig = metricsClient.getStreamConfig( 'metrics.platform.test' ) || {};
@@ -109,8 +112,8 @@ QUnit.test( 'streamConfig() - disallow modification', function ( assert ) {
 	assert.strictEqual( streamConfig.schema_title, 'metrics/platform/test' );
 } );
 
-QUnit.test( 'addRequiredMetadata() - modern event', function ( assert ) {
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
+QUnit.test( 'addRequiredMetadata() - modern event', ( assert ) => {
+	const hasOwnProperty = Object.prototype.hasOwnProperty;
 
 	modernEvent = metricsClient.addRequiredMetadata( modernEvent, 'metrics.platform.test' );
 	assert.true( hasOwnProperty.call( modernEvent, 'dt' ), 'dt should be set' );
@@ -120,8 +123,8 @@ QUnit.test( 'addRequiredMetadata() - modern event', function ( assert ) {
 	} );
 } );
 
-QUnit.test( 'addRequiredMetadata() - legacy event', function ( assert ) {
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
+QUnit.test( 'addRequiredMetadata() - legacy event', ( assert ) => {
+	const hasOwnProperty = Object.prototype.hasOwnProperty;
 
 	legacyEvent = metricsClient.addRequiredMetadata( legacyEvent, 'metrics.platform.test' );
 	assert.true( hasOwnProperty.call( legacyEvent, 'client_dt' ), 'client_dt should be set' );
@@ -132,9 +135,9 @@ QUnit.test( 'addRequiredMetadata() - legacy event', function ( assert ) {
 	} );
 } );
 
-QUnit.test( 'getStreamNamesForEvent() ', function ( assert ) {
+QUnit.test( 'getStreamNamesForEvent() ', ( assert ) => {
 	/** @type {[string, string[], string][]} */
-	var cases = [
+	const cases = [
 		[
 			'widgetClick', // eventName
 			[ 'metrics.platform.test2', 'metrics.platform.test3' ], // expected
@@ -158,7 +161,7 @@ QUnit.test( 'getStreamNamesForEvent() ', function ( assert ) {
 			'Zero streams can be interested in an event'
 		]
 	];
-	cases.forEach( function ( [ eventName, expected, message ] ) {
+	cases.forEach( ( [ eventName, expected, message ] ) => {
 		assert.deepEqual(
 			metricsClient.getStreamNamesForEvent( eventName ),
 			expected,
@@ -167,7 +170,7 @@ QUnit.test( 'getStreamNamesForEvent() ', function ( assert ) {
 	} );
 } );
 
-QUnit.test( 'getStreamNamesForEvent() - prefix matching', function ( assert ) {
+QUnit.test( 'getStreamNamesForEvent() - prefix matching', ( assert ) => {
 	assert.deepEqual(
 		metricsClient.getStreamNamesForEvent( 'widgetClickFoo' ),
 		[
@@ -181,9 +184,9 @@ QUnit.test( 'getStreamNamesForEvent() - prefix matching', function ( assert ) {
 	);
 } );
 
-QUnit.test( 'getStreamNamesForEvent() - streamConfigs is falsy', function ( assert ) {
+QUnit.test( 'getStreamNamesForEvent() - streamConfigs is falsy', ( assert ) => {
 	// eslint-disable-next-line no-shadow
-	var metricsClient = new MetricsClient( integration, false );
+	const metricsClient = new MetricsClient( integration, false );
 
 	assert.deepEqual( metricsClient.getStreamNamesForEvent( 'foo' ), [] );
 	assert.strictEqual(
@@ -193,14 +196,14 @@ QUnit.test( 'getStreamNamesForEvent() - streamConfigs is falsy', function ( asse
 	);
 } );
 
-QUnit.test( 'dispatch() - produce events correctly', function ( assert ) {
+QUnit.test( 'dispatch() - produce events correctly', ( assert ) => {
 	metricsClient.dispatch( 'widgetClick' );
 
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
 	assert.strictEqual( enqueueEventStub.callCount, 2, 'enqueueEvent() should be called' );
 
-	var event1 = enqueueEventStub.args[ 0 ][ 0 ];
-	var event2 = enqueueEventStub.args[ 1 ][ 0 ];
+	const event1 = enqueueEventStub.args[ 0 ][ 0 ];
+	const event2 = enqueueEventStub.args[ 1 ][ 0 ];
 
 	// Test that the first event was constructed and produced correctly
 	assert.strictEqual( event1.$schema, MetricsClient.SCHEMA );
@@ -226,7 +229,7 @@ QUnit.test( 'dispatch() - produce events correctly', function ( assert ) {
 	);
 } );
 
-QUnit.test( 'dispatch() - constructs the bespoke_data property', function ( assert ) {
+QUnit.test( 'dispatch() - constructs the bespoke_data property', ( assert ) => {
 	metricsClient.dispatch( 'otherWidgetClick', {
 		widget_id: 1234,
 		widget_color: 'blue',
@@ -237,7 +240,7 @@ QUnit.test( 'dispatch() - constructs the bespoke_data property', function ( asse
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
 	assert.strictEqual( enqueueEventStub.callCount, 1, 'enqueueEvent() should be called' );
 
-	var customData = enqueueEventStub.args[ 0 ][ 0 ].custom_data;
+	const customData = enqueueEventStub.args[ 0 ][ 0 ].custom_data;
 
 	assert.deepEqual(
 		customData,
@@ -262,7 +265,7 @@ QUnit.test( 'dispatch() - constructs the bespoke_data property', function ( asse
 	);
 } );
 
-QUnit.test( 'dispatch() - warn/do not produce event when bespokeData properties are not snake_case', function ( assert ) {
+QUnit.test( 'dispatch() - warn/do not produce event when bespokeData properties are not snake_case', ( assert ) => {
 	metricsClient.dispatch( 'otherWidgetClick', {
 		widgetId: 1234
 	} );
@@ -271,9 +274,9 @@ QUnit.test( 'dispatch() - warn/do not produce event when bespokeData properties 
 	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
 } );
 
-QUnit.test( 'dispatch() - warn/do not produce event when streamConfigs is false', function ( assert ) {
+QUnit.test( 'dispatch() - warn/do not produce event when streamConfigs is false', ( assert ) => {
 	// eslint-disable-next-line no-shadow
-	var metricsClient = new MetricsClient( integration, false );
+	const metricsClient = new MetricsClient( integration, false );
 
 	metricsClient.dispatch( 'otherWidgetClick' );
 
@@ -281,7 +284,7 @@ QUnit.test( 'dispatch() - warn/do not produce event when streamConfigs is false'
 	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
 } );
 
-QUnit.test( 'submitInteraction() - warn/do not produce for interactionData without action', function ( assert ) {
+QUnit.test( 'submitInteraction() - warn/do not produce for interactionData without action', ( assert ) => {
 	// @ts-ignore TS2345
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
@@ -293,7 +296,7 @@ QUnit.test( 'submitInteraction() - warn/do not produce for interactionData witho
 	assert.strictEqual( onSubmitStub.callCount, 0, 'onSubmit() should not be called' );
 } );
 
-QUnit.test( 'submitInteraction() - produce event correctly', function ( assert ) {
+QUnit.test( 'submitInteraction() - produce event correctly', ( assert ) => {
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
 		'/analytics/product_metrics/web/base/1.0.0',
@@ -304,7 +307,7 @@ QUnit.test( 'submitInteraction() - produce event correctly', function ( assert )
 	assert.strictEqual( enqueueEventStub.callCount, 1, 'enqueueEvent() should be called' );
 	assert.strictEqual( onSubmitStub.callCount, 1, 'onSubmit() should be called' );
 
-	var event = enqueueEventStub.args[ 0 ][ 0 ];
+	const event = enqueueEventStub.args[ 0 ][ 0 ];
 
 	// @ts-ignore TS2345
 	assert.strictEqual( event.meta.stream, 'metrics.platform.test6' );
@@ -312,7 +315,7 @@ QUnit.test( 'submitInteraction() - produce event correctly', function ( assert )
 	assert.strictEqual( event.action, 'foo' );
 } );
 
-QUnit.test( 'submitInteraction() - disallow $schema overriding', function ( assert ) {
+QUnit.test( 'submitInteraction() - disallow $schema overriding', ( assert ) => {
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
 		'/analytics/product_metrics/web/base/1.0.0',
@@ -323,7 +326,7 @@ QUnit.test( 'submitInteraction() - disallow $schema overriding', function ( asse
 		}
 	);
 
-	var event = enqueueEventStub.args[ 0 ][ 0 ];
+	const event = enqueueEventStub.args[ 0 ][ 0 ];
 
 	assert.strictEqual( event.$schema, '/analytics/product_metrics/web/base/1.0.0' );
 } );

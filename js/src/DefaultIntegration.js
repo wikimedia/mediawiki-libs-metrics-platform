@@ -21,7 +21,7 @@ function getStreamConfigsUrl( origin ) {
 
 		// Querystring parameters specific to the EventStreamConfigs MediaWiki extension:
 		[ 'constraints', 'destination_event_service=eventgate-analytics-external' ]
-	].forEach( function ( part ) {
+	].forEach( ( part ) => {
 		result.searchParams.set( part[ 0 ], part[ 1 ] );
 	} );
 
@@ -65,12 +65,8 @@ function DefaultIntegration( streamConfigsOrigin, eventGateOrigin ) {
  */
 DefaultIntegration.prototype.fetchStreamConfigs = function () {
 	return fetch( this.streamConfigsUrl )
-		.then( function ( response ) {
-			return response.json();
-		} )
-		.then( function ( json ) {
-			return json.streams;
-		} );
+		.then( ( response ) => response.json() )
+		.then( ( json ) => json.streams );
 };
 
 /**

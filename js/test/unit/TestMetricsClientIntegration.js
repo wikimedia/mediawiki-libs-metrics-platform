@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @constructor
  */
@@ -7,8 +9,8 @@ function TestMetricsClientIntegration() {
 }
 
 TestMetricsClientIntegration.prototype.generateRandomId = function () {
-	var rnds = new Array( 5 );
-	for ( var i = 0; i < 5; i++ ) {
+	const rnds = new Array( 5 );
+	for ( let i = 0; i < 5; i++ ) {
 		rnds[ i ] = Math.floor( Math.random() * 0x10000 );
 	}
 	return ( rnds[ 0 ] + 0x10000 ).toString( 16 ).slice( 1 ) +

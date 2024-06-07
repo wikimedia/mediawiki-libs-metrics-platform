@@ -37,7 +37,7 @@ ExternalMetricsClient.prototype.fetchStreamConfigs = function () {
 	const that = this;
 
 	that.integration.fetchStreamConfigs()
-		.then( function ( /** @type {StreamConfigs} */ streamConfigs ) {
+		.then( ( /** @type {StreamConfigs} */ streamConfigs ) => {
 			that.streamConfigs = streamConfigs;
 			that.eventNameToStreamNamesMap = null;
 			that.state = STATE_FETCHED_STREAM_CONFIGS;

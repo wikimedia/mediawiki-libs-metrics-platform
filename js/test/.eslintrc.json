@@ -5,10 +5,8 @@
 		"wikimedia/server"
 	],
 	"rules": {
-		"no-var": "off",
-		"jsdoc/no-undefined-types": "off",
-		"jsdoc/valid-types": "off",
 		"no-implicit-globals": "off",
-		"strict": "off"
+		"jsdoc/no-undefined-types": "off",
+		"jsdoc/valid-types": "off"
 	}
 }

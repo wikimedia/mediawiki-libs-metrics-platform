@@ -1,10 +1,13 @@
+'use strict';
+
 /* eslint-disable camelcase */
-var curationController = new ( require( './../../src/CurationController.js' ) )();
 
-QUnit.module( 'CurationController', function () {
+const curationController = new ( require( './../../src/CurationController.js' ) )();
 
-	QUnit.module( 'applyRules()', function () {
-		QUnit.test( 'equals', function ( assert ) {
+QUnit.module( 'CurationController', () => {
+
+	QUnit.module( 'applyRules()', () => {
+		QUnit.test( 'equals', ( assert ) => {
 			assert.true( curationController.applyRules( 1, { equals: 1 } ) );
 			assert.true( curationController.applyRules( 'a', { equals: 'a' } ) );
 			assert.false( curationController.applyRules( 1, { equals: 0 } ) );
@@ -12,29 +15,29 @@ QUnit.module( 'CurationController', function () {
 			assert.false( curationController.applyRules( '0', { equals: 0 } ) );
 			assert.false( curationController.applyRules( 0, { equals: undefined } ) );
 		} );
-		QUnit.test( 'greaterThan', function ( assert ) {
+		QUnit.test( 'greaterThan', ( assert ) => {
 			assert.true( curationController.applyRules( 1, { greater_than: 0 } ) );
 			assert.true( curationController.applyRules( 1.2, { greater_than: 1.1 } ) );
 			assert.false( curationController.applyRules( 1.1, { greater_than: 1.1 } ) );
 			assert.false( curationController.applyRules( 0, { greater_than: 1 } ) );
 			assert.false( curationController.applyRules( 0, { greater_than: 0 } ) );
 		} );
-		QUnit.test( 'lessThan', function ( assert ) {
+		QUnit.test( 'lessThan', ( assert ) => {
 			assert.true( curationController.applyRules( 0, { less_than: 1 } ) );
 			assert.true( curationController.applyRules( 1.1, { less_than: 1.2 } ) );
 			assert.false( curationController.applyRules( 1.1, { less_than: 1.1 } ) );
 			assert.false( curationController.applyRules( 1, { less_than: 0 } ) );
 			assert.false( curationController.applyRules( 0, { less_than: 0 } ) );
 		} );
-		QUnit.test( 'in', function ( assert ) {
+		QUnit.test( 'in', ( assert ) => {
 			assert.true( curationController.applyRules( 1, { in: [ 1 ] } ) );
 			assert.false( curationController.applyRules( 1, { in: [ 0 ] } ) );
 		} );
-		QUnit.test( 'contains', function ( assert ) {
+		QUnit.test( 'contains', ( assert ) => {
 			assert.true( curationController.applyRules( [ 1 ], { contains: 1 } ) );
 			assert.false( curationController.applyRules( [ 1 ], { contains: 0 } ) );
 		} );
-		QUnit.test( 'containsAll', function ( assert ) {
+		QUnit.test( 'containsAll', ( assert ) => {
 			assert.true(
 				curationController.applyRules( [ 0, 1 ], { contains_all: [ 0, 1 ] } )
 			);
@@ -43,7 +46,7 @@ QUnit.module( 'CurationController', function () {
 			);
 			assert.false( curationController.applyRules( [], { contains_all: [ 1 ] } ) );
 		} );
-		QUnit.test( 'containsAny', function ( assert ) {
+		QUnit.test( 'containsAny', ( assert ) => {
 			assert.true(
 				curationController.applyRules(
 					[ 0, 1 ],
@@ -59,11 +62,11 @@ QUnit.module( 'CurationController', function () {
 		} );
 	} );
 
-	QUnit.test( 'shouldProduceEvent()', function ( assert ) {
-		var event;
+	QUnit.test( 'shouldProduceEvent()', ( assert ) => {
+		let event;
 
 		/** @type StreamConfig */
-		var streamConfig = {
+		const streamConfig = {
 			producers: {
 				metrics_platform_client: {
 					curation: {

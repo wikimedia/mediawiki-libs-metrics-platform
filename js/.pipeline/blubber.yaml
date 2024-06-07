@@ -1,8 +1,8 @@
 version: v4
-base: docker-registry.wikimedia.org/nodejs12-devel:0.0.1
+base: docker-registry.wikimedia.org/nodejs18-devel:0.0.1
 variants:
   test:
-    base: docker-registry.wikimedia.org/nodejs12-devel:0.0.1
+    base: docker-registry.wikimedia.org/nodejs18-devel:0.0.1
     runs:
       insecurely: true
     copies: [local]
