@@ -1,9 +1,6 @@
 package org.wikimedia.metrics_platform.config;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.util.Map;
@@ -11,7 +8,10 @@ import java.util.stream.Collectors;
 
 import org.wikimedia.metrics_platform.json.GsonHelper;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class StreamConfigFetcher {
     public static final String ANALYTICS_API_ENDPOINT = "https://meta.wikimedia.org/w/api.php?" +
@@ -21,21 +21,24 @@ public class StreamConfigFetcher {
     public static final String METRICS_PLATFORM_SCHEMA_TITLE = "analytics/mediawiki/client/metrics_event";
 
     private final URL url;
+    private final OkHttpClient httpClient;
 
-    public StreamConfigFetcher(URL url) {
+    public StreamConfigFetcher(URL url, OkHttpClient httpClient) {
         this.url = url;
+        this.httpClient = httpClient;
     }
 
     /**
      * Fetch stream configs from analytics endpoint.
      */
-    @SuppressFBWarnings(
-            value = "URLCONNECTION_SSRF_FD",
-            justification = "Current implementation always uses ANALYTICS_API_ENDPOINT (see above) as a URL outside of unit tests.")
     public SourceConfig fetchStreamConfigs() throws IOException {
-        try (InputStreamReader inputStreamReader = new InputStreamReader(url.openStream(), UTF_8)) {
-            return new SourceConfig(parseConfig(inputStreamReader));
+        Request request = new Request.Builder().url(url).build();
+        Response response = httpClient.newCall(request).execute();
+        ResponseBody body = response.body();
+        if (body == null) {
+            throw new IOException("Failed to fetch stream configs: " + response.message());
         }
+        return new SourceConfig(parseConfig(body.charStream()));
     }
 
     // Visible For Testing

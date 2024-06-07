@@ -13,6 +13,7 @@ import static org.wikimedia.metrics_platform.event.EventFixtures.minimalEventPro
 
 import java.io.IOException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -87,7 +88,7 @@ class EventProcessorTest {
 
     @Test void eventsRemainInOutputBufferOnFailure() throws IOException {
         whenEventsArePassingCurationFilter();
-        doThrow(IOException.class).when(mockEventSender).sendEvents(any(URL.class), anyCollection());
+        doThrow(UnknownHostException.class).when(mockEventSender).sendEvents(any(URL.class), anyCollection());
 
         eventQueue.offer(minimalEventProcessed());
         eventProcessor.sendEnqueuedEvents();

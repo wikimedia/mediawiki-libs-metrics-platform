@@ -14,11 +14,13 @@ import org.junit.jupiter.api.Test;
 
 import com.google.common.io.Resources;
 
+import okhttp3.OkHttpClient;
+
 class StreamConfigFetcherTest {
 
     @Test void parsingConfigFromJsonWorks() throws IOException {
         try (Reader in = readConfigFile("streamconfigs.json")) {
-            StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT));
+            StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT), new OkHttpClient());
             Map<String, StreamConfig> config = streamConfigFetcher.parseConfig(in);
             assertThat(config).containsKey("mediawiki.visual_editor_feature_use");
             StreamConfig streamConfig = config.get("mediawiki.visual_editor_feature_use");
@@ -30,7 +32,7 @@ class StreamConfigFetcherTest {
 
     @Test void parsingLocalConfigFromJsonWorks() throws IOException {
         try (Reader in = readConfigFile("streamconfigs-local.json")) {
-            StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT));
+            StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT), new OkHttpClient());
             Map<String, StreamConfig> config = streamConfigFetcher.parseConfig(in);
             assertThat(config).containsKey("mediawiki.visual_editor_feature_use");
             StreamConfig streamConfig = config.get("mediawiki.edit_attempt");
