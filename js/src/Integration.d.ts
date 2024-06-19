@@ -9,16 +9,6 @@ interface Integration {
 	fetchStreamConfigs: () => Promise<StreamConfigs>;
 
 	/**
-	 * Enqueues the event to be submitted to the event ingestion service.
-	 */
-	enqueueEvent: ( eventData: EventData ) => void;
-
-	/**
-	 * Called when an event is enqueued to be submitted to the event ingestion service.
-	 */
-	onSubmit: ( streamName: string, eventData: EventData ) => void;
-
-	/**
 	 * Gets the hostname of the current document.
 	 */
 	getHostname: () => string;

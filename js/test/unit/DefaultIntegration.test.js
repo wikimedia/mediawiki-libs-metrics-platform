@@ -19,22 +19,6 @@ QUnit.test( 'constructor() - sets streamConfigsUrl', function ( assert ) {
 	);
 } );
 
-QUnit.test( 'constructor() - sets eventGateUrl', function ( assert ) {
-	var integration = new DefaultIntegration();
-
-	assert.strictEqual(
-		integration.eventGateUrl,
-		'https://intake-analytics.wikimedia.org/v1/events?hasty=true'
-	);
-
-	integration = new DefaultIntegration( undefined, 'http://default_integration.new/foo/bar' );
-
-	assert.strictEqual(
-		integration.eventGateUrl,
-		'http://default_integration.new/v1/events?hasty=true'
-	);
-} );
-
 QUnit.test( 'getContextAttributes()/setContextAttributes()', function ( assert ) {
 	/* eslint-disable camelcase */
 	var integration = new DefaultIntegration();
