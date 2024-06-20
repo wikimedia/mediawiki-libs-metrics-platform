@@ -33,6 +33,7 @@ var streamConfig = {
 				'performer_id',
 				'performer_name',
 				'performer_session_id',
+				'performer_active_browsing_session_token',
 				'performer_pageview_id',
 				'performer_groups',
 				'performer_is_bot',
