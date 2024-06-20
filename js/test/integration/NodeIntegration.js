@@ -1,12 +1,17 @@
-var crypto = require( 'crypto' );
+'use strict';
 
-var NodeIntegration = require( './../../src/DefaultIntegration' );
+const crypto = require( 'crypto' );
+
+const NodeIntegration = require( './../../src/DefaultIntegration' );
 
 /**
  * @param {EventData} eventData
  */
 NodeIntegration.prototype.enqueueEvent = function ( eventData ) {
-	// eslint-disable-next-line no-undef
+	// The experiment fetch API was available by default in Node >= 18 (see
+	// https://nodejs.org/en/blog/announcements/v18-release-announce#fetch-experimental).
+	//
+	// eslint-disable-next-line n/no-unsupported-features/node-builtins
 	fetch( this.eventGateUrl, {
 		method: 'POST',
 		body: JSON.stringify( eventData )
@@ -29,8 +34,12 @@ NodeIntegration.prototype.getHostname = function () {
  * @return {string}
  */
 function generateRandomId() {
-	var rnds = new Uint16Array( 5 );
+	const rnds = new Uint16Array( 5 );
 
+	// Crypto#getRandomValues() was added in Node v15.0.0 (see
+	// https://nodejs.org/api/webcrypto.html#cryptogetrandomvaluestypedarray).
+	//
+	// eslint-disable-next-line n/no-unsupported-features/node-builtins
 	crypto.webcrypto.getRandomValues( rnds );
 
 	return rnds.map( ( rnd ) => rnd + 0x10000 ).join( '' );

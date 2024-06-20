@@ -1,4 +1,6 @@
-var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' ),
+'use strict';
+
+const TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' ),
 	SamplingController = require( './../../src/SamplingController.js' ),
 
 	integration = new TestMetricsClientIntegration(),
@@ -6,8 +8,8 @@ var TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' 
 
 QUnit.module( 'SamplingController' );
 
-QUnit.test( 'isStreamInSample() - valid and invalid stream configs', function ( assert ) {
-	var conf = {
+QUnit.test( 'isStreamInSample() - valid and invalid stream configs', ( assert ) => {
+	const conf = {
 		emptyConfig: {},
 		nonemptyConfigNoSample: {
 			some: 'value'
@@ -95,56 +97,56 @@ QUnit.test( 'isStreamInSample() - valid and invalid stream configs', function ( 
 		[ conf.missingRateValidUnit, false ],
 		[ conf.missingRateInvalidUnit, false ],
 		[ conf.missingRateMissingUnit, false ]
-	].forEach( function ( value ) {
+	].forEach( ( value ) => {
 		assert.strictEqual( samplingController.isStreamInSample( value[ 0 ] ), value[ 1 ] );
 	} );
 } );
 
-QUnit.test( 'isStreamInSample() - session sampling is deterministic', function ( assert ) {
+QUnit.test( 'isStreamInSample() - session sampling is deterministic', ( assert ) => {
 	/** @type StreamConfig */
-	var conf = {
+	const conf = {
 		sample: {
 			rate: 0.5,
 			unit: 'session'
 		}
 	};
 
-	var x0 = samplingController.isStreamInSample( conf );
+	const x0 = samplingController.isStreamInSample( conf );
 
-	for ( var i = 0; i < 5; i++ ) {
+	for ( let i = 0; i < 5; i++ ) {
 		assert.strictEqual( x0, samplingController.isStreamInSample( conf ) );
 	}
 } );
 
-QUnit.test( 'isStreamInSample() - pageview sampling is deterministic', function ( assert ) {
+QUnit.test( 'isStreamInSample() - pageview sampling is deterministic', ( assert ) => {
 	/** @type StreamConfig */
-	var conf = {
+	const conf = {
 		sample: {
 			rate: 0.5,
 			unit: 'pageview'
 		}
 	};
 
-	var x0 = samplingController.isStreamInSample( conf );
+	const x0 = samplingController.isStreamInSample( conf );
 
-	for ( var i = 0; i < 5; i++ ) {
+	for ( let i = 0; i < 5; i++ ) {
 		assert.strictEqual( x0, samplingController.isStreamInSample( conf ) );
 	}
 } );
 
-QUnit.test( 'probability in sample is a number in [0,1]', function ( assert ) {
-	var UINT32_MAX = 4294967295, // (2^32) - 1
+QUnit.test( 'probability in sample is a number in [0,1]', ( assert ) => {
+	const UINT32_MAX = 4294967295, // (2^32) - 1
 		id = integration.generateRandomId(),
 		probabilityInSample = parseInt( id.slice( 0, 8 ), 16 ) / UINT32_MAX;
 
 	assert.strictEqual( probabilityInSample >= 0 && probabilityInSample <= 1, true );
 } );
 
-QUnit.test( 'a pageview/session/device that is in-sample at 1% is also in-sample at any greater rate', function ( assert ) {
+QUnit.test( 'a pageview/session/device that is in-sample at 1% is also in-sample at any greater rate', ( assert ) => {
 	// A pageviewId value that is in-sample at 1% as a starting point
 	integration.pageviewId = '00000000000000000ddd';
 
-	var pageviewConf = {
+	const pageviewConf = {
 		empty: {},
 		sample1: {
 			sample: {
@@ -200,14 +202,14 @@ QUnit.test( 'a pageview/session/device that is in-sample at 1% is also in-sample
 		[ pageviewConf.sample50, true ],
 		[ pageviewConf.sample75, true ],
 		[ pageviewConf.sample100, true ]
-	].forEach( function ( value ) {
+	].forEach( ( value ) => {
 		assert.strictEqual( samplingController.isStreamInSample( value[ 0 ] ), value[ 1 ] );
 	} );
 
 	// A sessionId value that is in-sample at 1% as a starting point
 	integration.sessionId = '00000000000000000ddd';
 
-	var sessionConf = {
+	const sessionConf = {
 		empty: {},
 		sample1: {
 			sample: {
@@ -263,7 +265,7 @@ QUnit.test( 'a pageview/session/device that is in-sample at 1% is also in-sample
 		[ sessionConf.sample50, true ],
 		[ sessionConf.sample75, true ],
 		[ sessionConf.sample100, true ]
-	].forEach( function ( value ) {
+	].forEach( ( value ) => {
 		assert.strictEqual( samplingController.isStreamInSample( value[ 0 ] ), value[ 1 ] );
 	} );
 } );
