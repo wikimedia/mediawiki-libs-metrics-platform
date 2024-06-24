@@ -80,9 +80,11 @@ interface EventPerformerData {
     id?: number;
     name?: string;
     session_id?: string;
+    active_browsing_session_token?: string;
     pageview_id?: string;
     groups?: string[];
     is_bot?: boolean;
+    is_temp?: boolean;
     language?: string;
     language_variant?: string;
     can_probably_edit_page?: boolean;
