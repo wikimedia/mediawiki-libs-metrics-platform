@@ -32,6 +32,7 @@ const VALID_ATTRIBUTE_NAMES = [
 	'performer_pageview_id',
 	'performer_groups',
 	'performer_is_bot',
+	'performer_is_temp',
 	'performer_language',
 	'performer_language_variant',
 	'performer_can_probably_edit_page',

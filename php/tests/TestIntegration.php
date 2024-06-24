@@ -15,6 +15,7 @@ class TestIntegration implements Integration {
 		'performer_is_logged_in' => true,
 		'performer_id' => 1,
 		'performer_is_bot' => false,
+		'performer_is_temp' => false,
 		'performer_name' => 'TestUser',
 		'performer_groups' => [ '*' ],
 		'performer_can_probably_edit_page' => true,

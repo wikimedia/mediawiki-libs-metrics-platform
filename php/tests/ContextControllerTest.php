@@ -75,6 +75,7 @@ class ContextControllerTest extends TestCase {
 		$this->assertArrayNotHasKey( "pageview_id", $userData );
 		$this->assertSame( [ "*" ], $userData["groups"] );
 		$this->assertSame( false, $userData["is_bot"] );
+		$this->assertSame( false, $userData["is_temp"] );
 		$this->assertSame( "zh", $userData["language"] );
 		$this->assertSame( "zh-tw", $userData["language_variant"] );
 		$this->assertSame( true, $userData["can_probably_edit_page"] );

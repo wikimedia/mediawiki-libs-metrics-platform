@@ -6,6 +6,7 @@
 function TestMetricsClientIntegration() {
 	this.pageviewId = this.generateRandomId();
 	this.sessionId = this.generateRandomId();
+	this.activeBrowsingSessionToken = this.generateRandomId();
 }
 
 TestMetricsClientIntegration.prototype.generateRandomId = function () {
@@ -96,9 +97,11 @@ TestMetricsClientIntegration.prototype.getContextAttributes = function () {
 			id: 1,
 			name: 'TestUser',
 			session_id: this.getSessionId(),
+			active_browsing_session_token: this.getActiveBrowsingSessionToken(),
 			pageview_id: this.getPageviewId(),
 			groups: [ '*' ],
 			is_bot: false,
+			is_temp: false,
 			language: 'en',
 			can_probably_edit_page: true,
 			edit_count: 10,
@@ -117,6 +120,10 @@ TestMetricsClientIntegration.prototype.getPageviewId = function () {
 
 TestMetricsClientIntegration.prototype.getSessionId = function () {
 	return this.sessionId;
+};
+
+TestMetricsClientIntegration.prototype.getActiveBrowsingSessionToken = function () {
+	return this.activeBrowsingSessionToken;
 };
 
 module.exports = TestMetricsClientIntegration;
