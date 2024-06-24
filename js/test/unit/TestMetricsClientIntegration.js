@@ -99,6 +99,7 @@ TestMetricsClientIntegration.prototype.getContextAttributes = function () {
 			pageview_id: this.getPageviewId(),
 			groups: [ '*' ],
 			is_bot: false,
+			is_temp: false,
 			language: 'en',
 			can_probably_edit_page: true,
 			edit_count: 10,
