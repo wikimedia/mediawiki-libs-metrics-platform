@@ -110,6 +110,7 @@ QUnit.test( 'addRequestedValues()', ( assert ) => {
 			id: 1,
 			name: 'TestUser',
 			session_id: integration.getSessionId(),
+			active_browsing_session_token: integration.getActiveBrowsingSessionToken(),
 			pageview_id: integration.getPageviewId(),
 			groups: [ '*' ],
 			is_bot: false,
