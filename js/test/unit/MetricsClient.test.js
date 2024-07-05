@@ -39,10 +39,10 @@ const streamConfigs = {
 		}
 	},
 	'metrics.platform.test4': {
-		schema_title: 'metrics/platform/test4'
+		schema_title: '/metrics/platform/test4'
 	},
 	'metrics.platform.test5': {
-		schema_title: 'metrics/platform/test5',
+		schema_title: '/metrics/platform/test5',
 		producers: {
 			metrics_platform_client: {
 				events: [
@@ -52,7 +52,7 @@ const streamConfigs = {
 		}
 	},
 	'metrics.platform.test6': {
-		schema_title: '/analytics/product_metrics/interaction/common'
+		schema_title: '/metrics/platform/test6'
 	}
 };
 
@@ -81,7 +81,10 @@ const logWarningStub = sandbox.stub( integration, 'logWarning' );
 const onSubmitStub = sandbox.stub( integration, 'onSubmit' );
 
 QUnit.module( 'MetricsClient', {
-	beforeEach: function () {
+	beforeEach: () => {
+		metricsClient = new MetricsClient( integration, streamConfigs );
+	},
+	afterEach: () => {
 		sandbox.reset();
 	}
 } );
@@ -329,4 +332,73 @@ QUnit.test( 'submitInteraction() - disallow $schema overriding', ( assert ) => {
 	const event = enqueueEventStub.args[ 0 ][ 0 ];
 
 	assert.strictEqual( event.$schema, '/analytics/product_metrics/web/base/1.0.0' );
+} );
+
+QUnit.test( 'addTag()', ( assert ) => {
+	[
+		'bar',
+		'bar',
+		'baz',
+		'qux'
+	].forEach(
+		( tag ) => metricsClient.addTag( 'metrics.platform.test6', tag )
+	);
+
+	metricsClient.submitInteraction(
+		'metrics.platform.test6',
+		'metrics/platform/test6/1.0.0',
+		'foo'
+	);
+
+	const event = enqueueEventStub.args[ 0 ][ 0 ];
+
+	assert.deepEqual( event.tags, [ 'bar', 'baz', 'qux' ], 'Unique tags are added to the list' );
+} );
+
+QUnit.test( 'addTags()', ( assert ) => {
+	metricsClient.addTags( 'metrics.platform.test6', 'bar' );
+	metricsClient.addTags( 'metrics.platform.test6', [ 'bar', 'baz', 'qux' ] );
+
+	metricsClient.submitInteraction(
+		'metrics.platform.test6',
+		'metrics/platform/test5/1.0.0',
+		'foo'
+	);
+
+	const event = enqueueEventStub.args[ 0 ][ 0 ];
+
+	assert.deepEqual( event.tags, [ 'bar', 'baz', 'qux' ], 'Unique tags are added to the list' );
+} );
+
+QUnit.test( 'addTagIf()', ( assert ) => {
+	metricsClient.addTagIf( 'metrics.platform.test6', 'bar', false );
+	metricsClient.addTagIf( 'metrics.platform.test6', 'baz', true );
+
+	metricsClient.submitInteraction(
+		'metrics.platform.test6',
+		'/metrics/platform/test6/1.0.0',
+		'foo'
+	);
+
+	const event = enqueueEventStub.args[ 0 ][ 0 ];
+
+	assert.deepEqual( event.tags, [ 'baz' ], 'Tags are added to the list' );
+} );
+
+QUnit.test( 'addTagsIf()', ( assert ) => {
+	metricsClient.addTagsIf( 'metrics.platform.test6', {
+		bar: false,
+		baz: true,
+		qux: true
+	} );
+
+	metricsClient.submitInteraction(
+		'metrics.platform.test6',
+		'/metrics/platform/test6/1.0.0',
+		'foo'
+	);
+
+	const event = enqueueEventStub.args[ 0 ][ 0 ];
+
+	assert.deepEqual( event.tags, [ 'baz', 'qux' ], 'Tags are added to the list' );
 } );
