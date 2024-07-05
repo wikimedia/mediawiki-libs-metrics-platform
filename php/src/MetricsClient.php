@@ -18,7 +18,7 @@ class MetricsClient implements LoggerAwareInterface {
 	 *
 	 * @var string
 	 */
-	public const BASE_SCHEMA = '/analytics/product_metrics/web/base/1.0.0';
+	public const BASE_SCHEMA = '/analytics/product_metrics/web/base/1.2.0';
 
 	/** @var EventSubmitter */
 	private $eventSubmitter;
