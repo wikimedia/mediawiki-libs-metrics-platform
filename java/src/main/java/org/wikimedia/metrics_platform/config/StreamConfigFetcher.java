@@ -4,10 +4,15 @@ import java.io.IOException;
 import java.io.Reader;
 import java.net.URL;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.wikimedia.metrics_platform.json.GsonHelper;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+
+import lombok.Getter;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -22,11 +27,29 @@ public class StreamConfigFetcher {
 
     private final URL url;
     private final OkHttpClient httpClient;
+    @Getter
+    private SourceConfig sourceConfig;
 
     public StreamConfigFetcher(URL url, OkHttpClient httpClient) {
         this.url = url;
         this.httpClient = httpClient;
+        this.sourceConfig = streamConfigCache.getIfPresent("metrics_platform_stream_configs");
     }
+
+    public StreamConfigFetcher(URL url, OkHttpClient httpClient, SourceConfig sourceConfig) {
+        this.url = url;
+        this.httpClient = httpClient;
+        streamConfigCache.put("metrics_platform_stream_configs", sourceConfig);
+        this.sourceConfig = sourceConfig;
+    }
+
+    /**
+     * Initialization of the StreamConfigFetcher cache.
+     */
+    Cache<String, SourceConfig> streamConfigCache = Caffeine.newBuilder()
+            .maximumSize(1)
+            .expireAfterWrite(1, TimeUnit.HOURS)
+            .build();
 
     /**
      * Fetch stream configs from analytics endpoint.
@@ -38,7 +61,9 @@ public class StreamConfigFetcher {
         if (body == null) {
             throw new IOException("Failed to fetch stream configs: " + response.message());
         }
-        return new SourceConfig(parseConfig(body.charStream()));
+        sourceConfig = new SourceConfig(parseConfig(body.charStream()));
+        streamConfigCache.put("metrics_platform_stream_configs", sourceConfig);
+        return sourceConfig;
     }
 
     // Visible For Testing
@@ -46,4 +71,5 @@ public class StreamConfigFetcher {
         return GsonHelper.getGson().fromJson(reader, StreamConfigCollection.class).streamConfigs.entrySet().stream()
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
+
 }
