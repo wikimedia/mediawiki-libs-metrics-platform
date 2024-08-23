@@ -5,20 +5,6 @@ const crypto = require( 'crypto' );
 const NodeIntegration = require( './../../src/DefaultIntegration' );
 
 /**
- * @param {EventData} eventData
- */
-NodeIntegration.prototype.enqueueEvent = function ( eventData ) {
-	// The experiment fetch API was available by default in Node >= 18 (see
-	// https://nodejs.org/en/blog/announcements/v18-release-announce#fetch-experimental).
-	//
-	// eslint-disable-next-line n/no-unsupported-features/node-builtins
-	fetch( this.eventGateUrl, {
-		method: 'POST',
-		body: JSON.stringify( eventData )
-	} );
-};
-
-/**
  * @return {string}
  */
 NodeIntegration.prototype.getHostname = function () {
