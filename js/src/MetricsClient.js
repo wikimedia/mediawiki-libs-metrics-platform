@@ -27,6 +27,9 @@ function MetricsClient(
 	this.streamConfigs = streamConfigs;
 	this.eventSubmitter = eventSubmitter || new DefaultEventSubmitter();
 	this.eventNameToStreamNamesMap = null;
+
+	/** @type Record<string,Set<string>> */
+	this.streamNameToTagsMap = {};
 }
 
 /**
@@ -258,6 +261,13 @@ MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, ev
 	}
 
 	this.addRequiredMetadata( eventData, streamName );
+
+	// Add tags.
+	//
+	// TODO: Should this be extracted to TagController?
+	if ( this.streamNameToTagsMap[ streamName ] ) {
+		eventData.tags = Array.from( this.streamNameToTagsMap[ streamName ] );
+	}
 
 	if ( this.samplingController.isStreamInSample( streamConfig ) ) {
 		this.eventSubmitter.submitEvent( eventData );
@@ -502,6 +512,82 @@ MetricsClient.prototype.isStreamInSample = function ( streamName ) {
 	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
 
 	return streamConfig ? this.samplingController.isStreamInSample( streamConfig ) : false;
+};
+
+/**
+ * Add a tag to all events submitted to the stream.
+ *
+ * If an event has already been submitted to the stream, then the tag is not added to that event.
+ *
+ * @param {string} streamName
+ * @param {string} tag
+ */
+MetricsClient.prototype.addTag = function ( streamName, tag ) {
+	if ( !this.streamNameToTagsMap[ streamName ] ) {
+		this.streamNameToTagsMap[ streamName ] = new Set( [ tag ] );
+
+		return;
+	}
+
+	this.streamNameToTagsMap[ streamName ].add( tag );
+};
+
+/**
+ * Add tags to all events submitted to the stream.
+ *
+ * @see MetricsClient#addTag
+ *
+ * @param {string} streamName
+ * @param {string[]|string} tags
+ */
+MetricsClient.prototype.addTags = function ( streamName, tags ) {
+	if ( !Array.isArray( tags ) ) {
+		tags = [ tags ];
+	}
+
+	for ( let i = 0; i < tags.length; ++i ) {
+		this.addTag( streamName, tags[ i ] );
+	}
+};
+
+/**
+ * Tags all events submitted to the stream if the condition is met.
+ *
+ * @see MetricsClient#addTag
+ *
+ * @param {string} streamName
+ * @param {string} tag
+ * @param {boolean} condition
+ */
+MetricsClient.prototype.addTagIf = function ( streamName, tag, condition ) {
+	if ( condition ) {
+		this.addTag( streamName, tag );
+	}
+};
+
+/**
+ * Adds all tags submitted to the stream if the conditions are met.
+ *
+ * @see MetricsClient#addTagIf
+ *
+ * @param {string} streamName
+ * @param {Record<string, boolean>} conditionalTags
+ *
+ * @example
+ * const m = createMetricsClient();
+ *
+ * m.addTagsIf(
+ *   'my_example_stream',
+ *   {
+ *     foo: fooCondition,
+ *     bar: barCondition
+ *   }
+ * );
+ */
+MetricsClient.prototype.addTagsIf = function ( streamName, conditionalTags ) {
+	for ( const tag in conditionalTags ) {
+		this.addTagIf( streamName, tag, conditionalTags[ tag ] );
+	}
 };
 
 module.exports = MetricsClient;
