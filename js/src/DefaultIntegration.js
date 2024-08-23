@@ -3,7 +3,6 @@
 const copyAttributes = require( './ContextUtils.js' ).copyAttributes;
 
 const DEFAULT_STREAM_CONFIGS_ORIGIN = 'https://meta.wikimedia.org';
-const DEFAULT_EVENTGATE_ORIGIN = 'https://intake-analytics.wikimedia.org';
 
 /**
  * @param {string} origin
@@ -29,30 +28,14 @@ function getStreamConfigsUrl( origin ) {
 }
 
 /**
- * @param {string} origin
- * @return {string}
- */
-function getEventGateUrl( origin ) {
-	const result = new URL( origin );
-
-	result.pathname = '/v1/events';
-	result.searchParams.set( 'hasty', 'true' );
-
-	return result.toString();
-}
-
-/**
  * @constructor
  * @param {string} [streamConfigsOrigin] The origin of the MediaWiki instance to fetch the stream
  *  configs from. `https://meta.mediawiki.org` by default
- * @param {string} [eventGateOrigin] The origin of the EventGate event intake service to send
- *  events to. `https://intake-analytics.wikimedia.org` by default
  */
-function DefaultIntegration( streamConfigsOrigin, eventGateOrigin ) {
+function DefaultIntegration( streamConfigsOrigin ) {
 	this.streamConfigsUrl = getStreamConfigsUrl(
 		streamConfigsOrigin || DEFAULT_STREAM_CONFIGS_ORIGIN
 	);
-	this.eventGateUrl = getEventGateUrl( eventGateOrigin || DEFAULT_EVENTGATE_ORIGIN );
 
 	/** @type {ContextAttributes} */
 	this.contextAttributes = {};
@@ -67,29 +50,6 @@ DefaultIntegration.prototype.fetchStreamConfigs = function () {
 	return fetch( this.streamConfigsUrl )
 		.then( ( response ) => response.json() )
 		.then( ( json ) => json.streams );
-};
-
-/**
- * Enqueues the event to be sent to the event intake service.
- *
- * @param {EventData} eventData
- */
-DefaultIntegration.prototype.enqueueEvent = function ( eventData ) {
-	navigator.sendBeacon(
-		this.eventGateUrl,
-		JSON.stringify( eventData )
-	);
-};
-
-/**
- * Called when an event is enqueued to be submitted to the event ingestion service.
- *
- * @param {string} streamName
- * @param {EventData} eventData
- */
-DefaultIntegration.prototype.onSubmit = function ( streamName, eventData ) {
-	// eslint-disable-next-line no-console
-	console.info( 'Submitted the following event to ' + streamName + ':', eventData );
 };
 
 /**

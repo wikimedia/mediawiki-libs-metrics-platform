@@ -11,10 +11,11 @@ const CALL_QUEUE_MAX_LENGTH = 128;
 
 /**
  * @param {Integration} integration
+ * @param {EventSubmitter} [eventSubmitter]
  * @constructor
  */
-function ExternalMetricsClient( integration ) {
-	MetricsClient.call( this, integration, {} );
+function ExternalMetricsClient( integration, eventSubmitter ) {
+	MetricsClient.call( this, integration, {}, eventSubmitter );
 	this.super = MetricsClient;
 
 	this.state = STATE_FETCHING_STREAM_CONFIGS;

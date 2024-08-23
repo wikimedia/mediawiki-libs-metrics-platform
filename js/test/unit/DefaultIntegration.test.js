@@ -21,22 +21,6 @@ QUnit.test( 'constructor() - sets streamConfigsUrl', ( assert ) => {
 	);
 } );
 
-QUnit.test( 'constructor() - sets eventGateUrl', ( assert ) => {
-	let integration = new DefaultIntegration();
-
-	assert.strictEqual(
-		integration.eventGateUrl,
-		'https://intake-analytics.wikimedia.org/v1/events?hasty=true'
-	);
-
-	integration = new DefaultIntegration( undefined, 'http://default_integration.new/foo/bar' );
-
-	assert.strictEqual(
-		integration.eventGateUrl,
-		'http://default_integration.new/v1/events?hasty=true'
-	);
-} );
-
 QUnit.test( 'getContextAttributes()/setContextAttributes()', ( assert ) => {
 	/* eslint-disable camelcase */
 	const integration = new DefaultIntegration();

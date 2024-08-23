@@ -10,6 +10,7 @@ const sinon = require( 'sinon' );
 
 const TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
 const MetricsClient = require( '../../src/ExternalMetricsClient.js' );
+const StubEventSubmitter = require( './StubEventSubmitter.js' );
 
 /** @type StreamConfigs */
 const streamConfigs = {
@@ -57,13 +58,14 @@ const streamConfigs = {
 	}
 };
 
+const eventSubmitter = new StubEventSubmitter();
 const integration = new TestMetricsClientIntegration();
 
 const sandbox = sinon.createSandbox();
-const enqueueEventStub = sandbox.stub( integration, 'enqueueEvent' );
+const submitEventStub = sandbox.stub( eventSubmitter, 'submitEvent' );
 const logWarningStub = sandbox.stub( integration, 'logWarning' );
 
-sandbox.stub( integration, 'onSubmit' );
+sandbox.stub( eventSubmitter, 'onSubmitEvent' );
 
 QUnit.module( 'ExternalMetricsClient', {
 	beforeEach: function () {
@@ -74,7 +76,7 @@ QUnit.module( 'ExternalMetricsClient', {
 QUnit.test( 'constructor() - fetches stream configs when they are not given', ( assert ) => {
 	const fetchStreamConfigsSpy = sandbox.spy( integration, 'fetchStreamConfigs' );
 
-	const metricsClient = new MetricsClient( integration );
+	const metricsClient = new MetricsClient( integration, eventSubmitter );
 
 	assert.deepEqual( metricsClient.streamConfigs, {}, 'Initializes streamConfigs to an empty object' );
 	assert.strictEqual( fetchStreamConfigsSpy.callCount, 1, 'fetchStreamConfigs() should not be called' );
@@ -88,7 +90,7 @@ QUnit.test( 'fetchStreamConfigs() - invalidates eventNameToStreamNames map', ( a
 	// @ts-ignore TS2585
 	fetchStreamConfigsStub.onFirstCall().returns( Promise.resolve( streamConfigs ) );
 
-	const metricsClient = new MetricsClient( integration );
+	const metricsClient = new MetricsClient( integration, eventSubmitter );
 	metricsClient.getStreamNamesForEvent( 'widgetClick' );
 
 	assert.deepEqual( metricsClient.eventNameToStreamNamesMap, {} );
@@ -128,18 +130,18 @@ QUnit.test( 'submit()/dispatch() - does not produce an event until streamConfigs
 	// @ts-ignore TS2585
 	fetchStreamConfigsStub.onFirstCall().returns( streamConfigsPromise );
 
-	const metricsClient = new MetricsClient( integration );
+	const metricsClient = new MetricsClient( integration, eventSubmitter );
 
 	metricsClient.submit( 'metrics.platform.test', { $schema: 'metrics/platform/test' } );
 	metricsClient.dispatch( 'click' );
 
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
-	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
+	assert.strictEqual( submitEventStub.callCount, 0, 'submitEvent() should not be called' );
 
 	const done = assert.async();
 
 	streamConfigsPromise.then( () => {
-		assert.strictEqual( enqueueEventStub.callCount, 2, 'enqueueEvent() should be called' );
+		assert.strictEqual( submitEventStub.callCount, 2, 'submitEvent() should be called' );
 
 		fetchStreamConfigsStub.restore();
 
@@ -162,7 +164,7 @@ QUnit.test( 'logs a warning if too many calls are enqueued before stream configs
 	// @ts-ignore TS2585
 	fetchStreamConfigsStub.onFirstCall().returns( streamConfigsPromise );
 
-	const metricsClient = new MetricsClient( integration );
+	const metricsClient = new MetricsClient( integration, eventSubmitter );
 
 	for ( let i = 0; i < 132; i += 2 ) {
 		metricsClient.submit( 'metrics.platform.test', { $schema: 'metrics/platform/test' } );
@@ -175,12 +177,12 @@ QUnit.test( 'logs a warning if too many calls are enqueued before stream configs
 	assert.strictEqual( logWarningStub.args[ 2 ][ 0 ], 'Call to submit( metrics.platform.test, eventData ) dropped because the queue is full.' );
 	assert.strictEqual( logWarningStub.args[ 3 ][ 0 ], 'Call to dispatch( click, customData ) dropped because the queue is full.' );
 
-	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
+	assert.strictEqual( submitEventStub.callCount, 0, 'submitEvent() should not be called' );
 
 	const done = assert.async();
 
 	streamConfigsPromise.then( () => {
-		assert.strictEqual( enqueueEventStub.callCount, 128, 'enqueueEvent() should be called' );
+		assert.strictEqual( submitEventStub.callCount, 128, 'submitEvent() should be called' );
 
 		fetchStreamConfigsStub.restore();
 

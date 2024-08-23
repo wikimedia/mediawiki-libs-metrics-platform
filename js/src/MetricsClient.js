@@ -1,6 +1,7 @@
 const ContextController = require( './ContextController.js' );
 const SamplingController = require( './SamplingController.js' );
 const CurationController = require( './CurationController.js' );
+const DefaultEventSubmitter = require( './DefaultEventSubmitter.js' ).DefaultEventSubmitter;
 
 const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
 
@@ -10,18 +11,21 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @param {Integration} integration
  * @param {StreamConfigs|false} streamConfigs
+ * @param {EventSubmitter} [eventSubmitter] An instance of {@link DefaultEventSubmitter} by default
  * @constructor
  * @class MetricsClient
  */
 function MetricsClient(
 	integration,
-	streamConfigs
+	streamConfigs,
+	eventSubmitter
 ) {
 	this.contextController = new ContextController( integration );
 	this.samplingController = new SamplingController( integration );
 	this.curationController = new CurationController();
 	this.integration = integration;
 	this.streamConfigs = streamConfigs;
+	this.eventSubmitter = eventSubmitter || new DefaultEventSubmitter();
 	this.eventNameToStreamNamesMap = null;
 }
 
@@ -256,8 +260,7 @@ MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, ev
 	this.addRequiredMetadata( eventData, streamName );
 
 	if ( this.samplingController.isStreamInSample( streamConfig ) ) {
-		this.integration.enqueueEvent( eventData );
-		this.integration.onSubmit( streamName, eventData );
+		this.eventSubmitter.submitEvent( eventData );
 	}
 };
 
@@ -406,8 +409,7 @@ MetricsClient.prototype.processDispatchCall = function (
 			this.samplingController.isStreamInSample( streamConfig ) &&
 			this.curationController.shouldProduceEvent( eventData, streamConfig )
 		) {
-			this.integration.enqueueEvent( eventData );
-			this.integration.onSubmit( streamName, eventData );
+			this.eventSubmitter.submitEvent( eventData );
 		}
 	}
 };

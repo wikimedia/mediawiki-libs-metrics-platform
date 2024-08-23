@@ -5,6 +5,7 @@
 const sinon = require( 'sinon' );
 
 const TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
+const StubEventSubmitter = require( './StubEventSubmitter.js' );
 const MetricsClient = require( './../../src/MetricsClient.js' );
 
 /** @type StreamConfigs */
@@ -73,12 +74,12 @@ let legacyEvent = {
 };
 
 const integration = new TestMetricsClientIntegration();
-const metricsClient = new MetricsClient( integration, streamConfigs );
+const eventSubmitter = new StubEventSubmitter();
+const metricsClient = new MetricsClient( integration, streamConfigs, eventSubmitter );
 
 const sandbox = sinon.createSandbox();
-const enqueueEventStub = sandbox.stub( integration, 'enqueueEvent' );
+const submitEventStub = sandbox.stub( eventSubmitter, 'submitEvent' );
 const logWarningStub = sandbox.stub( integration, 'logWarning' );
-const onSubmitStub = sandbox.stub( integration, 'onSubmit' );
 
 QUnit.module( 'MetricsClient', {
 	beforeEach: function () {
@@ -91,16 +92,14 @@ QUnit.test( 'submit() - warn/do not produce for event without $schema', ( assert
 	metricsClient.submit( 'metrics.platform.test', {} );
 
 	assert.strictEqual( logWarningStub.callCount, 1, 'logWarning() should be called' );
-	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
-	assert.strictEqual( onSubmitStub.callCount, 0, 'onSubmit() should not be called' );
+	assert.strictEqual( submitEventStub.callCount, 0, 'submitEvent() should not be called' );
 } );
 
 QUnit.test( 'submit() - produce an event correctly', ( assert ) => {
 	metricsClient.submit( 'metrics.platform.test', { $schema: 'metrics/platform/test' } );
 
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
-	assert.strictEqual( enqueueEventStub.callCount, 1, 'enqueueEvent() should be called' );
-	assert.strictEqual( onSubmitStub.callCount, 1, 'onSubmit() should be called' );
+	assert.strictEqual( submitEventStub.callCount, 1, 'submitEvent() should be called' );
 } );
 
 QUnit.test( 'streamConfig() - disallow modification', ( assert ) => {
@@ -186,7 +185,7 @@ QUnit.test( 'getStreamNamesForEvent() - prefix matching', ( assert ) => {
 
 QUnit.test( 'getStreamNamesForEvent() - streamConfigs is falsy', ( assert ) => {
 	// eslint-disable-next-line no-shadow
-	const metricsClient = new MetricsClient( integration, false );
+	const metricsClient = new MetricsClient( integration, false, eventSubmitter );
 
 	assert.deepEqual( metricsClient.getStreamNamesForEvent( 'foo' ), [] );
 	assert.strictEqual(
@@ -200,10 +199,10 @@ QUnit.test( 'dispatch() - produce events correctly', ( assert ) => {
 	metricsClient.dispatch( 'widgetClick' );
 
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
-	assert.strictEqual( enqueueEventStub.callCount, 2, 'enqueueEvent() should be called' );
+	assert.strictEqual( submitEventStub.callCount, 2, 'submitEvent() should be called' );
 
-	const event1 = enqueueEventStub.args[ 0 ][ 0 ];
-	const event2 = enqueueEventStub.args[ 1 ][ 0 ];
+	const event1 = submitEventStub.args[ 0 ][ 0 ];
+	const event2 = submitEventStub.args[ 1 ][ 0 ];
 
 	// Test that the first event was constructed and produced correctly
 	assert.strictEqual( event1.$schema, MetricsClient.SCHEMA );
@@ -238,9 +237,9 @@ QUnit.test( 'dispatch() - constructs the bespoke_data property', ( assert ) => {
 	} );
 
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
-	assert.strictEqual( enqueueEventStub.callCount, 1, 'enqueueEvent() should be called' );
+	assert.strictEqual( submitEventStub.callCount, 1, 'submitEvent() should be called' );
 
-	const customData = enqueueEventStub.args[ 0 ][ 0 ].custom_data;
+	const customData = submitEventStub.args[ 0 ][ 0 ].custom_data;
 
 	assert.deepEqual(
 		customData,
@@ -271,17 +270,17 @@ QUnit.test( 'dispatch() - warn/do not produce event when bespokeData properties 
 	} );
 
 	assert.strictEqual( logWarningStub.callCount, 1, 'logWarning() should be called' );
-	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
+	assert.strictEqual( submitEventStub.callCount, 0, 'submitEvent() should not be called' );
 } );
 
 QUnit.test( 'dispatch() - warn/do not produce event when streamConfigs is false', ( assert ) => {
 	// eslint-disable-next-line no-shadow
-	const metricsClient = new MetricsClient( integration, false );
+	const metricsClient = new MetricsClient( integration, false, eventSubmitter );
 
 	metricsClient.dispatch( 'otherWidgetClick' );
 
 	assert.strictEqual( logWarningStub.callCount, 1, 'logWarning() should be called' );
-	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
+	assert.strictEqual( submitEventStub.callCount, 0, 'submitEvent() should not be called' );
 } );
 
 QUnit.test( 'submitInteraction() - warn/do not produce for interactionData without action', ( assert ) => {
@@ -292,8 +291,7 @@ QUnit.test( 'submitInteraction() - warn/do not produce for interactionData witho
 	);
 
 	assert.strictEqual( logWarningStub.callCount, 1, 'logWarning() should be called' );
-	assert.strictEqual( enqueueEventStub.callCount, 0, 'enqueueEvent() should not be called' );
-	assert.strictEqual( onSubmitStub.callCount, 0, 'onSubmit() should not be called' );
+	assert.strictEqual( submitEventStub.callCount, 0, 'submitEvent() should not be called' );
 } );
 
 QUnit.test( 'submitInteraction() - produce event correctly', ( assert ) => {
@@ -304,10 +302,9 @@ QUnit.test( 'submitInteraction() - produce event correctly', ( assert ) => {
 	);
 
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
-	assert.strictEqual( enqueueEventStub.callCount, 1, 'enqueueEvent() should be called' );
-	assert.strictEqual( onSubmitStub.callCount, 1, 'onSubmit() should be called' );
+	assert.strictEqual( submitEventStub.callCount, 1, 'submitEvent() should be called' );
 
-	const event = enqueueEventStub.args[ 0 ][ 0 ];
+	const event = submitEventStub.args[ 0 ][ 0 ];
 
 	// @ts-ignore TS2345
 	assert.strictEqual( event.meta.stream, 'metrics.platform.test6' );
@@ -326,7 +323,7 @@ QUnit.test( 'submitInteraction() - disallow $schema overriding', ( assert ) => {
 		}
 	);
 
-	const event = enqueueEventStub.args[ 0 ][ 0 ];
+	const event = submitEventStub.args[ 0 ][ 0 ];
 
 	assert.strictEqual( event.$schema, '/analytics/product_metrics/web/base/1.0.0' );
 } );
