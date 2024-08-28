@@ -2,42 +2,20 @@
 
 /* eslint-disable camelcase */
 
-/**
- * NOTE:
- *
- * Before running this script the following stream configs MUST be available from the wiki that the
- * stream configs are fetched from (default: http://localhost:8080):
- *
- * $wgEventStreams = [
- *   'test.metrics_platform.metrics_events' => [
- *     'schema_title' => 'fragment/analytics/product_metrics/interaction/common',
- *     'destination_event_service' => 'eventgate-analytics-external',
- *     'producers' => [
- *     'metrics_platform_client' => [
- *       'events' => [
- *         'test.',
- *       ],
- *       'provide_values' => [
- *         'mediawiki_skin',
- *       ],
- *     ],
- *   ],
- *   'test.metrics_platform.interactions' => [
- *     'schema_title' => 'fragment/analytics/product_metrics/interaction/common',
- *     'destination_event_service' => 'eventgate-analytics-external',
- *   ],
- * ];
- * ```
- */
-
 const MetricsClient = require( './../../src/ExternalMetricsClient' );
 const Integration = require( './NodeIntegration' );
 const NodeEventSubmitter = require( '../../src/NodeEventSubmitter' );
+
+// eslint-disable-next-line no-unused-vars
+const Instrument = require( '../../src/Instrument' );
 
 const integration = new Integration( 'http://localhost:8080' );
 const eventSubmitter = new NodeEventSubmitter( 'http://localhost:8192' );
 
 integration.setContextAttributes( {
+	agent: {
+		client_platform_family: 'app'
+	},
 	mediawiki: {
 		skin: 'minerva'
 	}
@@ -53,31 +31,25 @@ metricsClient.dispatch( 'test.click', {
 	element_id: 'ca-talk'
 } );
 
-// @ts-ignore TS2339
-metricsClient.submitInteraction(
-	'test.metrics_platform.interactions',
-	'/fragment/analytics/product_metrics/interaction/common/1.0.0',
-	{
-		action: 'init'
-	}
-);
+setTimeout(
+	() => {
+		/** @type {Instrument} */
+		// @ts-ignore TS2339 TypeScript doesn't support ES5-style inheritance
+		// (see https://github.com/microsoft/TypeScript/issues/18609)
+		const i = metricsClient.newInstrument(
+			'test.metrics_platform.interactions',
+			'/analytics/product_metrics/web/base/1.2.0'
+		);
 
-// @ts-ignore TS2339
-metricsClient.submitInteraction(
-	'test.metrics_platform.interactions',
-	'/fragment/analytics/product_metrics/interaction/common/1.0.0',
-	{
-		action: 'click',
-		element_id: 'ca-edit'
-	}
-);
-
-// @ts-ignore TS2339
-metricsClient.submitInteraction(
-	'test.metrics_platform.interactions',
-	'/fragment/analytics/product_metrics/interaction/common/1.0.0',
-	{
-		action: 'click',
-		element_id: 'ca-talk'
-	}
+		i.submitInteraction( 'init' );
+		i.submitClick( {
+			element_id: 'ca-edit',
+			element_friendly_name: 'edit'
+		} );
+		i.submitClick( {
+			element_id: 'ca-talk',
+			element_friendly_name: 'talk'
+		} );
+	},
+	1000
 );

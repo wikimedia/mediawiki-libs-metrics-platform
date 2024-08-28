@@ -82,7 +82,7 @@ const submitEventStub = sandbox.stub( eventSubmitter, 'submitEvent' );
 const logWarningStub = sandbox.stub( integration, 'logWarning' );
 
 QUnit.module( 'MetricsClient', {
-	beforeEach: function () {
+	beforeEach: () => {
 		sandbox.reset();
 	}
 } );

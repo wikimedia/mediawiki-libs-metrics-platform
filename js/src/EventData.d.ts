@@ -102,6 +102,8 @@ interface InteractionContextData {
     action_subtype?: string;
     action_source?: string;
     action_context?: string;
+
+    funnel_event_sequence_position?: number;
 }
 
 // TODO: Could this be limited?
