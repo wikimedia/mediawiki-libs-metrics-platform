@@ -68,7 +68,7 @@ const logWarningStub = sandbox.stub( integration, 'logWarning' );
 sandbox.stub( eventSubmitter, 'onSubmitEvent' );
 
 QUnit.module( 'ExternalMetricsClient', {
-	beforeEach: function () {
+	beforeEach: () => {
 		sandbox.reset();
 	}
 } );
