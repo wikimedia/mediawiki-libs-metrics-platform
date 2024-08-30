@@ -1,5 +1,5 @@
 {
-	"$schema": "/analytics/product_metrics/app/base/1.2.1",
+	"$schema": "/analytics/product_metrics/app/base/1.2.2",
 	"test": "consistency",
 	"meta": {
 		"stream": "test.consistency",
