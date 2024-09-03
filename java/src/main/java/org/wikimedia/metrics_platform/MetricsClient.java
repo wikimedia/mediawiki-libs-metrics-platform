@@ -26,7 +26,6 @@ import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.stream.Stream;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -449,7 +448,7 @@ public final class MetricsClient {
         private Duration sendEventsInitialDelay = Duration.ofSeconds(3);
         private Duration sendEventsInterval = Duration.ofSeconds(30);
         private boolean isDebug;
-        private List<Consumer<SourceConfig>> sourceConfigConsumers = List.of();
+        private Consumer<SourceConfig> sourceConfigConsumer = sourceConfig -> {};
         private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1, new SimpleThreadFactory());
 
         @Nullable private SourceConfig sourceConfig;
@@ -490,9 +489,7 @@ public final class MetricsClient {
                     eventQueue,
                     eventProcessor);
 
-            List<Consumer<SourceConfig>> consumers = Stream.concat(
-                    Stream.of(sourceConfigRef::set), // adding our own consumer to the list of consumers
-                    sourceConfigConsumers.stream())
+            List<Consumer<SourceConfig>> consumers = Stream.of(sourceConfigRef::set, sourceConfigConsumer)
                     .collect(toList());
 
             StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(streamConfigURL, httpClient, gson);
@@ -531,7 +528,7 @@ public final class MetricsClient {
         private final AtomicLong counter = new AtomicLong();
 
         @Override
-        public Thread newThread(@Nonnull Runnable r) {
+        public Thread newThread(Runnable r) {
             return new Thread(r, "metrics-client-" + counter.incrementAndGet());
         }
     }

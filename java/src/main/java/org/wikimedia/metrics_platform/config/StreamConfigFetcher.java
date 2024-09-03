@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 
-import lombok.Cleanup;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -36,12 +35,13 @@ public class StreamConfigFetcher {
      */
     public SourceConfig fetchStreamConfigs() throws IOException {
         Request request = new Request.Builder().url(url).build();
-        @Cleanup Response response = httpClient.newCall(request).execute();
-        @Cleanup ResponseBody body = response.body();
-        if (body == null) {
-            throw new IOException("Failed to fetch stream configs: " + response.message());
+        try (Response response = httpClient.newCall(request).execute()) {
+            ResponseBody body = response.body();
+            if (body == null) {
+                throw new IOException("Failed to fetch stream configs: " + response.message());
+            }
+            return new SourceConfig(parseConfig(body.charStream()));
         }
-        return new SourceConfig(parseConfig(body.charStream()));
     }
 
     // Visible For Testing
