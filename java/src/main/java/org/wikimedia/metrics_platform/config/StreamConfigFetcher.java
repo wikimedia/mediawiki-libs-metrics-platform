@@ -6,8 +6,9 @@ import java.net.URL;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.wikimedia.metrics_platform.json.GsonHelper;
+import com.google.gson.Gson;
 
+import lombok.Cleanup;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -22,10 +23,12 @@ public class StreamConfigFetcher {
 
     private final URL url;
     private final OkHttpClient httpClient;
+    private final Gson gson;
 
-    public StreamConfigFetcher(URL url, OkHttpClient httpClient) {
+    public StreamConfigFetcher(URL url, OkHttpClient httpClient, Gson gson) {
         this.url = url;
         this.httpClient = httpClient;
+        this.gson = gson;
     }
 
     /**
@@ -33,8 +36,8 @@ public class StreamConfigFetcher {
      */
     public SourceConfig fetchStreamConfigs() throws IOException {
         Request request = new Request.Builder().url(url).build();
-        Response response = httpClient.newCall(request).execute();
-        ResponseBody body = response.body();
+        @Cleanup Response response = httpClient.newCall(request).execute();
+        @Cleanup ResponseBody body = response.body();
         if (body == null) {
             throw new IOException("Failed to fetch stream configs: " + response.message());
         }
@@ -43,7 +46,7 @@ public class StreamConfigFetcher {
 
     // Visible For Testing
     public Map<String, StreamConfig> parseConfig(Reader reader) {
-        return GsonHelper.getGson().fromJson(reader, StreamConfigCollection.class).streamConfigs.entrySet().stream()
+        return gson.fromJson(reader, StreamConfigCollection.class).streamConfigs.entrySet().stream()
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }

@@ -123,9 +123,6 @@
                             <rules>
                                 <NoPackageCyclesRule implementation="de.andrena.tools.nopackagecycles.NoPackageCyclesRule">
                                     <includeTests>false</includeTests>
-                                    <excludedPackages>
-                                        <excludedPackage>org.wikimedia.metrics_platform.json</excludedPackage>
-                                    </excludedPackages>
                                 </NoPackageCyclesRule>
                             </rules>
                         </configuration>

@@ -121,7 +121,7 @@ class ConsistencyIT {
     }
 
     private static Map<String, StreamConfig> getTestStreamConfigs(Reader reader) throws MalformedURLException {
-        StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT), new OkHttpClient());
+        StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(ANALYTICS_API_ENDPOINT), new OkHttpClient(), GsonHelper.getGson());
         return streamConfigFetcher.parseConfig(reader);
     }
 
