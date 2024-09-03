@@ -4,7 +4,7 @@ import static java.lang.Math.max;
 import static java.time.Instant.now;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.logging.Level.FINE;
-import static java.util.logging.Level.WARNING;
+import static java.util.stream.Collectors.toList;
 import static org.wikimedia.metrics_platform.config.StreamConfigFetcher.ANALYTICS_API_ENDPOINT;
 import static org.wikimedia.metrics_platform.event.EventProcessed.fromEvent;
 
@@ -12,6 +12,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -21,12 +22,16 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import java.util.logging.Level;
+import java.util.stream.Stream;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import org.wikimedia.metrics_platform.config.ConfigFetcherRunnable;
 import org.wikimedia.metrics_platform.config.SourceConfig;
 import org.wikimedia.metrics_platform.config.StreamConfig;
 import org.wikimedia.metrics_platform.config.StreamConfigFetcher;
@@ -36,6 +41,8 @@ import org.wikimedia.metrics_platform.context.PerformerData;
 import org.wikimedia.metrics_platform.event.Event;
 import org.wikimedia.metrics_platform.event.EventProcessed;
 import org.wikimedia.metrics_platform.json.GsonHelper;
+
+import com.google.gson.Gson;
 
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -50,7 +57,7 @@ public final class MetricsClient {
             .ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
             .withZone(ZoneId.of("UTC"));
 
-    private static final ScheduledExecutorService EXECUTOR_SERVICE = Executors.newScheduledThreadPool(1, new SimpleThreadFactory());
+    private final ScheduledExecutorService executorService;
     public static final String METRICS_PLATFORM_LIBRARY_VERSION = "2.8";
     public static final String METRICS_PLATFORM_BASE_VERSION = "1.2.2";
     public static final String METRICS_PLATFORM_SCHEMA_BASE = "/analytics/product_metrics/app/base/" + METRICS_PLATFORM_BASE_VERSION;
@@ -69,25 +76,24 @@ public final class MetricsClient {
 
     private final BlockingQueue<EventProcessed> eventQueue;
     private final EventProcessor eventProcessor;
-    private final OkHttpClient httpClient;
 
     /**
      * MetricsClient constructor.
      */
     private MetricsClient(
+            ScheduledExecutorService executorService,
             SessionController sessionController,
             SamplingController samplingController,
             AtomicReference<SourceConfig> sourceConfig,
             BlockingQueue<EventProcessed> eventQueue,
-            EventProcessor eventProcessor,
-            OkHttpClient httpClient
+            EventProcessor eventProcessor
     ) {
+        this.executorService = executorService;
         this.sessionController = sessionController;
         this.samplingController = samplingController;
         this.sourceConfig = sourceConfig;
         this.eventQueue = eventQueue;
         this.eventProcessor = eventProcessor;
-        this.httpClient = httpClient;
     }
 
     /**
@@ -123,7 +129,7 @@ public final class MetricsClient {
      * <p>
      * This particular submitMetricsEvent method accepts unformatted custom data and calls the following
      * submitMetricsEvent method with the custom data properly formatted.
-     * <p>
+     *
      * @see <a href="https://wikitech.wikimedia.org/wiki/Metrics_Platform">Metrics Platform</a>
      *
      * @param streamName stream name
@@ -339,7 +345,7 @@ public final class MetricsClient {
      * application is resumed.
      */
     public void onAppPause() {
-        EXECUTOR_SERVICE.schedule(eventProcessor::sendEnqueuedEvents, 0, MILLISECONDS);
+        executorService.schedule(eventProcessor::sendEnqueuedEvents, 0, MILLISECONDS);
         sessionController.touchSession();
     }
 
@@ -358,7 +364,7 @@ public final class MetricsClient {
      * Closes the session.
      */
     public void onAppClose() {
-        EXECUTOR_SERVICE.schedule(eventProcessor::sendEnqueuedEvents, 0, MILLISECONDS);
+        executorService.schedule(eventProcessor::sendEnqueuedEvents, 0, MILLISECONDS);
         sessionController.closeSession();
     }
 
@@ -420,17 +426,21 @@ public final class MetricsClient {
 
     @NotThreadSafe @ParametersAreNonnullByDefault
     @Setter @Accessors(fluent = true)
+    @SuppressWarnings("checkstyle:classfanoutcomplexity") // As the main builder for the application, this class has
+                                                          // to fan out to almost everything. We could hide this by
+                                                          // using an injection framework (Guice?), but the added
+                                                          // dependency is probably not worth it.
     public static final class Builder {
 
         private final ClientData clientData;
+        private final Duration streamConfigFetchRetryDelay = Duration.ofMinutes(1);
         private AtomicReference<SourceConfig> sourceConfigRef = new AtomicReference<>();
         private BlockingQueue<EventProcessed> eventQueue = new LinkedBlockingQueue<>(10);
         private SessionController sessionController = new SessionController();
 
         private CurationController curationController = new CurationController();
 
-        @Nullable
-        private SamplingController samplingController;
+        @Nullable private SamplingController samplingController;
 
         private OkHttpClient httpClient = new OkHttpClient();
         private URL streamConfigURL = safeURL(ANALYTICS_API_ENDPOINT);
@@ -439,22 +449,10 @@ public final class MetricsClient {
         private Duration sendEventsInitialDelay = Duration.ofSeconds(3);
         private Duration sendEventsInterval = Duration.ofSeconds(30);
         private boolean isDebug;
+        private List<Consumer<SourceConfig>> sourceConfigConsumers = List.of();
+        private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1, new SimpleThreadFactory());
 
-        private Runnable configFetchRunnable = new Runnable() {
-            @SuppressWarnings("checkstyle:IllegalCatch")
-            public void run() {
-                long nextFetchMillis = streamConfigFetchInterval.toMillis();
-                try {
-                    StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(streamConfigURL, httpClient);
-                    sourceConfigRef.set(streamConfigFetcher.fetchStreamConfigs());
-                } catch (Exception e) {
-                    log.log(WARNING, "Could not fetch configuration. Will retry sooner.", e);
-                    nextFetchMillis = Duration.ofMinutes(1).toMillis();
-                } finally {
-                    EXECUTOR_SERVICE.schedule(this, nextFetchMillis, MILLISECONDS);
-                }
-            }
-        };
+        @Nullable private SourceConfig sourceConfig;
 
         public Builder(ClientData clientData) {
             this.clientData = clientData;
@@ -466,38 +464,57 @@ public final class MetricsClient {
         }
 
         public MetricsClient build() {
+            if (sourceConfig != null) sourceConfigRef.set(sourceConfig);
+
             if (samplingController == null) {
                 samplingController = new SamplingController(clientData, sessionController);
             }
+
+            Gson gson = GsonHelper.getGson();
 
             EventProcessor eventProcessor = new EventProcessor(
                     new ContextController(),
                     curationController,
                     sourceConfigRef,
                     samplingController,
-                    new EventSenderDefault(GsonHelper.getGson(), httpClient),
+                    new EventSenderDefault(gson, httpClient),
                     eventQueue,
                     isDebug
             );
 
             MetricsClient metricsClient = new MetricsClient(
+                    executorService,
                     sessionController,
                     samplingController,
                     sourceConfigRef,
                     eventQueue,
-                    eventProcessor,
-                    httpClient
-            );
+                    eventProcessor);
 
-            startScheduledOperations(eventProcessor);
+            List<Consumer<SourceConfig>> consumers = Stream.concat(
+                    Stream.of(sourceConfigRef::set), // adding our own consumer to the list of consumers
+                    sourceConfigConsumers.stream())
+                    .collect(toList());
+
+            StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(streamConfigURL, httpClient, gson);
+
+            ConfigFetcherRunnable configFetchRunnable = new ConfigFetcherRunnable(streamConfigFetchInterval,
+                    streamConfigFetcher,
+                    consumers,
+                    executorService, streamConfigFetchRetryDelay);
+
+            startScheduledOperations(eventProcessor, configFetchRunnable, executorService);
 
             return metricsClient;
         }
 
-        private void startScheduledOperations(EventProcessor eventProcessor) {
-            EXECUTOR_SERVICE.schedule(configFetchRunnable, streamConfigFetchInitialDelay.toMillis(), MILLISECONDS);
+        private void startScheduledOperations(
+                EventProcessor eventProcessor,
+                ConfigFetcherRunnable configFetchRunnable,
+                ScheduledExecutorService executorService
+        ) {
+            executorService.schedule(configFetchRunnable, streamConfigFetchInitialDelay.toMillis(), MILLISECONDS);
 
-            EXECUTOR_SERVICE.scheduleAtFixedRate(
+            executorService.scheduleAtFixedRate(
                     eventProcessor::sendEnqueuedEvents,
                     sendEventsInitialDelay.toMillis(), sendEventsInterval.toMillis(), MILLISECONDS);
         }
@@ -506,6 +523,7 @@ public final class MetricsClient {
         private static URL safeURL(String url) {
             return new URL(url);
         }
+
     }
 
     private static final class SimpleThreadFactory implements ThreadFactory {
@@ -513,7 +531,7 @@ public final class MetricsClient {
         private final AtomicLong counter = new AtomicLong();
 
         @Override
-        public Thread newThread(Runnable r) {
+        public Thread newThread(@Nonnull Runnable r) {
             return new Thread(r, "metrics-client-" + counter.incrementAndGet());
         }
     }

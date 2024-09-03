@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.junit.jupiter.api.Test;
+import org.wikimedia.metrics_platform.json.GsonHelper;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
@@ -26,7 +27,11 @@ class StreamConfigIT {
                 )
         );
 
-        StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(new URL(wmRuntimeInfo.getHttpBaseUrl() + "/streamConfig"), new OkHttpClient());
+        StreamConfigFetcher streamConfigFetcher = new StreamConfigFetcher(
+                new URL(wmRuntimeInfo.getHttpBaseUrl() + "/streamConfig"),
+                new OkHttpClient(),
+                GsonHelper.getGson()
+        );
 
         SourceConfig sourceConfig = streamConfigFetcher.fetchStreamConfigs();
 
