@@ -25,6 +25,8 @@ interface StreamProducerConfig {
 
     provide_values?: StreamProducerContextAttribute[];
     curation?: StreamProducerCurationConfigs;
+
+    stream_name?: string;
 }
 
 type StreamProducerCurationConfigs = {

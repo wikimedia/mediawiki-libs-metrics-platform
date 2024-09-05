@@ -3,6 +3,7 @@ const SamplingController = require( './SamplingController.js' );
 const CurationController = require( './CurationController.js' );
 const DefaultEventSubmitter = require( './DefaultEventSubmitter.js' ).DefaultEventSubmitter;
 const Instrument = require( './Instrument.js' );
+const NullInstrument = require( './NullInstrument.js' );
 
 const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
 
@@ -513,12 +514,62 @@ MetricsClient.prototype.isStreamInSample = function ( streamName ) {
 };
 
 /**
- * @param {string} streamName
- * @param {string} schemaID
- * @return {Instrument}
+ * @param {string} streamOrInstrumentName
+ * @param {string} [streamNameOrSchemaID]
+ * @param {string} [schemaID]
+ * @return {Instrument|NullInstrument}
  */
-MetricsClient.prototype.newInstrument = function ( streamName, schemaID ) {
-	return new Instrument( this, streamName, schemaID );
+MetricsClient.prototype.newInstrument = function (
+	streamOrInstrumentName,
+	streamNameOrSchemaID,
+	schemaID
+) {
+	let instrumentName;
+	let streamName;
+
+	if ( streamNameOrSchemaID === undefined ) {
+		// #newInstrument( instrumentName )
+
+		instrumentName = streamOrInstrumentName;
+
+		const streamConfig = getStreamConfigInternal( this.streamConfigs, instrumentName );
+
+		streamName =
+			streamConfig &&
+			streamConfig.producers &&
+			streamConfig.producers.metrics_platform_client &&
+			streamConfig.producers.metrics_platform_client.stream_name;
+
+		if ( !streamName ) {
+			this.integration.logWarning(
+				'newInstrument( ' + instrumentName + ' ) ' +
+				'cannot determine stream name for instrument. No event(s) will be produced.'
+			);
+
+			return new NullInstrument();
+		}
+
+		// TODO: This should be WEB_BASE_SCHEMA_ID
+		schemaID = CLICK_SCHEMA_ID;
+	} else if ( schemaID === undefined ) {
+		// #newInstrument( streamName, schemaID )
+
+		streamName = streamOrInstrumentName;
+		schemaID = streamNameOrSchemaID;
+	} else {
+		// #newInstrument( instrumentName, streamName, schemaID )
+
+		instrumentName = streamOrInstrumentName;
+		streamName = streamNameOrSchemaID;
+	}
+
+	const result = new Instrument( this, streamName, schemaID );
+
+	if ( instrumentName ) {
+		result.setInstrumentName( instrumentName );
+	}
+
+	return result;
 };
 
 /**
