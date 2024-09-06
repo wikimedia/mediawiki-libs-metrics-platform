@@ -1,5 +1,6 @@
-// eslint-disable-next-line no-unused-vars
-const MetricsClient = require( './MetricsClient.js' );
+// TypeScript can't parse the MetricsClient type without explicitly importing it. On the other
+// hand, JSDoc can. Prioritise documentation over type checking for now.
+// @ts-nocheck
 
 /**
  * Provides a convenient API for writing an instrument.
