@@ -85,11 +85,24 @@ DefaultEventSubmitter.prototype.submitEvent = function ( eventData ) {
  * @ignore
  */
 DefaultEventSubmitter.prototype.doSubmitEvents = function () {
-	if ( this.events ) {
-		navigator.sendBeacon(
-			this.eventGateUrl,
-			JSON.stringify( this.events )
-		);
+	if ( this.events.length ) {
+		try {
+			navigator.sendBeacon(
+				this.eventGateUrl,
+				JSON.stringify( this.events )
+			);
+		} catch ( e ) {
+			// Some browsers throw when sending a beacon to a blocked URL (by an adblocker, for
+			// example). Some browser extensions remove Navigator#sendBeacon() altogether. See also:
+			//
+			// 1. https://phabricator.wikimedia.org/T86680
+			// 2. https://phabricator.wikimedia.org/T273374
+			// 3. https://phabricator.wikimedia.org/T308311
+			//
+			// Regardless, ignore all errors for now.
+			//
+			// TODO (phuedx, 2024/09/09): Instrument this!
+		}
 	}
 
 	this.events = [];
