@@ -458,6 +458,8 @@ MetricsClient.prototype.submitInteraction = function (
 		return;
 	}
 
+	const experimentData = this.integration.getExperimentConfig ();
+
 	const eventData = Object.assign(
 		{
 			action
@@ -465,7 +467,8 @@ MetricsClient.prototype.submitInteraction = function (
 		interactionData || {},
 		{
 			$schema: schemaID
-		}
+		},
+		experimentData
 	);
 
 	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
