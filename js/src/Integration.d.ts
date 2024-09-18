@@ -46,10 +46,10 @@ interface Integration {
 	/**
 	 * Gets the experiment details for the current user.
 	 */
-	getExperimentConfig: () => object;
+	getCurrentUserExperiments: () => object;
 
 	/**
-	 * Gets the experiment bucket for the current user.
+	 *Checks whether the user is enrolled in a specific experiment
 	 */
-	isUserEnrolled: (experimentName: string) => boolean;
+	 isCurrentUserEnrolled: (experimentName: string) => boolean;
 }

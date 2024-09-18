@@ -134,7 +134,7 @@ DefaultIntegration.prototype.setContextAttributes = function ( contextAttributes
  *
  * @return {string}
  */
-DefaultIntegration.prototype.getExperimentConfig = function () {
+DefaultIntegration.prototype.getCurrentUserExperiments = function () {
 	throw new Error( 'Not implemented yet.' );
 };
 
@@ -144,7 +144,7 @@ DefaultIntegration.prototype.getExperimentConfig = function () {
  * @param {string} experimentName
  * @return {boolean}
  */
-DefaultIntegration.prototype.isUserEnrolled = function (experimentName) {
+DefaultIntegration.prototype.isCurrentUserEnrolled = function (experimentName) {
 	throw new Error( 'Not implemented yet.' );
 };
 
