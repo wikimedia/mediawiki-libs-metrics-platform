@@ -54,6 +54,9 @@ const streamConfigs = {
 	},
 	'metrics.platform.test6': {
 		schema_title: '/analytics/product_metrics/interaction/common'
+	},
+	'metrics.platform.test7': {
+		schema_title: '/analytics/product_metrics/web/base/1.3.0'
 	}
 };
 
@@ -326,4 +329,21 @@ QUnit.test( 'submitInteraction() - disallow $schema overriding', ( assert ) => {
 	const event = submitEventStub.args[ 0 ][ 0 ];
 
 	assert.strictEqual( event.$schema, '/analytics/product_metrics/web/base/1.0.0' );
+} );
+
+QUnit.test( 'submitInteraction() - experiments details are added when appropriate', ( assert ) => {
+	// @ts-ignore TS2345
+	metricsClient.submitInteraction(
+		'metrics.platform.test7',
+		'/analytics/product_metrics/web/base/1.3.0',
+		'someAction'
+	);
+
+	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
+	assert.strictEqual( submitEventStub.callCount, 1, 'submitEvent() should be called' );
+
+	const event = submitEventStub.args[ 0 ][ 0 ];
+
+	assert.deepEqual( event.experiments.enrolled, [ 'experiment1', 'experiment2' ] );
+	assert.deepEqual( event.experiments.assigned, { experiment1: 'blue', experiment2: 'right' } );
 } );

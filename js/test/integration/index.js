@@ -9,8 +9,8 @@ const NodeEventSubmitter = require( '../../src/NodeEventSubmitter' );
 // eslint-disable-next-line no-unused-vars
 const Instrument = require( '../../src/Instrument' );
 
-const integration = new Integration( 'http://localhost:8080' );
-const eventSubmitter = new NodeEventSubmitter( 'http://localhost:8192' );
+const integration = new Integration( 'http://host.docker.internal:8080' );
+const eventSubmitter = new NodeEventSubmitter( 'http://host.docker.internal:8192' );
 
 integration.setContextAttributes( {
 	agent: {
@@ -38,7 +38,7 @@ setTimeout(
 		// (see https://github.com/microsoft/TypeScript/issues/18609)
 		const i = metricsClient.newInstrument(
 			'test.metrics_platform.interactions',
-			'/analytics/product_metrics/web/base/1.2.0'
+			'/analytics/product_metrics/web/base/1.3.0'
 		);
 
 		i.submitInteraction( 'init' );

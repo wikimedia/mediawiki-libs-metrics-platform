@@ -111,4 +111,28 @@ TestMetricsClientIntegration.prototype.getActiveBrowsingSessionToken = function 
 	return this.activeBrowsingSessionToken;
 };
 
+/**
+ * @returns {Object}
+ */
+TestMetricsClientIntegration.prototype.getCurrentUserExperiments = function () {
+	return {
+		experiments: {
+			enrolled: [ 'experiment1', 'experiment2' ],
+			assigned: { experiment1: 'blue', experiment2: 'right' }
+		}
+	};
+};
+
+/**
+ * @param {string} experimentName
+ * @returns {boolean}
+ */
+TestMetricsClientIntegration.prototype.isCurrentUserEnrolled = function ( experimentName ) {
+	if ( ( experimentName === 'experiment1' ) || ( experimentName === 'experiment2' ) ) {
+		return true;
+	}
+
+	return false;
+};
+
 module.exports = TestMetricsClientIntegration;

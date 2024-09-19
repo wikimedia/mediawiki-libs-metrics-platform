@@ -458,14 +458,11 @@ MetricsClient.prototype.submitInteraction = function (
 		return;
 	}
 
-	const experimentData = this.integration.getCurrentUserExperiments ();
-
 	let currentUserExperiments = null;
 	// The new experiments fragment is only available for web/base 1.3.0
-	if (schemaID === '/analytics/product_metrics/web/base/1.3.0') {
+	if ( schemaID === '/analytics/product_metrics/web/base/1.3.0' ) {
 		currentUserExperiments = this.integration.getCurrentUserExperiments();
 	}
-
 
 	const eventData = Object.assign(
 		{
@@ -475,7 +472,7 @@ MetricsClient.prototype.submitInteraction = function (
 		{
 			$schema: schemaID
 		},
-		currentUserExperiments ? currentUserExperiments : null
+		currentUserExperiments
 	);
 
 	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );

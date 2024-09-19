@@ -128,23 +128,23 @@ DefaultIntegration.prototype.setContextAttributes = function ( contextAttributes
 };
 
 /**
- * Gets the experiment configurations for the current user.
+ * Gets the experiment enrollment and membership for the current user.
  *
  * A experiment detail.
  *
- * @return {string}
+ * @return {object}
  */
 DefaultIntegration.prototype.getCurrentUserExperiments = function () {
 	throw new Error( 'Not implemented yet.' );
 };
 
 /**
- * check if the current user is enrolled in a specific experimet.
+ * check whether the current user is enrolled in a specific experimet.
  *
  * @param {string} experimentName
  * @return {boolean}
  */
-DefaultIntegration.prototype.isCurrentUserEnrolled = function (experimentName) {
+DefaultIntegration.prototype.isCurrentUserEnrolled = function ( experimentName ) {
 	throw new Error( 'Not implemented yet.' );
 };
 

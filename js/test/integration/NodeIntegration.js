@@ -45,4 +45,28 @@ NodeIntegration.prototype.getSessionId = function () {
 	return generateRandomId();
 };
 
+/**
+ * @return {object}
+ */
+NodeIntegration.prototype.getCurrentUserExperiments = function () {
+	return {
+		experiments: {
+			enrolled: [ 'experiment1', 'experiment2' ],
+			assigned: { experiment1: 'blue', experiment2: 'right' }
+		}
+	};
+};
+
+/**
+ * @param {string} experimentName
+ * @returns {boolean}
+ */
+NodeIntegration.prototype.isCurrentUserEnrolled = function ( experimentName ) {
+	if ( ( experimentName === 'experiment1' ) || ( experimentName === 'experiment2' ) ) {
+		return true;
+	}
+
+	return false;
+};
+
 module.exports = NodeIntegration;
