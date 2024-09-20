@@ -127,4 +127,25 @@ DefaultIntegration.prototype.setContextAttributes = function ( contextAttributes
 	copyAttributes( contextAttributes, this.contextAttributes );
 };
 
+/**
+ * Gets the experiment enrollment and membership for the current user.
+ *
+ * A experiment detail.
+ *
+ * @return {object}
+ */
+DefaultIntegration.prototype.getCurrentUserExperiments = function () {
+	throw new Error( 'Not implemented yet.' );
+};
+
+/**
+ * check whether the current user is enrolled in a specific experimet.
+ *
+ * @param {string} experimentName
+ * @return {boolean}
+ */
+DefaultIntegration.prototype.isCurrentUserEnrolled = function ( experimentName ) {
+	throw new Error( 'Not implemented yet.' );
+};
+
 module.exports = DefaultIntegration;

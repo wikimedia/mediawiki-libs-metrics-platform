@@ -42,4 +42,14 @@ interface Integration {
 	 * Gets a token unique to the current session within the execution environment.
 	 */
 	getSessionId: () => string;
+
+	/**
+	 * Gets the experiment details for the current user.
+	 */
+	getCurrentUserExperiments: () => object;
+
+	/**
+	 *Checks whether the user is enrolled in a specific experiment
+	 */
+	 isCurrentUserEnrolled: (experimentName: string) => boolean;
 }
