@@ -56,7 +56,7 @@ const streamConfigs = {
 		schema_title: '/analytics/product_metrics/interaction/common'
 	},
 	'metrics.platform.test7': {
-		schema_title: '/analytics/product_metrics/web/base/1.3.0'
+		schema_title: '/analytics/product_metrics/web/base'
 	}
 };
 
