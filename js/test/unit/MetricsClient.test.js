@@ -347,3 +347,17 @@ QUnit.test( 'submitInteraction() - experiments details are added when appropriat
 	assert.deepEqual( event.experiments.enrolled, [ 'experiment1', 'experiment2' ] );
 	assert.deepEqual( event.experiments.assigned, { experiment1: 'blue', experiment2: 'right' } );
 } );
+
+QUnit.test( 'submitInteraction() - experiments details are not added when the schema doesn\'t include that fragment', ( assert ) => {
+	const getCurrentUserExperimentsStub = sandbox.stub( integration, 'getCurrentUserExperiments' );
+
+	// @ts-ignore TS2345
+	metricsClient.submitInteraction(
+		'metrics.platform.test7',
+		'/analytics/product_metrics/web/base/1.2.0',
+		'someAction'
+	);
+
+	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
+	assert.strictEqual( getCurrentUserExperimentsStub.callCount, 0, 'getCurrentUserExperiments should not be called' );
+} );
