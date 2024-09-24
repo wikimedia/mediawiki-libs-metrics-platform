@@ -49,7 +49,7 @@ interface Integration {
 	getCurrentUserExperiments: () => object;
 
 	/**
-	 *Checks whether the user is enrolled in a specific experiment
+	 * Checks whether the user is enrolled in a specific experiment
 	 */
 	 isCurrentUserEnrolled: (experimentName: string) => boolean;
 }

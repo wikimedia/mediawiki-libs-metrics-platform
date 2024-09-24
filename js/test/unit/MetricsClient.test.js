@@ -361,3 +361,8 @@ QUnit.test( 'submitInteraction() - experiments details are not added when the sc
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
 	assert.strictEqual( getCurrentUserExperimentsStub.callCount, 0, 'getCurrentUserExperiments should not be called' );
 } );
+
+QUnit.test( 'isCurrentUserEnrolled() - current user is enrolled in the right experiments', ( assert ) => {
+	assert.true( metricsClient.isCurrentUserEnrolled( 'experiment1' ), 'user should be enrolled in this experiment1' );
+	assert.false( metricsClient.isCurrentUserEnrolled( 'non-existent' ), 'user shouldn\'t be enrolled in this experiment' );
+} );
