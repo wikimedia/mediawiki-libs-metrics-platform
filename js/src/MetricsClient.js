@@ -521,5 +521,15 @@ MetricsClient.prototype.newInstrument = function ( streamName, schemaID ) {
 	return new Instrument( this, streamName, schemaID );
 };
 
+/**
+ *  Checks whether the user is enrolled in a specific experiment
+ *
+ * @param {string} experimentName
+ * @return {boolean}
+ */
+MetricsClient.prototype.isCurrentUserEnrolled = function ( experimentName ) {
+	return this.integration.isCurrentUserEnrolled( experimentName );
+};
+
 module.exports = MetricsClient;
 module.exports.SCHEMA = SCHEMA;
