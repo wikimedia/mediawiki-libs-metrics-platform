@@ -29,7 +29,6 @@ CurationController.prototype.applyRules = function ( value, rules ) {
 
 	for ( operator in rules ) {
 		let i;
-		// @ts-ignore TS7053
 		const operand = rules[ operator ];
 		if ( operator === 'equals' && value !== operand ) {
 			return false;

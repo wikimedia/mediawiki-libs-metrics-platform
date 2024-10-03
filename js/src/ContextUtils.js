@@ -53,14 +53,11 @@ function getAttributeByName( from, name ) {
 	const index = name.indexOf( '_' );
 	const primaryKey = name.slice( 0, index );
 
-	// @ts-ignore TS7053
 	if ( !from[ primaryKey ] ) {
 		return null;
 	}
 
 	const secondaryKey = name.slice( index + 1 );
-
-	// @ts-ignore TS7053
 	const value = from[ primaryKey ][ secondaryKey ];
 
 	return ( value === undefined || value === null ) ? null : value;
@@ -76,16 +73,13 @@ function copyAttributeByName( from, to, name ) {
 	const primaryKey = name.slice( 0, index );
 	const secondaryKey = name.slice( index + 1 );
 
-	// @ts-ignore TS7053
 	const value = from[ primaryKey ] ? from[ primaryKey ][ secondaryKey ] : null;
 
 	if ( value === undefined || value === null ) {
 		return;
 	}
 
-	// @ts-ignore TS7053
 	to[ primaryKey ] = to[ primaryKey ] || {};
-	// @ts-ignore TS7053
 	to[ primaryKey ][ secondaryKey ] = value;
 }
 

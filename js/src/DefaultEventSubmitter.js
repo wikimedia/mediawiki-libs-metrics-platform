@@ -1,5 +1,27 @@
+// Types
+// =====
+
+/**
+ * @interface EventSubmitter
+ */
+
+/**
+ * Submits to the event intake service or enqueues the event for submission to the event
+ * intake service.
+ *
+ * @method
+ * @name EventSubmitter#submitEvent
+ * @param {EventData} event
+ */
+
+// Constants
+// =========
+
 const DEFAULT_EVENTGATE_ORIGIN = 'https://intake-analytics.wikimedia.org';
 const DELAYED_SUBMIT_TIMEOUT = 5; // (s)
+
+// Functions
+// =========
 
 /**
  * @param {string} [origin]
@@ -13,6 +35,9 @@ function getEventGateUrl( origin ) {
 
 	return result.toString();
 }
+
+// API
+// ===
 
 /**
  * The default event submitter used by {@link MetricsClient}.
@@ -33,6 +58,7 @@ function getEventGateUrl( origin ) {
  * @param {string} [eventGateOrigin] The origin of the EventGate event intake service to send
  *  events to. `https://intake-analytics.wikimedia.org` by default
  * @constructor
+ * @implements {EventSubmitter}
  */
 function DefaultEventSubmitter( eventGateOrigin ) {
 	this.eventGateUrl = getEventGateUrl( eventGateOrigin );
