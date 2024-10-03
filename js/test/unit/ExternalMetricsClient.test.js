@@ -1,7 +1,3 @@
-// TypeScript doesn't support ES5-style inheritance
-// (see https://github.com/microsoft/TypeScript/issues/18609).
-// @ts-nocheck
-
 'use strict';
 
 /* eslint-disable camelcase */
@@ -87,7 +83,6 @@ QUnit.test( 'constructor() - fetches stream configs when they are not given', ( 
 QUnit.test( 'fetchStreamConfigs() - invalidates eventNameToStreamNames map', ( assert ) => {
 	const fetchStreamConfigsStub = sandbox.stub( integration, 'fetchStreamConfigs' );
 
-	// @ts-ignore TS2585
 	fetchStreamConfigsStub.onFirstCall().returns( Promise.resolve( streamConfigs ) );
 
 	const metricsClient = new MetricsClient( integration, eventSubmitter );
@@ -99,8 +94,6 @@ QUnit.test( 'fetchStreamConfigs() - invalidates eventNameToStreamNames map', ( a
 
 	// Because Integration#fetchStreamConfigs() returns an instance of Promise, we have to wait for
 	// the microtask queue to be drained before making an assertion.
-	//
-	// @ts-ignore TS2580
 	process.nextTick( () => {
 		assert.strictEqual( metricsClient.streamConfigs, streamConfigs );
 		assert.strictEqual(
@@ -127,7 +120,6 @@ QUnit.test( 'submit()/dispatch() - does not produce an event until streamConfigs
 
 	const fetchStreamConfigsStub = sandbox.stub( integration, 'fetchStreamConfigs' );
 
-	// @ts-ignore TS2585
 	fetchStreamConfigsStub.onFirstCall().returns( streamConfigsPromise );
 
 	const metricsClient = new MetricsClient( integration, eventSubmitter );
@@ -161,7 +153,6 @@ QUnit.test( 'logs a warning if too many calls are enqueued before stream configs
 
 	const fetchStreamConfigsStub = sandbox.stub( integration, 'fetchStreamConfigs' );
 
-	// @ts-ignore TS2585
 	fetchStreamConfigsStub.onFirstCall().returns( streamConfigsPromise );
 
 	const metricsClient = new MetricsClient( integration, eventSubmitter );
