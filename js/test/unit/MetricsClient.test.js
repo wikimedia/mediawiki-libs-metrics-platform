@@ -91,7 +91,6 @@ QUnit.module( 'MetricsClient', {
 } );
 
 QUnit.test( 'submit() - warn/do not produce for event without $schema', ( assert ) => {
-	// @ts-ignore TS2345
 	metricsClient.submit( 'metrics.platform.test', {} );
 
 	assert.strictEqual( logWarningStub.callCount, 1, 'logWarning() should be called' );
@@ -287,7 +286,6 @@ QUnit.test( 'dispatch() - warn/do not produce event when streamConfigs is false'
 } );
 
 QUnit.test( 'submitInteraction() - warn/do not produce for interactionData without action', ( assert ) => {
-	// @ts-ignore TS2345
 	metricsClient.submitInteraction(
 		'metrics.platform.test6',
 		'/fragment/analytics/product_metrics/interaction/common/1.0.0'
@@ -309,7 +307,6 @@ QUnit.test( 'submitInteraction() - produce event correctly', ( assert ) => {
 
 	const event = submitEventStub.args[ 0 ][ 0 ];
 
-	// @ts-ignore TS2345
 	assert.strictEqual( event.meta.stream, 'metrics.platform.test6' );
 	assert.strictEqual( event.$schema, '/analytics/product_metrics/web/base/1.0.0' );
 	assert.strictEqual( event.action, 'foo' );
@@ -321,7 +318,6 @@ QUnit.test( 'submitInteraction() - disallow $schema overriding', ( assert ) => {
 		'/analytics/product_metrics/web/base/1.0.0',
 		'foo',
 		{
-			// @ts-ignore TS2345
 			$schema: '/bar/baz/1.0.0'
 		}
 	);
@@ -332,7 +328,6 @@ QUnit.test( 'submitInteraction() - disallow $schema overriding', ( assert ) => {
 } );
 
 QUnit.test( 'submitInteraction() - experiments details are added when appropriate', ( assert ) => {
-	// @ts-ignore TS2345
 	metricsClient.submitInteraction(
 		'metrics.platform.test7',
 		'/analytics/product_metrics/web/base/1.3.0',
@@ -351,7 +346,6 @@ QUnit.test( 'submitInteraction() - experiments details are added when appropriat
 QUnit.test( 'submitInteraction() - experiments details are not added when the schema doesn\'t include that fragment', ( assert ) => {
 	const getCurrentUserExperimentsStub = sandbox.stub( integration, 'getCurrentUserExperiments' );
 
-	// @ts-ignore TS2345
 	metricsClient.submitInteraction(
 		'metrics.platform.test7',
 		'/analytics/product_metrics/web/base/1.2.0',

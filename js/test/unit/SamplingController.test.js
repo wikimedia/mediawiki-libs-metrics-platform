@@ -81,7 +81,6 @@ QUnit.test( 'isStreamInSample() - valid and invalid stream configs', ( assert ) 
 	};
 
 	[
-		// @ts-ignore TS2339
 		[ conf.nonExistentStream, false ],
 		[ conf.emptyConfig, true ],
 		[ conf.nonemptyConfigNoSample, true ],
@@ -193,7 +192,6 @@ QUnit.test( 'a pageview/session/device that is in-sample at 1% is also in-sample
 	};
 
 	[
-		// @ts-ignore TS2339
 		[ pageviewConf.empty, true ],
 		[ pageviewConf.sample1, true ],
 		[ pageviewConf.sample5, true ],
@@ -256,7 +254,6 @@ QUnit.test( 'a pageview/session/device that is in-sample at 1% is also in-sample
 	};
 
 	[
-		// @ts-ignore TS2339
 		[ sessionConf.empty, true ],
 		[ sessionConf.sample1, true ],
 		[ sessionConf.sample5, true ],

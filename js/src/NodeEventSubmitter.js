@@ -9,7 +9,9 @@ const getEventGateUrl = require( './DefaultEventSubmitter.js' ).getEventGateUrl;
  *
  * @param {string} [eventGateOrigin] The origin of the EventGate event intake service to send
  *  events to. `https://intake-analytics.wikimedia.org` by default
- * @constructor
+ *
+ * @class
+ * @implements {EventSubmitter}
  */
 function NodeEventSubmitter( eventGateOrigin ) {
 	this.eventGateUrl = getEventGateUrl( eventGateOrigin );
@@ -30,17 +32,7 @@ NodeEventSubmitter.prototype.submitEvent = function ( eventData ) {
 		body: JSON.stringify( eventData )
 	} );
 
-	this.onSubmitEvent( eventData );
-};
-
-/**
- * Called when an event is enqueued for submission to the event intake service.
- *
- * @param {EventData} eventData
- */
-NodeEventSubmitter.prototype.onSubmitEvent = function ( eventData ) {
-	// eslint-disable-next-line no-console
-	console.info( 'Submitted the following event:', eventData );
+	console.info( 'Submitted the following event:', eventData )
 };
 
 module.exports = NodeEventSubmitter;
