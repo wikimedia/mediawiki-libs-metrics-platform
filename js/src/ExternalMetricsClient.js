@@ -1,6 +1,21 @@
-// TypeScript doesn't support ES5-style inheritance
-// (see https://github.com/microsoft/TypeScript/issues/18609).
-// @ts-nocheck
+/**
+ * TODO: Convert CallQueueEntry to an object so that we can use stricter typing.
+ *
+ * Previously, CallQueueEntry was defined as:
+ *
+ * ```ts
+ * type CallQueueEntry =
+ *     ["submit", string, string, BaseEventData]
+ *     | ["dispatch", string, string, FormattedCustomData]
+ *     ;
+ * ```
+ *
+ * @typedef {Array} CallQueueEntry
+ * @typedef {CallQueueEntry[]} CallQueue
+ */
+
+//
+
 
 const MetricsClient = require( './MetricsClient.js' );
 
@@ -12,7 +27,9 @@ const CALL_QUEUE_MAX_LENGTH = 128;
 /**
  * @param {Integration} integration
  * @param {EventSubmitter} [eventSubmitter]
+ *
  * @constructor
+ * @extends MetricsClient
  */
 function ExternalMetricsClient( integration, eventSubmitter ) {
 	MetricsClient.call( this, integration, {}, eventSubmitter );
@@ -108,11 +125,11 @@ ExternalMetricsClient.prototype.processCallQueue = function () {
 };
 
 /**
- * @inheritdoc
- *
  * NOTE: Calls to `submit()` are processed after the stream configs are fetched and updated. If
  * the Metrics Platform Client was initialized with stream configs, then calls to `submit()` are
  * processed immediately.
+ *
+ * @override
  */
 ExternalMetricsClient.prototype.submit = function ( streamName, eventData ) {
 	const result = this.validateSubmitCall( streamName, eventData );
@@ -128,11 +145,11 @@ ExternalMetricsClient.prototype.submit = function ( streamName, eventData ) {
 };
 
 /**
- * @inheritdoc
- *
  * NOTE: Calls to `dispatch()` are processed after the stream configs are fetched and updated. If
  * the Metrics Platform Client was initialized with stream configs, then calls to `dispatch()` are
  * processed immediately.
+ *
+ * @override
  */
 ExternalMetricsClient.prototype.dispatch = function ( eventName, customData ) {
 	const result = this.validateDispatchCall( eventName, customData );
