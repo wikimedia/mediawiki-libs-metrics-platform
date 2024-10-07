@@ -3,7 +3,6 @@ const SamplingController = require( './SamplingController.js' );
 const CurationController = require( './CurationController.js' );
 const DefaultEventSubmitter = require( './DefaultEventSubmitter.js' ).DefaultEventSubmitter;
 const Instrument = require( './Instrument.js' );
-const NullInstrument = require( './NullInstrument.js' );
 
 const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
 
@@ -487,7 +486,8 @@ MetricsClient.prototype.submitInteraction = function (
 	this.submit( streamName, eventData );
 };
 
-const CLICK_SCHEMA_ID = '/analytics/product_metrics/web/base/1.2.0';
+const WEB_BASE_SCHEMA_ID = '/analytics/product_metrics/web/base/1.2.0';
+const WEB_BASE_STREAM_NAME = 'product_metrics.web_base';
 
 /**
  * See `MetricsClient#submitInteraction()`.
@@ -498,7 +498,7 @@ const CLICK_SCHEMA_ID = '/analytics/product_metrics/web/base/1.2.0';
  * @param {ElementInteractionData} interactionData
  */
 MetricsClient.prototype.submitClick = function ( streamName, interactionData ) {
-	this.submitInteraction( streamName, CLICK_SCHEMA_ID, 'click', interactionData );
+	this.submitInteraction( streamName, WEB_BASE_SCHEMA_ID, 'click', interactionData );
 };
 
 /**
@@ -517,7 +517,7 @@ MetricsClient.prototype.isStreamInSample = function ( streamName ) {
  * @param {string} streamOrInstrumentName
  * @param {string} [streamNameOrSchemaID]
  * @param {string} [schemaID]
- * @return {Instrument|NullInstrument}
+ * @return {Instrument}
  */
 MetricsClient.prototype.newInstrument = function (
 	streamOrInstrumentName,
@@ -533,24 +533,14 @@ MetricsClient.prototype.newInstrument = function (
 		instrumentName = streamOrInstrumentName;
 
 		const streamConfig = getStreamConfigInternal( this.streamConfigs, instrumentName );
-
-		streamName =
+		const overrideStreamName =
 			streamConfig &&
 			streamConfig.producers &&
 			streamConfig.producers.metrics_platform_client &&
 			streamConfig.producers.metrics_platform_client.stream_name;
 
-		if ( !streamName ) {
-			this.integration.logWarning(
-				'newInstrument( ' + instrumentName + ' ) ' +
-				'cannot determine stream name for instrument. No event(s) will be produced.'
-			);
-
-			return new NullInstrument();
-		}
-
-		// TODO: This should be WEB_BASE_SCHEMA_ID
-		schemaID = CLICK_SCHEMA_ID;
+		streamName = overrideStreamName || WEB_BASE_STREAM_NAME;
+		schemaID = WEB_BASE_SCHEMA_ID;
 	} else if ( schemaID === undefined ) {
 		// #newInstrument( streamName, schemaID )
 
