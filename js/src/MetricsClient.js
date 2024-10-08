@@ -514,6 +514,22 @@ MetricsClient.prototype.isStreamInSample = function ( streamName ) {
 };
 
 /**
+ * Creates a new {@link Instrument} instance, which is bound to this `MetricsClient` instance.
+ *
+ * @example
+ * // Create a new instrument by name:
+ *
+ * const m = require( '/path/to/metrics-platform' ).createMetricsClient();
+ * let i = m.newInstrument( 'my_instrument' );
+ *
+ * // … and by stream name/schema ID pair:
+ *
+ * i = m.newInstrument( 'my_stream_name', '/analytics/my/schema/id/1.0.0' );
+ *
+ * // … and by instrument name and stream name/schema ID pair:
+ *
+ * i = m.newInstrument( 'my_instrument', 'my_stream_name', '/analytics/my/schema/id/1.0.0' );
+ *
  * @param {string} streamOrInstrumentName
  * @param {string} [streamNameOrSchemaID]
  * @param {string} [schemaID]
