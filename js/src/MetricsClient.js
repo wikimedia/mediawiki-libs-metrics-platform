@@ -486,7 +486,8 @@ MetricsClient.prototype.submitInteraction = function (
 	this.submit( streamName, eventData );
 };
 
-const CLICK_SCHEMA_ID = '/analytics/product_metrics/web/base/1.2.0';
+const WEB_BASE_SCHEMA_ID = '/analytics/product_metrics/web/base/1.3.0';
+const WEB_BASE_STREAM_NAME = 'product_metrics.web_base';
 
 /**
  * See `MetricsClient#submitInteraction()`.
@@ -497,7 +498,7 @@ const CLICK_SCHEMA_ID = '/analytics/product_metrics/web/base/1.2.0';
  * @param {ElementInteractionData} interactionData
  */
 MetricsClient.prototype.submitClick = function ( streamName, interactionData ) {
-	this.submitInteraction( streamName, CLICK_SCHEMA_ID, 'click', interactionData );
+	this.submitInteraction( streamName, WEB_BASE_SCHEMA_ID, 'click', interactionData );
 };
 
 /**
@@ -513,12 +514,68 @@ MetricsClient.prototype.isStreamInSample = function ( streamName ) {
 };
 
 /**
- * @param {string} streamName
- * @param {string} schemaID
+ * Creates a new {@link Instrument} instance, which is bound to this `MetricsClient` instance.
+ *
+ * @example
+ * // Create a new instrument by name:
+ *
+ * const m = require( '/path/to/metrics-platform' ).createMetricsClient();
+ * let i = m.newInstrument( 'my_instrument' );
+ *
+ * // … and by stream name/schema ID pair:
+ *
+ * i = m.newInstrument( 'my_stream_name', '/analytics/my/schema/id/1.0.0' );
+ *
+ * // … and by instrument name and stream name/schema ID pair:
+ *
+ * i = m.newInstrument( 'my_instrument', 'my_stream_name', '/analytics/my/schema/id/1.0.0' );
+ *
+ * @param {string} streamOrInstrumentName
+ * @param {string} [streamNameOrSchemaID]
+ * @param {string} [schemaID]
  * @return {Instrument}
  */
-MetricsClient.prototype.newInstrument = function ( streamName, schemaID ) {
-	return new Instrument( this, streamName, schemaID );
+MetricsClient.prototype.newInstrument = function (
+	streamOrInstrumentName,
+	streamNameOrSchemaID,
+	schemaID
+) {
+	let instrumentName;
+	let streamName;
+
+	if ( streamNameOrSchemaID === undefined ) {
+		// #newInstrument( instrumentName )
+
+		instrumentName = streamOrInstrumentName;
+
+		const streamConfig = getStreamConfigInternal( this.streamConfigs, instrumentName );
+		const overrideStreamName =
+			streamConfig &&
+			streamConfig.producers &&
+			streamConfig.producers.metrics_platform_client &&
+			streamConfig.producers.metrics_platform_client.stream_name;
+
+		streamName = overrideStreamName || WEB_BASE_STREAM_NAME;
+		schemaID = WEB_BASE_SCHEMA_ID;
+	} else if ( schemaID === undefined ) {
+		// #newInstrument( streamName, schemaID )
+
+		streamName = streamOrInstrumentName;
+		schemaID = streamNameOrSchemaID;
+	} else {
+		// #newInstrument( instrumentName, streamName, schemaID )
+
+		instrumentName = streamOrInstrumentName;
+		streamName = streamNameOrSchemaID;
+	}
+
+	const result = new Instrument( this, streamName, schemaID );
+
+	if ( instrumentName ) {
+		result.setInstrumentName( instrumentName );
+	}
+
+	return result;
 };
 
 /**

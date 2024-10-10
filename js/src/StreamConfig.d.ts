@@ -19,9 +19,14 @@ type StreamProducerName = "metrics_platform_client";
 
 interface StreamProducerConfig {
     events?: string|string[];
+
+    // TODO (phuedx, 2024/09/05): Do we need to keep this?
     sampling?: StreamSamplingConfig;
+
     provide_values?: StreamProducerContextAttribute[];
     curation?: StreamProducerCurationConfigs;
+
+    stream_name?: string;
 }
 
 type StreamProducerCurationConfigs = {
