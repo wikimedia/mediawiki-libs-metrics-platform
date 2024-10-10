@@ -486,7 +486,7 @@ MetricsClient.prototype.submitInteraction = function (
 	this.submit( streamName, eventData );
 };
 
-const WEB_BASE_SCHEMA_ID = '/analytics/product_metrics/web/base/1.2.0';
+const WEB_BASE_SCHEMA_ID = '/analytics/product_metrics/web/base/1.3.0';
 const WEB_BASE_STREAM_NAME = 'product_metrics.web_base';
 
 /**
