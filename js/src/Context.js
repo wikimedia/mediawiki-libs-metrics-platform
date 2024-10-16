@@ -1,6 +1,14 @@
 /**
+ * @namespace Context
+ */
+
+// Types
+// =====
+
+/**
+ * @ignore
+ *
  * @type {StreamProducerContextAttribute[]}
- * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/Contextual_attributes
  */
 const VALID_ATTRIBUTE_NAMES = [
 	'agent_app_install_id',
@@ -44,7 +52,87 @@ const VALID_ATTRIBUTE_NAMES = [
 	'performer_registration_dt'
 ];
 
+
 /**
+ * All the context attributes that can be provided by the JavaScript Metrics Platform Client.
+ *
+ * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/Contextual_attributes
+ *
+ * @memberof Context
+ *
+ * @typedef {Object} ContextAttributes
+ * @property {EventAgentData} agent
+ * @property {EventPageData} [page]
+ * @property {EventMediaWikiData} [mediawiki]
+ * @property {EventPerformerData} [performer]
+ * @property {StreamConfig.StreamSamplingConfig} [sample]
+ */
+
+/**
+ * @memberof Context
+ *
+ * @typedef {Object} EventAgentData
+ * @property {string} [client_platform]
+ * @property {string} [client_platform_family]
+ */
+
+/**
+ * @memberof Context
+ *
+ * @typedef {Object} EventPageData
+ * @property {number} [id]
+ * @property {string} [title]
+ * @property {number} [namespace]
+ * @property {string} [namespace_name]
+ * @property {number} [revision_id]
+ * @property {number} [wikidata_id]
+ * @property {string} [wikidata_qid]
+ * @property {string} [content_language]
+ * @property {boolean} [is_redirect]
+ * @property {string[]} [user_groups_allowed_to_move]
+ * @property {string[]} [user_groups_allowed_to_edit]
+ */
+
+/**
+ * @memberof Context
+ *
+ * @typedef {Object} EventMediaWikiData
+ * @property {string} [skin]
+ * @property {string} [version]
+ * @property {boolean} [is_production]
+ * @property {boolean} [is_debug_mode]
+ * @property {string} [database]
+ * @property {string} [site_content_language]
+ * @property {string} [site_content_language_variant]
+ */
+
+/**
+ * @memberof Context
+ *
+ * @typedef {Object} EventPerformerData
+ * @property {boolean} [is_logged_in]
+ * @property {string} [id]
+ * @property {string} [name]
+ * @property {string} [session_id]
+ * @property {string} [active_browsing_session_token]
+ * @property {string} [pageview_id]
+ * @property {string[]} [groups]
+ * @property {boolean} [is_bot]
+ * @property {boolean} [is_temp]
+ * @property {string} [language]
+ * @property {string} [language_variant]
+ * @property {boolean} [can_probably_edit_page]
+ * @property {number} [edit_count]
+ * @property {string} [edit_count_bucket]
+ * @property {string} [registration_dt]
+ */
+
+// Functions
+// =========
+
+/**
+ * @memberof Context
+ *
  * @param {ContextAttributes} from
  * @param {StreamProducerContextAttribute} name
  * @return {*}
@@ -64,6 +152,8 @@ function getAttributeByName( from, name ) {
 }
 
 /**
+ * @memberof Context
+ *
  * @param {ContextAttributes} from
  * @param {ContextAttributes} to
  * @param {StreamProducerContextAttribute} name
@@ -84,6 +174,8 @@ function copyAttributeByName( from, to, name ) {
 }
 
 /**
+ * @memberof Context
+ *
  * @param {ContextAttributes} from
  * @param {ContextAttributes} to
  */
