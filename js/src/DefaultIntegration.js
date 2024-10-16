@@ -1,10 +1,12 @@
 /* eslint-disable jsdoc/require-returns-check,no-unused-vars */
 
-const copyAttributes = require( './ContextUtils.js' ).copyAttributes;
+const copyAttributes = require( './Context.js' ).copyAttributes;
 
 const DEFAULT_STREAM_CONFIGS_ORIGIN = 'https://meta.wikimedia.org';
 
 /**
+ * @ignore
+ *
  * @param {string} origin
  * @return {string}
  */

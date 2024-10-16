@@ -94,6 +94,12 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
 // ---
 
 /**
+ * @namespace EventPlatform
+ */
+
+/**
+ * @memberof EventPlatform
+ *
  * @typedef {object} BaseEventData
  * @property {string} $schema
  * @property {EventMetaData} [meta]
@@ -102,6 +108,8 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  */
 
 /**
+ * @memberof EventPlatform
+ *
  * @typedef {object} EventMetaData
  * @property {string} [domain]
  * @property {string} stream
@@ -110,94 +118,36 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  */
 
 /**
+ * @memberof EventPlatform
+ *
  * @typedef {EventData} BaseEventData
  */
 
 /**
+ * @memberof EventPlatform
+ *
  * @typedef {Object.<string,EventCustomDatum>} FormattedCustomData
  */
 
 /**
+ * @memberof EventPlatform
+ *
  * @typedef {Object} EventCustomDatum
  * @property {string} data_type
  * @property {string} value
  */
 
 /**
+ * @memberof MetricsClient
+ *
  * @typedef {BaseEventData|ContextAttributes} MetricsPlatformEventData
  * @property {string} name
  * @property {FormattedCustomData} [custom_data]
  */
 
 /**
- * All the context attributes that can be provided by the JavaScript Metrics Platform Client.
+ * @memberof MetricsClient
  *
- * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/Contextual_attributes
- *
- * @typedef {Object} ContextAttributes
- * @property {EventAgentData} agent
- * @property {EventPageData} [page]
- * @property {EventMediaWikiData} [mediawiki]
- * @property {EventPerformerData} [performer]
- * @property {SampleData} [sample]
- */
-
-/**
- * @typedef {Object} EventAgentData
- * @property {string} [client_platform]
- * @property {string} [client_platform_family]
- */
-
-/**
- * @typedef {Object} EventPageData
- * @property {number} [id]
- * @property {string} [title]
- * @property {number} [namespace]
- * @property {string} [namespace_name]
- * @property {number} [revision_id]
- * @property {number} [wikidata_id]
- * @property {string} [wikidata_qid]
- * @property {string} [content_language]
- * @property {boolean} [is_redirect]
- * @property {string[]} [user_groups_allowed_to_move]
- * @property {string[]} [user_groups_allowed_to_edit]
- */
-
-/**
- * @typedef {Object} EventMediaWikiData
- * @property {string} [skin]
- * @property {string} [version]
- * @property {boolean} [is_production]
- * @property {boolean} [is_debug_mode]
- * @property {string} [database]
- * @property {string} [site_content_language]
- * @property {string} [site_content_language_variant]
- */
-
-/**
- * @typedef {Object} EventPerformerData
- * @property {boolean} [is_logged_in]
- * @property {string} [id]
- * @property {string} [name]
- * @property {string} [session_id]
- * @property {string} [active_browsing_session_token]
- * @property {string} [pageview_id]
- * @property {string[]} [groups]
- * @property {boolean} [is_bot]
- * @property {boolean} [is_temp]
- * @property {string} [language]
- * @property {string} [language_variant]
- * @property {boolean} [can_probably_edit_page]
- * @property {number} [edit_count]
- * @property {string} [edit_count_bucket]
- * @property {string} [registration_dt]
- */
-
-/**
- * @typedef {StreamSamplingConfig} SampleData
- */
-
-/**
  * Optional data related to the interaction.
  *
  * @typedef {Object} InteractionContextData
@@ -206,10 +156,6 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * @property {string} action_context
  *
  * @property {number} funnel_event_sequence_position
- */
-
-/**
- * @typedef {string} InteractionAction
  */
 
 /**
@@ -222,117 +168,18 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * convenience methods that fill the `action` property (and/or other properties in future), e.g.
  * `MetricsClient#submitClick()`.
  *
- * @typedef {InteractionContextData} InteractionAction
- * @property {InteractionAction} action
+ * @memberof MetricsClient
+ *
+ * @typedef {InteractionContextData} InteractionData
+ * @property {string} action
  */
 
 /**
+ * @memberof MetricsClient
+ *
  * @typedef {InteractionContextData} ElementInteractionData
  * @property {string} element_id
  * @property {string} element_friendly_name
- */
-
-/**
- * @typedef {Object.<string,StreamConfig>} StreamConfigs
- */
-
-/**
- * @typedef {Object} StreamConfig
- * @property {string} [schema_title]
- * @property {Object.<string,StreamProducerConfig>} [producers]
- * @property {StreamSamplingConfig} [sample]
- */
-
-// ---
-
-/**
- * @typedef {Object} StreamSamplingConfig
- * @property {string} unit
- * @property {number} rate
- */
-
-// ---
-
-/**
- * @typedef {Object} StreamProducerConfig
- * @property {string[]} [events]
- * @property {StreamSamplingConfig} [sampling]
- * @property {StreamProducerContextAttribute[]} [provide_values]
- * @property {StreamProducerCurationConfigs} [curation]
- */
-
-/**
- * @typedef {Object.<string,StreamProducerContextAttribute>} StreamProducerCurationConfigs
- */
-
-/**
- * @readonly
- * @enum {string}
- */
-const StreamProducerContextAttribute = {
-
-    // Agent
-    agent_client_platform: 'agent_client_platform',
-    agent_client_platform_family: 'agent_client_platform_family',
-
-    // Page
-    page_id: 'page_id',
-    page_title: 'page_title',
-    page_namespace: 'page_namespace',
-    page_namespace_name: 'page_namespace_name',
-    page_revision_id: 'page_revision_id',
-    page_wikidata_id: 'page_wikidata_id',
-    page_wikidata_qid: 'page_wikidata_id',
-    page_content_language: 'page_content_language',
-    page_is_redirect: 'page_is_redirect',
-    page_user_groups_allowed_to_move: 'page_user_groups_allowed_to_move',
-    page_user_groups_allowed_to_edit: 'page_user_groups_allowed_to_edit',
-
-    // MediaWiki
-    mediawiki_skin: 'mediawiki_skin',
-    mediawiki_version: 'mediawiki_version',
-    mediawiki_is_production: 'mediawiki_is_production',
-    mediawiki_is_debug_mode: 'mediawiki_is_debug_mode',
-    mediawiki_database: 'mediawiki_database',
-    mediawiki_site_content_language: 'mediawiki_site_content_language',
-    mediawiki_site_content_language_variant: 'mediawiki_site_content_language_variant',
-
-    // Performer
-    performer_is_logged_in: 'performer_is_logged_in',
-    performer_id: 'performer_id',
-    performer_name: 'performer_name',
-    performer_session_id: 'performer_session_id',
-    performer_active_browsing_session_token: 'performer_active_browsing_session_token',
-    performer_pageview_id: 'performer_pageview_id',
-    performer_groups: 'performer_groups',
-    performer_is_bot: 'performer_is_bot',
-    performer_is_temp: 'performer_is_temp',
-    performer_language: 'performer_language',
-    performer_language_variant: 'performer_language_variant',
-    performer_can_probably_edit_page: 'performer_can_probably_edit_page',
-    performer_edit_count: 'performer_edit_count',
-    performer_edit_count_bucket: 'performer_edit_count_bucket',
-    performer_registration_dt: 'performer_registration_dt'
-};
-
-/**
- * @typedef {Object} StreamProducerCurationConfig
- * @property {StreamProducerCurationOperand} [equals]
- * @property {StreamProducerCurationOperand} [not_equals]
- * @property {StreamProducerCurationOperand} [greater_than]
- * @property {number} [less_than]
- * @property {number} [less_than_or_equals]
- * @property {number} [greater_than_or_equals]
- * @property {StreamProducerCurationOperand[]} [in]
- * @property {StreamProducerCurationOperand[]} [not_in]
- * @property {StreamProducerCurationOperand} [contains]
- * @property {StreamProducerCurationOperand[]} [contains_all]
- * @property {StreamProducerCurationOperand[]} [contains_any]
- * @property {StreamProducerCurationOperand} [does_not_contain]
- */
-
-/**
- * @typedef {string|number|boolean|null} StreamProducerCurationOperand
  */
 
 /**
@@ -360,6 +207,8 @@ function MetricsClient(
 }
 
 /**
+ * @ignore
+ *
  * @param {StreamConfigs|false} streamConfigs
  * @param {string} streamName
  * @return {StreamConfig|undefined}
@@ -402,6 +251,8 @@ MetricsClient.prototype.getStreamConfig = function ( streamName ) {
 };
 
 /**
+ * @ignore
+ *
  * @param {StreamConfigs} streamConfigs
  * @return {Record<string, string[]>}
  */
@@ -598,6 +449,8 @@ MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, ev
  * Format the custom data so that it is compatible with the Metrics Platform Event schema.
  *
  * `customData` is considered valid if all of its keys are snake_case.
+ *
+ * @ignore
  *
  * @param {Record<string,any>|undefined} customData
  * @return {FormattedCustomData}

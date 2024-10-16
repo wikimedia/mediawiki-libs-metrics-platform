@@ -1,5 +1,5 @@
-const copyAttributeByName = require( './ContextUtils.js' ).copyAttributeByName;
-const isValidSample = require( './StreamConfigUtils.js' ).isValidSample;
+const copyAttributeByName = require( './Context.js' ).copyAttributeByName;
+const isValidSample = require( './StreamConfig.js' ).isValidSample;
 
 /**
  * Add context attributes requested in stream configuration.
