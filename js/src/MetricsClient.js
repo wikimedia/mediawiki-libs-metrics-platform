@@ -6,12 +6,17 @@ const Instrument = require( './Instrument.js' );
 
 const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
 
+/**
+ * @namespace MetricsPlatform
+ */
+
 // ---
 
 /**
  * An adaptor for the environment that the Metrics Platform Client is executing in.
  *
  * @interface Integration
+ * @memberof MetricsPlatform
  */
 
 /**
@@ -138,7 +143,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  */
 
 /**
- * @memberof MetricsClient
+ * @memberof MetricsPlatform
  *
  * @typedef {BaseEventData|ContextAttributes} MetricsPlatformEventData
  * @property {string} name
@@ -146,16 +151,15 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  */
 
 /**
- * @memberof MetricsClient
- *
  * Optional data related to the interaction.
  *
  * @typedef {Object} InteractionContextData
  * @property {string} action_subtype
  * @property {string} action_source
  * @property {string} action_context
- *
  * @property {number} funnel_event_sequence_position
+ *
+ * @memberof MetricsPlatform
  */
 
 /**
@@ -168,14 +172,14 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * convenience methods that fill the `action` property (and/or other properties in future), e.g.
  * `MetricsClient#submitClick()`.
  *
- * @memberof MetricsClient
+ * @memberof MetricsPlatform
  *
  * @typedef {InteractionContextData} InteractionData
  * @property {string} action
  */
 
 /**
- * @memberof MetricsClient
+ * @memberof MetricsPlatform
  *
  * @typedef {InteractionContextData} ElementInteractionData
  * @property {string} element_id

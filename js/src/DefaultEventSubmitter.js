@@ -3,6 +3,7 @@
 
 /**
  * @interface EventSubmitter
+ * @memberof MetricsPlatform
  */
 
 /**
