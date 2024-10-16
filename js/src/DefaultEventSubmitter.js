@@ -24,6 +24,8 @@ const DELAYED_SUBMIT_TIMEOUT = 5; // (s)
 // =========
 
 /**
+ * @ignore
+ *
  * @param {string} [origin]
  * @return {string}
  */

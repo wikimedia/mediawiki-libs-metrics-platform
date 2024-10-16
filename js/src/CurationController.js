@@ -1,4 +1,4 @@
-const getAttributeByName = require( './ContextUtils.js' ).getAttributeByName;
+const getAttributeByName = require( './Context.js' ).getAttributeByName;
 
 /**
  * @constructor
