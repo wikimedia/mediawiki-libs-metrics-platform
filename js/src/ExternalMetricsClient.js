@@ -10,6 +10,8 @@
  *     ;
  * ```
  *
+ * @ignore
+ *
  * @typedef {Array} CallQueueEntry
  * @typedef {CallQueueEntry[]} CallQueue
  */

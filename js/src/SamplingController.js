@@ -1,4 +1,4 @@
-const isValidSample = require( './StreamConfigUtils.js' ).isValidSample;
+const isValidSample = require( './StreamConfig.js' ).isValidSample;
 
 const UINT32_MAX = 4294967295; // (2^32) - 1
 
