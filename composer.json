@@ -22,7 +22,7 @@
 		"php": ">=7.4.3",
 		"justinrainbow/json-schema": "~5.2.11",
 		"psr/log": "^1.1.4",
-		"wikimedia/timestamp": "4.1.1"
+		"wikimedia/timestamp": "^4.1.1"
 	},
 	"require-dev": {
 		"ext-json": "*",
