@@ -158,6 +158,8 @@ public class MetricsClient {
      *   event: event
      * )
      * ```
+     *
+     * See https://wikitech.wikimedia.org/wiki/Metrics_Platform/Swift_API
      */
     public func submit(stream: String, event: Event) {
         if !integration.loggingEnabled() {

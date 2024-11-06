@@ -2,6 +2,9 @@ package org.wikimedia.metrics_platform.context;
 
 import javax.annotation.concurrent.ThreadSafe;
 
+/**
+ * @see <a href="https://wikitech.wikimedia.org/wiki/Metrics_Platform/Contextual_attributes">Metrics Platform/Contextual attributes</a>
+ */
 @ThreadSafe
 public final class ContextValue {
     public static final String AGENT_APP_INSTALL_ID = "agent_app_install_id";

@@ -35,7 +35,7 @@ interface MetricsPlatformEventData extends BaseEventData, ContextAttributes {
 /**
  * All the context attributes that can be provided by the Metrics Platform Client.
  *
- * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/Event_Context_Attributes
+ * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/Contextual_attributes
  */
 interface ContextAttributes {
 	agent?: EventAgentData;

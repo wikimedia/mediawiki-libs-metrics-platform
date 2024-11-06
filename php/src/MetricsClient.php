@@ -78,6 +78,8 @@ class MetricsClient implements LoggerAwareInterface {
 	 * @param string $schemaId
 	 * @param string $action
 	 * @param array $interactionData
+	 *
+	 * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/PHP_API
 	 */
 	public function submitInteraction(
 		string $streamName,
@@ -113,6 +115,8 @@ class MetricsClient implements LoggerAwareInterface {
 	 *
 	 * @param string $streamName
 	 * @param array $interactionData
+	 *
+	 * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/PHP_API
 	 */
 	public function submitClick(
 		string $streamName,

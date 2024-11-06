@@ -1,5 +1,8 @@
 import Foundation
 
+/**
+ * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/Contextual_attributes
+ */
 enum ContextAttribute: String, Codable, CaseIterable {
     case agentAppInstallId = "agent_app_install_id"
     case agentClientPlatform = "agent_client_platform"
