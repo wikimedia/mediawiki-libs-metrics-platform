@@ -14,6 +14,7 @@ class ContextController {
 
             /// Agent
             /// NOTE: The app install ID, client platform, and client platform family are initialized in `Event()`.
+            /// See https://wikitech.wikimedia.org/wiki/Metrics_Platform/Contextual_attributes
             case .agentAppInstallId:
                 break
             case .agentClientPlatform:

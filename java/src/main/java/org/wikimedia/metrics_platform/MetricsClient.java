@@ -129,7 +129,7 @@ public final class MetricsClient {
      * This particular submitMetricsEvent method accepts unformatted custom data and calls the following
      * submitMetricsEvent method with the custom data properly formatted.
      *
-     * @see <a href="https://wikitech.wikimedia.org/wiki/Metrics_Platform">Metrics Platform</a>
+     * @see <a href="https://wikitech.wikimedia.org/wiki/Metrics_Platform/Java_API">Metrics Platform/Java API</a>
      *
      * @param streamName stream name
      * @param schemaId  schema id
@@ -230,6 +230,8 @@ public final class MetricsClient {
      * @param eventName event name
      * @param clientData client context data
      * @param interactionData common data for the base interaction schema
+     *
+     * @see <a href="https://wikitech.wikimedia.org/wiki/Metrics_Platform/Java_API">Metrics Platform/Java API</a>
      */
     public void submitInteraction(
             String streamName,
@@ -251,6 +253,8 @@ public final class MetricsClient {
      * @param clientData client context data
      * @param interactionData common data for the base interaction schema
      * @param customData custom data for the interaction
+     *
+     * @see <a href="https://wikitech.wikimedia.org/wiki/Metrics_Platform/Java_API">Metrics Platform/Java API</a>
      */
     public void submitInteraction(
             String streamName,
@@ -269,6 +273,8 @@ public final class MetricsClient {
      * @param streamName stream name
      * @param clientData client context data
      * @param interactionData common data for the base interaction schema
+     *
+     * @see <a href="https://wikitech.wikimedia.org/wiki/Metrics_Platform/Java_API">Metrics Platform/Java API</a>
      */
     public void submitClick(
             String streamName,
@@ -287,6 +293,8 @@ public final class MetricsClient {
      * @param clientData client context data
      * @param customData custom data for the interaction
      * @param interactionData common data for the base interaction schema
+     *
+     * @see <a href="https://wikitech.wikimedia.org/wiki/Metrics_Platform/Java_API">Metrics Platform/Java API</a>
      */
     public void submitClick(
             String streamName,

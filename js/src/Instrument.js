@@ -37,6 +37,8 @@
  * @param {string} streamName
  * @param {string} schemaID
  * @constructor
+ *
+ * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/JavaScript_API
  */
 function Instrument( metricsClient, streamName, schemaID ) {
 	this.metricsClient = metricsClient;

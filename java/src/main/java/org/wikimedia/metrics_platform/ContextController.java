@@ -52,6 +52,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @ParametersAreNonnullByDefault
 public class ContextController {
 
+    /**
+     * @see <a href="https://wikitech.wikimedia.org/wiki/Metrics_Platform/Contextual_attributes">Metrics Platform/Contextual attributes</a>
+     */
     private static final Collection<String> REQUIRED_PROPERTIES = List.of(
             "agent_app_flavor",
             "agent_app_install_id",

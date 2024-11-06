@@ -432,9 +432,7 @@ MetricsClient.prototype.processDispatchCall = function (
  *
  * If E does not have the `action` property, then a warning is logged.
  *
- * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/Implementations
- * @todo Should we create an API subpage?
- * @todo Link to the page created as part of https://phabricator.wikimedia.org/T345906
+ * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/JavaScript_API
  *
  * @unstable
  *
@@ -496,6 +494,8 @@ const WEB_BASE_STREAM_NAME = 'product_metrics.web_base';
  *
  * @param {string} streamName
  * @param {ElementInteractionData} interactionData
+ *
+ * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/JavaScript_API
  */
 MetricsClient.prototype.submitClick = function ( streamName, interactionData ) {
 	this.submitInteraction( streamName, WEB_BASE_SCHEMA_ID, 'click', interactionData );
