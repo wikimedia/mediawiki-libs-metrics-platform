@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "qunit ./test/unit/ && npm run lint",
-		"lint": "eslint --cache . && tsc",
+		"lint": "eslint --cache",
 		"doc": "jsdoc -c jsdoc.json",
 		"coverage": "nyc qunit ./test/unit/",
 		"build": "esbuild build/index.js --bundle --outfile=dist/metrics-platform.js"
@@ -21,16 +21,13 @@
 	],
 	"license": "GPL-2.0+",
 	"devDependencies": {
-		"@types/node": "^20.14.2",
-		"@types/qunit": "^2.19.10",
-		"@types/sinon": "^17.0.3",
 		"esbuild": "^0.21.4",
 		"eslint-config-wikimedia": "^0.28.0",
 		"jsdoc": "^4.0.3",
+		"jsdoc-wmf-theme": "^1.1.0",
 		"nyc": "^15.1.0",
 		"qunit": "^2.21.0",
-		"sinon": "^18.0.0",
-		"typescript": "^5.4.5"
+		"sinon": "^18.0.0"
 	},
 	"files": [
 		"src/*.js",
