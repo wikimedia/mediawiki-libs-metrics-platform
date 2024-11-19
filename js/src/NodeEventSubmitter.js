@@ -11,7 +11,8 @@ const getEventGateUrl = require( './DefaultEventSubmitter.js' ).getEventGateUrl;
  *  events to. `https://intake-analytics.wikimedia.org` by default
  *
  * @class
- * @implements {EventSubmitter}
+ * @implements {MetricsPlatform.EventSubmitter}
+ * @memberof MetricsPlatform
  */
 function NodeEventSubmitter( eventGateOrigin ) {
 	this.eventGateUrl = getEventGateUrl( eventGateOrigin );
@@ -21,7 +22,7 @@ function NodeEventSubmitter( eventGateOrigin ) {
  * Submits to the event intake service or enqueues the event for submission to the event
  * intake service.
  *
- * @param {EventData} eventData
+ * @param {EventPlatform.EventData} eventData
  */
 NodeEventSubmitter.prototype.submitEvent = function ( eventData ) {
 	fetch( this.eventGateUrl, {

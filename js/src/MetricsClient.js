@@ -22,16 +22,16 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
 /**
  * Fetches stream configs from some source, remote or local.
  *
+ * @name MetricsPlatform.Integration#fetchStreamConfigs
+ * @returns {Promise<EventPlatform.StreamConfigs>}
  * @method
- * @name Integration#fetchStreamConfigs
- * @returns {Promise<StreamConfigs>}
  */
 
 /**
  * Gets the hostname of the current document.
  *
  * @method
- * @name Integration#getHostname
+ * @name MetricsPlatform.Integration#getHostname
  * @returns {string}
  */
 
@@ -40,7 +40,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * the console.
  *
  * @method
- * @name Integration#logWarning
+ * @name MetricsPlatform.Integration#logWarning
  * @param {string} message
  */
 
@@ -48,7 +48,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * Gets a deep clone of the object.
  *
  * @method
- * @name Integration#clone
+ * @name MetricsPlatform.Integration#clone
  * @param {Object} obj
  * @returns {Object}
  */
@@ -58,8 +58,8 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * environment.
  *
  * @method
- * @name Integration#getContextAttributes
- * @returns {ContextAttributes}
+ * @name MetricsPlatform.Integration#getContextAttributes
+ * @returns {MetricsPlatform.Context.ContextAttributes}
  */
 
 // NOTE: The following are required for compatibility with the current impl. but the
@@ -69,7 +69,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * Gets a token unique to the current pageview within the execution environment.
  *
  * @method
- * @name Integration#getPageviewId
+ * @name MetricsPlatform.Integration#getPageviewId
  * @returns {string}
  */
 
@@ -77,7 +77,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * Gets a token unique to the current session within the execution environment.
  *
  * @method
- * @name Integration#getSessionId
+ * @name MetricsPlatform.Integration#getSessionId
  * @returns {string}
  */
 
@@ -85,13 +85,13 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * Gets the experiment details for the current user.
  *
  * @method
- * @name Integration#getCurrentUserExperiments
+ * @name MetricsPlatform.Integration#getCurrentUserExperiments
  * @returns {Object}
  */
 
 /**
  * @method
- * @name Integration#isCurrentUserEnrolled
+ * @name MetricsPlatform.Integration#isCurrentUserEnrolled
  * @param {string} experimentName
  * @returns {boolean}
  */
@@ -103,51 +103,40 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  */
 
 /**
- * @memberof EventPlatform
- *
- * @typedef {object} BaseEventData
+ * @typedef {Object} EventData
  * @property {string} $schema
- * @property {EventMetaData} [meta]
+ * @property {EventPlatform.EventMetaData} [meta]
  * @property {string} [client_dt]
  * @property {string} [dt]
+ * @memberof EventPlatform
  */
 
 /**
- * @memberof EventPlatform
- *
- * @typedef {object} EventMetaData
+ * @typedef {Object} EventMetaData
  * @property {string} [domain]
  * @property {string} stream
- *
- * …
+ * @memberof EventPlatform
+ */
+
+// ---
+
+/**
+ * @typedef {EventPlatform.EventData|MetricsPlatform.Context.ContextAttributes} EventData
+ * @property {string} name
+ * @property {MetricsPlatform.FormattedCustomData} [custom_data]
+ * @memberof MetricsPlatform
  */
 
 /**
- * @memberof EventPlatform
- *
- * @typedef {EventData} BaseEventData
+ * @typedef {Map<string,MetricsPlatform.EventCustomDatum>} FormattedCustomData
+ * @memberof MetricsPlatform
  */
 
 /**
- * @memberof EventPlatform
- *
- * @typedef {Object.<string,EventCustomDatum>} FormattedCustomData
- */
-
-/**
- * @memberof EventPlatform
- *
  * @typedef {Object} EventCustomDatum
  * @property {string} data_type
  * @property {string} value
- */
-
-/**
  * @memberof MetricsPlatform
- *
- * @typedef {BaseEventData|ContextAttributes} MetricsPlatformEventData
- * @property {string} name
- * @property {FormattedCustomData} [custom_data]
  */
 
 /**
@@ -158,43 +147,40 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * @property {string} action_source
  * @property {string} action_context
  * @property {number} funnel_event_sequence_position
- *
  * @memberof MetricsPlatform
  */
 
 /**
  * Data for the interaction.
  *
- * Note well that this data cannot be submitted without being combined with some/all of the data
- * described above.
+ * This interface and the {@link MetricsPlatform.InteractionContextData} interface allow for the
+ * creation of many convenience methods that fill the `action` property (and/or other properties in
+ * future), e.g. {@link MetricsPlatform.MetricsClient#submitClick}.
  *
- * This interface and the `InteractionContextData` interface allow for the creation of many
- * convenience methods that fill the `action` property (and/or other properties in future), e.g.
- * `MetricsClient#submitClick()`.
- *
- * @memberof MetricsPlatform
- *
- * @typedef {InteractionContextData} InteractionData
+ * @typedef {MetricsPlatform.InteractionContextData} InteractionData
  * @property {string} action
+ * @memberof MetricsPlatform
  */
 
 /**
- * @memberof MetricsPlatform
- *
- * @typedef {InteractionContextData} ElementInteractionData
+ * @typedef {MetricsPlatform.InteractionContextData} ElementInteractionData
  * @property {string} element_id
  * @property {string} element_friendly_name
+ * @memberof MetricsPlatform
  */
+
+// ---
 
 /**
  * Client for producing events to [the Event Platform](https://wikitech.wikimedia.org/wiki/Event_Platform) and
  * [the Metrics Platform](https://wikitech.wikimedia.org/wiki/Metrics_Platform).
  *
- * @param {Integration} integration
- * @param {StreamConfigs|false} streamConfigs
- * @param {EventSubmitter} [eventSubmitter] An instance of {@link DefaultEventSubmitter} by default
+ * @param {MetricsPlatform.Integration} integration
+ * @param {EventPlatform.StreamConfigs|false} streamConfigs
+ * @param {MetricsPlatform.EventSubmitter} [eventSubmitter] An instance of {@link DefaultEventSubmitter} by default
  * @constructor
  * @class MetricsClient
+ * @memberof MetricsPlatform
  */
 function MetricsClient(
 	integration,
@@ -213,9 +199,9 @@ function MetricsClient(
 /**
  * @ignore
  *
- * @param {StreamConfigs|false} streamConfigs
+ * @param {EventPlatform.StreamConfigs|false} streamConfigs
  * @param {string} streamName
- * @return {StreamConfig|undefined}
+ * @return {EventPlatform.StreamConfig|undefined}
  */
 function getStreamConfigInternal( streamConfigs, streamName ) {
 	// If streamConfigs are false, then stream config usage is not enabled.
@@ -246,7 +232,7 @@ function getStreamConfigInternal( streamConfigs, streamName ) {
  * Gets a deep clone of the stream config.
  *
  * @param {string} streamName
- * @return {StreamConfig|undefined}
+ * @return {EventPlatform.StreamConfig|undefined}
  */
 MetricsClient.prototype.getStreamConfig = function ( streamName ) {
 	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
@@ -258,10 +244,10 @@ MetricsClient.prototype.getStreamConfig = function ( streamName ) {
  * @ignore
  *
  * @param {StreamConfigs} streamConfigs
- * @return {Record<string, string[]>}
+ * @return {Map<string, string[]>}
  */
 function getEventNameToStreamNamesMap( streamConfigs ) {
-	/** @type Record<string, string[]> */
+	/** @type {Map<string, string[]>} */
 	const result = {};
 
 	for ( const streamName in streamConfigs ) {
@@ -346,9 +332,9 @@ MetricsClient.prototype.getStreamNamesForEvent = function ( eventName ) {
  *
  * @ignore
  *
- * @param {BaseEventData} eventData
+ * @param {EventPlatform.EventData} eventData
  * @param {string} streamName
- * @return {BaseEventData}
+ * @return {EventPlatform.EventData}
  */
 MetricsClient.prototype.addRequiredMetadata = function ( eventData, streamName ) {
 	if ( eventData.meta ) {
@@ -389,7 +375,7 @@ MetricsClient.prototype.addRequiredMetadata = function ( eventData, streamName )
  * sample. If E does not have the `$schema` property, then a warning is logged.
  *
  * @param {string} streamName The name of the stream to send the event data to
- * @param {BaseEventData} eventData The event data
+ * @param {EventPlatform.EventData} eventData The event data
  *
  * @stable
  */
@@ -405,11 +391,10 @@ MetricsClient.prototype.submit = function ( streamName, eventData ) {
  * If `eventData` is falsy or does not have the `$schema` property set, then a warning is logged
  * and `false` is returned. Otherwise, `true` is returned.
  *
- * @ignore
- *
  * @param {string} streamName
- * @param {BaseEventData} eventData
+ * @param {EventPlatform.EventData} eventData
  * @return {boolean}
+ * @protected
  */
 MetricsClient.prototype.validateSubmitCall = function ( streamName, eventData ) {
 	if ( !eventData || !eventData.$schema ) {
@@ -431,7 +416,7 @@ MetricsClient.prototype.validateSubmitCall = function ( streamName, eventData ) 
  *
  * @param {string} timestamp The ISO 8601 formatted timestamp of the original call
  * @param {string} streamName The name of the stream to send the event data to
- * @param {BaseEventData} eventData The event data
+ * @param {EventPlatform.EventData} eventData The event data
  */
 MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, eventData ) {
 	eventData.dt = timestamp;
@@ -456,12 +441,12 @@ MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, ev
  *
  * @ignore
  *
- * @param {Record<string,any>|undefined} customData
+ * @param {Map<string,any>|undefined} customData
  * @return {FormattedCustomData}
  * @throws {Error} If `customData` is invalid
  */
 function getFormattedCustomData( customData ) {
-	/** @type {Record<string,EventCustomDatum>} */
+	/** @type {Map<string,MetricsPlatform.EventCustomDatum>} */
 	const result = {};
 
 	if ( !customData ) {
@@ -498,7 +483,7 @@ function getFormattedCustomData( customData ) {
  * is not filtered according to the filtering rules for S.
  *
  * @param {string} eventName
- * @param {Record<string, any>} [customData]
+ * @param {Map<string, any>} [customData]
  *
  * @unstable
  * @deprecated
@@ -516,11 +501,10 @@ MetricsClient.prototype.dispatch = function ( eventName, customData ) {
  * {@link getFormattedCustomData}, then a warning is logged and `false` is returned. Otherwise, the
  * formatted custom data is returned.
  *
- * @ignore
- *
  * @param {string} eventName
- * @param {Record<string, any>} [customData]
- * @return {FormattedCustomData|false}
+ * @param {Map<string, any>} [customData]
+ * @return {MetricsPlatform.FormattedCustomData|false}
+ * @protected
  */
 MetricsClient.prototype.validateDispatchCall = function ( eventName, customData ) {
 	// T309083
@@ -548,13 +532,12 @@ MetricsClient.prototype.validateDispatchCall = function ( eventName, customData 
  * Processes the result of a call to {@link MetricsClient.prototype.dispatch}.
  *
  * NOTE: This method should only be called **after** the stream configs have been fetched via
- * {@link MetricsClient.prototype.fetchStreamConfigs}.
- *
- * @ignore
+ * {@link MetricsPlatform.MetricsClient#fetchStreamConfigs}.
  *
  * @param {string} timestamp The ISO 8601 formatted timestamp of the original call
  * @param {string} eventName
- * @param {Record<string, any>} [formattedCustomData]
+ * @param {Map<string, any>} [formattedCustomData]
+ * @protected
  */
 MetricsClient.prototype.processDispatchCall = function (
 	timestamp,
@@ -566,7 +549,7 @@ MetricsClient.prototype.processDispatchCall = function (
 	// Produce the event(s)
 	for ( let i = 0; i < streamNames.length; ++i ) {
 		/* eslint-disable camelcase */
-		/** @type {MetricsPlatformEventData} */
+		/** @type {MetricsPlatform.EventData} */
 		const eventData = {
 			$schema: SCHEMA,
 			dt: timestamp,
@@ -605,24 +588,23 @@ MetricsClient.prototype.processDispatchCall = function (
  * occurring, e.g. the user (**performer**) tapping/clicking a UI element, or an app notifying the
  * server of its current state.
  *
- * An interaction event (E) MUST validate against the
- * /analytics/product_metrics/web/base/1.0.0 schema. At the time of writing, this means that E
+ * An interaction event (`E`) MUST validate against the
+ * /analytics/product_metrics/web/base/1.0.0 schema. At the time of writing, this means that `E`
  * MUST have the `action` property and MAY have the following properties:
  *
  * `action_subtype`
  * `action_source`
  * `action_context`
  *
- * If E does not have the `action` property, then a warning is logged.
+ * If `E` does not have the `action` property, then a warning is logged.
  *
- * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/JavaScript_API
- *
- * @unstable
+ * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/JavaScript_API#Submit_an_interaction_event
  *
  * @param {string} streamName
  * @param {string} schemaID
- * @param {InteractionAction} action
- * @param {InteractionContextData} [interactionData]
+ * @param {string} action
+ * @param {MetricsPlatform.InteractionContextData} [interactionData]
+ * @stable
  */
 MetricsClient.prototype.submitInteraction = function (
 	streamName,
@@ -671,14 +653,11 @@ const WEB_BASE_SCHEMA_ID = '/analytics/product_metrics/web/base/1.3.0';
 const WEB_BASE_STREAM_NAME = 'product_metrics.web_base';
 
 /**
- * See `MetricsClient#submitInteraction()`.
- *
- * @unstable
+ * See {@link MetricsPlatform.MetricsClient#submitInteraction}.
  *
  * @param {string} streamName
- * @param {ElementInteractionData} interactionData
- *
- * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/JavaScript_API
+ * @param {MetricsPlatform.ElementInteractionData} interactionData
+ * @unstable
  */
 MetricsClient.prototype.submitClick = function ( streamName, interactionData ) {
 	this.submitInteraction( streamName, WEB_BASE_SCHEMA_ID, 'click', interactionData );
@@ -689,6 +668,7 @@ MetricsClient.prototype.submitClick = function ( streamName, interactionData ) {
  *
  * @param {string} streamName
  * @return {boolean}
+ * @stable
  */
 MetricsClient.prototype.isStreamInSample = function ( streamName ) {
 	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
@@ -697,7 +677,8 @@ MetricsClient.prototype.isStreamInSample = function ( streamName ) {
 };
 
 /**
- * Creates a new {@link Instrument} instance, which is bound to this `MetricsClient` instance.
+ * Creates a new {@link MetricsPlatform.Instrument} instance, which is bound to this
+ * `MetricsClient` instance.
  *
  * @example
  * // Create a new instrument by name:
@@ -716,7 +697,8 @@ MetricsClient.prototype.isStreamInSample = function ( streamName ) {
  * @param {string} streamOrInstrumentName
  * @param {string} [streamNameOrSchemaID]
  * @param {string} [schemaID]
- * @return {Instrument}
+ * @return {MetricsPlatform.Instrument}
+ * @stable
  */
 MetricsClient.prototype.newInstrument = function (
 	streamOrInstrumentName,
@@ -762,10 +744,11 @@ MetricsClient.prototype.newInstrument = function (
 };
 
 /**
- *  Checks whether the user is enrolled in a specific experiment
+ * Checks whether the user is enrolled in a specific experiment
  *
  * @param {string} experimentName
  * @return {boolean}
+ * @stable
  */
 MetricsClient.prototype.isCurrentUserEnrolled = function ( experimentName ) {
 	return this.integration.isCurrentUserEnrolled( experimentName );

@@ -1,14 +1,14 @@
 /**
- * @namespace Context
+ * @namespace MetricsPlatform.Context
  */
 
 // Types
 // =====
 
 /**
- * @ignore
+ * @memberof MetricsPlatform.Context
  *
- * @type {StreamProducerContextAttribute[]}
+ * @type {EventPlatform.StreamProducerContextAttribute[]}
  */
 const VALID_ATTRIBUTE_NAMES = [
 	'agent_app_install_id',
@@ -58,27 +58,23 @@ const VALID_ATTRIBUTE_NAMES = [
  *
  * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/Contextual_attributes
  *
- * @memberof Context
- *
  * @typedef {Object} ContextAttributes
- * @property {EventAgentData} agent
- * @property {EventPageData} [page]
- * @property {EventMediaWikiData} [mediawiki]
- * @property {EventPerformerData} [performer]
- * @property {StreamConfig.StreamSamplingConfig} [sample]
+ * @property {MetricsPlatform.Context.EventAgentData} agent
+ * @property {MetricsPlatform.Context.EventPageData} [page]
+ * @property {MetricsPlatform.Context.EventMediaWikiData} [mediawiki]
+ * @property {MetricsPlatform.Context.EventPerformerData} [performer]
+ * @property {EventPlatform.StreamSampleConfig} [sample]
+ * @memberof MetricsPlatform.Context
  */
 
 /**
- * @memberof Context
- *
  * @typedef {Object} EventAgentData
  * @property {string} [client_platform]
  * @property {string} [client_platform_family]
+ * @memberof MetricsPlatform.Context
  */
 
 /**
- * @memberof Context
- *
  * @typedef {Object} EventPageData
  * @property {number} [id]
  * @property {string} [title]
@@ -91,11 +87,10 @@ const VALID_ATTRIBUTE_NAMES = [
  * @property {boolean} [is_redirect]
  * @property {string[]} [user_groups_allowed_to_move]
  * @property {string[]} [user_groups_allowed_to_edit]
+ * @memberof MetricsPlatform.Context
  */
 
 /**
- * @memberof Context
- *
  * @typedef {Object} EventMediaWikiData
  * @property {string} [skin]
  * @property {string} [version]
@@ -104,11 +99,10 @@ const VALID_ATTRIBUTE_NAMES = [
  * @property {string} [database]
  * @property {string} [site_content_language]
  * @property {string} [site_content_language_variant]
+ * @memberof MetricsPlatform.Context
  */
 
 /**
- * @memberof Context
- *
  * @typedef {Object} EventPerformerData
  * @property {boolean} [is_logged_in]
  * @property {string} [id]
@@ -125,17 +119,17 @@ const VALID_ATTRIBUTE_NAMES = [
  * @property {number} [edit_count]
  * @property {string} [edit_count_bucket]
  * @property {string} [registration_dt]
+ * @memberof MetricsPlatform.Context
  */
 
 // Functions
 // =========
 
 /**
- * @memberof Context
- *
- * @param {ContextAttributes} from
- * @param {StreamProducerContextAttribute} name
- * @return {*}
+ * @param {MetricsPlatform.Context.ContextAttributes} from
+ * @param {EventPlatform.StreamProducerContextAttribute} name
+ * @return {any}
+ * @memberof MetricsPlatform.Context
  */
 function getAttributeByName( from, name ) {
 	const index = name.indexOf( '_' );
@@ -152,11 +146,10 @@ function getAttributeByName( from, name ) {
 }
 
 /**
- * @memberof Context
- *
- * @param {ContextAttributes} from
- * @param {ContextAttributes} to
- * @param {StreamProducerContextAttribute} name
+ * @param {MetricsPlatform.Context.ContextAttributes} from
+ * @param {MetricsPlatform.Context.ContextAttributes} to
+ * @param {EventPlatform.StreamProducerContextAttribute} name
+ * @memberof MetricsPlatform.Context
  */
 function copyAttributeByName( from, to, name ) {
 	const index = name.indexOf( '_' );
@@ -174,10 +167,9 @@ function copyAttributeByName( from, to, name ) {
 }
 
 /**
- * @memberof Context
- *
- * @param {ContextAttributes} from
- * @param {ContextAttributes} to
+ * @param {MetricsPlatform.Context.ContextAttributes} from
+ * @param {MetricsPlatform.Context.ContextAttributes} to
+ * @memberof MetricsPlatform.Context
  */
 function copyAttributes( from, to ) {
 	VALID_ATTRIBUTE_NAMES.forEach( ( name ) => copyAttributeByName( from, to, name ) );
