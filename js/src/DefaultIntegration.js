@@ -30,23 +30,25 @@ function getStreamConfigsUrl( origin ) {
 }
 
 /**
- * @constructor
  * @param {string} [streamConfigsOrigin] The origin of the MediaWiki instance to fetch the stream
  *  configs from. `https://meta.mediawiki.org` by default
+ * @constructor
+ * @implements {MetricsPlatform.Integration}
+ * @memberof MetricsPlatform
  */
 function DefaultIntegration( streamConfigsOrigin ) {
 	this.streamConfigsUrl = getStreamConfigsUrl(
 		streamConfigsOrigin || DEFAULT_STREAM_CONFIGS_ORIGIN
 	);
 
-	/** @type {ContextAttributes} */
+	/** @type {MetricsPlatform.Context.ContextAttributes} */
 	this.contextAttributes = {};
 }
 
 /**
  * Fetches stream configs from some source, remote or local.
  *
- * @return {Promise<StreamConfigs>}
+ * @return {Promise<EventPlatform.StreamConfigs>}
  */
 DefaultIntegration.prototype.fetchStreamConfigs = function () {
 	return fetch( this.streamConfigsUrl )
@@ -87,7 +89,7 @@ DefaultIntegration.prototype.clone = function ( _obj ) {
  * Gets the values for those context attributes that are available in the execution
  * environment.
  *
- * @return {ContextAttributes}
+ * @return {MetricsPlatform.Context.ContextAttributes}
  */
 DefaultIntegration.prototype.getContextAttributes = function () {
 	return this.contextAttributes;
@@ -123,7 +125,7 @@ DefaultIntegration.prototype.getSessionId = function () {
 /**
  * Copies the given context attributes so that they can be mixed into events.
  *
- * @param {ContextAttributes} contextAttributes
+ * @param {MetricsPlatform.Context.ContextAttributes} contextAttributes
  */
 DefaultIntegration.prototype.setContextAttributes = function ( contextAttributes ) {
 	copyAttributes( contextAttributes, this.contextAttributes );
@@ -134,7 +136,7 @@ DefaultIntegration.prototype.setContextAttributes = function ( contextAttributes
  *
  * A experiment detail.
  *
- * @return {object}
+ * @return {Object}
  */
 DefaultIntegration.prototype.getCurrentUserExperiments = function () {
 	throw new Error( 'Not implemented yet.' );
