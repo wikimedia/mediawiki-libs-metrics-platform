@@ -2,49 +2,21 @@
 // =====
 
 /**
- * @memberof StreamConfig
- *
- * @typedef {Object.<string,StreamConfig>} StreamConfigs
+ * @namespace EventPlatform
  */
 
 /**
- * @memberof StreamConfig
- *
- * @typedef {Object} StreamConfig
- * @property {string} [schema_title]
- * @property {Object.<string,StreamProducerConfig>} [producers]
- * @property {StreamSamplingConfig} [sample]
- */
-
-/**
- * @memberof StreamConfig
- *
- * @typedef {Object} StreamSamplingConfig
+ * @typedef {Object} StreamSampleConfig
  * @property {string} unit
  * @property {number} rate
+ * @memberof EventPlatform
  */
 
-/**
- * @memberof StreamConfig
- *
- * @typedef {Object} StreamProducerConfig
- * @property {string[]} [events]
- * @property {StreamSamplingConfig} [sampling]
- * @property {StreamProducerContextAttribute[]} [provide_values]
- * @property {StreamProducerCurationConfigs} [curation]
- */
 
 /**
- * @memberof StreamConfig
- *
- * @typedef {Object.<string,StreamProducerContextAttribute>} StreamProducerCurationConfigs
- */
-
-/**
- * @memberof StreamConfig
- *
- * @readonly
  * @enum {string}
+ * @readonly
+ * @memberof EventPlatform
  */
 const StreamProducerContextAttribute = {
 
@@ -93,41 +65,61 @@ const StreamProducerContextAttribute = {
 };
 
 /**
- * @memberof StreamConfig
- *
  * @typedef {Object} StreamProducerCurationConfig
- * @property {StreamConfig.StreamProducerCurationOperand} [equals]
- * @property {StreamConfig.StreamProducerCurationOperand} [not_equals]
- * @property {StreamConfig.StreamProducerCurationOperand} [greater_than]
+ * @property {EventPlatform.StreamProducerCurationOperand} [equals]
+ * @property {EventPlatform.StreamProducerCurationOperand} [not_equals]
+ * @property {EventPlatform.StreamProducerCurationOperand} [greater_than]
  * @property {number} [less_than]
  * @property {number} [less_than_or_equals]
  * @property {number} [greater_than_or_equals]
- * @property {StreamConfig.StreamProducerCurationOperand[]} [in]
- * @property {StreamConfig.StreamProducerCurationOperand[]} [not_in]
- * @property {StreamConfig.StreamProducerCurationOperand} [contains]
- * @property {StreamConfig.StreamProducerCurationOperand[]} [contains_all]
- * @property {StreamConfig.StreamProducerCurationOperand[]} [contains_any]
- * @property {StreamConfig.StreamProducerCurationOperand} [does_not_contain]
+ * @property {EventPlatform.StreamProducerCurationOperand[]} [in]
+ * @property {EventPlatform.StreamProducerCurationOperand[]} [not_in]
+ * @property {EventPlatform.StreamProducerCurationOperand} [contains]
+ * @property {EventPlatform.StreamProducerCurationOperand[]} [contains_all]
+ * @property {EventPlatform.StreamProducerCurationOperand[]} [contains_any]
+ * @property {EventPlatform.StreamProducerCurationOperand} [does_not_contain]
+ * @memberof EventPlatform
  */
 
 /**
- * @memberof StreamConfig
- *
  * @typedef {string|number|boolean|null} StreamProducerCurationOperand
+ * @memberof EventPlatform
+ */
+
+/**
+ * @typedef {Map<EventPlatform.StreamProducerContextAttribute,EventPlatform.StreamProducerCurationConfig>} StreamProducerCurationConfigs
+ * @memberof EventPlatform
+ */
+
+/**
+ * @typedef {Object} StreamProducerConfig
+ * @property {string[]} [events]
+ * @property {EventPlatform.StreamSampleConfig} [sampling]
+ * @property {EventPlatform.StreamProducerContextAttribute[]} [provide_values]
+ * @property {EventPlatform.StreamProducerCurationConfigs} [curation]
+ * @memberof EventPlatform
+ */
+
+/**
+ * @typedef {Object} StreamConfig
+ * @property {string} [schema_title]
+ * @property {Map<string,EventPlatform.StreamProducerConfig>} [producers]
+ * @property {EventPlatform.StreamSampleConfig} [sample]
+ * @memberof EventPlatform
+ */
+
+/**
+ * @typedef {Map<string,EventPlatform.StreamConfig>} StreamConfigs
+ * @memberof EventPlatform
  */
 
 // Functions
 // =========
 
 /**
- * @namespace StreamConfig
- */
-
-/**
- * @memberof StreamConfig
- *
- * @param {?StreamConfig.StreamSamplingConfig} sample
+ * @param {?EventPlatform.StreamSampleConfig} sample
  * @return {boolean}
+ * @memberof EventPlatform
  */
 function isValidSample( sample ) {
 	return !!(

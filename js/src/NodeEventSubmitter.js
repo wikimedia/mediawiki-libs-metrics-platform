@@ -11,7 +11,8 @@ const DEFAULT_EVENT_INTAKE_URL = 'https://intake-analytics.wikimedia.org/v1/even
  *  to. `https://intake-analytics.wikimedia.org/v1/events?hasty=true` by default
  *
  * @constructor
- * @implements {EventSubmitter}
+ * @implements {MetricsPlatform.EventSubmitter}
+ * @memberof MetricsPlatform
  */
 function NodeEventSubmitter( eventIntakeUrl ) {
 	this.eventIntakeUrl = eventIntakeUrl || DEFAULT_EVENT_INTAKE_URL;
@@ -21,7 +22,7 @@ function NodeEventSubmitter( eventIntakeUrl ) {
  * Submits to the event intake service or enqueues the event for submission to the event
  * intake service.
  *
- * @param {EventData} eventData
+ * @param {EventPlatform.EventData} eventData
  */
 NodeEventSubmitter.prototype.submitEvent = function ( eventData ) {
 	fetch( this.eventIntakeUrl, {
