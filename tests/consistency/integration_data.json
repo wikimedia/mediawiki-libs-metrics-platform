@@ -1,7 +1,6 @@
 {
 	"hostname": "en.wikipedia.org",
 	"agent": {
-		"app_install_id": "ffffffff-ffff-ffff-ffff-ffffffffffff",
 		"client_platform": "mediawiki_js",
 		"client_platform_family": "desktop_browser"
 	},

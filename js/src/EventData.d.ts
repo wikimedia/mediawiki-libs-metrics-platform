@@ -46,7 +46,6 @@ interface ContextAttributes {
 }
 
 interface EventAgentData {
-    app_install_id?: string;
     client_platform?: string;
     client_platform_family?: string;
 }
