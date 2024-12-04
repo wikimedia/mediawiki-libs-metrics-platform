@@ -36,7 +36,6 @@ type StreamProducerCurationConfigs = {
 type StreamProducerContextAttribute =
 
     // Agent
-    | "agent_app_install_id"
     | "agent_client_platform"
     | "agent_client_platform_family"
 

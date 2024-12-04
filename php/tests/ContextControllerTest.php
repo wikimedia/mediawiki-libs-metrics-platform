@@ -44,7 +44,6 @@ class ContextControllerTest extends TestCase {
 		$userData = $event['performer'];
 		$siteData = $event['mediawiki'];
 
-		$this->assertArrayNotHasKey( 'app_install_id', $agentData );
 		$this->assertSame( 'mediawiki_php', $agentData['client_platform'] );
 		$this->assertArrayNotHasKey( 'client_platform_family', $agentData );
 

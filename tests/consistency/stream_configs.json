@@ -13,10 +13,6 @@
 						"test_consistency_event"
 					],
 					"provide_values": [
-						"agent_app_install_id",
-						"agent_client_platform",
-						"agent_client_platform_family",
-
 						"page_id",
 						"page_title",
 						"page_namespace",
