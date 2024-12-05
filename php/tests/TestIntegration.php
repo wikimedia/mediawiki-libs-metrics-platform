@@ -8,7 +8,6 @@ class TestIntegration implements Integration {
 
 	/** @var array */
 	private $contextAttributes = [
-		'agent_app_install_id' => null,
 		'agent_client_platform' => 'mediawiki_php',
 		'agent_client_platform_family' => null,
 
