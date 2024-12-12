@@ -348,6 +348,39 @@ QUnit.test( 'submitInteraction() - experiments details are added when appropriat
 	assert.deepEqual( event.experiments.assigned, { experiment1: 'blue', experiment2: 'right' } );
 } );
 
+// T381849: Testing temporarily for growthExperiments to be able to add experiment details
+// as interaction data
+QUnit.test( 'submitInteraction() - experiments details are added when included as interaction data', ( assert ) => {
+	const experimentsAsInteractionData = {
+		action_subtype: 'foo',
+		action_source: 'bar',
+		experiments: {
+			assigned: { 'growth-experiments': 'community-updates-module' },
+			enrolled: [ 'growth-experiments' ]
+		}
+	};
+
+	// @ts-ignore TS2345
+	metricsClient.submitInteraction(
+		'metrics.platform.test7',
+		'/analytics/product_metrics/web/base/1.3.0',
+		'someAction',
+		experimentsAsInteractionData
+	);
+
+	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
+	assert.strictEqual( submitEventStub.callCount, 1, 'submitEvent() should be called' );
+
+	const event = submitEventStub.args[ 0 ][ 0 ];
+
+	assert.deepEqual( event.experiments.assigned, {
+		experiment1: 'blue',
+		experiment2: 'right',
+		'growth-experiments': 'community-updates-module'
+	} );
+	assert.deepEqual( event.experiments.enrolled, [ 'experiment1', 'experiment2', 'growth-experiments' ] );
+} );
+
 QUnit.test( 'submitInteraction() - experiments details are not added when the schema doesn\'t include that fragment', ( assert ) => {
 	const getCurrentUserExperimentsStub = sandbox.stub( integration, 'getCurrentUserExperiments' );
 

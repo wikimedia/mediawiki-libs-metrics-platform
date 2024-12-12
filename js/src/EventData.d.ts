@@ -105,6 +105,14 @@ interface InteractionContextData {
     funnel_event_sequence_position?: number;
 
     instrument_name?: string;
+    // T381849: Added temporarily for growthExperiments to be able to add experiments details as interaction data
+    experiments?: ExperimentDetails
+}
+
+// T381849: Added temporarily for growthExperiments to be able to add experiments details as interaction data
+interface ExperimentDetails {
+    assigned: {[key: string]: string};
+    enrolled: string[];
 }
 
 // TODO: Could this be limited?
