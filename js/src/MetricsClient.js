@@ -459,9 +459,20 @@ MetricsClient.prototype.submitInteraction = function (
 	let currentUserExperiments = null;
 	// The new experiments fragment is only available for web/base 1.3.0
 	if ( schemaID === '/analytics/product_metrics/web/base/1.3.0' ) {
-		// T381849: Checking temporarily for growthExperiments to be able to add experiments details as interaction data
-		if ( interactionData === undefined || !interactionData.experiments ) {
-			currentUserExperiments = this.integration.getCurrentUserExperiments();
+		currentUserExperiments = this.integration.getCurrentUserExperiments();
+		// T381849: Checking and merging temporarily for growthExperiments to be able to add
+		// experiments details as interaction data
+		if ( interactionData !== undefined && interactionData.experiments ) {
+			// @ts-ignore
+			currentUserExperiments.experiments.enrolled.push(
+				...interactionData.experiments.enrolled
+			);
+			Object.assign(
+				// @ts-ignore
+				currentUserExperiments.experiments.assigned,
+				// @ts-ignore
+				currentUserExperiments.experiments.assigned,
+				interactionData.experiments.assigned );
 		}
 	}
 

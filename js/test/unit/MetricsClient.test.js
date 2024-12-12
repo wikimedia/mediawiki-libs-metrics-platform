@@ -348,15 +348,14 @@ QUnit.test( 'submitInteraction() - experiments details are added when appropriat
 	assert.deepEqual( event.experiments.assigned, { experiment1: 'blue', experiment2: 'right' } );
 } );
 
-// T381849: Testing temporarily for growthExperiments to be able to add experiments details as interaction data
+// T381849: Testing temporarily for growthExperiments to be able to add experiment details
+// as interaction data
 QUnit.test( 'submitInteraction() - experiments details are added when included as interaction data', ( assert ) => {
 	const experimentsAsInteractionData = {
 		action_subtype: 'foo',
 		action_source: 'bar',
 		experiments: {
-			assigned: {
-				'growth-experiments': 'community-updates-module'
-			},
+			assigned: { 'growth-experiments': 'community-updates-module' },
 			enrolled: [ 'growth-experiments' ]
 		}
 	};
@@ -374,8 +373,12 @@ QUnit.test( 'submitInteraction() - experiments details are added when included a
 
 	const event = submitEventStub.args[ 0 ][ 0 ];
 
-	assert.deepEqual( event.experiments.assigned, { 'growth-experiments': 'community-updates-module' } );
-	assert.deepEqual( event.experiments.enrolled, [ 'growth-experiments' ] );
+	assert.deepEqual( event.experiments.assigned, {
+		experiment1: 'blue',
+		experiment2: 'right',
+		'growth-experiments': 'community-updates-module'
+	} );
+	assert.deepEqual( event.experiments.enrolled, [ 'experiment1', 'experiment2', 'growth-experiments' ] );
 } );
 
 QUnit.test( 'submitInteraction() - experiments details are not added when the schema doesn\'t include that fragment', ( assert ) => {
