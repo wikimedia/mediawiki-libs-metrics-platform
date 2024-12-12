@@ -463,14 +463,14 @@ MetricsClient.prototype.submitInteraction = function (
 		// T381849: Checking and merging temporarily for growthExperiments to be able to add
 		// experiments details as interaction data
 		if ( interactionData !== undefined && interactionData.experiments ) {
-			// @ts-ignore
+			// @ts-ignore ts2339
 			currentUserExperiments.experiments.enrolled.push(
 				...interactionData.experiments.enrolled
 			);
 			Object.assign(
-				// @ts-ignore
+				// @ts-ignore ts2339
 				currentUserExperiments.experiments.assigned,
-				// @ts-ignore
+				// @ts-ignore ts2339
 				currentUserExperiments.experiments.assigned,
 				interactionData.experiments.assigned );
 		}
