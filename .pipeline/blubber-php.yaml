@@ -1,7 +1,7 @@
 version: v4
 variants:
   test:
-    base: docker-registry.wikimedia.org/dev/buster-php74:1.0.0-s2
+    base: docker-registry.wikimedia.org/dev/buster-php74:1.1.0-s3
     copies: [local]
     builder:
       command: [composer, install]
