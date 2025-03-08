@@ -32,7 +32,7 @@ test-js:
     BUILD_VARIANT: test
     BUILD_CONTEXT: js
 
-test-php:
+test-php74:
   extends: .kokkuri:build-and-run-image
   rules:
     - changes:
@@ -46,7 +46,23 @@ test-php:
   stage: test
   variables:
     BUILD_CONFIG: .pipeline/blubber-php.yaml
-    BUILD_VARIANT: test
+    BUILD_VARIANT: test-php74
+
+test-php81:
+  extends: .kokkuri:build-and-run-image
+  rules:
+    - changes:
+      - .phan/**/*
+      - php/**/*
+      - tests/consistency/*.php
+      - tests/consistency/php/*
+      - .phpcs.xml
+      - composer.json
+      - composer.lock
+  stage: test
+  variables:
+    BUILD_CONFIG: .pipeline/blubber-php.yaml
+    BUILD_VARIANT: test-php81
 
 test-swift:
   extends: .kokkuri:build-and-run-image
