@@ -7,53 +7,58 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
 stages:
-- test
+  - test
+
+.test-client:
+  # Job template: all client library tests
+  extends: .kokkuri:build-and-run-image
+  stage: test
+  tags:
+    - wmcs
+  variables:
+    BUILD_VARIANT: test
 
 test-java:
-  extends: .kokkuri:build-and-run-image
+  # Run tests for Java client library
+  extends: .test-client
   rules:
     - changes:
-      - .mvn/**/*
-      - java/**/*
-      - mvnw
-      - mvwn.cmnd
-  stage: test
+        - .mvn/**/*
+        - .pipeline/blubber-java.yaml
+        - java/**/*
+        - mvnw
+        - mvwn.cmnd
   variables:
     BUILD_CONFIG: .pipeline/blubber-java.yaml
-    BUILD_VARIANT: test
 
 test-js:
-  extends: .kokkuri:build-and-run-image
+  # Run tests for Javascript client library
+  extends: .test-client
   rules:
     - changes:
-      - js/**/*
-  stage: test
+        - js/**/*
   variables:
-    BUILD_VARIANT: test
     BUILD_CONTEXT: js
 
 test-php:
-  extends: .kokkuri:build-and-run-image
+  extends: .test-client
   rules:
     - changes:
-      - .phan/**/*
-      - php/**/*
-      - tests/consistency/*.php
-      - tests/consistency/php/*
-      - .phpcs.xml
-      - composer.json
-      - composer.lock
-  stage: test
+        - .phan/**/*
+        - .pipeline/blubber-php.yaml
+        - php/**/*
+        - tests/consistency/*.php
+        - tests/consistency/php/*
+        - .phpcs.xml
+        - composer.json
+        - composer.lock
   variables:
     BUILD_CONFIG: .pipeline/blubber-php.yaml
-    BUILD_VARIANT: test
 
 test-swift:
-  extends: .kokkuri:build-and-run-image
+  extends: .test-client
   rules:
     - changes:
-      - swift/**/*
-  stage: test
+        - swift/**/*
   variables:
-    BUILD_VARIANT: test
     BUILD_CONTEXT: swift
