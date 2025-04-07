@@ -6,6 +6,8 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Wikimedia\MetricsPlatform\ExperimentConfig\ExperimentConfigException;
+use Wikimedia\MetricsPlatform\ExperimentConfig\ExperimentConfigFactory;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigException;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
 use Wikimedia\Timestamp\ConvertibleTimestamp;
@@ -18,7 +20,7 @@ class MetricsClient implements LoggerAwareInterface {
 	 *
 	 * @var string
 	 */
-	public const BASE_SCHEMA = '/analytics/product_metrics/web/base/1.2.0';
+	public const BASE_SCHEMA = '/analytics/product_metrics/web/base/1.4.1';
 
 	/** @var EventSubmitter */
 	private $eventSubmitter;
@@ -35,6 +37,9 @@ class MetricsClient implements LoggerAwareInterface {
 	/** @var StreamConfigFactory */
 	private $streamConfigFactory;
 
+	/** @var ExperimentConfigFactory */
+	private $experimentConfigFactory;
+
 	/**
 	 * @param EventSubmitter $eventSubmitter
 	 * @param Integration $integration
@@ -49,7 +54,8 @@ class MetricsClient implements LoggerAwareInterface {
 		StreamConfigFactory $streamConfigFactory,
 		?LoggerInterface $logger = null,
 		?ContextController $contextController = null,
-		?CurationController $curationController = null
+		?CurationController $curationController = null,
+		?ExperimentConfigFactory $experimentConfigFactory = null
 	) {
 		$this->eventSubmitter = $eventSubmitter;
 		$this->integration = $integration;
@@ -57,6 +63,7 @@ class MetricsClient implements LoggerAwareInterface {
 		$this->setLogger( $logger ?? new NullLogger() );
 		$this->contextController = $contextController ?? new ContextController( $integration );
 		$this->curationController = $curationController ?? new CurationController();
+		$this->experimentConfigFactory = $experimentConfigFactory;
 	}
 
 	/**
@@ -78,6 +85,7 @@ class MetricsClient implements LoggerAwareInterface {
 	 * @param string $schemaId
 	 * @param string $action
 	 * @param array $interactionData
+	 * @param ?string $experimentName
 	 *
 	 * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/PHP_API
 	 */
@@ -85,7 +93,8 @@ class MetricsClient implements LoggerAwareInterface {
 		string $streamName,
 		string $schemaId,
 		string $action,
-		array $interactionData = []
+		array $interactionData = [],
+		?string $experimentName = null
 	): void {
 		// See https://gitlab.wikimedia.org/repos/data-engineering/metrics-platform/-/blob/f7d52c6394a26f9de9cfe0fadbbc3c0dfe51b095/js/src/MetricsClient.js#L458
 		$event = array_merge(
@@ -105,6 +114,23 @@ class MetricsClient implements LoggerAwareInterface {
 			$event = $this->contextController->addRequestedValues( $event, $streamConfig );
 		} catch ( StreamConfigException $e ) {
 			return;
+		}
+
+		// Read experiment data from experiment config if applicable.
+		if ( $experimentName !== null ) {
+			try {
+				$event = $this->addExperimentDetails( $experimentName, $event );
+			} catch ( ExperimentConfigException $e ) {
+				return;
+			}
+		} elseif ( array_key_exists( 'experiment', $interactionData ) ) {
+			// Read experiment data from the interactionData parameter if applicable.
+			try {
+				$enrolled = $this->experimentConfigFactory->getExperimentName( $interactionData );
+				$event = $this->addExperimentDetails( $enrolled, $event );
+			} catch ( ExperimentConfigException $e ) {
+				return;
+			}
 		}
 
 		$this->eventSubmitter->submit( $streamName, $event );
@@ -135,5 +161,10 @@ class MetricsClient implements LoggerAwareInterface {
 	 */
 	private function getTimestamp(): string {
 		return ConvertibleTimeStamp::now( TS_ISO_8601 );
+	}
+
+	private function addExperimentDetails( string $experimentName, array $event ): array {
+		$experimentConfig = $this->experimentConfigFactory->getCurrentUserExperiment( $experimentName );
+		return array_merge( $event, [ 'experiment' => $experimentConfig ] );
 	}
 }

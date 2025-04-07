@@ -6,6 +6,7 @@ require_once __DIR__ . '/TestIntegration.php';
 require_once __DIR__ . '/TestEventSubmitter.php';
 
 use PHPUnit\Framework\TestCase;
+use Wikimedia\MetricsPlatform\ExperimentConfig\ExperimentConfigFactory;
 use Wikimedia\MetricsPlatform\MetricsClient;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
 use Wikimedia\TestingAccessWrapper;
@@ -28,6 +29,9 @@ class MetricsClientTest extends TestCase {
 
 	/** @var MetricsClient */
 	private $client;
+
+	/** @var ExperimentConfigFactory */
+	private $experimentConfigFactory;
 
 	/** @var array */
 	private $streamConfigs = [
@@ -52,10 +56,15 @@ class MetricsClientTest extends TestCase {
 		$this->eventSubmitter = new TestEventSubmitter();
 		$this->integration = new TestIntegration();
 		$this->config = new StreamConfigFactory( $this->streamConfigs );
+		$this->experimentConfigFactory = new ExperimentConfigFactory( $this->experimentEnrollment );
 		$this->client = new MetricsClient(
 			$this->eventSubmitter,
 			$this->integration,
-			$this->config
+			$this->config,
+			null,
+			null,
+			null,
+			$this->experimentConfigFactory,
 		);
 	}
 
@@ -167,27 +176,48 @@ class MetricsClientTest extends TestCase {
 		);
 	}
 
-	private function assertEventSame(
-		array $expectedEvent,
-		array $actualEvent,
-		bool $ignoreContextAttributes = false,
-		string $message = ''
-	): void {
-		$keys = [ 'dt' ];
+	public function testSubmitInteractionWithExperimentDetailsInInteractionData(): void {
+		$eventName = 'test_action';
+		$experimentName = 'test_experiment';
 
-		if ( $ignoreContextAttributes ) {
-			$keys = array_merge( $keys, [
-				'agent',
-				'page',
-				'mediawiki',
-				'performer',
-			] );
-		}
+		$this->client->submitInteraction(
+			$this->testStreamName,
+			MetricsClient::BASE_SCHEMA,
+			$eventName,
+			$this->getTestInteractionWithExperimentDetailsData( $eventName, $experimentName )
+		);
+		[ $actualStreamName, $actualEvent ] = $this->eventSubmitter->getSubmissions()[0];
+		$expectedEvent = $this->getTestInteractionWithExperimentDetailsEvent( $eventName, $experimentName );
 
-		foreach ( $keys as $key ) {
-			unset( $expectedEvent[$key], $actualEvent[$key] );
-		}
+		$this->assertSame( $this->testStreamName, $actualStreamName );
+		$this->assertEventSame(
+			$expectedEvent,
+			$actualEvent,
+			true,
+			'#submitInteractionWithExperimentDetailsInInteractionData() submits event correctly.'
+		);
+	}
 
-		$this->assertEquals( $expectedEvent, $actualEvent, $message );
+	public function testSubmitInteractionWithExperimentDetailsInParameter(): void {
+		$eventName = 'test_action';
+		$experimentName = 'test_experiment';
+
+		$this->client->submitInteraction(
+			$this->testStreamName,
+			MetricsClient::BASE_SCHEMA,
+			$eventName,
+			$this->getTestInteractionData(),
+			$experimentName
+		);
+		[ $actualStreamName, $actualEvent ] = $this->eventSubmitter->getSubmissions()[0];
+		$expectedEvent = $this->getTestInteractionWithExperimentDetailsEvent( $eventName, $experimentName );
+
+		$this->assertSame( $this->testStreamName, $actualStreamName );
+		$this->assertEventSame(
+			$expectedEvent,
+			$actualEvent,
+			true,
+			'#submitInteractionWithExperimentDetailsInParameter() submits event correctly.'
+		);
 	}
 }
