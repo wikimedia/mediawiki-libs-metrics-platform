@@ -6,7 +6,6 @@ require_once __DIR__ . '/TestIntegration.php';
 require_once __DIR__ . '/TestEventSubmitter.php';
 
 use PHPUnit\Framework\TestCase;
-use Wikimedia\MetricsPlatform\ExperimentConfig\ExperimentConfigFactory;
 use Wikimedia\MetricsPlatform\Instrument;
 use Wikimedia\MetricsPlatform\MetricsClient;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
@@ -38,9 +37,6 @@ class InstrumentTest extends TestCase {
 	/** @var string */
 	private $eventName;
 
-	/** @var ExperimentConfigFactory */
-	private $experimentConfigFactory;
-
 	/** @var array */
 	private $streamConfigs = [
 		'test.stream' => [],
@@ -64,15 +60,10 @@ class InstrumentTest extends TestCase {
 		$this->eventSubmitter = new TestEventSubmitter();
 		$this->integration = new TestIntegration();
 		$this->config = new StreamConfigFactory( $this->streamConfigs );
-		$this->experimentConfigFactory = new ExperimentConfigFactory( $this->experimentEnrollment );
 		$this->client = new MetricsClient(
 			$this->eventSubmitter,
 			$this->integration,
-			$this->config,
-			null,
-			null,
-			null,
-			$this->experimentConfigFactory,
+			$this->config
 		);
 		$this->instrument = new Instrument(
 			$this->client,
@@ -112,6 +103,30 @@ class InstrumentTest extends TestCase {
 			true,
 			'#submitClick() submits event correctly.'
 		);
+	}
+
+	private function assertEventSame(
+		array $expectedEvent,
+		array $actualEvent,
+		bool $ignoreContextAttributes = false,
+		string $message = ''
+	): void {
+		$keys = [ 'dt' ];
+
+		if ( $ignoreContextAttributes ) {
+			$keys = array_merge( $keys, [
+				'agent',
+				'page',
+				'mediawiki',
+				'performer',
+			] );
+		}
+
+		foreach ( $keys as $key ) {
+			unset( $expectedEvent[$key], $actualEvent[$key] );
+		}
+
+		$this->assertEquals( $expectedEvent, $actualEvent, $message );
 	}
 
 }

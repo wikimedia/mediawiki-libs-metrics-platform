@@ -70,35 +70,32 @@ trait TestHelperTrait {
 		];
 	}
 
-	/**
-	 * @param string $eventName
-	 */
-	private function getTestInteractionWithExperimentDetailsEvent( string $eventName, string $experimentName ): array {
-		return array_merge(
-			$this->getTestInteractionEvent( $eventName ),
-			$this->getExperimentData( $experimentName )
-		);
-	}
+// private function getTestInteractionWithExperimentDetailsEvent( string $eventName, string $experimentName ): array {
+//		return array_merge(
+//			$this->getTestInteractionEvent( $eventName ),
+//			$this->getExperimentData( $experimentName )
+//		);
+//	}
+//
+//	private function getTestInteractionWithExperimentDetailsData( string $eventName, string $experimentName ): array {
+//		return array_merge(
+//			$this->getTestInteractionEvent( $eventName ),
+//			$this->getExperimentData( $experimentName )
+//		);
+//	}
 
-	private function getTestInteractionWithExperimentDetailsData( string $eventName, string $experimentName ): array {
-		return array_merge(
-			$this->getTestInteractionEvent( $eventName ),
-			$this->getExperimentData( $experimentName )
-		);
-	}
-
-	private function getExperimentData( string $experimentName ): array {
-		return [
-			'experiment' => [
-				'enrolled' => $experimentName,
-				'assigned' => 'test_assignment',
-				'subject_id' => 'test_subject_id',
-				'sampling_unit' => 'test_sampling_unit',
-				'other_assigned' => [ 'experiment1' => 'A' ],
-				'coordinator' => 'xLab'
-			]
-		];
-	}
+//	private function getExperimentData( string $experimentName ): array {
+//		return [
+//			'experiment' => [
+//				'enrolled' => $experimentName,
+//				'assigned' => 'test_assignment',
+//				'subject_id' => 'test_subject_id',
+//				'sampling_unit' => 'test_sampling_unit',
+//				'other_assigned' => [ 'experiment1' => 'A' ],
+//				'coordinator' => 'xLab'
+//			]
+//		];
+//	}
 
 	/**
 	 * @param string $eventName
@@ -115,29 +112,5 @@ trait TestHelperTrait {
 			$this->getTestInteractionData(),
 			[ 'instrument_name' => 'test_instrument_name' ]
 		);
-	}
-
-	private function assertEventSame(
-		array $expectedEvent,
-		array $actualEvent,
-		bool $ignoreContextAttributes = false,
-		string $message = ''
-	): void {
-		$keys = [ 'dt' ];
-
-		if ( $ignoreContextAttributes ) {
-			$keys = array_merge( $keys, [
-				'agent',
-				'page',
-				'mediawiki',
-				'performer',
-			] );
-		}
-
-		foreach ( $keys as $key ) {
-			unset( $expectedEvent[$key], $actualEvent[$key] );
-		}
-
-		$this->assertEquals( $expectedEvent, $actualEvent, $message );
 	}
 }
