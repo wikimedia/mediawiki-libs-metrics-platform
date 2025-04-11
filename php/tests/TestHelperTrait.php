@@ -9,37 +9,6 @@ trait TestHelperTrait {
 	/** @var string */
 	private string $testStreamName = 'test.metrics_platform.interactions';
 
-	/** @var array */
-	private $experimentEnrollment = [
-		'active_experiments' => [
-			'experiment1',
-			'experiment2',
-			'experiment3',
-			'experiment4',
-			'test_experiment',
-		],
-		'enrolled' => [
-			'experiment1',
-			'test_experiment',
-		],
-		'assigned' => [
-			'experiment1' => 'A',
-			'test_experiment' => 'test_assignment',
-		],
-		'subject_ids' => [
-			'experiment1' => 'poaiusdfapoiupaosdf',
-			'test_experiment' => 'test_subject_id',
-		],
-		'sampling_units' => [
-			'experiment1' => 'mw-user',
-			'test_experiment' => 'test_sampling_unit',
-		],
-		'coordinators' => [
-			'experiment1' => 'xLab',
-			'test_experiment' => 'xLab',
-		]
-	];
-
 	private function createTestInteractionEvent(): array {
 		return [
 			'$schema' => MetricsClient::BASE_SCHEMA,
