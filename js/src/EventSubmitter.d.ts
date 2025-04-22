@@ -4,7 +4,7 @@ interface EventSubmitter {
      * Submits to the event intake service or enqueues the event for submission to the event
      * intake service.
      */
-    submitEvent: ( event: EventData ) => void;
+    submitEvent: ( event: EventData, _useEnrollmentService?: Boolean ) => void;
 
     /**
      * Called when an event is enqueued for submission to the event intake service.
