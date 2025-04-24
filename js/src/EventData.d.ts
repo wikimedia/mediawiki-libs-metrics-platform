@@ -106,13 +106,30 @@ interface InteractionContextData {
 
     instrument_name?: string;
     // T381849: Added temporarily for growthExperiments to be able to add experiments details as interaction data
-    experiments?: ExperimentDetails
+    // Still here while it's used by T377098
+    experiments?: ExperimentsDetails;
+    // T390308: Added temporarily for growthExperiments to be able to add experiments details as interaction data
+    // using the new `experiment` fragment
+    experiment?: ExperimentDetails;
 }
 
 // T381849: Added temporarily for growthExperiments to be able to add experiments details as interaction data
-interface ExperimentDetails {
+// using the deprecated `experiments` fragment
+// Still here while it's used by T377098
+interface ExperimentsDetails {
     assigned: {[key: string]: string};
     enrolled: string[];
+}
+
+// T390308: Added temporarily for growthExperiments to be able to add experiments details as interaction data
+// using the new `experiment` fragment
+interface ExperimentDetails {
+    enrolled?: string;
+    assigned?: string;
+    subject_id?: string;
+    sampling_unit?: string;
+    other_enrolled?: string[];
+    coordinator?: string;
 }
 
 // TODO: Could this be limited?
