@@ -331,12 +331,24 @@ QUnit.test( 'submitInteraction() - disallow $schema overriding', ( assert ) => {
 	assert.strictEqual( event.$schema, '/analytics/product_metrics/web/base/1.0.0' );
 } );
 
-QUnit.test( 'submitInteraction() - experiments details are added when appropriate', ( assert ) => {
-	// @ts-ignore TS2345
+// T381849: Testing temporarily for growthExperiments to be able to add experiment details
+// as interaction data via the `experiment` fragment
+QUnit.test( 'submitInteraction() - experiments details are added when included as interaction data using the `experiment` fragment', ( assert ) => {
+	const experimentsAsInteractionData = {
+		action_subtype: 'foo',
+		action_source: 'bar',
+		experiment: {
+			assigned: 'community-updates-module',
+			enrolled: 'growth-experiments',
+			coordinator: 'custom'
+		}
+	};
+
 	metricsClient.submitInteraction(
 		'metrics.platform.test7',
-		'/analytics/product_metrics/web/base/1.3.0',
-		'someAction'
+		'/analytics/product_metrics/web/base/1.4.1',
+		'someAction',
+		experimentsAsInteractionData
 	);
 
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
@@ -344,13 +356,14 @@ QUnit.test( 'submitInteraction() - experiments details are added when appropriat
 
 	const event = submitEventStub.args[ 0 ][ 0 ];
 
-	assert.deepEqual( event.experiments.enrolled, [ 'experiment1', 'experiment2' ] );
-	assert.deepEqual( event.experiments.assigned, { experiment1: 'blue', experiment2: 'right' } );
+	assert.deepEqual( event.experiment.assigned, 'community-updates-module' );
+	assert.deepEqual( event.experiment.enrolled, 'growth-experiments' );
+	assert.deepEqual( event.experiment.coordinator, 'custom' );
 } );
 
-// T381849: Testing temporarily for growthExperiments to be able to add experiment details
-// as interaction data
-QUnit.test( 'submitInteraction() - experiments details are added when included as interaction data', ( assert ) => {
+// T381849, T377098: Testing temporarily for growthExperiments to be able to add experiment details
+// as interaction data via the `experiments` fragment
+QUnit.test( 'submitInteraction() - experiments details are added when included as interaction data using the `experiments` fragment', ( assert ) => {
 	const experimentsAsInteractionData = {
 		action_subtype: 'foo',
 		action_source: 'bar',
@@ -360,10 +373,9 @@ QUnit.test( 'submitInteraction() - experiments details are added when included a
 		}
 	};
 
-	// @ts-ignore TS2345
 	metricsClient.submitInteraction(
 		'metrics.platform.test7',
-		'/analytics/product_metrics/web/base/1.3.0',
+		'/analytics/product_metrics/web/base/1.4.1',
 		'someAction',
 		experimentsAsInteractionData
 	);
@@ -374,28 +386,7 @@ QUnit.test( 'submitInteraction() - experiments details are added when included a
 	const event = submitEventStub.args[ 0 ][ 0 ];
 
 	assert.deepEqual( event.experiments.assigned, {
-		experiment1: 'blue',
-		experiment2: 'right',
 		'growth-experiments': 'community-updates-module'
 	} );
-	assert.deepEqual( event.experiments.enrolled, [ 'experiment1', 'experiment2', 'growth-experiments' ] );
-} );
-
-QUnit.test( 'submitInteraction() - experiments details are not added when the schema doesn\'t include that fragment', ( assert ) => {
-	const getCurrentUserExperimentsStub = sandbox.stub( integration, 'getCurrentUserExperiments' );
-
-	// @ts-ignore TS2345
-	metricsClient.submitInteraction(
-		'metrics.platform.test7',
-		'/analytics/product_metrics/web/base/1.2.0',
-		'someAction'
-	);
-
-	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
-	assert.strictEqual( getCurrentUserExperimentsStub.callCount, 0, 'getCurrentUserExperiments should not be called' );
-} );
-
-QUnit.test( 'isCurrentUserEnrolled() - current user is enrolled in the right experiments', ( assert ) => {
-	assert.true( metricsClient.isCurrentUserEnrolled( 'experiment1' ), 'user should be enrolled in this experiment1' );
-	assert.false( metricsClient.isCurrentUserEnrolled( 'non-existent' ), 'user shouldn\'t be enrolled in this experiment' );
+	assert.deepEqual( event.experiments.enrolled, [ 'growth-experiments' ] );
 } );
