@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f36eecab8eb1b540abaaf655501bb29f",
+    "content-hash": "6091d159588e56975e7de45d19455c9d",
     "packages": [
         {
             "name": "justinrainbow/json-schema",
@@ -807,16 +807,16 @@
         },
         {
             "name": "mediawiki/mediawiki-codesniffer",
-            "version": "v46.0.0",
+            "version": "v47.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/mediawiki-tools-codesniffer.git",
-                "reference": "6bd8a9ac4c10bf393dcd9ef32e3402399128a9e5"
+                "reference": "056bb337d5229699356884563431b9cc6521ad14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/mediawiki-tools-codesniffer/zipball/6bd8a9ac4c10bf393dcd9ef32e3402399128a9e5",
-                "reference": "6bd8a9ac4c10bf393dcd9ef32e3402399128a9e5",
+                "url": "https://api.github.com/repos/wikimedia/mediawiki-tools-codesniffer/zipball/056bb337d5229699356884563431b9cc6521ad14",
+                "reference": "056bb337d5229699356884563431b9cc6521ad14",
                 "shasum": ""
             },
             "require": {
@@ -826,7 +826,7 @@
                 "ext-mbstring": "*",
                 "php": ">=7.4.0",
                 "phpcsstandards/phpcsextra": "1.2.1",
-                "squizlabs/php_codesniffer": "3.11.3",
+                "squizlabs/php_codesniffer": "3.12.2",
                 "symfony/polyfill-php80": "^1.26.0"
             },
             "require-dev": {
@@ -855,9 +855,9 @@
                 "mediawiki"
             ],
             "support": {
-                "source": "https://github.com/wikimedia/mediawiki-tools-codesniffer/tree/v46.0.0"
+                "source": "https://github.com/wikimedia/mediawiki-tools-codesniffer/tree/v47.0.0"
             },
-            "time": "2025-01-27T21:05:44+00:00"
+            "time": "2025-05-04T07:30:05+00:00"
         },
         {
             "name": "mediawiki/mediawiki-phan-config",
@@ -3546,16 +3546,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.11.3",
+            "version": "3.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "ba05f990e79cbe69b9f35c8c1ac8dca7eecc3a10"
+                "reference": "6d4cf6032d4b718f168c90a96e36c7d0eaacb2aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/ba05f990e79cbe69b9f35c8c1ac8dca7eecc3a10",
-                "reference": "ba05f990e79cbe69b9f35c8c1ac8dca7eecc3a10",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/6d4cf6032d4b718f168c90a96e36c7d0eaacb2aa",
+                "reference": "6d4cf6032d4b718f168c90a96e36c7d0eaacb2aa",
                 "shasum": ""
             },
             "require": {
@@ -3622,11 +3622,11 @@
                     "type": "open_collective"
                 },
                 {
-                    "url": "https://thanks.dev/phpcsstandards",
+                    "url": "https://thanks.dev/u/gh/phpcsstandards",
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2025-01-23T17:04:15+00:00"
+            "time": "2025-04-13T04:10:18+00:00"
         },
         {
             "name": "symfony/console",
