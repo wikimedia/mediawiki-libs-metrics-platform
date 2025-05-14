@@ -1,4 +1,4 @@
-const getEventGateUrl = require( './DefaultEventSubmitter.js' ).getEventGateUrl;
+const DEFAULT_EVENT_INTAKE_URL = 'https://intake-analytics.wikimedia.org/v1/events?hasty=true';
 
 /**
  * A simple event submitter for use in server-side environments or environments requiring
@@ -7,12 +7,12 @@ const getEventGateUrl = require( './DefaultEventSubmitter.js' ).getEventGateUrl;
  * This event submitter submits the event to the event intake service immediately. The request is
  * made using the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
  *
- * @param {string} [eventGateOrigin] The origin of the EventGate event intake service to send
- *  events to. `https://intake-analytics.wikimedia.org` by default
+ * @param {string} [eventIntakeUrl] The URL of the EventGate event intake service to send events
+ *  to. `https://intake-analytics.wikimedia.org/v1/events?hasty=true` by default
  * @constructor
  */
-function NodeEventSubmitter( eventGateOrigin ) {
-	this.eventGateUrl = getEventGateUrl( eventGateOrigin );
+function NodeEventSubmitter( eventIntakeUrl ) {
+	this.eventIntakeUrl = eventIntakeUrl || DEFAULT_EVENT_INTAKE_URL;
 }
 
 /**
@@ -22,7 +22,7 @@ function NodeEventSubmitter( eventGateOrigin ) {
  * @param {EventData} eventData
  */
 NodeEventSubmitter.prototype.submitEvent = function ( eventData ) {
-	fetch( this.eventGateUrl, {
+	fetch( this.eventIntakeUrl, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
