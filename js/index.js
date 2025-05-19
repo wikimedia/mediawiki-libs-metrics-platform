@@ -1,16 +1,16 @@
 const DefaultIntegration = require( './src/DefaultIntegration.js' );
-const DefaultEventSubmitter = require( './src/DefaultEventSubmitter.js' ).DefaultEventSubmitter;
+const DefaultEventSubmitter = require( './src/DefaultEventSubmitter.js' );
 const MetricsClient = require( './src/ExternalMetricsClient.js' );
 
 /**
  * @param {string} [streamConfigsOrigin]
- * @param {string} [eventGateOrigin]
+ * @param {string} [eventIntakeUrl]
  * @return {MetricsClient}
  */
-function createMetricsClient( streamConfigsOrigin, eventGateOrigin ) {
+function createMetricsClient( streamConfigsOrigin, eventIntakeUrl ) {
 	return new MetricsClient(
 		new DefaultIntegration( streamConfigsOrigin ),
-		new DefaultEventSubmitter( eventGateOrigin )
+		new DefaultEventSubmitter( eventIntakeUrl )
 	);
 }
 

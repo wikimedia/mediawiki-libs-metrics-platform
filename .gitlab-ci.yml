@@ -13,8 +13,6 @@ stages:
   # Job template: all client library tests
   extends: .kokkuri:build-and-run-image
   stage: test
-  tags:
-    - wmcs
   variables:
     BUILD_VARIANT: test
 
