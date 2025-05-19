@@ -206,14 +206,15 @@ MetricsClient.prototype.addRequiredMetadata = function ( eventData, streamName )
  *
  * @param {string} streamName The name of the stream to send the event data to
  * @param {BaseEventData} eventData The event data
+ * @param {boolean} [_useEnrollmentService] Whether to mediate with enrollment service (e.g., for CDN experiments)
  *
  * @stable
  */
-MetricsClient.prototype.submit = function ( streamName, eventData ) {
+MetricsClient.prototype.submit = function ( streamName, eventData, _useEnrollmentService ) {
 	const result = this.validateSubmitCall( streamName, eventData );
 
 	if ( result ) {
-		this.processSubmitCall( new Date().toISOString(), streamName, eventData );
+		this.processSubmitCall( new Date().toISOString(), streamName, eventData, _useEnrollmentService );
 	}
 };
 
@@ -248,8 +249,9 @@ MetricsClient.prototype.validateSubmitCall = function ( streamName, eventData ) 
  * @param {string} timestamp The ISO 8601 formatted timestamp of the original call
  * @param {string} streamName The name of the stream to send the event data to
  * @param {BaseEventData} eventData The event data
+ * @param {boolean} [_useEnrollmentService] Whether to mediate with enrollment service (e.g., for CDN experiments)
  */
-MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, eventData ) {
+MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, eventData, _useEnrollmentService ) {
 	eventData.dt = timestamp;
 
 	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
@@ -261,7 +263,7 @@ MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, ev
 	this.addRequiredMetadata( eventData, streamName );
 
 	if ( this.samplingController.isStreamInSample( streamConfig ) ) {
-		this.eventSubmitter.submitEvent( eventData );
+		this.eventSubmitter.submitEvent( eventData, _useEnrollmentService );
 	}
 };
 
@@ -440,12 +442,14 @@ MetricsClient.prototype.processDispatchCall = function (
  * @param {string} schemaID
  * @param {InteractionAction} action
  * @param {InteractionContextData} [interactionData]
+ * @param {boolean} [_useEnrollmentService] Whether to mediate with enrollment service (e.g., for CDN experiments)
  */
 MetricsClient.prototype.submitInteraction = function (
 	streamName,
 	schemaID,
 	action,
-	interactionData
+	interactionData,
+	_useEnrollmentService
 ) {
 	if ( !action ) {
 		this.integration.logWarning(
@@ -474,7 +478,7 @@ MetricsClient.prototype.submitInteraction = function (
 
 	this.contextController.addRequestedValues( eventData, streamConfig );
 
-	this.submit( streamName, eventData );
+	this.submit( streamName, eventData, _useEnrollmentService );
 };
 
 const WEB_BASE_SCHEMA_ID = '/analytics/product_metrics/web/base/1.4.1';
