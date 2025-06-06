@@ -1,13 +1,9 @@
 version: v4
 variants:
-  test-php74:
-    base: docker-registry.wikimedia.org/dev/buster-php74:1.1.0-s3
+  test-php81:
+    base: docker-registry.wikimedia.org/dev/buster-php81:1.0.1-s2
     copies: [local]
     builder:
       command: [composer, install]
       requirements: [composer.json, composer.lock, php/]
     entrypoint: [composer, test]
-
-  test-php81:
-    includes: [test-php74]
-    base: docker-registry.wikimedia.org/dev/buster-php81:1.0.1-s2

@@ -56,10 +56,6 @@ test-js:
     # Use the job name as the blubber build variant
     BUILD_VARIANT: "${CI_JOB_NAME}"
 
-test-php74:
-  # Run tests for PHP client library with PHP 7.4 runtime
-  extends: .test-client-php
-
 test-php81:
   # Run tests for PHP client library with PHP 8.1 runtime
   extends: .test-client-php
