@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "32ad5c7af9084eb12968a425fb519d35",
+    "content-hash": "525ba47fe523e1a064204f793e3d175f",
     "packages": [
         {
             "name": "justinrainbow/json-schema",
@@ -879,25 +879,25 @@
         },
         {
             "name": "mediawiki/mediawiki-phan-config",
-            "version": "0.15.1",
+            "version": "0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/mediawiki-tools-phan.git",
-                "reference": "fa343ed8d1b3229f922ba7af6f5e8631bc312687"
+                "reference": "dc57a25d23a737c60be83557e2c986e28d8f5891"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/mediawiki-tools-phan/zipball/fa343ed8d1b3229f922ba7af6f5e8631bc312687",
-                "reference": "fa343ed8d1b3229f922ba7af6f5e8631bc312687",
+                "url": "https://api.github.com/repos/wikimedia/mediawiki-tools-phan/zipball/dc57a25d23a737c60be83557e2c986e28d8f5891",
+                "reference": "dc57a25d23a737c60be83557e2c986e28d8f5891",
                 "shasum": ""
             },
             "require": {
-                "mediawiki/phan-taint-check-plugin": "6.1.0",
-                "phan/phan": "5.4.5",
+                "mediawiki/phan-taint-check-plugin": "6.2.1",
+                "phan/phan": "5.5.0",
                 "php": ">=7.4.0"
             },
             "require-dev": {
-                "mediawiki/mediawiki-codesniffer": "45.0.0",
+                "mediawiki/mediawiki-codesniffer": "47.0.0",
                 "mediawiki/minus-x": "1.1.3",
                 "ockcyp/covers-validator": "1.6.0",
                 "php-parallel-lint/php-console-highlighter": "1.0.0",
@@ -923,9 +923,9 @@
             "description": "Standard MediaWiki phan configuration",
             "homepage": "https://www.mediawiki.org/wiki/Continuous_integration/Phan",
             "support": {
-                "source": "https://github.com/wikimedia/mediawiki-tools-phan/tree/0.15.1"
+                "source": "https://github.com/wikimedia/mediawiki-tools-phan/tree/0.16.0"
             },
-            "time": "2025-01-09T21:22:46+00:00"
+            "time": "2025-07-02T13:31:28+00:00"
         },
         {
             "name": "mediawiki/minus-x",
@@ -978,26 +978,26 @@
         },
         {
             "name": "mediawiki/phan-taint-check-plugin",
-            "version": "6.1.0",
+            "version": "6.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/mediawiki-tools-phan-SecurityCheckPlugin.git",
-                "reference": "73483518b835f677a3122367072a017430353e4b"
+                "reference": "b062502768910f1b2e56e354bcf6a52caf889b60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/mediawiki-tools-phan-SecurityCheckPlugin/zipball/73483518b835f677a3122367072a017430353e4b",
-                "reference": "73483518b835f677a3122367072a017430353e4b",
+                "url": "https://api.github.com/repos/wikimedia/mediawiki-tools-phan-SecurityCheckPlugin/zipball/b062502768910f1b2e56e354bcf6a52caf889b60",
+                "reference": "b062502768910f1b2e56e354bcf6a52caf889b60",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "phan/phan": "5.4.5",
+                "phan/phan": "5.5.0",
                 "php": "^7.4.0 | ^8.0.0"
             },
             "require-dev": {
                 "ext-pdo": "*",
-                "mediawiki/mediawiki-codesniffer": "45.0.0",
+                "mediawiki/mediawiki-codesniffer": "47.0.0",
                 "mediawiki/minus-x": "1.1.3",
                 "php-parallel-lint/php-console-highlighter": "1.0.0",
                 "php-parallel-lint/php-parallel-lint": "1.4.0",
@@ -1044,7 +1044,7 @@
                 "source": "https://phabricator.wikimedia.org/diffusion/MTPS/",
                 "wiki": "https://www.mediawiki.org/wiki/SecurityCheckPlugin"
             },
-            "time": "2024-12-01T22:01:25+00:00"
+            "time": "2025-07-02T12:50:02+00:00"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -1317,16 +1317,16 @@
         },
         {
             "name": "phan/phan",
-            "version": "5.4.5",
+            "version": "5.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phan/phan.git",
-                "reference": "2b15302175931a0629a85c57d0c1f91d68b26a4d"
+                "reference": "d27e93d3284d7eec9fd9647605d86cb6e6f2ea92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phan/phan/zipball/2b15302175931a0629a85c57d0c1f91d68b26a4d",
-                "reference": "2b15302175931a0629a85c57d0c1f91d68b26a4d",
+                "url": "https://api.github.com/repos/phan/phan/zipball/d27e93d3284d7eec9fd9647605d86cb6e6f2ea92",
+                "reference": "d27e93d3284d7eec9fd9647605d86cb6e6f2ea92",
                 "shasum": ""
             },
             "require": {
@@ -1337,7 +1337,7 @@
                 "ext-tokenizer": "*",
                 "felixfbecker/advanced-json-rpc": "^3.0.4",
                 "microsoft/tolerant-php-parser": "0.1.2",
-                "netresearch/jsonmapper": "^1.6.0|^2.0|^3.0|^4.0",
+                "netresearch/jsonmapper": "^1.6.0|^2.0|^3.0|^4.0|^5.0",
                 "php": "^7.2.0|^8.0.0",
                 "sabre/event": "^5.1.3",
                 "symfony/console": "^3.2|^4.0|^5.0|^6.0|^7.0",
@@ -1391,9 +1391,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phan/phan/issues",
-                "source": "https://github.com/phan/phan/tree/5.4.5"
+                "source": "https://github.com/phan/phan/tree/5.5.0"
             },
-            "time": "2024-08-13T21:41:35+00:00"
+            "time": "2025-06-30T14:18:36+00:00"
         },
         {
             "name": "phar-io/manifest",

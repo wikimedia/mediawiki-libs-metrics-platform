@@ -103,7 +103,7 @@ class MetricsClient implements LoggerAwareInterface {
 			$streamConfig = $this->streamConfigFactory->getStreamConfig( $streamName );
 
 			$event = $this->contextController->addRequestedValues( $event, $streamConfig );
-		} catch ( StreamConfigException $e ) {
+		} catch ( StreamConfigException ) {
 			return;
 		}
 
