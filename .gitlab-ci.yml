@@ -60,6 +60,10 @@ test-php81:
   # Run tests for PHP client library with PHP 8.1 runtime
   extends: .test-client-php
 
+test-php83:
+  # Run tests for PHP client library with PHP 8.3 runtime
+  extends: .test-client-php
+
 test-swift:
   extends: .test-client
   rules:
