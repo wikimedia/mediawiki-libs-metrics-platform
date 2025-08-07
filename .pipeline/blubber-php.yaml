@@ -7,3 +7,7 @@ variants:
       command: [composer, install]
       requirements: [composer.json, composer.lock, php/]
     entrypoint: [composer, test]
+
+  test-php83:
+    includes: [test-php81]
+    base: docker-registry.wikimedia.org/dev/bookworm-php83:1.0.0
