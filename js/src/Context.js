@@ -6,9 +6,8 @@
 // =====
 
 /**
- * @memberof MetricsPlatform.Context
- *
  * @type {EventPlatform.StreamProducerContextAttribute[]}
+ * @memberof MetricsPlatform.Context
  */
 const VALID_ATTRIBUTE_NAMES = [
 	'agent_client_platform',

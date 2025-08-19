@@ -7,6 +7,7 @@ const UINT32_MAX = 4294967295; // (2^32) - 1
  *
  * @param {MetricsPlatform.Integration} integration
  * @constructor
+ * @memberof MetricsPlatform
  */
 function SamplingController( integration ) {
 	this.integration = integration;

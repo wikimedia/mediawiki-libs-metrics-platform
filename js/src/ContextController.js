@@ -6,7 +6,7 @@ const isValidSample = require( './StreamConfig.js' ).isValidSample;
  *
  * @param {MetricsPlatform.Integration} integration
  * @constructor
- * @memberof MetricsPlatform
+ * @memberof MetricsPlatform.Context
  */
 function ContextController( integration ) {
 	this.integration = integration;
