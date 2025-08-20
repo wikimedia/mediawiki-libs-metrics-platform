@@ -9,7 +9,10 @@ const DEFAULT_EVENT_INTAKE_URL = 'https://intake-analytics.wikimedia.org/v1/even
  *
  * @param {string} [eventIntakeUrl] The URL of the EventGate event intake service to send events
  *  to. `https://intake-analytics.wikimedia.org/v1/events?hasty=true` by default
+ *
  * @constructor
+ * @implements {MetricsPlatform.EventSubmitter}
+ * @memberof MetricsPlatform
  */
 function NodeEventSubmitter( eventIntakeUrl ) {
 	this.eventIntakeUrl = eventIntakeUrl || DEFAULT_EVENT_INTAKE_URL;
@@ -19,7 +22,7 @@ function NodeEventSubmitter( eventIntakeUrl ) {
  * Submits to the event intake service or enqueues the event for submission to the event
  * intake service.
  *
- * @param {EventData} eventData
+ * @param {EventPlatform.EventData} eventData
  */
 NodeEventSubmitter.prototype.submitEvent = function ( eventData ) {
 	fetch( this.eventIntakeUrl, {
@@ -30,17 +33,7 @@ NodeEventSubmitter.prototype.submitEvent = function ( eventData ) {
 		body: JSON.stringify( eventData )
 	} );
 
-	this.onSubmitEvent( eventData );
-};
-
-/**
- * Called when an event is enqueued for submission to the event intake service.
- *
- * @param {EventData} eventData
- */
-NodeEventSubmitter.prototype.onSubmitEvent = function ( eventData ) {
-	// eslint-disable-next-line no-console
-	console.info( 'Submitted the following event:', eventData );
+	console.info( 'Submitted the following event:', eventData )
 };
 
 module.exports = NodeEventSubmitter;
