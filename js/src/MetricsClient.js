@@ -147,6 +147,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * @property {string} action_source
  * @property {string} action_context
  * @property {number} funnel_event_sequence_position
+ * @property {string} instrument_name
  * @memberof MetricsPlatform
  */
 
