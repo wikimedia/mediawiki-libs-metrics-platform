@@ -158,13 +158,13 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * creation of many convenience methods that fill the `action` property (and/or other properties in
  * future), e.g. {@link MetricsPlatform.MetricsClient#submitClick}.
  *
- * @typedef {MetricsPlatform.InteractionContextData} InteractionData
+ * @typedef {Object} InteractionData
  * @property {string} action
  * @memberof MetricsPlatform
  */
 
 /**
- * @typedef {MetricsPlatform.InteractionContextData} ElementInteractionData
+ * @typedef {Object} ElementInteractionData
  * @property {string} element_id
  * @property {string} element_friendly_name
  * @memberof MetricsPlatform
