@@ -34,8 +34,6 @@ metricsClient.dispatch( 'test.click', {
 setTimeout(
 	() => {
 		/** @type {Instrument} */
-		// @ts-ignore TS2339 TypeScript doesn't support ES5-style inheritance
-		// (see https://github.com/microsoft/TypeScript/issues/18609)
 		const i = metricsClient.newInstrument(
 			'test.metrics_platform.interactions',
 			'/analytics/product_metrics/web/base/1.3.0'

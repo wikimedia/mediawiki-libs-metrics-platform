@@ -1,21 +1,31 @@
 {
 	"opts": {
-		"destination": "docs/",
-		"package": "package.json",
+		"destination": "docs/js",
 		"pedantic": true,
 		"readme": "README.md",
-		"recurse": true
+		"recurse": true,
+		"template": "node_modules/jsdoc-wmf-theme"
 	},
 	"plugins": [
-		"plugins/markdown"
+		"node_modules/jsdoc-wmf-theme/plugins/default"
 	],
 	"source": {
-		"include": [ "src/" ]
+		"include": [ "src" ],
+		"exclude": []
 	},
+	"sourceType": "module",
 	"templates": {
 		"cleverLinks": true,
 		"default": {
 			"useLongnameInNav": true
+		},
+		"wmf": {
+			"maintitle": "Metrics Platform",
+			"repository": "https://gitlab.wikimedia.org/repos/data-engineering/metrics-platform/",
+			"siteMap": {
+				"sections": true
+			},
+			"linkMap": {}
 		}
 	}
 }

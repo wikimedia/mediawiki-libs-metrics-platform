@@ -1,6 +1,20 @@
-// TypeScript doesn't support ES5-style inheritance
-// (see https://github.com/microsoft/TypeScript/issues/18609).
-// @ts-nocheck
+/**
+ * TODO: Convert CallQueueEntry to an object so that we can use stricter typing.
+ *
+ * Previously, CallQueueEntry was defined as:
+ *
+ * ```ts
+ * type CallQueueEntry =
+ *     ["submit", string, string, BaseEventData]
+ *     | ["dispatch", string, string, FormattedCustomData]
+ *     ;
+ * ```
+ *
+ * @typedef {Array} MetricsPlatform.ExternalMetricsClient.CallQueueEntry
+ * @typedef {MetricsPlatform.ExternalMetricsClient.CallQueueEntry[]} MetricsPlatform.ExternalMetricsClient.CallQueue
+ */
+
+//
 
 const MetricsClient = require( './MetricsClient.js' );
 
@@ -10,9 +24,11 @@ const STATE_FETCHED_STREAM_CONFIGS = 2;
 const CALL_QUEUE_MAX_LENGTH = 128;
 
 /**
- * @param {Integration} integration
- * @param {EventSubmitter} [eventSubmitter]
+ * @param {MetricsPlatform.Integration} integration
+ * @param {MetricsPlatform.EventSubmitter} [eventSubmitter]
  * @constructor
+ * @extends {MetricsPlatform.MetricsClient}
+ * @memberof MetricsPlatform
  */
 function ExternalMetricsClient( integration, eventSubmitter ) {
 	MetricsClient.call( this, integration, {}, eventSubmitter );
@@ -21,7 +37,7 @@ function ExternalMetricsClient( integration, eventSubmitter ) {
 	this.state = STATE_FETCHING_STREAM_CONFIGS;
 	this.fetchStreamConfigs();
 
-	/** @type {CallQueue} */
+	/** @type {MetricsPlatform.ExternalMetricsClient.CallQueue} */
 	this.callQueue = [];
 }
 
@@ -32,7 +48,7 @@ ExternalMetricsClient.prototype.constructor = ExternalMetricsClient;
  * Fetch and update the stream configs, and then process the call queue, submitting and dispatching
  * events as necessary.
  *
- * @ignore
+ * @private
  */
 ExternalMetricsClient.prototype.fetchStreamConfigs = function () {
 	const that = this;
@@ -53,9 +69,8 @@ ExternalMetricsClient.prototype.fetchStreamConfigs = function () {
  * The call queue has a maximum capacity of 128 calls. If it is full, then the earliest call is
  * dropped and a warning is logged.
  *
- * @ignore
- *
- * @param {CallQueueEntry} call
+ * @param {MetricsPlatform.ExternalMetricsClient.CallQueueEntry} call
+ * @private
  */
 ExternalMetricsClient.prototype.queueCall = function ( call ) {
 	this.callQueue.push( call );
@@ -84,7 +99,7 @@ ExternalMetricsClient.prototype.queueCall = function ( call ) {
  * Processes calls to {@link MetricsClient.prototype.submit} and
  * {@link MetricsClient.prototype.dispatch} if the stream configs have been fetched and updated.
  *
- * @ignore
+ * @private
  */
 ExternalMetricsClient.prototype.processCallQueue = function () {
 	if ( this.state === STATE_FETCHING_STREAM_CONFIGS ) {
@@ -108,11 +123,11 @@ ExternalMetricsClient.prototype.processCallQueue = function () {
 };
 
 /**
- * @inheritdoc
- *
  * NOTE: Calls to `submit()` are processed after the stream configs are fetched and updated. If
  * the Metrics Platform Client was initialized with stream configs, then calls to `submit()` are
  * processed immediately.
+ *
+ * @override
  */
 ExternalMetricsClient.prototype.submit = function ( streamName, eventData ) {
 	const result = this.validateSubmitCall( streamName, eventData );
@@ -128,11 +143,11 @@ ExternalMetricsClient.prototype.submit = function ( streamName, eventData ) {
 };
 
 /**
- * @inheritdoc
- *
  * NOTE: Calls to `dispatch()` are processed after the stream configs are fetched and updated. If
  * the Metrics Platform Client was initialized with stream configs, then calls to `dispatch()` are
  * processed immediately.
+ *
+ * @override
  */
 ExternalMetricsClient.prototype.dispatch = function ( eventName, customData ) {
 	const result = this.validateDispatchCall( eventName, customData );
