@@ -3,6 +3,7 @@ const SamplingController = require( './SamplingController.js' );
 const CurationController = require( './CurationController.js' );
 const DefaultEventTransport = require( './EventTransport.js' );
 const Instrument = require( './Instrument.js' );
+const { DummyEventSender, DefaultEventSender } = require('./EventSender.js');
 
 const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
 
@@ -195,6 +196,7 @@ function MetricsClient(
 	this.streamConfigs = streamConfigs;
 	this.eventTransport = eventTransport || new DefaultEventTransport();
 	this.eventNameToStreamNamesMap = null;
+	this.streamNameToEventSenderMap = {};
 }
 
 /**
@@ -370,6 +372,56 @@ MetricsClient.prototype.addRequiredMetadata = function ( eventData, streamName )
 };
 
 /**
+ * Gets the {@link EventSender} instance for the stream (S).
+ *
+ * 1. If stream configs are disabled, then an {@link EventSender} instance is returned that has no
+ *    context attributes
+ *
+ * 2. If stream configs are enabled, then:
+ *
+ *     1. If S doesn't exist, then a {@link DummyEventSender} instance is returned
+ *
+ *     2. If S exists but is not in-sample, then a {@link DummyEventSender} instance is returned
+ *
+ *     3. If S exists and is in-sample, then an {@link EventSender} instance is returned with the
+ *        the context attributes requested in the configuration for S
+ *
+ * @param {string} streamName
+ * @return {MetricsPlatform.EventSender}
+ * @ignore
+ */
+MetricsClient.prototype.getEventSenderForStream = function ( streamName ) {
+	if ( this.streamNameToEventSenderMap[ streamName ] ) {
+		return this.streamNameToEventSenderMap[ streamName ];
+	}
+
+	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
+	let result;
+
+	if (
+		!streamConfig ||
+		!this.samplingController.isStreamInSample( streamConfig )
+	) {
+
+		// TODO (phuedx, 2025/08/22): Add logging?
+		result = new DummyEventSender();
+	} else {
+
+		// TODO (phuedx, 2025/08/22): Rename this method to ContextController#getContextAttributes()
+		const contextAttributes = this.contextController.addRequestedValues( {}, streamConfig );
+
+		result = new DefaultEventSender(
+			contextAttributes,
+			this.eventTransport
+		);
+	}
+
+	this.streamNameToEventSenderMap[ streamName ] = result;
+
+	return result;
+}
+
+/**
  * Submit an event to a stream.
  *
  * The event (E) is submitted to the stream (S) if E has the `$schema` property and S is in
@@ -422,17 +474,10 @@ MetricsClient.prototype.validateSubmitCall = function ( streamName, eventData ) 
 MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, eventData ) {
 	eventData.dt = timestamp;
 
-	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
-
-	if ( !streamConfig ) {
-		return;
-	}
-
 	this.addRequiredMetadata( eventData, streamName );
 
-	if ( this.samplingController.isStreamInSample( streamConfig ) ) {
-		this.eventTransport.transportEvent( eventData );
-	}
+	this.getEventSenderForStream( streamName )
+		.sendEvent( eventData );
 };
 
 /**
