@@ -1,20 +1,20 @@
 const DEFAULT_EVENT_INTAKE_URL = 'https://intake-analytics.wikimedia.org/v1/events?hasty=true';
 
 /**
- * A simple event submitter for use in server-side environments or environments requiring
+ * A simple event transport for use in server-side environments or environments requiring
  * simplicity.
  *
- * This event submitter submits the event to the event intake service immediately. The request is
+ * This event transport submits the event to the event intake service immediately. The request is
  * made using the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
  *
  * @param {string} [eventIntakeUrl] The URL of the EventGate event intake service to send events
  *  to. `https://intake-analytics.wikimedia.org/v1/events?hasty=true` by default
  *
  * @constructor
- * @implements {MetricsPlatform.EventSubmitter}
+ * @implements {MetricsPlatform.EventTransport}
  * @memberof MetricsPlatform
  */
-function NodeEventSubmitter( eventIntakeUrl ) {
+function NodeEventTransport( eventIntakeUrl ) {
 	this.eventIntakeUrl = eventIntakeUrl || DEFAULT_EVENT_INTAKE_URL;
 }
 
@@ -24,7 +24,7 @@ function NodeEventSubmitter( eventIntakeUrl ) {
  *
  * @param {EventPlatform.EventData} eventData
  */
-NodeEventSubmitter.prototype.submitEvent = function ( eventData ) {
+NodeEventTransport.prototype.transportEvent = function ( eventData ) {
 	fetch( this.eventIntakeUrl, {
 		method: 'POST',
 		headers: {
@@ -36,4 +36,4 @@ NodeEventSubmitter.prototype.submitEvent = function ( eventData ) {
 	console.info( 'Submitted the following event:', eventData )
 };
 
-module.exports = NodeEventSubmitter;
+module.exports = NodeEventTransport;

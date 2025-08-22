@@ -1,7 +1,7 @@
 const ContextController = require( './ContextController.js' );
 const SamplingController = require( './SamplingController.js' );
 const CurationController = require( './CurationController.js' );
-const DefaultEventSubmitter = require( './DefaultEventSubmitter.js' );
+const DefaultEventTransport = require( './EventTransport.js' );
 const Instrument = require( './Instrument.js' );
 
 const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
@@ -178,7 +178,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @param {MetricsPlatform.Integration} integration
  * @param {EventPlatform.StreamConfigs|false} streamConfigs
- * @param {MetricsPlatform.EventSubmitter} [eventSubmitter] An instance of {@link DefaultEventSubmitter} by default
+ * @param {MetricsPlatform.EventTransport} [eventTransport] An instance of {@link DefaultEventTransport} by default
  * @constructor
  * @class MetricsClient
  * @memberof MetricsPlatform
@@ -186,14 +186,14 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
 function MetricsClient(
 	integration,
 	streamConfigs,
-	eventSubmitter
+	eventTransport
 ) {
 	this.contextController = new ContextController( integration );
 	this.samplingController = new SamplingController( integration );
 	this.curationController = new CurationController();
 	this.integration = integration;
 	this.streamConfigs = streamConfigs;
-	this.eventSubmitter = eventSubmitter || new DefaultEventSubmitter();
+	this.eventTransport = eventTransport || new DefaultEventTransport();
 	this.eventNameToStreamNamesMap = null;
 }
 
@@ -431,7 +431,7 @@ MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, ev
 	this.addRequiredMetadata( eventData, streamName );
 
 	if ( this.samplingController.isStreamInSample( streamConfig ) ) {
-		this.eventSubmitter.submitEvent( eventData );
+		this.eventTransport.transportEvent( eventData );
 	}
 };
 
@@ -577,7 +577,7 @@ MetricsClient.prototype.processDispatchCall = function (
 			this.samplingController.isStreamInSample( streamConfig ) &&
 			this.curationController.shouldProduceEvent( eventData, streamConfig )
 		) {
-			this.eventSubmitter.submitEvent( eventData );
+			this.eventTransport.transportEvent( eventData );
 		}
 	}
 };
@@ -622,6 +622,12 @@ MetricsClient.prototype.submitInteraction = function (
 		return;
 	}
 
+	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
+
+	if ( !streamConfig ) {
+		return;
+	}
+
 	const eventData = Object.assign(
 		{
 			action
@@ -631,12 +637,6 @@ MetricsClient.prototype.submitInteraction = function (
 			$schema: schemaID
 		}
 	);
-
-	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
-
-	if ( !streamConfig ) {
-		return;
-	}
 
 	this.contextController.addRequestedValues( eventData, streamConfig );
 
