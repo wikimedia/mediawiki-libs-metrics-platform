@@ -396,15 +396,17 @@ MetricsClient.prototype.getEventSenderForStream = function ( streamName ) {
 	}
 
 	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
-	let result;
+	let result = new DummyEventSender();
 
-	if (
-		!streamConfig ||
-		!this.samplingController.isStreamInSample( streamConfig )
-	) {
-
-		// TODO (phuedx, 2025/08/22): Add logging?
-		result = new DummyEventSender();
+	if ( !streamConfig ) {
+		this.integration.logWarning(
+			'The stream ' + streamName + ' isn\'t defined. No events will be produced to the stream.'
+		);
+	} else if ( !this.samplingController.isStreamInSample( streamConfig ) ) {
+		this.integration.logWarning(
+			'The stream ' + streamName + ' isn\'t in-sample for this pageview or session. ' +
+			'No events will be produced to the stream.'
+		);
 	} else {
 
 		// TODO (phuedx, 2025/08/22): Rename this method to ContextController#getContextAttributes()
