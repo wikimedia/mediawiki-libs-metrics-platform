@@ -3,7 +3,7 @@ const SamplingController = require( './SamplingController.js' );
 const CurationController = require( './CurationController.js' );
 const DefaultEventTransport = require( './EventTransport.js' );
 const Instrument = require( './Instrument.js' );
-const { DummyEventSender, DefaultEventSender } = require('./EventSender.js');
+const { DummyEventSender, DefaultEventSender } = require( './EventSender.js' );
 
 const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
 
@@ -24,7 +24,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * Fetches stream configs from some source, remote or local.
  *
  * @name MetricsPlatform.Integration#fetchStreamConfigs
- * @returns {Promise<EventPlatform.StreamConfigs>}
+ * @return {Promise<EventPlatform.StreamConfigs>}
  * @method
  */
 
@@ -33,7 +33,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @method
  * @name MetricsPlatform.Integration#getHostname
- * @returns {string}
+ * @return {string}
  */
 
 /**
@@ -51,7 +51,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * @method
  * @name MetricsPlatform.Integration#clone
  * @param {Object} obj
- * @returns {Object}
+ * @return {Object}
  */
 
 /**
@@ -60,7 +60,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @method
  * @name MetricsPlatform.Integration#getContextAttributes
- * @returns {MetricsPlatform.Context.ContextAttributes}
+ * @return {MetricsPlatform.Context.ContextAttributes}
  */
 
 // NOTE: The following are required for compatibility with the current impl. but the
@@ -71,7 +71,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @method
  * @name MetricsPlatform.Integration#getPageviewId
- * @returns {string}
+ * @return {string}
  */
 
 /**
@@ -79,7 +79,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @method
  * @name MetricsPlatform.Integration#getSessionId
- * @returns {string}
+ * @return {string}
  */
 
 /**
@@ -87,14 +87,14 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @method
  * @name MetricsPlatform.Integration#getCurrentUserExperiments
- * @returns {Object}
+ * @return {Object}
  */
 
 /**
  * @method
  * @name MetricsPlatform.Integration#isCurrentUserEnrolled
  * @param {string} experimentName
- * @returns {boolean}
+ * @return {boolean}
  */
 
 // ---
@@ -179,7 +179,8 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @param {MetricsPlatform.Integration} integration
  * @param {EventPlatform.StreamConfigs|false} streamConfigs
- * @param {MetricsPlatform.EventTransport} [eventTransport] An instance of {@link DefaultEventTransport} by default
+ * @param {MetricsPlatform.EventTransport} [eventTransport] An instance of
+ *  {@link DefaultEventTransport} by default
  * @constructor
  * @class MetricsClient
  * @memberof MetricsPlatform
@@ -533,8 +534,6 @@ function getFormattedCustomData( customData ) {
  *
  * @param {string} eventName
  * @param {Map<string, any>} [customData]
- *
- * @unstable
  * @deprecated
  */
 MetricsClient.prototype.dispatch = function ( eventName, customData ) {
@@ -693,14 +692,15 @@ MetricsClient.prototype.submitInteraction = function (
 };
 
 const WEB_BASE_SCHEMA_ID = '/analytics/product_metrics/web/base/1.4.1';
-const WEB_BASE_STREAM_NAME = 'product_metrics.web_base';
+
+// TODO (phuedx, 2025/08/27): DefaultEventSender should also accept the destination stream
+// const WEB_BASE_STREAM_NAME = 'product_metrics.web_base';
 
 /**
  * See {@link MetricsPlatform.MetricsClient#submitInteraction}.
  *
  * @param {string} streamName
  * @param {MetricsPlatform.ElementInteractionData} interactionData
- * @unstable
  */
 MetricsClient.prototype.submitClick = function ( streamName, interactionData ) {
 	this.submitInteraction( streamName, WEB_BASE_SCHEMA_ID, 'click', interactionData );
