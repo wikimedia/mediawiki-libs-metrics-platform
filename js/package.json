@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "qunit ./test/unit/ && npm run lint",
-		"lint": "eslint --cache",
+		"lint": "eslint --cache .",
 		"doc": "jsdoc -c jsdoc.json",
 		"coverage": "nyc qunit ./test/unit/",
 		"build": "esbuild build/index.js --bundle --outfile=dist/metrics-platform.js"
