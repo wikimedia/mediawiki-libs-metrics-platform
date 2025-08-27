@@ -12,6 +12,7 @@
  * @memberof EventPlatform
  */
 
+/* eslint-disable camelcase,no-unused-vars */
 /**
  * @enum {string}
  * @readonly
@@ -62,6 +63,7 @@ const StreamProducerContextAttribute = {
 	performer_edit_count_bucket: 'performer_edit_count_bucket',
 	performer_registration_dt: 'performer_registration_dt'
 };
+/* eslint-enable camelcase,no-unused-vars */
 
 /**
  * @typedef {Object} StreamProducerCurationConfig
@@ -85,10 +87,8 @@ const StreamProducerContextAttribute = {
  * @memberof EventPlatform
  */
 
-/**
- * @typedef {Map<EventPlatform.StreamProducerContextAttribute,EventPlatform.StreamProducerCurationConfig>} StreamProducerCurationConfigs
- * @memberof EventPlatform
- */
+// eslint-disable-next-line max-len
+/** @typedef {Map<EventPlatform.StreamProducerContextAttribute,EventPlatform.StreamProducerCurationConfig>} EventPlatform.StreamProducerCurationConfigs */
 
 /**
  * @typedef {Object} StreamProducerConfig
