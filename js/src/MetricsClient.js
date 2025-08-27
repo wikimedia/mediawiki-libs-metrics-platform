@@ -421,7 +421,7 @@ MetricsClient.prototype.getEventSenderForStream = function ( streamName ) {
 	this.streamNameToEventSenderMap[ streamName ] = result;
 
 	return result;
-}
+};
 
 /**
  * Submit an event to a stream.
