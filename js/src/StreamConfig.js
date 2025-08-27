@@ -12,7 +12,6 @@
  * @memberof EventPlatform
  */
 
-
 /**
  * @enum {string}
  * @readonly

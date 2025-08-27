@@ -1,3 +1,5 @@
+const { DefaultEventSender } = require( './EventSender.js' );
+
 /**
  * Provides a convenient API for writing an instrument.
  *
@@ -31,27 +33,30 @@
  *
  * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/JavaScript_API
  *
- * @param {MetricsPlatform.MetricsClient} metricsClient
- * @param {string} streamName
+ * @param {MetricsPlatform.EventSender} eventSender
  * @param {string} schemaID
  * @constructor
  * @memberof MetricsPlatform
  */
-function Instrument( metricsClient, streamName, schemaID ) {
-	this.metricsClient = metricsClient;
-	this.streamName = streamName;
+function Instrument( eventSender, schemaID ) {
+	this.eventSender = eventSender;
 	this.schemaID = schemaID;
 	this.eventSequencePosition = 1;
 	this.instrumentName = null;
 }
 
+// TODO (phuedx, 2025/08/27): Remove Instrument#isStreamInSample() and #isEnabled() as:
+//
+// 1. They are not used; and
+// 2. Their use shouldn't be encouraged as, in general, instruments shouldn't "know" that they are
+//    enabled/disabled
 /**
  * See {@link MetricsClient#isStreamInSample}.
  *
  * @return {boolean}
  */
 Instrument.prototype.isStreamInSample = function () {
-	return this.metricsClient.isStreamInSample( this.streamName );
+	return this.eventSender instanceof DefaultEventSender;
 };
 
 /**
@@ -68,10 +73,13 @@ Instrument.prototype.isEnabled = function () {
  * @param {MetricsPlatform.InteractionContextData} [interactionData]
  */
 Instrument.prototype.submitInteraction = function ( action, interactionData ) {
-	interactionData = Object.assign(
+	const event = Object.assign(
 		{},
 		interactionData || {},
 		{
+			action,
+			$schema: this.schemaID,
+
 			// eslint-disable-next-line camelcase
 			funnel_event_sequence_position: this.eventSequencePosition++
 		}
@@ -82,12 +90,7 @@ Instrument.prototype.submitInteraction = function ( action, interactionData ) {
 		interactionData.instrument_name = this.instrumentName;
 	}
 
-	this.metricsClient.submitInteraction(
-		this.streamName,
-		this.schemaID,
-		action,
-		interactionData
-	);
+	this.eventSender.sendEvent( event );
 };
 
 /**
