@@ -178,7 +178,8 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @param {MetricsPlatform.Integration} integration
  * @param {EventPlatform.StreamConfigs|false} streamConfigs
- * @param {MetricsPlatform.EventSubmitter} [eventSubmitter] An instance of {@link DefaultEventSubmitter} by default
+ * @param {MetricsPlatform.EventSubmitter} [eventSubmitter] An instance of
+ *  {@link DefaultEventSubmitter} by default
  * @constructor
  * @class MetricsClient
  * @memberof MetricsPlatform
@@ -485,8 +486,6 @@ function getFormattedCustomData( customData ) {
  *
  * @param {string} eventName
  * @param {Map<string, any>} [customData]
- *
- * @unstable
  * @deprecated
  */
 MetricsClient.prototype.dispatch = function ( eventName, customData ) {
@@ -651,7 +650,6 @@ const WEB_BASE_STREAM_NAME = 'product_metrics.web_base';
  *
  * @param {string} streamName
  * @param {MetricsPlatform.ElementInteractionData} interactionData
- * @unstable
  */
 MetricsClient.prototype.submitClick = function ( streamName, interactionData ) {
 	this.submitInteraction( streamName, WEB_BASE_SCHEMA_ID, 'click', interactionData );
