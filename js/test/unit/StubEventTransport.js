@@ -12,6 +12,6 @@ function StubEventTransport() {
  */
 StubEventTransport.prototype.transportEvent = function ( eventData ) {
 	console.log( JSON.stringify( eventData ) );
-}
+};
 
 module.exports = StubEventTransport;

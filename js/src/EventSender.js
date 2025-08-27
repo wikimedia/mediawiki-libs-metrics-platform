@@ -20,8 +20,8 @@
  * @memberof MetricsPlatform
  */
 function DefaultEventSender( contextAttributes, eventTransport ) {
-    this.contextAttributes = contextAttributes;
-    this.eventTransport = eventTransport;
+	this.contextAttributes = contextAttributes;
+	this.eventTransport = eventTransport;
 }
 
 /**
@@ -30,7 +30,7 @@ function DefaultEventSender( contextAttributes, eventTransport ) {
 DefaultEventSender.prototype.sendEvent = function ( eventData ) {
 	eventData = Object.assign( eventData, this.contextAttributes );
 
-    this.eventTransport.transportEvent( eventData );
+	this.eventTransport.transportEvent( eventData );
 };
 
 /**
@@ -45,6 +45,6 @@ DummyEventSender.prototype.sendEvent = function () {
 };
 
 module.exports = {
-    DefaultEventSender,
-    DummyEventSender
+	DefaultEventSender,
+	DummyEventSender
 };

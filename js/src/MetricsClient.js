@@ -669,7 +669,8 @@ MetricsClient.prototype.submitInteraction = function (
 		return;
 	}
 
-	// TODO (phuedx, 2025/08/27): Remove this as it's done as part of MetricsClient#getEventSenderForStream()
+	// TODO (phuedx, 2025/08/27): Remove this as it's done as part of
+	//  MetricsClient#getEventSenderForStream()
 	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
 
 	if ( !streamConfig ) {
