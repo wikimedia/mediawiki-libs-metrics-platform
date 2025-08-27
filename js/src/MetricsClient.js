@@ -23,7 +23,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * Fetches stream configs from some source, remote or local.
  *
  * @name MetricsPlatform.Integration#fetchStreamConfigs
- * @returns {Promise<EventPlatform.StreamConfigs>}
+ * @return {Promise<EventPlatform.StreamConfigs>}
  * @method
  */
 
@@ -32,7 +32,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @method
  * @name MetricsPlatform.Integration#getHostname
- * @returns {string}
+ * @return {string}
  */
 
 /**
@@ -50,7 +50,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  * @method
  * @name MetricsPlatform.Integration#clone
  * @param {Object} obj
- * @returns {Object}
+ * @return {Object}
  */
 
 /**
@@ -59,7 +59,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @method
  * @name MetricsPlatform.Integration#getContextAttributes
- * @returns {MetricsPlatform.Context.ContextAttributes}
+ * @return {MetricsPlatform.Context.ContextAttributes}
  */
 
 // NOTE: The following are required for compatibility with the current impl. but the
@@ -70,7 +70,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @method
  * @name MetricsPlatform.Integration#getPageviewId
- * @returns {string}
+ * @return {string}
  */
 
 /**
@@ -78,7 +78,7 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @method
  * @name MetricsPlatform.Integration#getSessionId
- * @returns {string}
+ * @return {string}
  */
 
 /**
@@ -86,14 +86,14 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @method
  * @name MetricsPlatform.Integration#getCurrentUserExperiments
- * @returns {Object}
+ * @return {Object}
  */
 
 /**
  * @method
  * @name MetricsPlatform.Integration#isCurrentUserEnrolled
  * @param {string} experimentName
- * @returns {boolean}
+ * @return {boolean}
  */
 
 // ---

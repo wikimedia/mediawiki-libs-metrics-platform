@@ -33,7 +33,7 @@ NodeEventSubmitter.prototype.submitEvent = function ( eventData ) {
 		body: JSON.stringify( eventData )
 	} );
 
-	console.info( 'Submitted the following event:', eventData )
+	console.info( 'Submitted the following event:', eventData );
 };
 
 module.exports = NodeEventSubmitter;
