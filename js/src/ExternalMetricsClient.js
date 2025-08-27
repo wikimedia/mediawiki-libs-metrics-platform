@@ -1,5 +1,5 @@
 /**
- * TODO: Convert CallQueueEntry to an object so that we can use stricter typing.
+ * TODO: Convert to an object so that we can use stricter typing.
  *
  * Previously, CallQueueEntry was defined as:
  *
@@ -11,8 +11,10 @@
  * ```
  *
  * @typedef {Array} MetricsPlatform.ExternalMetricsClient.CallQueueEntry
- * @typedef {MetricsPlatform.ExternalMetricsClient.CallQueueEntry[]} MetricsPlatform.ExternalMetricsClient.CallQueue
  */
+
+// eslint-disable-next-line max-len
+/** @typedef {MetricsPlatform.ExternalMetricsClient.CallQueueEntry[]} MetricsPlatform.ExternalMetricsClient.CallQueue */
 
 //
 

@@ -50,7 +50,6 @@ const VALID_ATTRIBUTE_NAMES = [
 	'performer_registration_dt'
 ];
 
-
 /**
  * All the context attributes that can be provided by the JavaScript Metrics Platform Client.
  *
