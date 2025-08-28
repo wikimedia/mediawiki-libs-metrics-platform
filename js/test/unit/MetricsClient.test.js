@@ -116,10 +116,9 @@ QUnit.test( 'streamConfig() - disallow modification', ( assert ) => {
 QUnit.test( 'addRequiredMetadata() - modern event', ( assert ) => {
 	const hasOwnProperty = Object.prototype.hasOwnProperty;
 
-	modernEvent = metricsClient.addRequiredMetadata( modernEvent, 'metrics.platform.test' );
+	modernEvent = metricsClient.addRequiredMetadata( modernEvent );
 	assert.true( hasOwnProperty.call( modernEvent, 'dt' ), 'dt should be set' );
 	assert.deepEqual( modernEvent.meta, {
-		stream: 'metrics.platform.test',
 		domain: 'test.example.com'
 	} );
 } );
@@ -127,11 +126,10 @@ QUnit.test( 'addRequiredMetadata() - modern event', ( assert ) => {
 QUnit.test( 'addRequiredMetadata() - legacy event', ( assert ) => {
 	const hasOwnProperty = Object.prototype.hasOwnProperty;
 
-	legacyEvent = metricsClient.addRequiredMetadata( legacyEvent, 'metrics.platform.test' );
+	legacyEvent = metricsClient.addRequiredMetadata( legacyEvent );
 	assert.true( hasOwnProperty.call( legacyEvent, 'client_dt' ), 'client_dt should be set' );
 	assert.false( hasOwnProperty.call( legacyEvent, 'dt' ), 'dt should not be set' );
 	assert.deepEqual( legacyEvent.meta, {
-		stream: 'metrics.platform.test',
 		domain: 'test.example.com'
 	} );
 } );

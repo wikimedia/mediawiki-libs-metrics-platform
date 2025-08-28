@@ -339,16 +339,13 @@ MetricsClient.prototype.getStreamNamesForEvent = function ( eventName ) {
  * @ignore
  *
  * @param {EventPlatform.EventData} eventData
- * @param {string} streamName
  * @return {EventPlatform.EventData}
  */
-MetricsClient.prototype.addRequiredMetadata = function ( eventData, streamName ) {
+MetricsClient.prototype.addRequiredMetadata = function ( eventData ) {
 	if ( eventData.meta ) {
-		eventData.meta.stream = streamName;
 		eventData.meta.domain = this.integration.getHostname();
 	} else {
 		eventData.meta = {
-			stream: streamName,
 			domain: this.integration.getHostname()
 		};
 	}
@@ -416,6 +413,7 @@ MetricsClient.prototype.getEventSenderForStream = function ( streamName ) {
 		const contextAttributes = this.contextController.addRequestedValues( {}, streamConfig );
 
 		result = new DefaultEventSender(
+			streamName,
 			contextAttributes,
 			this.eventTransport
 		);
@@ -619,13 +617,11 @@ MetricsClient.prototype.processDispatchCall = function (
 		}
 
 		this.addRequiredMetadata( eventData, streamName );
-		this.contextController.addRequestedValues( eventData, streamConfig );
 
-		if (
-			this.samplingController.isStreamInSample( streamConfig ) &&
-			this.curationController.shouldProduceEvent( eventData, streamConfig )
-		) {
-			this.eventTransport.transportEvent( eventData );
+		const eventSender = this.getEventSenderForStream( streamName );
+
+		if ( this.curationController.shouldProduceEvent( eventData, streamConfig ) ) {
+			eventSender.sendEvent( eventData );
 		}
 	}
 };
@@ -694,9 +690,7 @@ MetricsClient.prototype.submitInteraction = function (
 };
 
 const WEB_BASE_SCHEMA_ID = '/analytics/product_metrics/web/base/1.4.1';
-
-// TODO (phuedx, 2025/08/27): DefaultEventSender should also accept the destination stream
-// const WEB_BASE_STREAM_NAME = 'product_metrics.web_base';
+const WEB_BASE_STREAM_NAME = 'product_metrics.web_base';
 
 /**
  * See {@link MetricsPlatform.MetricsClient#submitInteraction}.
@@ -739,11 +733,13 @@ MetricsClient.prototype.getEventSenderForInstrument = function ( instrumentName 
 			'No events will be produced.'
 		);
 	} else {
+		const streamName = instrumentConfig.stream_name || WEB_BASE_STREAM_NAME;
 
 		// TODO (phuedx, 2025/08/22): Rename this method to ContextController#getContextAttributes()
 		const contextAttributes = this.contextController.addRequestedValues( {}, instrumentConfig );
 
 		result = new DefaultEventSender(
+			streamName,
 			contextAttributes,
 			this.eventTransport
 		);
