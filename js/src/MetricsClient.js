@@ -1,8 +1,9 @@
 const ContextController = require( './ContextController.js' );
 const SamplingController = require( './SamplingController.js' );
 const CurationController = require( './CurationController.js' );
-const DefaultEventSubmitter = require( './DefaultEventSubmitter.js' );
+const DefaultEventTransport = require( './EventTransport.js' );
 const Instrument = require( './Instrument.js' );
+const { DummyEventSender, DefaultEventSender } = require( './EventSender.js' );
 
 const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
 
@@ -178,8 +179,8 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
  *
  * @param {MetricsPlatform.Integration} integration
  * @param {EventPlatform.StreamConfigs|false} streamConfigs
- * @param {MetricsPlatform.EventSubmitter} [eventSubmitter] An instance of
- *  {@link DefaultEventSubmitter} by default
+ * @param {MetricsPlatform.EventTransport} [eventTransport] An instance of
+ *  {@link DefaultEventTransport} by default
  * @constructor
  * @class MetricsClient
  * @memberof MetricsPlatform
@@ -187,15 +188,19 @@ const SCHEMA = '/analytics/mediawiki/client/metrics_event/2.1.0';
 function MetricsClient(
 	integration,
 	streamConfigs,
-	eventSubmitter
+	eventTransport
 ) {
 	this.contextController = new ContextController( integration );
 	this.samplingController = new SamplingController( integration );
 	this.curationController = new CurationController();
 	this.integration = integration;
 	this.streamConfigs = streamConfigs;
-	this.eventSubmitter = eventSubmitter || new DefaultEventSubmitter();
+	this.eventTransport = eventTransport || new DefaultEventTransport();
 	this.eventNameToStreamNamesMap = null;
+	this.streamNameToEventSenderMap = {};
+	this.instrumentNameToEventSenderMap = {};
+	this.instrumentConfigs = {};
+	this.domain = this.integration.getHostname();
 }
 
 /**
@@ -325,49 +330,57 @@ MetricsClient.prototype.getStreamNamesForEvent = function ( eventName ) {
 };
 
 /**
- * Adds required fields:
+ * Gets the {@link EventSender} instance for the stream (S).
  *
- * - `meta.stream`: the target stream name
- * - `meta.domain`: the domain associated with this event
- * - `dt`: the client-side timestamp (unless this is a migrated legacy event,
- *         in which case the timestamp will already be present as `client_dt`).
+ * 1. If stream configs are disabled, then an {@link EventSender} instance is returned that has no
+ *    context attributes
  *
- * @ignore
+ * 2. If stream configs are enabled, then:
  *
- * @param {EventPlatform.EventData} eventData
+ *     1. If S doesn't exist, then a {@link DummyEventSender} instance is returned
+ *
+ *     2. If S exists but is not in-sample, then a {@link DummyEventSender} instance is returned
+ *
+ *     3. If S exists and is in-sample, then an {@link EventSender} instance is returned with the
+ *        the context attributes requested in the configuration for S
+ *
  * @param {string} streamName
- * @return {EventPlatform.EventData}
+ * @return {MetricsPlatform.EventSender}
+ * @ignore
  */
-MetricsClient.prototype.addRequiredMetadata = function ( eventData, streamName ) {
-	if ( eventData.meta ) {
-		eventData.meta.stream = streamName;
-		eventData.meta.domain = this.integration.getHostname();
-	} else {
-		eventData.meta = {
-			stream: streamName,
-			domain: this.integration.getHostname()
-		};
+MetricsClient.prototype.getEventSenderForStream = function ( streamName ) {
+	if ( this.streamNameToEventSenderMap[ streamName ] ) {
+		return this.streamNameToEventSenderMap[ streamName ];
 	}
 
-	//
-	// The 'dt' field is reserved for the internal use of this library,
-	// and should not be set by any other caller.
-	//
-	// (1) 'dt' is a client-side timestamp for new events
-	//      and a server-side timestamp for legacy events.
-	// (2) 'dt' will be provided by EventGate if omitted here,
-	//      so it should be omitted for legacy events (and
-	//      deleted if present).
-	//
-	// We detect legacy events by looking for the 'client_dt'.
-	//
-	if ( eventData.client_dt ) {
-		delete eventData.dt;
+	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
+	let result = new DummyEventSender();
+
+	if ( !streamConfig ) {
+		this.integration.logWarning(
+			'The stream ' + streamName + ' isn\'t defined. No events will be produced to the stream.'
+		);
+	} else if ( !this.samplingController.isStreamInSample( streamConfig ) ) {
+		this.integration.logWarning(
+			'The stream ' + streamName + ' isn\'t in-sample for this pageview or session. ' +
+			'No events will be produced to the stream.'
+		);
 	} else {
-		eventData.dt = eventData.dt || new Date().toISOString();
+
+		// TODO (phuedx, 2025/08/22): Rename this method to ContextController#getContextAttributes()
+		const contextAttributes = this.contextController.addRequestedValues( {}, streamConfig );
+
+		result = new DefaultEventSender(
+			this.domain,
+			streamName,
+			contextAttributes,
+			this.eventTransport
+		);
 	}
 
-	return eventData;
+	this.streamNameToEventSenderMap[ streamName ] = result;
+
+	return result;
 };
 
 /**
@@ -423,17 +436,8 @@ MetricsClient.prototype.validateSubmitCall = function ( streamName, eventData ) 
 MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, eventData ) {
 	eventData.dt = timestamp;
 
-	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
-
-	if ( !streamConfig ) {
-		return;
-	}
-
-	this.addRequiredMetadata( eventData, streamName );
-
-	if ( this.samplingController.isStreamInSample( streamConfig ) ) {
-		this.eventSubmitter.submitEvent( eventData );
-	}
+	this.getEventSenderForStream( streamName )
+		.sendEvent( eventData );
 };
 
 /**
@@ -569,14 +573,9 @@ MetricsClient.prototype.processDispatchCall = function (
 			continue;
 		}
 
-		this.addRequiredMetadata( eventData, streamName );
-		this.contextController.addRequestedValues( eventData, streamConfig );
-
-		if (
-			this.samplingController.isStreamInSample( streamConfig ) &&
-			this.curationController.shouldProduceEvent( eventData, streamConfig )
-		) {
-			this.eventSubmitter.submitEvent( eventData );
+		if ( this.curationController.shouldProduceEvent( eventData, streamConfig ) ) {
+			this.getEventSenderForStream( streamName )
+				.sendEvent( eventData );
 		}
 	}
 };
@@ -621,6 +620,14 @@ MetricsClient.prototype.submitInteraction = function (
 		return;
 	}
 
+	// TODO (phuedx, 2025/08/27): Remove this as it's done as part of
+	//  MetricsClient#getEventSenderForStream()
+	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
+
+	if ( !streamConfig ) {
+		return;
+	}
+
 	const eventData = Object.assign(
 		{
 			action
@@ -630,12 +637,6 @@ MetricsClient.prototype.submitInteraction = function (
 			$schema: schemaID
 		}
 	);
-
-	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
-
-	if ( !streamConfig ) {
-		return;
-	}
 
 	this.contextController.addRequestedValues( eventData, streamConfig );
 
@@ -668,6 +669,42 @@ MetricsClient.prototype.isStreamInSample = function ( streamName ) {
 	return streamConfig ? this.samplingController.isStreamInSample( streamConfig ) : false;
 };
 
+MetricsClient.prototype.getEventSenderForInstrument = function ( instrumentName ) {
+	if ( this.instrumentNameToEventSenderMap[ instrumentName ] ) {
+		return this.instrumentNameToEventSenderMap[ instrumentName ];
+	}
+
+	const instrumentConfig = this.instrumentConfigs[ instrumentName ];
+	let result = new DummyEventSender();
+
+	if ( !instrumentConfig ) {
+		this.integration.logWarning(
+			'The instrument ' + instrumentName + ' isn\'t defined. No events will be produced.'
+		);
+	} else if ( !this.samplingController.isStreamInSample( instrumentConfig ) ) {
+		this.integration.logWarning(
+			'The instrument ' + instrumentName + ' isn\'t in-sample for this pageview or session. ' +
+			'No events will be produced.'
+		);
+	} else {
+		const streamName = instrumentConfig.stream_name || WEB_BASE_STREAM_NAME;
+
+		// TODO (phuedx, 2025/08/22): Rename this method to ContextController#getContextAttributes()
+		const contextAttributes = this.contextController.addRequestedValues( {}, instrumentConfig );
+
+		result = new DefaultEventSender(
+			this.domain,
+			streamName,
+			contextAttributes,
+			this.eventTransport
+		);
+	}
+
+	this.instrumentNameToEventSenderMap[ instrumentName ] = result;
+
+	return result;
+};
+
 /**
  * Creates a new {@link MetricsPlatform.Instrument} instance, which is bound to this
  * `MetricsClient` instance.
@@ -697,42 +734,49 @@ MetricsClient.prototype.newInstrument = function (
 	streamNameOrSchemaID,
 	schemaID
 ) {
-	let instrumentName;
-	let streamName;
+	let result;
 
 	if ( streamNameOrSchemaID === undefined ) {
 		// #newInstrument( instrumentName )
 
-		instrumentName = streamOrInstrumentName;
+		result = new Instrument(
+			this.getEventSenderForInstrument( streamOrInstrumentName ),
+			WEB_BASE_SCHEMA_ID
+		);
 
-		const streamConfig = getStreamConfigInternal( this.streamConfigs, instrumentName );
-		const overrideStreamName =
-			streamConfig &&
-			streamConfig.producers &&
-			streamConfig.producers.metrics_platform_client &&
-			streamConfig.producers.metrics_platform_client.stream_name;
+		return result.setInstrumentName( streamOrInstrumentName );
+	}
 
-		streamName = overrideStreamName || WEB_BASE_STREAM_NAME;
-		schemaID = WEB_BASE_SCHEMA_ID;
-	} else if ( schemaID === undefined ) {
+	if ( schemaID === undefined ) {
 		// #newInstrument( streamName, schemaID )
 
-		streamName = streamOrInstrumentName;
-		schemaID = streamNameOrSchemaID;
-	} else {
-		// #newInstrument( instrumentName, streamName, schemaID )
-
-		instrumentName = streamOrInstrumentName;
-		streamName = streamNameOrSchemaID;
+		return new Instrument(
+			this.getEventSenderForStream( streamOrInstrumentName ),
+			streamNameOrSchemaID
+		);
 	}
 
-	const result = new Instrument( this, streamName, schemaID );
+	// #newInstrument( instrumentName, streamName, schemaID )
 
-	if ( instrumentName ) {
-		result.setInstrumentName( instrumentName );
-	}
+	result = new Instrument(
+		this.getEventSenderForStream( streamNameOrSchemaID ),
+		schemaID
+	);
 
-	return result;
+	return result.setInstrumentName( streamOrInstrumentName );
+};
+
+/**
+ * Sets the instrument configs that are used in {@link MetricsClient#newInstrument}.
+ *
+ * @param {EventPlatform.StreamConfigs} instrumentConfigs
+ * @internal
+ */
+MetricsClient.prototype.setInstrumentConfigs = function ( instrumentConfigs ) {
+	this.instrmentConfigs = instrumentConfigs;
+
+	// Invalidate the event sender cache as we don't know how the instrument configs have changed
+	this.instrumentNameToEventSenderMap = {};
 };
 
 module.exports = MetricsClient;

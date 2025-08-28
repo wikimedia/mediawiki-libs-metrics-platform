@@ -96,20 +96,19 @@ const StreamProducerContextAttribute = {
  * @property {EventPlatform.StreamSampleConfig} [sampling]
  * @property {EventPlatform.StreamProducerContextAttribute[]} [provide_values]
  * @property {EventPlatform.StreamProducerCurationConfigs} [curation]
+ * @property {string} stream_name
  * @memberof EventPlatform
  */
 
 /**
- * @typedef {Object} StreamConfig
+ * @typedef {Object} EventPlatform.StreamConfig
  * @property {string} [schema_title]
  * @property {Map<string,EventPlatform.StreamProducerConfig>} [producers]
  * @property {EventPlatform.StreamSampleConfig} [sample]
- * @memberof EventPlatform
  */
 
 /**
- * @typedef {Map<string,EventPlatform.StreamConfig>} StreamConfigs
- * @memberof EventPlatform
+ * @typedef {Object.<string,EventPlatform.StreamConfig>} EventPlatform.StreamConfigs
  */
 
 // Functions
