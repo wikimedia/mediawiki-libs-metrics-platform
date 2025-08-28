@@ -199,6 +199,7 @@ function MetricsClient(
 	this.eventNameToStreamNamesMap = null;
 	this.streamNameToEventSenderMap = {};
 	this.instrumentNameToEventSenderMap = {};
+	this.instrumentConfigs = {};
 }
 
 /**
@@ -812,6 +813,19 @@ MetricsClient.prototype.newInstrument = function (
 	);
 
 	return result.setInstrumentName( streamOrInstrumentName );
+};
+
+/**
+ * Sets the instrument configs that are used in {@link MetricsClient#newInstrument}.
+ *
+ * @param {EventPlatform.StreamConfigs} instrumentConfigs
+ * @internal
+ */
+MetricsClient.prototype.setInstrumentConfigs = function ( instrumentConfigs ) {
+	this.instrmentConfigs = instrumentConfigs;
+
+	// Invalidate the event sender cache as we don't know how the instrument configs have changed
+	this.instrumentNameToEventSenderMap = {};
 };
 
 module.exports = MetricsClient;
