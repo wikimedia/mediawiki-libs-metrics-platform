@@ -46,6 +46,16 @@ DefaultEventSender.prototype.sendEvent = function ( eventData ) {
 		}
 	);
 
+	// If the 'dt' field is not set, then the event intake service, EventGate, will set it. The
+	// 'dt' field is a client-side timestamp for modern events and a server-side timestamp for
+	// legacy events. Thus, if we detect a legacy event, i.e. an event with the 'client_dt' field
+	// set, then we delete the 'dt' field.
+	if ( eventData.client_dt ) {
+		delete eventData.dt;
+	} else {
+		eventData.dt = eventData.dt || new Date().toISOString();
+	}
+
 	this.eventTransport.transportEvent( eventData );
 };
 

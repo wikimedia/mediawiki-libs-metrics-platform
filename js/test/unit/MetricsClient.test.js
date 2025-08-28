@@ -60,22 +60,6 @@ const streamConfigs = {
 	}
 };
 
-/** @type EventData */
-let modernEvent = {
-	$schema: '/test/event/1.0.0',
-	volcano: 'Nyiragongo',
-	Explosivity: 1
-};
-
-/** @type EventData */
-let legacyEvent = {
-	$schema: '/test/event/1.0.0',
-	volcano: 'Nyiragongo',
-	Explosivity: 1,
-	client_dt: '2021-05-12T00:00:00.000Z',
-	dt: '2021-05-12T00:00:00.000Z'
-};
-
 const integration = new TestMetricsClientIntegration();
 const eventTransport = new StubEventTransport();
 const metricsClient = new MetricsClient( integration, streamConfigs, eventTransport );
@@ -111,21 +95,6 @@ QUnit.test( 'streamConfig() - disallow modification', ( assert ) => {
 	streamConfig = metricsClient.getStreamConfig( 'metrics.platform.test' ) || {};
 
 	assert.strictEqual( streamConfig.schema_title, 'metrics/platform/test' );
-} );
-
-QUnit.test( 'addRequiredMetadata() - modern event', ( assert ) => {
-	const hasOwnProperty = Object.prototype.hasOwnProperty;
-
-	modernEvent = metricsClient.addRequiredMetadata( modernEvent );
-	assert.true( hasOwnProperty.call( modernEvent, 'dt' ), 'dt should be set' );
-} );
-
-QUnit.test( 'addRequiredMetadata() - legacy event', ( assert ) => {
-	const hasOwnProperty = Object.prototype.hasOwnProperty;
-
-	legacyEvent = metricsClient.addRequiredMetadata( legacyEvent );
-	assert.true( hasOwnProperty.call( legacyEvent, 'client_dt' ), 'client_dt should be set' );
-	assert.false( hasOwnProperty.call( legacyEvent, 'dt' ), 'dt should not be set' );
 } );
 
 QUnit.test( 'getStreamNamesForEvent() ', ( assert ) => {

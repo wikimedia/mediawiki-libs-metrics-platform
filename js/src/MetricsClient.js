@@ -330,41 +330,6 @@ MetricsClient.prototype.getStreamNamesForEvent = function ( eventName ) {
 };
 
 /**
- * Adds required fields:
- *
- * - `meta.stream`: the target stream name
- * - `meta.domain`: the domain associated with this event
- * - `dt`: the client-side timestamp (unless this is a migrated legacy event,
- *         in which case the timestamp will already be present as `client_dt`).
- *
- * @ignore
- *
- * @param {EventPlatform.EventData} eventData
- * @return {EventPlatform.EventData}
- */
-MetricsClient.prototype.addRequiredMetadata = function ( eventData ) {
-	//
-	// The 'dt' field is reserved for the internal use of this library,
-	// and should not be set by any other caller.
-	//
-	// (1) 'dt' is a client-side timestamp for new events
-	//      and a server-side timestamp for legacy events.
-	// (2) 'dt' will be provided by EventGate if omitted here,
-	//      so it should be omitted for legacy events (and
-	//      deleted if present).
-	//
-	// We detect legacy events by looking for the 'client_dt'.
-	//
-	if ( eventData.client_dt ) {
-		delete eventData.dt;
-	} else {
-		eventData.dt = eventData.dt || new Date().toISOString();
-	}
-
-	return eventData;
-};
-
-/**
  * Gets the {@link EventSender} instance for the stream (S).
  *
  * 1. If stream configs are disabled, then an {@link EventSender} instance is returned that has no
@@ -470,8 +435,6 @@ MetricsClient.prototype.validateSubmitCall = function ( streamName, eventData ) 
  */
 MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, eventData ) {
 	eventData.dt = timestamp;
-
-	this.addRequiredMetadata( eventData, streamName );
 
 	this.getEventSenderForStream( streamName )
 		.sendEvent( eventData );
