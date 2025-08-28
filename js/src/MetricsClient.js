@@ -610,12 +610,9 @@ MetricsClient.prototype.processDispatchCall = function (
 			continue;
 		}
 
-		this.addRequiredMetadata( eventData, streamName );
-
-		const eventSender = this.getEventSenderForStream( streamName );
-
 		if ( this.curationController.shouldProduceEvent( eventData, streamConfig ) ) {
-			eventSender.sendEvent( eventData );
+			this.getEventSenderForStream( streamName )
+				.sendEvent( eventData );
 		}
 	}
 };
