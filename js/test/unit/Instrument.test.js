@@ -20,10 +20,6 @@ QUnit.module( 'Instrument', {
 	}
 } );
 
-QUnit.test( 'isStreamInSample()', ( assert ) => {
-	assert.strictEqual( instrument.isStreamInSample(), false );
-} );
-
 QUnit.test( 'submitInteraction()', ( assert ) => {
 	instrument.submitInteraction( 'init' );
 	instrument.submitInteraction( 'scroll', {

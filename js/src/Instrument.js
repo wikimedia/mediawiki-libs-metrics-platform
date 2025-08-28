@@ -1,5 +1,3 @@
-const { DefaultEventSender } = require( './EventSender.js' );
-
 /**
  * Provides a convenient API for writing an instrument.
  *
@@ -45,27 +43,6 @@ function Instrument( eventSender, schemaID ) {
 	this.instrumentName = null;
 }
 
-// TODO (phuedx, 2025/08/27): Remove Instrument#isStreamInSample() and #isEnabled() as:
-//
-// 1. They are not used; and
-// 2. Their use shouldn't be encouraged as, in general, instruments shouldn't "know" that they are
-//    enabled/disabled
-/**
- * See {@link MetricsClient#isStreamInSample}.
- *
- * @return {boolean}
- */
-Instrument.prototype.isStreamInSample = function () {
-	return this.eventSender instanceof DefaultEventSender;
-};
-
-/**
- * @return {boolean}
- */
-Instrument.prototype.isEnabled = function () {
-	return this.isStreamInSample();
-};
-
 /**
  * See {@link MetricsClient#submitInteraction}.
  *
@@ -91,24 +68,6 @@ Instrument.prototype.submitInteraction = function ( action, interactionData ) {
 	}
 
 	this.eventSender.sendEvent( event );
-};
-
-/**
- * See {@link MetricsClient#submitClick}.
- *
- * @param {MetricsPlatform.ElementInteractionData} interactionData
- */
-Instrument.prototype.submitClick = function ( interactionData ) {
-
-	/* eslint-disable camelcase */
-	interactionData.funnel_event_sequence_position = this.eventSequencePosition++;
-
-	if ( this.instrumentName ) {
-		interactionData.instrument_name = this.instrumentName;
-	}
-	/* eslint-enable camelcase */
-
-	this.metricsClient.submitClick( this.streamName, interactionData );
 };
 
 /**
