@@ -200,6 +200,7 @@ function MetricsClient(
 	this.streamNameToEventSenderMap = {};
 	this.instrumentNameToEventSenderMap = {};
 	this.instrumentConfigs = {};
+	this.domain = this.integration.getHostname();
 }
 
 /**
@@ -342,14 +343,6 @@ MetricsClient.prototype.getStreamNamesForEvent = function ( eventName ) {
  * @return {EventPlatform.EventData}
  */
 MetricsClient.prototype.addRequiredMetadata = function ( eventData ) {
-	if ( eventData.meta ) {
-		eventData.meta.domain = this.integration.getHostname();
-	} else {
-		eventData.meta = {
-			domain: this.integration.getHostname()
-		};
-	}
-
 	//
 	// The 'dt' field is reserved for the internal use of this library,
 	// and should not be set by any other caller.
@@ -413,6 +406,7 @@ MetricsClient.prototype.getEventSenderForStream = function ( streamName ) {
 		const contextAttributes = this.contextController.addRequestedValues( {}, streamConfig );
 
 		result = new DefaultEventSender(
+			this.domain,
 			streamName,
 			contextAttributes,
 			this.eventTransport
@@ -739,6 +733,7 @@ MetricsClient.prototype.getEventSenderForInstrument = function ( instrumentName 
 		const contextAttributes = this.contextController.addRequestedValues( {}, instrumentConfig );
 
 		result = new DefaultEventSender(
+			this.domain,
 			streamName,
 			contextAttributes,
 			this.eventTransport

@@ -118,9 +118,6 @@ QUnit.test( 'addRequiredMetadata() - modern event', ( assert ) => {
 
 	modernEvent = metricsClient.addRequiredMetadata( modernEvent );
 	assert.true( hasOwnProperty.call( modernEvent, 'dt' ), 'dt should be set' );
-	assert.deepEqual( modernEvent.meta, {
-		domain: 'test.example.com'
-	} );
 } );
 
 QUnit.test( 'addRequiredMetadata() - legacy event', ( assert ) => {
@@ -129,9 +126,6 @@ QUnit.test( 'addRequiredMetadata() - legacy event', ( assert ) => {
 	legacyEvent = metricsClient.addRequiredMetadata( legacyEvent );
 	assert.true( hasOwnProperty.call( legacyEvent, 'client_dt' ), 'client_dt should be set' );
 	assert.false( hasOwnProperty.call( legacyEvent, 'dt' ), 'dt should not be set' );
-	assert.deepEqual( legacyEvent.meta, {
-		domain: 'test.example.com'
-	} );
 } );
 
 QUnit.test( 'getStreamNamesForEvent() ', ( assert ) => {

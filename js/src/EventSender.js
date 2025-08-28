@@ -13,14 +13,21 @@
  */
 
 /**
- * @param {string} streamName
+ * @param {string} domain The value to use for `meta.domain`
+ * @param {string} streamName The value to use for `meta.stream`
  * @param {MetricsPlatform.Context.ContextAttributes} contextAttributes
  * @param {MetricsPlatform.EventTransport} eventTransport
  * @constructor
  * @implements {MetricsPlatform.EventSender}
  * @memberof MetricsPlatform
  */
-function DefaultEventSender( streamName, contextAttributes, eventTransport ) {
+function DefaultEventSender(
+	domain,
+	streamName,
+	contextAttributes,
+	eventTransport
+) {
+	this.domain = domain;
 	this.streamName = streamName;
 	this.contextAttributes = contextAttributes;
 	this.eventTransport = eventTransport;
@@ -34,6 +41,7 @@ DefaultEventSender.prototype.sendEvent = function ( eventData ) {
 	eventData.meta = Object.assign(
 		eventData.meta || {},
 		{
+			domain: this.domain,
 			stream: this.streamName
 		}
 	);
