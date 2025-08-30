@@ -132,9 +132,9 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-.mvn/timing.properties
+java/.mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
-.mvn/wrapper/maven-wrapper.jar
+java/.mvn/wrapper/maven-wrapper.jar
 
 # Eclipse m2e generated files
 # Eclipse Core
