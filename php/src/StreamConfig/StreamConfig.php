@@ -11,6 +11,7 @@ class StreamConfig {
 	public const CONTEXTUAL_ATTRIBUTES = [
 		'agent_client_platform',
 		'agent_client_platform_family',
+		'agent_ua_string',
 
 		'page_id',
 		'page_title',
