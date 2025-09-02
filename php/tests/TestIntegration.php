@@ -10,6 +10,7 @@ class TestIntegration implements Integration {
 	private $contextAttributes = [
 		'agent_client_platform' => 'mediawiki_php',
 		'agent_client_platform_family' => null,
+		'agent_ua_string' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)',
 
 		'performer_is_logged_in' => true,
 		'performer_id' => 1,
