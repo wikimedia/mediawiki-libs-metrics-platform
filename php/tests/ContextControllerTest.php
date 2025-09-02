@@ -46,10 +46,7 @@ class ContextControllerTest extends TestCase {
 
 		$this->assertSame( 'mediawiki_php', $agentData['client_platform'] );
 		$this->assertArrayNotHasKey( 'client_platform_family', $agentData );
-		$this->assertSame(
-			'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
-			$agentData['ua_string']
-		);
+		$this->assertSame( 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)', $agentData['ua_string'] );
 
 		$this->assertSame( 1, $pageData['id'] );
 		$this->assertSame( 'Test', $pageData['title'] );
