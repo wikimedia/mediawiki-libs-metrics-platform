@@ -4,13 +4,13 @@
 
 const MetricsClient = require( './../../src/ExternalMetricsClient' );
 const Integration = require( './NodeIntegration' );
-const NodeEventSubmitter = require( '../../src/NodeEventSubmitter' );
+const NodeEventTransport = require( '../../src/NodeEventTransport' );
 
 // eslint-disable-next-line no-unused-vars
 const Instrument = require( '../../src/Instrument' );
 
 const integration = new Integration( 'http://host.docker.internal:8080' );
-const eventSubmitter = new NodeEventSubmitter( 'http://host.docker.internal:8192' );
+const eventTransport = new NodeEventTransport( 'http://host.docker.internal:8192' );
 
 integration.setContextAttributes( {
 	agent: {
@@ -21,7 +21,7 @@ integration.setContextAttributes( {
 	}
 } );
 
-const metricsClient = new MetricsClient( integration, eventSubmitter );
+const metricsClient = new MetricsClient( integration, eventTransport );
 
 metricsClient.dispatch( 'test.init' );
 metricsClient.dispatch( 'test.click', {
