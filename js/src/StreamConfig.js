@@ -23,6 +23,7 @@ const StreamProducerContextAttribute = {
 	// Agent
 	agent_client_platform: 'agent_client_platform',
 	agent_client_platform_family: 'agent_client_platform_family',
+	agent_ua_string: 'agent_ua_string',
 
 	// Page
 	page_id: 'page_id',

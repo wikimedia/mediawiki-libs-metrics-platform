@@ -15,6 +15,7 @@ const streamConfig = {
 			provide_values: [
 				'agent_client_platform',
 				'agent_client_platform_family',
+				'agent_ua_string',
 				'page_id',
 				'page_title',
 				'page_namespace',
@@ -82,7 +83,8 @@ QUnit.test( 'addRequestedValues()', ( assert ) => {
 
 		agent: {
 			client_platform: 'mediawiki_js',
-			client_platform_family: 'desktop_browser'
+			client_platform_family: 'desktop_browser',
+			ua_string: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'
 		},
 		page: {
 			id: 1,
