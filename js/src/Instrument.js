@@ -115,4 +115,11 @@ Instrument.prototype.setInstrumentName = function ( instrumentName ) {
 	this.instrumentName = instrumentName;
 };
 
+/**
+ * @param {string} schemaID
+ */
+Instrument.prototype.setSchemaID = function ( schemaID ) {
+	this.schemaID = schemaID;
+};
+
 module.exports = Instrument;
