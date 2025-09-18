@@ -1,5 +1,5 @@
 const DefaultIntegration = require( './src/DefaultIntegration.js' );
-const DefaultEventSubmitter = require( './src/DefaultEventSubmitter.js' );
+const DefaultEventTransport = require( './src/EventTransport.js' );
 const MetricsClient = require( './src/ExternalMetricsClient.js' );
 
 /**
@@ -10,7 +10,7 @@ const MetricsClient = require( './src/ExternalMetricsClient.js' );
 function createMetricsClient( streamConfigsOrigin, eventIntakeUrl ) {
 	return new MetricsClient(
 		new DefaultIntegration( streamConfigsOrigin ),
-		new DefaultEventSubmitter( eventIntakeUrl )
+		new DefaultEventTransport( eventIntakeUrl )
 	);
 }
 
@@ -18,5 +18,5 @@ module.exports = {
 	createMetricsClient: createMetricsClient,
 	MetricsClient: MetricsClient,
 	Integration: DefaultIntegration,
-	EventSubmitter: DefaultEventSubmitter
+	EventTransport: DefaultEventTransport
 };

@@ -31,35 +31,17 @@
  *
  * @see https://wikitech.wikimedia.org/wiki/Metrics_Platform/JavaScript_API
  *
- * @param {MetricsPlatform.MetricsClient} metricsClient
- * @param {string} streamName
+ * @param {MetricsPlatform.EventSender} eventSender
  * @param {string} schemaID
  * @constructor
  * @memberof MetricsPlatform
  */
-function Instrument( metricsClient, streamName, schemaID ) {
-	this.metricsClient = metricsClient;
-	this.streamName = streamName;
+function Instrument( eventSender, schemaID ) {
+	this.eventSender = eventSender;
 	this.schemaID = schemaID;
 	this.eventSequencePosition = 1;
 	this.instrumentName = null;
 }
-
-/**
- * See {@link MetricsClient#isStreamInSample}.
- *
- * @return {boolean}
- */
-Instrument.prototype.isStreamInSample = function () {
-	return this.metricsClient.isStreamInSample( this.streamName );
-};
-
-/**
- * @return {boolean}
- */
-Instrument.prototype.isEnabled = function () {
-	return this.isStreamInSample();
-};
 
 /**
  * See {@link MetricsClient#submitInteraction}.
@@ -68,10 +50,13 @@ Instrument.prototype.isEnabled = function () {
  * @param {MetricsPlatform.InteractionContextData} [interactionData]
  */
 Instrument.prototype.submitInteraction = function ( action, interactionData ) {
-	interactionData = Object.assign(
+	const event = Object.assign(
 		{},
 		interactionData || {},
 		{
+			action,
+			$schema: this.schemaID,
+
 			// eslint-disable-next-line camelcase
 			funnel_event_sequence_position: this.eventSequencePosition++
 		}
@@ -82,30 +67,7 @@ Instrument.prototype.submitInteraction = function ( action, interactionData ) {
 		interactionData.instrument_name = this.instrumentName;
 	}
 
-	this.metricsClient.submitInteraction(
-		this.streamName,
-		this.schemaID,
-		action,
-		interactionData
-	);
-};
-
-/**
- * See {@link MetricsClient#submitClick}.
- *
- * @param {MetricsPlatform.ElementInteractionData} interactionData
- */
-Instrument.prototype.submitClick = function ( interactionData ) {
-
-	/* eslint-disable camelcase */
-	interactionData.funnel_event_sequence_position = this.eventSequencePosition++;
-
-	if ( this.instrumentName ) {
-		interactionData.instrument_name = this.instrumentName;
-	}
-	/* eslint-enable camelcase */
-
-	this.metricsClient.submitClick( this.streamName, interactionData );
+	this.eventSender.sendEvent( event );
 };
 
 /**

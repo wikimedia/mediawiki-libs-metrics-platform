@@ -2,16 +2,16 @@
 // =====
 
 /**
- * @interface EventSubmitter
+ * @interface EventTransport
  * @memberof MetricsPlatform
  */
 
 /**
- * Submits to the event intake service or enqueues the event for submission to the event
- * intake service.
+ * Transports the event to the event intake service or enqueues the event for transport to the
+ * event intake service.
  *
  * @method
- * @name MetricsPlatform.EventSubmitter#submitEvent
+ * @name MetricsPlatform.EventTransport#transportEvent
  * @param {EventPlatform.EventData} event
  */
 
@@ -25,16 +25,16 @@ const DELAYED_SUBMIT_TIMEOUT = 5; // (s)
 // ===
 
 /**
- * The default event submitter used by {@link MetricsClient}.
+ * The default event transport used by {@link MetricsClient}.
  *
- * This event submitter maintains an unbounded internal queue of events, which is drained every
+ * This event transport maintains an unbounded internal queue of events, which is drained every
  * 5 seconds or when the page is hidden. When the queue is drained, all events in the queue are
- * submitted to the event intake service in one request. The request is made using the
+ * transported to the event intake service in one request. The request is made using the
  * [Navigator: sendBeacon() method][0]. That is, the request is made asynchronously in the
  * background by the browser with no indication whether it succeeded.
  *
- * This event submitter is expected to be used in a browser. As well as the
- * [Navigator: sendBeacon() method][0], the event submitter requires the browser to support for the
+ * This event transport is expected to be used in a browser. As well as the
+ * [Navigator: sendBeacon() method][0], the event transport requires the browser to support for the
  * [Page Visbility API][1].
  *
  * [0]: https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon
@@ -43,30 +43,30 @@ const DELAYED_SUBMIT_TIMEOUT = 5; // (s)
  * @param {string} [eventIntakeUrl] The URL of the EventGate event intake service to send events
  *  to. `https://intake-analytics.wikimedia.org/v1/events?hasty=true` by default
  * @constructor
- * @implements {MetricsPlatform.EventSubmitter}
+ * @implements {MetricsPlatform.EventTransport}
  * @memberof MetricsPlatform
  */
-function DefaultEventSubmitter( eventIntakeUrl ) {
+function DefaultEventTransport( eventIntakeUrl ) {
 	this.eventIntakeUrl = eventIntakeUrl || DEFAULT_EVENT_INTAKE_URL;
 
 	/** @type {EventPlatform.EventData[]} */
 	this.events = [];
 
-	const eventSubmitter = this;
+	const eventTransport = this;
 
 	this.isDocumentUnloading = false;
 
 	window.addEventListener( 'pagehide', () => {
-		eventSubmitter.isDocumentUnloading = true;
+		eventTransport.isDocumentUnloading = true;
 	} );
 
 	window.addEventListener( 'pageshow', () => {
-		eventSubmitter.isDocumentUnloading = false;
+		eventTransport.isDocumentUnloading = false;
 	} );
 
 	document.addEventListener( 'visibilitychange', () => {
 		if ( document.hidden ) {
-			eventSubmitter.doSubmitEvents();
+			eventTransport.doTransportEvents();
 		}
 	} );
 
@@ -79,16 +79,16 @@ function DefaultEventSubmitter( eventIntakeUrl ) {
  *
  * @param {EventPlatform.EventData} eventData
  */
-DefaultEventSubmitter.prototype.submitEvent = function ( eventData ) {
+DefaultEventTransport.prototype.transportEvent = function ( eventData ) {
 	this.events.push( eventData );
 
 	if ( this.isDocumentUnloading ) {
-		this.doSubmitEvents();
+		this.doTransportEvents();
 	} else {
-		this.doDelayedSubmit();
+		this.doDelayedTransportEvents();
 	}
 
-	this.onSubmitEvent( eventData );
+	this.onTransportEvent( eventData );
 };
 
 /**
@@ -96,7 +96,7 @@ DefaultEventSubmitter.prototype.submitEvent = function ( eventData ) {
  *
  * @ignore
  */
-DefaultEventSubmitter.prototype.doSubmitEvents = function () {
+DefaultEventTransport.prototype.doTransportEvents = function () {
 	if ( this.events.length ) {
 		try {
 			navigator.sendBeacon(
@@ -122,21 +122,21 @@ DefaultEventSubmitter.prototype.doSubmitEvents = function () {
 };
 
 /**
- * Schedules a call to {@link DefaultEventSubmitter#doSubmitEvents} in 5 seconds, if a call is not
- * already scheduled.
+ * Schedules a call to {@link DefaultEventTransport#doTransportEvents} in 5 seconds, if a call is
+ * not already scheduled.
  *
  * @ignore
  */
-DefaultEventSubmitter.prototype.doDelayedSubmit = function () {
+DefaultEventTransport.prototype.doDelayedTransportEvents = function () {
 	if ( this.delayedSubmitTimeoutID ) {
 		return;
 	}
 
-	const eventSubmitter = this;
+	const eventTranpsport = this;
 
 	this.delayedSubmitTimeoutID = setTimeout(
 		() => {
-			eventSubmitter.doSubmitEvents();
+			eventTranpsport.doTransportEvents();
 		},
 		DELAYED_SUBMIT_TIMEOUT * 1000
 	);
@@ -147,9 +147,9 @@ DefaultEventSubmitter.prototype.doDelayedSubmit = function () {
  *
  * @param {EventPlatform.EventData} eventData
  */
-DefaultEventSubmitter.prototype.onSubmitEvent = function ( eventData ) {
+DefaultEventTransport.prototype.onTransportEvent = function ( eventData ) {
 	// eslint-disable-next-line no-console
 	console.info( 'Submitted the following event:', eventData );
 };
 
-module.exports = DefaultEventSubmitter;
+module.exports = DefaultEventTransport;
