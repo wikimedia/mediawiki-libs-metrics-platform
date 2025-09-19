@@ -57,6 +57,14 @@ const streamConfigs = {
 	},
 	'metrics.platform.test7': {
 		schema_title: '/analytics/product_metrics/web/base'
+	},
+	'metrics.platform.test8': {
+		schema_title: '/analytics/product_metrics/web/base',
+		producers: {
+			metrics_platform_client: {
+				stream_name: 'metrics.platform.test7'
+			}
+		}
 	}
 };
 
@@ -102,6 +110,34 @@ QUnit.test( 'submit() - produce an event correctly', ( assert ) => {
 
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
 	assert.strictEqual( submitEventStub.callCount, 1, 'submitEvent() should be called' );
+} );
+
+QUnit.test( 'submit() - produce an event to a redirected stream', ( assert ) => {
+	metricsClient.submit( 'metrics.platform.test8', { $schema: '/analytics/product_metrics/web/base/1.4.3' } );
+
+	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
+	assert.strictEqual( submitEventStub.callCount, 1, 'submitEvent() should be called' );
+
+	const event = submitEventStub.args[ 0 ][ 0 ];
+
+	assert.strictEqual( event.meta.stream, 'metrics.platform.test7', 'The event was redirect' );
+} );
+
+QUnit.test( 'submit() - check if the stream is in-sample', ( assert ) => {
+	const isStreamInSampleSpy = sandbox.spy( metricsClient.samplingController, 'isStreamInSample' );
+
+	metricsClient.submit( 'metrics.platform.test8', { $schema: '/analytics/product_metrics/web/base/1.4.3' } );
+
+	const expectedStreamConfig = streamConfigs[ 'metrics.platform.test8' ];
+
+	assert.strictEqual( isStreamInSampleSpy.callCount, 1, 'isStreamInSample() should be called' );
+	assert.deepEqual(
+		isStreamInSampleSpy.args[ 0 ][ 0 ],
+		expectedStreamConfig,
+		'isStreamInSample() should be called with the config for the original stream'
+	);
+
+	isStreamInSampleSpy.restore();
 } );
 
 QUnit.test( 'streamConfig() - disallow modification', ( assert ) => {
