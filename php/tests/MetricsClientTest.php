@@ -79,8 +79,8 @@ class MetricsClientTest extends TestCase {
 	}
 
 	private function assertIsValidTimestamp( string $timestamp ) {
-		$ts = TestingAccessWrapper::newFromClass( ConvertibleTimestamp::class );
-		$this->assertMatchesRegularExpression( $ts->regexes['TS_ISO_8601'], $timestamp );
+		$regexes = TestingAccessWrapper::constant( ConvertibleTimestamp::class, 'REGEXES' );
+		$this->assertMatchesRegularExpression( $regexes['TS_ISO_8601'], $timestamp );
 		$this->assertStringEndsWith( 'Z', $timestamp );
 	}
 
