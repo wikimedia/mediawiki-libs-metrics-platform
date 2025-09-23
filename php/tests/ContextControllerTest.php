@@ -50,7 +50,7 @@ class ContextControllerTest extends TestCase {
 
 		$this->assertSame( 1, $pageData['id'] );
 		$this->assertSame( 'Test', $pageData['title'] );
-		$this->assertSame( 0, $pageData['namespace'] );
+		$this->assertSame( 0, $pageData['namespace_id'] );
 		$this->assertSame( '', $pageData['namespace_name'] );
 		$this->assertSame( 1, $pageData['revision_id'] );
 		$this->assertSame( 1, $pageData["wikidata_id"] );

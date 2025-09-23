@@ -30,7 +30,7 @@ class CurationControllerTest extends TestCase {
 							'less_than' => 500,
 							'not_equals' => 42,
 						],
-						'page_namespace_text' => [
+						'page_namespace_name' => [
 							'equals' => 'Talk',
 						],
 						'user_is_logged_in' => [
@@ -55,7 +55,7 @@ class CurationControllerTest extends TestCase {
 			'$schema' => 'test/event',
 			'page' => [
 				'id' => 1,
-				'namespace_text' => 'Talk',
+				'namespace_name' => 'Talk',
 			],
 			'user' => [
 				'groups' => [ 'user', 'autoconfirmed', 'steward' ],
@@ -76,9 +76,9 @@ class CurationControllerTest extends TestCase {
 		$this->assertFalse( $this->curationController->shouldProduceEvent( $event, $this->streamConfig ) );
 	}
 
-	public function testEventFailsWrongPageNamespaceText() {
+	public function testEventFailsWrongPageNamespaceName() {
 		$event = $this->baseEvent;
-		$event['page']['namespace_text'] = 'User';
+		$event['page']['namespace_name'] = 'User';
 		$this->assertFalse( $this->curationController->shouldProduceEvent( $event, $this->streamConfig ) );
 	}
 

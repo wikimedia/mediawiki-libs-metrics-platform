@@ -58,7 +58,7 @@ TestMetricsClientIntegration.prototype.getContextAttributes = function () {
 		page: {
 			id: 1,
 			title: 'Test',
-			namespace: 0,
+			namespace_id: 0,
 			namespace_name: '',
 			revision_id: 1,
 			wikidata_id: 1,

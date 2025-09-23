@@ -133,7 +133,7 @@ QUnit.module( 'CurationController', () => {
 		event.page.namespace_name = 'User';
 		assert.false(
 			curationController.shouldProduceEvent( event, streamConfig ),
-			'wrong page namespace text'
+			'wrong page namespace name'
 		);
 
 		event = baseEvent();

@@ -18,7 +18,7 @@ const streamConfig = {
 				'agent_ua_string',
 				'page_id',
 				'page_title',
-				'page_namespace',
+				'page_namespace_id',
 				'page_namespace_name',
 				'page_revision_id',
 				'page_wikidata_id',
@@ -89,7 +89,7 @@ QUnit.test( 'addRequestedValues()', ( assert ) => {
 		page: {
 			id: 1,
 			title: 'Test',
-			namespace: 0,
+			namespace_id: 0,
 			namespace_name: '',
 			revision_id: 1,
 			wikidata_id: 1,

@@ -34,7 +34,7 @@ class TestIntegration implements Integration {
 		'mediawiki_site_content_language_variant' => 'zh-tw',
 
 		'page_id' => 1,
-		'page_namespace' => 0,
+		'page_namespace_id' => 0,
 		'page_namespace_name' => '',
 		'page_title' => 'Test',
 		'page_is_redirect' => false,
