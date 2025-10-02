@@ -5,11 +5,10 @@ namespace Wikimedia\MetricsPlatform\Tests;
 require_once __DIR__ . '/TestIntegration.php';
 require_once __DIR__ . '/TestEventSubmitter.php';
 
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Wikimedia\MetricsPlatform\MetricsClient;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
-use Wikimedia\TestingAccessWrapper;
-use Wikimedia\Timestamp\ConvertibleTimestamp;
 
 /**
  * @covers \Wikimedia\MetricsPlatform\MetricsClient
@@ -79,9 +78,11 @@ class MetricsClientTest extends TestCase {
 	}
 
 	private function assertIsValidTimestamp( string $timestamp ) {
-		$regexes = TestingAccessWrapper::constant( ConvertibleTimestamp::class, 'REGEXES' );
-		$this->assertMatchesRegularExpression( $regexes['TS_ISO_8601'], $timestamp );
 		$this->assertStringEndsWith( 'Z', $timestamp );
+		$this->assertInstanceOf(
+			DateTimeImmutable::class,
+			DateTimeImmutable::createFromFormat( DateTimeImmutable::ATOM, $timestamp )
+		);
 	}
 
 	public function testSubmitInteraction(): void {
