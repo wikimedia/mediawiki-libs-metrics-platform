@@ -23,14 +23,6 @@ integration.setContextAttributes( {
 
 const metricsClient = new MetricsClient( integration, eventSubmitter );
 
-metricsClient.dispatch( 'test.init' );
-metricsClient.dispatch( 'test.click', {
-	element_id: 'ca-edit'
-} );
-metricsClient.dispatch( 'test.click', {
-	element_id: 'ca-talk'
-} );
-
 setTimeout(
 	() => {
 		/** @type {Instrument} */

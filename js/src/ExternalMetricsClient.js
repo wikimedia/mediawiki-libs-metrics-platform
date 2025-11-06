@@ -47,7 +47,7 @@ ExternalMetricsClient.prototype = Object.create( MetricsClient.prototype );
 ExternalMetricsClient.prototype.constructor = ExternalMetricsClient;
 
 /**
- * Fetch and update the stream configs, and then process the call queue, submitting and dispatching
+ * Fetch and update the stream configs, and then process the call queue, submitting
  * events as necessary.
  *
  * @private
@@ -98,8 +98,8 @@ ExternalMetricsClient.prototype.queueCall = function ( call ) {
 };
 
 /**
- * Processes calls to {@link MetricsClient.prototype.submit} and
- * {@link MetricsClient.prototype.dispatch} if the stream configs have been fetched and updated.
+ * Processes calls to {@link MetricsClient.prototype.submit}
+ * if the stream configs have been fetched and updated.
  *
  * @private
  */
@@ -118,8 +118,6 @@ ExternalMetricsClient.prototype.processCallQueue = function () {
 
 		if ( call[ 0 ] === 'submit' ) {
 			this.processSubmitCall( call[ 1 ], call[ 2 ], call[ 3 ] );
-		} else if ( call[ 0 ] === 'dispatch' ) {
-			this.processDispatchCall( call[ 1 ], call[ 2 ], call[ 3 ] );
 		}
 	}
 };
@@ -140,26 +138,6 @@ ExternalMetricsClient.prototype.submit = function ( streamName, eventData ) {
 			new Date().toISOString(),
 			streamName,
 			eventData
-		] );
-	}
-};
-
-/**
- * NOTE: Calls to `dispatch()` are processed after the stream configs are fetched and updated. If
- * the Metrics Platform Client was initialized with stream configs, then calls to `dispatch()` are
- * processed immediately.
- *
- * @override
- */
-ExternalMetricsClient.prototype.dispatch = function ( eventName, customData ) {
-	const result = this.validateDispatchCall( eventName, customData );
-
-	if ( result ) {
-		this.queueCall( [
-			'dispatch',
-			new Date().toISOString(),
-			eventName,
-			result
 		] );
 	}
 };

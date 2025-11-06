@@ -108,7 +108,7 @@ QUnit.test( 'fetchStreamConfigs() - invalidates eventNameToStreamNames map', ( a
 	} );
 } );
 
-QUnit.test( 'submit()/dispatch() - does not produce an event until streamConfigs are fetched', ( assert ) => {
+QUnit.test( 'submit() - does not produce an event until streamConfigs are fetched', ( assert ) => {
 	const streamConfigsPromise = new Promise( ( resolve ) => {
 		setTimeout(
 			() => {
@@ -125,7 +125,6 @@ QUnit.test( 'submit()/dispatch() - does not produce an event until streamConfigs
 	const metricsClient = new MetricsClient( integration, eventSubmitter );
 
 	metricsClient.submit( 'metrics.platform.test', { $schema: 'metrics/platform/test' } );
-	metricsClient.dispatch( 'click' );
 
 	assert.strictEqual( logWarningStub.callCount, 0, 'logWarning() should not be called' );
 	assert.strictEqual( submitEventStub.callCount, 0, 'submitEvent() should not be called' );
@@ -133,7 +132,7 @@ QUnit.test( 'submit()/dispatch() - does not produce an event until streamConfigs
 	const done = assert.async();
 
 	streamConfigsPromise.then( () => {
-		assert.strictEqual( submitEventStub.callCount, 2, 'submitEvent() should be called' );
+		assert.strictEqual( submitEventStub.callCount, 1, 'submitEvent() should be called' );
 
 		fetchStreamConfigsStub.restore();
 
@@ -157,16 +156,12 @@ QUnit.test( 'logs a warning if too many calls are enqueued before stream configs
 
 	const metricsClient = new MetricsClient( integration, eventSubmitter );
 
-	for ( let i = 0; i < 132; i += 2 ) {
+	for ( let i = 0; i < 132; i += 1 ) {
 		metricsClient.submit( 'metrics.platform.test', { $schema: 'metrics/platform/test' } );
-		metricsClient.dispatch( 'click' );
 	}
 
-	assert.strictEqual( logWarningStub.callCount, 4, 'logWarning() should be called twice' );
 	assert.strictEqual( logWarningStub.args[ 0 ][ 0 ], 'Call to submit( metrics.platform.test, eventData ) dropped because the queue is full.' );
-	assert.strictEqual( logWarningStub.args[ 1 ][ 0 ], 'Call to dispatch( click, customData ) dropped because the queue is full.' );
-	assert.strictEqual( logWarningStub.args[ 2 ][ 0 ], 'Call to submit( metrics.platform.test, eventData ) dropped because the queue is full.' );
-	assert.strictEqual( logWarningStub.args[ 3 ][ 0 ], 'Call to dispatch( click, customData ) dropped because the queue is full.' );
+	assert.strictEqual( logWarningStub.args[ 1 ][ 0 ], 'Call to submit( metrics.platform.test, eventData ) dropped because the queue is full.' );
 
 	assert.strictEqual( submitEventStub.callCount, 0, 'submitEvent() should not be called' );
 
