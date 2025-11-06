@@ -8,6 +8,7 @@ variables:
 
 stages:
   - test
+  - deploy
 
 .test-client:
   # Job template: all client library tests
@@ -17,17 +18,23 @@ stages:
     BUILD_VARIANT: test
 
 test-java:
+  stage: test
   # Run tests for Java client library
-  extends: .test-client
   rules:
-    - changes:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event' || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
         - .mvn/**/*
-        - .pipeline/blubber-java.yaml
         - java/**/*
         - mvnw
         - mvwn.cmnd
-  variables:
-    BUILD_CONFIG: .pipeline/blubber-java.yaml
+  trigger:
+    strategy: depend
+    include:
+      - component: $CI_SERVER_FQDN/repos/maven/wmf-maven-ci/mvn-job-verify@2.1.2
+        inputs:
+          pom-dir: java
+          workflow-rules:
+            - if: $CI_PIPELINE_SOURCE == "parent_pipeline"
 
 test-js:
   # Run tests for Javascript client library
