@@ -1,3 +1,4 @@
+# syntax = docker-registry.wikimedia.org/repos/releng/blubber/buildkit:v1.5.1
 version: v4
 variants:
   test:
