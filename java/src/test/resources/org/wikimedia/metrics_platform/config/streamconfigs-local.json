@@ -1834,7 +1834,7 @@
             "web_ui."
           ],
           "provide_values": [
-            "page_namespace",
+            "page_namespace_id",
             "performer_is_logged_in",
             "performer_session_id",
             "performer_pageview_id",

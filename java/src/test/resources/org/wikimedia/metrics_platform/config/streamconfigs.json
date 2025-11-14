@@ -1658,7 +1658,7 @@
             "web_ui."
           ],
           "provide_values": [
-            "page_namespace",
+            "page_namespace_id",
             "performer_is_logged_in",
             "performer_session_id",
             "performer_pageview_id",
@@ -1710,7 +1710,7 @@
             "agent_client_platform_family",
             "page_id",
             "page_title",
-            "page_namespace",
+            "page_namespace_id",
             "page_revision_id",
             "mediawiki_version",
             "mediawiki_is_debug_mode",
