@@ -6,7 +6,6 @@ use Wikimedia\MetricsPlatform\MetricsClient;
 use Wikimedia\Timestamp\ConvertibleTimestamp;
 
 trait TestHelperTrait {
-	/** @var string */
 	private string $testStreamName = 'test.metrics_platform.interactions';
 
 	private function createTestInteractionEvent(): array {
@@ -16,9 +15,6 @@ trait TestHelperTrait {
 		];
 	}
 
-	/**
-	 * @param string $eventName
-	 */
 	private function getTestInteractionEvent( string $eventName ): array {
 		$eventBase = $this->createTestInteractionEvent();
 		$interactionData = $this->getTestInteractionData();
