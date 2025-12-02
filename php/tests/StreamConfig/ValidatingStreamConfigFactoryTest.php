@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikimedia\MetricsPlatform\Tests;
+namespace Wikimedia\MetricsPlatform\Tests\StreamConfig;
 
 use Generator;
 use JsonSchema\Validator;
@@ -106,7 +106,7 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 		$this->assertEquals( $expectedCurationRules, $streamConfig->getCurationRules() );
 	}
 
-	public function testItShouldHandleDisabledStreamConfigs() {
+	public function testItShouldHandleDisabledStreamConfigs(): void {
 		$streamName = 'test.stream';
 		$streamConfigs = false;
 
