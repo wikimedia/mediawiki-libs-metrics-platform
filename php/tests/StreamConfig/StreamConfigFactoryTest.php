@@ -32,7 +32,7 @@ class StreamConfigFactoryTest extends TestCase {
 		$this->assertEquals( new StreamConfig( [] ), $factory->getStreamConfig( 'test.stream' ) );
 	}
 
-	public function provideStreamConfigThrows(): Generator {
+	public static function provideStreamConfigThrows(): Generator {
 		yield [ false ];
 		yield [ true ];
 		yield [ 1 ];
