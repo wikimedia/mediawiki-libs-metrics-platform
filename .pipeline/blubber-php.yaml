@@ -1,14 +1,10 @@
 # syntax = docker-registry.wikimedia.org/repos/releng/blubber/buildkit:v1.5.1
 version: v4
 variants:
-  test-php81:
-    base: docker-registry.wikimedia.org/dev/buster-php81:1.0.1-s2
+  test-php83:
+    base: docker-registry.wikimedia.org/dev/bookworm-php83:1.0.0
     copies: [local]
     builder:
       command: [composer, install]
       requirements: [composer.json, composer.lock, php/]
     entrypoint: [composer, test]
-
-  test-php83:
-    includes: [test-php81]
-    base: docker-registry.wikimedia.org/dev/bookworm-php83:1.0.0
