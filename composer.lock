@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5056b5d35c41259fb7f9a2b0ed9fc12f",
+    "content-hash": "07b47cbee12cf7578484579f8260842f",
     "packages": [
         {
             "name": "justinrainbow/json-schema",
@@ -1308,21 +1308,21 @@
         },
         {
             "name": "ockcyp/covers-validator",
-            "version": "v1.6.0",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oradwell/covers-validator.git",
-                "reference": "71f5dee61cd520366b62460bbdf1d655e8186c05"
+                "reference": "c784c9993e888bf9deb351cd3feabc32f5d0eccd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oradwell/covers-validator/zipball/71f5dee61cd520366b62460bbdf1d655e8186c05",
-                "reference": "71f5dee61cd520366b62460bbdf1d655e8186c05",
+                "url": "https://api.github.com/repos/oradwell/covers-validator/zipball/c784c9993e888bf9deb351cd3feabc32f5d0eccd",
+                "reference": "c784c9993e888bf9deb351cd3feabc32f5d0eccd",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0",
-                "phpunit/phpunit": ">=7.0,<10.0",
+                "phpunit/phpunit": ">=7.0,<11.0",
                 "symfony/console": ">=2.7,<7.0"
             },
             "bin": [
@@ -1357,9 +1357,9 @@
             ],
             "support": {
                 "issues": "https://github.com/oradwell/covers-validator/issues",
-                "source": "https://github.com/oradwell/covers-validator/tree/v1.6.0"
+                "source": "https://github.com/oradwell/covers-validator/tree/v1.7.0"
             },
-            "time": "2022-10-04T20:00:21+00:00"
+            "time": "2025-10-07T13:30:16+00:00"
         },
         {
             "name": "phan/phan",
