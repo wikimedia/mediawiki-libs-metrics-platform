@@ -14,7 +14,9 @@ $eventSubmitter = new ConsistencyTestEventSubmitter( __DIR__ . '/../integration_
 $integration = new ConsistencyTestIntegration( __DIR__ . '/../integration_data.json' );
 $streamConfigFactory = new StreamConfigFactory( __DIR__ . '/../stream_configs.json' );
 
-( new MetricsClient( $eventSubmitter, $integration, $streamConfigFactory ) )->dispatch(
+( new MetricsClient( $eventSubmitter, $integration, $streamConfigFactory ) )->submitInteraction(
+	'test.consistency',
+	'/analytics/product_metrics/web/base/1.5.0',
 	'test_consistency_event',
 	[
 		'test' => 'consistency',

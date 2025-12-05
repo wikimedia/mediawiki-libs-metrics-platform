@@ -2,7 +2,7 @@
 	"streams": {
 		"test.consistency": {
 			"stream": "test.consistency",
-			"schema_title": "analytics/mediawiki/client/metrics_event",
+			"schema_title": "analytics/product_metrics/web/base",
 			"sample": {
 				"rate": 1.0,
 				"unit": "session"
