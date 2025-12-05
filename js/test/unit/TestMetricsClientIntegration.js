@@ -32,14 +32,6 @@ TestMetricsClientIntegration.prototype.getHostname = function () {
 	return 'test.example.com';
 };
 
-/**
- * @param {Object} obj
- * @return {Object}
- */
-TestMetricsClientIntegration.prototype.clone = function ( obj ) {
-	return JSON.parse( JSON.stringify( obj ) );
-};
-
 TestMetricsClientIntegration.prototype.getContextAttributes = function () {
 	/* eslint-disable camelcase */
 	return {
@@ -74,9 +66,9 @@ TestMetricsClientIntegration.prototype.getContextAttributes = function () {
 			is_logged_in: true,
 			id: 1,
 			name: 'TestUser',
-			session_id: this.getSessionId(),
-			active_browsing_session_token: this.getActiveBrowsingSessionToken(),
-			pageview_id: this.getPageviewId(),
+			session_id: this.sessionId,
+			active_browsing_session_token: this.activeBrowsingSessionToken,
+			pageview_id: this.pageviewId,
 			groups: [ '*' ],
 			is_bot: false,
 			is_temp: false,
@@ -90,18 +82,6 @@ TestMetricsClientIntegration.prototype.getContextAttributes = function () {
 		}
 	};
 	/* eslint-enable camelcase */
-};
-
-TestMetricsClientIntegration.prototype.getPageviewId = function () {
-	return this.pageviewId;
-};
-
-TestMetricsClientIntegration.prototype.getSessionId = function () {
-	return this.sessionId;
-};
-
-TestMetricsClientIntegration.prototype.getActiveBrowsingSessionToken = function () {
-	return this.activeBrowsingSessionToken;
 };
 
 module.exports = TestMetricsClientIntegration;

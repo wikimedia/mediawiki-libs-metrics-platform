@@ -66,15 +66,6 @@ DefaultIntegration.prototype.getHostname = function () {
 };
 
 /**
- * Gets a deep clone of the object.
- *
- * @param {Object} _obj
- */
-DefaultIntegration.prototype.clone = function ( _obj ) {
-	throw new Error( 'Not implemented!' );
-};
-
-/**
  * Gets the values for those context attributes that are available in the execution
  * environment.
  *
