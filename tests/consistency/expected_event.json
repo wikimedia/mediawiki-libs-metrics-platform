@@ -1,12 +1,7 @@
 {
-	"$schema": "/analytics/mediawiki/client/metrics_event/2.0.0",
-	"name": "test_consistency_event",
-	"custom_data": {
-		"test": {
-			"data_type": "string",
-			"value": "consistency"
-		}
-	},
+	"$schema": "/analytics/product_metrics/web/base/1.5.0",
+	"action": "test_consistency_event",
+	"test": "consistency",
 	"meta": {
 		"stream": "test.consistency",
 		"domain": "en.wikipedia.org"
@@ -18,7 +13,7 @@
 	"page": {
 		"id": 30715282,
 		"title": "Dark_Souls",
-		"namespace": 0,
+		"namespace_id": 0,
 		"namespace_name": "",
 		"revision_id": 1084793259,
 		"wikidata_qid": "Q1166232",
