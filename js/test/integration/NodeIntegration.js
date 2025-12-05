@@ -5,7 +5,8 @@ const crypto = require( 'crypto' );
 const NodeIntegration = require( './../../src/DefaultIntegration' );
 
 /**
- * @type {Integration}
+ * @implements {MetricsPlatform.Integration}
+ * @memberof MetricsPlatform
  */
 
 /**
