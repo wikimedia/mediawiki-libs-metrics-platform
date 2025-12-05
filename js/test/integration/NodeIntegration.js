@@ -5,6 +5,10 @@ const crypto = require( 'crypto' );
 const NodeIntegration = require( './../../src/DefaultIntegration' );
 
 /**
+ * @type {Integration}
+ */
+
+/**
  * @return {string}
  */
 NodeIntegration.prototype.getHostname = function () {

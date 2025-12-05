@@ -5,6 +5,7 @@
 const sinon = require( 'sinon' );
 
 const TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
+const TestMetricsClientLogger = require( './TestMetricsClientLogger.js' );
 const StubEventSubmitter = require( './StubEventSubmitter.js' );
 const MetricsClient = require( './../../src/MetricsClient.js' );
 
@@ -85,12 +86,13 @@ let legacyEvent = {
 };
 
 const integration = new TestMetricsClientIntegration();
+const logger = new TestMetricsClientLogger();
 const eventSubmitter = new StubEventSubmitter();
-const metricsClient = new MetricsClient( integration, streamConfigs, eventSubmitter );
+const metricsClient = new MetricsClient( integration, logger, streamConfigs, eventSubmitter );
 
 const sandbox = sinon.createSandbox();
 const submitEventStub = sandbox.stub( eventSubmitter, 'submitEvent' );
-const logWarningStub = sandbox.stub( integration, 'logWarning' );
+const logWarningStub = sandbox.stub( logger, 'logWarning' );
 
 QUnit.module( 'MetricsClient', {
 	beforeEach: () => {
@@ -223,7 +225,7 @@ QUnit.test( 'getStreamNamesForEvent() - prefix matching', ( assert ) => {
 
 QUnit.test( 'getStreamNamesForEvent() - streamConfigs is falsy', ( assert ) => {
 	// eslint-disable-next-line no-shadow
-	const metricsClient = new MetricsClient( integration, false, eventSubmitter );
+	const metricsClient = new MetricsClient( integration, logger, false, eventSubmitter );
 
 	assert.deepEqual( metricsClient.getStreamNamesForEvent( 'foo' ), [] );
 	assert.strictEqual(

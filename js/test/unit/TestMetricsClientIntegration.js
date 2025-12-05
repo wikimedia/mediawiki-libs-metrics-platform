@@ -33,13 +33,6 @@ TestMetricsClientIntegration.prototype.getHostname = function () {
 };
 
 /**
- * @param {string} string
- */
-TestMetricsClientIntegration.prototype.logWarning = function ( string ) {
-	console.log( string );
-};
-
-/**
  * @param {Object} obj
  * @return {Object}
  */

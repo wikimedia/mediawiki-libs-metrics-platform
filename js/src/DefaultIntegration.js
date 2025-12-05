@@ -66,17 +66,6 @@ DefaultIntegration.prototype.getHostname = function () {
 };
 
 /**
- * Logs the warning to whatever logging backend that the execution environment, e.g. the
- * console.
- *
- * @param {string} message
- */
-DefaultIntegration.prototype.logWarning = function ( message ) {
-	// eslint-disable-next-line no-console
-	console.warn( message );
-};
-
-/**
  * Gets a deep clone of the object.
  *
  * @param {Object} _obj
@@ -93,42 +82,6 @@ DefaultIntegration.prototype.clone = function ( _obj ) {
  */
 DefaultIntegration.prototype.getContextAttributes = function () {
 	return this.contextAttributes;
-};
-
-// NOTE: The following are required for compatibility with the current impl. but the
-// information is also available via ::getContextualAttributes() above.
-
-/**
- * Gets a pageview ID.
- *
- * A pageview ID is a token that should uniquely identify a pageview.
- *
- * @return {string}
- */
-DefaultIntegration.prototype.getPageviewId = function () {
-	throw new Error( 'Not implemented yet.' );
-};
-
-/**
- * Gets the session ID.
- *
- * A session ID is a token that should uniquely identify a browsing session.
- *
- * @return {string}
- */
-DefaultIntegration.prototype.getSessionId = function () {
-	throw new Error( 'Not implemented yet.' );
-};
-
-// ---
-
-/**
- * Copies the given context attributes so that they can be mixed into events.
- *
- * @param {MetricsPlatform.Context.ContextAttributes} contextAttributes
- */
-DefaultIntegration.prototype.setContextAttributes = function ( contextAttributes ) {
-	copyAttributes( contextAttributes, this.contextAttributes );
 };
 
 module.exports = DefaultIntegration;
