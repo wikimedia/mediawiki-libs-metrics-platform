@@ -14,15 +14,6 @@ const integration = new Integration( 'http://host.docker.internal:8080' );
 const logger = new Logger();
 const eventSubmitter = new NodeEventSubmitter( 'http://host.docker.internal:8192' );
 
-integration.setContextAttributes( {
-	agent: {
-		client_platform_family: 'app'
-	},
-	mediawiki: {
-		skin: 'minerva'
-	}
-} );
-
 const metricsClient = new MetricsClient( integration, logger, eventSubmitter );
 
 setTimeout(
