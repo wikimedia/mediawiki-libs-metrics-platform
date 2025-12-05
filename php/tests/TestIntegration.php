@@ -7,7 +7,7 @@ use Wikimedia\MetricsPlatform\Integration;
 class TestIntegration implements Integration {
 
 	/** @var array */
-	private $contextAttributes = [
+	private array $contextAttributes = [
 		'agent_client_platform' => 'mediawiki_php',
 		'agent_client_platform_family' => null,
 		'agent_ua_string' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)',

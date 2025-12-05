@@ -16,20 +16,15 @@ use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
 class MetricsClientTest extends TestCase {
 	use TestHelperTrait;
 
-	/** @var TestEventSubmitter */
-	private $eventSubmitter;
+	private TestEventSubmitter $eventSubmitter;
 
-	/** @var TestIntegration */
-	private $integration;
+	private TestIntegration $integration;
 
-	/** @var StreamConfigFactory */
-	private $config;
+	private StreamConfigFactory $config;
 
-	/** @var MetricsClient */
-	private $client;
+	private MetricsClient $client;
 
-	/** @var array */
-	private $streamConfigs = [
+	private array $streamConfigs = [
 		'test.event' => [],
 		'test.metrics_platform.interactions' => [
 			'schema_title' => 'analytics/product_metrics/web/base',
@@ -77,7 +72,7 @@ class MetricsClientTest extends TestCase {
 		);
 	}
 
-	private function assertIsValidTimestamp( string $timestamp ) {
+	private function assertIsValidTimestamp( string $timestamp ): void {
 		$this->assertStringEndsWith( 'Z', $timestamp );
 		$this->assertInstanceOf(
 			DateTimeImmutable::class,

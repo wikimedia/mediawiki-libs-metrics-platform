@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikimedia\MetricsPlatform\Tests;
+namespace Wikimedia\MetricsPlatform\Tests\StreamConfig;
 
 use Generator;
 use JsonSchema\Validator;
@@ -26,21 +26,21 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 		$this->getFactory( [] )->getStreamConfig( 'test.stream' );
 	}
 
-	public function provideShouldHandleValidStreamConfigs(): Generator {
+	public static function provideShouldHandleValidStreamConfigs(): Generator {
 		yield [
-			'streamConfig' => [],
+			'rawStreamConfig' => [],
 			'expectedRequestValues' => [],
 			'expectedCurationRules' => [],
 		];
 		yield [
-			'streamConfig' => [
+			'rawStreamConfig' => [
 				'producers' => []
 			],
 			'expectedRequestValues' => [],
 			'expectedCurationRules' => [],
 		];
 		yield [
-			'streamConfig' => [
+			'rawStreamConfig' => [
 				'producers' => [
 					'foo_producer' => [
 						'bar' => 'baz',
@@ -51,7 +51,7 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 			'expectedCurationRules' => [],
 		];
 		yield [
-			'streamConfig' => [
+			'rawStreamConfig' => [
 				'producers' => [
 					'metrics_platform_client' => []
 				]
@@ -60,7 +60,7 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 			'expectedCurationRules' => [],
 		];
 		yield [
-			'streamConfig' => [
+			'rawStreamConfig' => [
 				'producers' => [
 					'metrics_platform_client' => [
 						'provide_values' => [
@@ -106,7 +106,7 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 		$this->assertEquals( $expectedCurationRules, $streamConfig->getCurationRules() );
 	}
 
-	public function testItShouldHandleDisabledStreamConfigs() {
+	public function testItShouldHandleDisabledStreamConfigs(): void {
 		$streamName = 'test.stream';
 		$streamConfigs = false;
 
@@ -116,7 +116,7 @@ class ValidatingStreamConfigFactoryTest extends TestCase {
 		$this->assertEquals( new StreamConfig( [] ), $streamConfig );
 	}
 
-	public function provideMetricsPlatformClientConfig(): Generator {
+	public static function provideMetricsPlatformClientConfig(): Generator {
 		yield [
 			'metricsPlatformClientConfig' => [
 				'foo' => [],
