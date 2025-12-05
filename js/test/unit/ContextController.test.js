@@ -112,7 +112,8 @@ QUnit.test( 'addRequestedValues()', ( assert ) => {
 			id: 1,
 			name: 'TestUser',
 			session_id: integration.getContextAttributes().performer.session_id,
-			active_browsing_session_token: integration.getContextAttributes().performer.active_browsing_session_token,
+			active_browsing_session_token:
+				integration.getContextAttributes().performer.active_browsing_session_token,
 			pageview_id: integration.getContextAttributes().performer.pageview_id,
 			groups: [ '*' ],
 			is_bot: false,

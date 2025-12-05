@@ -18,6 +18,15 @@
  */
 
 /**
+ * Gets a deep clone of the object.
+ *
+ * @method
+ * @name MetricsPlatform.Integration#clone
+ * @param {Object} obj
+ * @return {Object}
+ */
+
+/**
  * Gets the values for those context attributes that are available in the execution
  * environment.
  *

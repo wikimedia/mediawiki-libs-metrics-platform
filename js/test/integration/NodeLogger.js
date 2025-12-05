@@ -14,7 +14,6 @@ const NodeLogger = require( './../../src/DefaultLogger' );
  * @param {string} message
  */
 NodeLogger.prototype.logWarning = function ( message ) {
-	// eslint-disable-next-line no-console
 	console.warn( message );
 };
 

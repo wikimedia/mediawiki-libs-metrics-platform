@@ -32,6 +32,14 @@ TestMetricsClientIntegration.prototype.getHostname = function () {
 	return 'test.example.com';
 };
 
+/**
+ * @param {Object} obj
+ * @return {Object}
+ */
+TestMetricsClientIntegration.prototype.clone = function ( obj ) {
+	return JSON.parse( JSON.stringify( obj ) );
+};
+
 TestMetricsClientIntegration.prototype.getContextAttributes = function () {
 	/* eslint-disable camelcase */
 	return {

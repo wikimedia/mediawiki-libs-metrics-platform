@@ -1,5 +1,3 @@
-/* eslint-disable jsdoc/require-returns-check,no-unused-vars */
-
 /**
  * @constructor
  * @implements {MetricsPlatform.Logger}

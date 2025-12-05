@@ -1,7 +1,5 @@
 /* eslint-disable jsdoc/require-returns-check,no-unused-vars */
 
-const copyAttributes = require( './Context.js' ).copyAttributes;
-
 const DEFAULT_STREAM_CONFIGS_ORIGIN = 'https://meta.wikimedia.org';
 
 /**
@@ -63,6 +61,16 @@ DefaultIntegration.prototype.fetchStreamConfigs = function () {
  */
 DefaultIntegration.prototype.getHostname = function () {
 	return location.hostname;
+};
+
+/**
+ * Gets the hostname of the current document.
+ *
+ * @param {Object} obj
+ * @return {string}
+ */
+DefaultIntegration.prototype.clone = function ( obj ) {
+	throw new Error( 'Not implemented!' );
 };
 
 /**

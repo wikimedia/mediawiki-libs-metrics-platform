@@ -148,7 +148,7 @@ function getStreamConfigInternal( streamConfigs, streamName ) {
 MetricsClient.prototype.getStreamConfig = function ( streamName ) {
 	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
 
-	return streamConfig ? structuredClone( streamConfig ) : streamConfig;
+	return streamConfig ? this.integration.clone( streamConfig ) : streamConfig;
 };
 
 /**
