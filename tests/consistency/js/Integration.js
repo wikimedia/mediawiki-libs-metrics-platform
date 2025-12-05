@@ -3,12 +3,6 @@ class Integration {
 		this.data = require( filename );
 	}
 
-	enqueueEvent( event ) {
-		console.log( JSON.stringify( event ) );
-	}
-
-	onSubmit( _streamName, _eventData ) {}
-
 	getHostname() {
 		return this.data.hostname;
 	}

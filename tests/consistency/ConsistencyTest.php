@@ -5,6 +5,9 @@ namespace Wikimedia\MetricsPlatform\Tests\Consistency;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Process\Process;
 
+/**
+ * @coversNothing
+ */
 class ConsistencyTest extends TestCase {
 	private const IMPLEMENTATION_TO_COMMAND_MAP = [
 		'php' => [ 'php', 'main.php' ],
@@ -15,7 +18,7 @@ class ConsistencyTest extends TestCase {
 		return array_keys( self::IMPLEMENTATION_TO_COMMAND_MAP );
 	}
 
-	private function dispatch( $impl ): array {
+	private function submitInteraction( $impl ): array {
 		$command = self::IMPLEMENTATION_TO_COMMAND_MAP[ $impl ];
 		$cwd = __DIR__ . "/{$impl}";
 
@@ -30,8 +33,11 @@ class ConsistencyTest extends TestCase {
 
 		$this->assertIsArray( $output, "The {$impl} should output valid JSON." );
 
-		// Only the PHP Event Platform Client adds the http property of the event.
+		// Only the PHP Client adds the http property to the event.
 		unset( $output['http'] );
+
+		// The PHP Client doesn't add the sample property to the event.
+		unset( $output['sample'] );
 
 		// TODO: Test whether all Metrics Platform Clients are adding timestamps in the form
 		// YY:MM:DDThh:mm:ss.vvvZ?
@@ -46,7 +52,7 @@ class ConsistencyTest extends TestCase {
 		$expectedEvent = json_decode( $expectedEventRaw, true  );
 
 		foreach ( self::getImplementations() as $impl ) {
-			$output = $this->dispatch( $impl );
+			$output = $this->submitInteraction( $impl );
 
 			$this->assertEquals(
 				$expectedEvent,
