@@ -518,7 +518,7 @@ MetricsClient.prototype.submitInteraction = function (
 	this.submit( streamName, eventData );
 };
 
-const WEB_BASE_SCHEMA_ID = '/analytics/product_metrics/web/base/1.4.3';
+const WEB_BASE_SCHEMA_ID = '/analytics/product_metrics/web/base/1.5.0';
 
 /**
  * See {@link MetricsPlatform.MetricsClient#submitInteraction}.
