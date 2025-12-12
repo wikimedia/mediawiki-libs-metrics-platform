@@ -3,7 +3,27 @@
 const DEFAULT_STREAM_CONFIGS_ORIGIN = 'https://meta.wikimedia.org';
 
 /**
- * @ignore
+ * @implements {MetricsPlatform.ExternalIntegration}
+ * @memberof MetricsPlatform
+ */
+
+/**
+ * @param {string} [streamConfigsOrigin] The origin of the MediaWiki instance to fetch the stream
+ *  configs from. `https://meta.mediawiki.org` by default
+ * @constructor
+ * @implements {MetricsPlatform.Integration}
+ * @memberof MetricsPlatform
+ */
+function DefaultIntegration( streamConfigsOrigin ) {
+	this.streamConfigsUrl = getStreamConfigsUrl(
+		streamConfigsOrigin || DEFAULT_STREAM_CONFIGS_ORIGIN
+	);
+
+	/** @type {MetricsPlatform.Context.ContextAttributes} */
+	this.contextAttributes = {};
+}
+
+/**
  *
  * @param {string} origin
  * @return {string}
@@ -25,22 +45,6 @@ function getStreamConfigsUrl( origin ) {
 	} );
 
 	return result.toString();
-}
-
-/**
- * @param {string} [streamConfigsOrigin] The origin of the MediaWiki instance to fetch the stream
- *  configs from. `https://meta.mediawiki.org` by default
- * @constructor
- * @implements {MetricsPlatform.Integration}
- * @memberof MetricsPlatform
- */
-function DefaultIntegration( streamConfigsOrigin ) {
-	this.streamConfigsUrl = getStreamConfigsUrl(
-		streamConfigsOrigin || DEFAULT_STREAM_CONFIGS_ORIGIN
-	);
-
-	/** @type {MetricsPlatform.Context.ContextAttributes} */
-	this.contextAttributes = {};
 }
 
 /**

@@ -1,11 +1,11 @@
 'use strict';
 
-const NodeIntegration = require( './../../src/DefaultIntegration' );
-
 /**
- * @implements {MetricsPlatform.Integration}
+ * @implements {MetricsPlatform.ExternalIntegration}
  * @memberof MetricsPlatform
  */
+
+const NodeIntegration = require( './../../src/DefaultIntegration' );
 
 /**
  * @return {string}

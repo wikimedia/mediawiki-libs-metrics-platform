@@ -10,9 +10,9 @@ const NodeEventSubmitter = require( '../../src/NodeEventSubmitter' );
 // eslint-disable-next-line no-unused-vars
 const Instrument = require( '../../src/Instrument' );
 
-const integration = new Integration( 'http://host.docker.internal:8080' );
+const integration = new Integration( 'http://localhost:8080' );
 const logger = new Logger();
-const eventSubmitter = new NodeEventSubmitter( 'http://host.docker.internal:8192' );
+const eventSubmitter = new NodeEventSubmitter( 'http://localhost:8192' );
 
 const metricsClient = new MetricsClient( integration, logger, eventSubmitter );
 
