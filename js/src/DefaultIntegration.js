@@ -68,7 +68,7 @@ DefaultIntegration.prototype.getHostname = function () {
 };
 
 /**
- * Gets the hostname of the current document.
+ * Gets a deep clone of the object
  *
  * @param {Object} obj
  * @return {string}
