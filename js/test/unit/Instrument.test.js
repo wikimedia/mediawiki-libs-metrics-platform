@@ -5,13 +5,15 @@
 const sinon = require( 'sinon' );
 
 const TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
+const TestMetricsClientLogger = require( './TestMetricsClientLogger.js' );
 const StubEventSubmitter = require( './StubEventSubmitter.js' );
 const MetricsClient = require( '../../src/MetricsClient.js' );
 const Instrument = require( '../../src/Instrument.js' );
 
 const integration = new TestMetricsClientIntegration();
+const logger = new TestMetricsClientLogger();
 const stubEventSubmitter = new StubEventSubmitter();
-const metricsClient = new MetricsClient( integration, false, stubEventSubmitter );
+const metricsClient = new MetricsClient( integration, logger, false, stubEventSubmitter );
 const instrument = new Instrument( metricsClient, 'fooStreamName', 'fooSchemaID' );
 
 const sandbox = sinon.createSandbox();
