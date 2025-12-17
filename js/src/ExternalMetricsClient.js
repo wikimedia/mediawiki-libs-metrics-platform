@@ -27,13 +27,14 @@ const CALL_QUEUE_MAX_LENGTH = 128;
 
 /**
  * @param {MetricsPlatform.Integration} integration
+ * @param {MetricsPlatform.Logger} logger
  * @param {MetricsPlatform.EventSubmitter} [eventSubmitter]
  * @constructor
  * @extends {MetricsPlatform.MetricsClient}
  * @memberof MetricsPlatform
  */
-function ExternalMetricsClient( integration, eventSubmitter ) {
-	MetricsClient.call( this, integration, {}, eventSubmitter );
+function ExternalMetricsClient( integration, logger, eventSubmitter ) {
+	MetricsClient.call( this, integration, logger, {}, eventSubmitter );
 	this.super = MetricsClient;
 
 	this.state = STATE_FETCHING_STREAM_CONFIGS;
@@ -90,7 +91,7 @@ ExternalMetricsClient.prototype.queueCall = function ( call ) {
 				' )'
 			].join( '' );
 
-			this.integration.logWarning( 'Call to ' + callString + ' dropped because the queue is full.' );
+			this.logger.logWarning( 'Call to ' + callString + ' dropped because the queue is full.' );
 		}
 	}
 

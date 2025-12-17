@@ -5,6 +5,7 @@
 const sinon = require( 'sinon' );
 
 const TestMetricsClientIntegration = require( './TestMetricsClientIntegration.js' );
+const TestMetricsClientLogger = require( './TestMetricsClientLogger.js' );
 const MetricsClient = require( '../../src/ExternalMetricsClient.js' );
 const StubEventSubmitter = require( './StubEventSubmitter.js' );
 
@@ -56,10 +57,11 @@ const streamConfigs = {
 
 const eventSubmitter = new StubEventSubmitter();
 const integration = new TestMetricsClientIntegration();
+const logger = new TestMetricsClientLogger();
 
 const sandbox = sinon.createSandbox();
 const submitEventStub = sandbox.stub( eventSubmitter, 'submitEvent' );
-const logWarningStub = sandbox.stub( integration, 'logWarning' );
+const logWarningStub = sandbox.stub( logger, 'logWarning' );
 
 sandbox.stub( eventSubmitter, 'onSubmitEvent' );
 
@@ -72,7 +74,7 @@ QUnit.module( 'ExternalMetricsClient', {
 QUnit.test( 'constructor() - fetches stream configs when they are not given', ( assert ) => {
 	const fetchStreamConfigsSpy = sandbox.spy( integration, 'fetchStreamConfigs' );
 
-	const metricsClient = new MetricsClient( integration, eventSubmitter );
+	const metricsClient = new MetricsClient( integration, logger, eventSubmitter );
 
 	assert.deepEqual( metricsClient.streamConfigs, {}, 'Initializes streamConfigs to an empty object' );
 	assert.strictEqual( fetchStreamConfigsSpy.callCount, 1, 'fetchStreamConfigs() should not be called' );
@@ -85,7 +87,7 @@ QUnit.test( 'fetchStreamConfigs() - invalidates eventNameToStreamNames map', ( a
 
 	fetchStreamConfigsStub.onFirstCall().returns( Promise.resolve( streamConfigs ) );
 
-	const metricsClient = new MetricsClient( integration, eventSubmitter );
+	const metricsClient = new MetricsClient( integration, logger, eventSubmitter );
 	metricsClient.getStreamNamesForEvent( 'widgetClick' );
 
 	assert.deepEqual( metricsClient.eventNameToStreamNamesMap, {} );
@@ -122,7 +124,7 @@ QUnit.test( 'submit() - does not produce an event until streamConfigs are fetche
 
 	fetchStreamConfigsStub.onFirstCall().returns( streamConfigsPromise );
 
-	const metricsClient = new MetricsClient( integration, eventSubmitter );
+	const metricsClient = new MetricsClient( integration, logger, eventSubmitter );
 
 	metricsClient.submit( 'metrics.platform.test', { $schema: 'metrics/platform/test' } );
 
@@ -154,7 +156,7 @@ QUnit.test( 'logs a warning if too many calls are enqueued before stream configs
 
 	fetchStreamConfigsStub.onFirstCall().returns( streamConfigsPromise );
 
-	const metricsClient = new MetricsClient( integration, eventSubmitter );
+	const metricsClient = new MetricsClient( integration, logger, eventSubmitter );
 
 	for ( let i = 0; i < 132; i += 1 ) {
 		metricsClient.submit( 'metrics.platform.test', { $schema: 'metrics/platform/test' } );
