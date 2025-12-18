@@ -335,19 +335,15 @@ MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, ev
 	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
 
 	if ( !streamConfig ) {
-		// eslint-disable-next-line no-console
-		console.warn(
-			'The stream %s is not configured. No event will be sent',
-			streamName
+		this.logger.logWarning(
+			'The stream ' + streamName + ' is not configured. No event will be sent'
 		);
 		return;
 	}
 
 	if ( !this.samplingController.isStreamInSample( streamConfig ) ) {
-		// eslint-disable-next-line no-console
-		console.warn(
-			'The stream %s is out of sample. No event will be sent',
-			streamName
+		this.logger.logWarning(
+			'The stream ' + streamName + ' is out of sample. No event will be sent'
 		);
 		return;
 	}
