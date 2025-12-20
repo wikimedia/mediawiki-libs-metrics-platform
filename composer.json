@@ -21,7 +21,7 @@
 	"require": {
 		"php": ">=8.2",
 		"justinrainbow/json-schema": "~5.3.0 || ^6.2.1",
-		"psr/log": "^1.1.4",
+		"psr/log": "^1.1.4 || ^3.0.0",
 		"wikimedia/timestamp": "^5.0"
 	},
 	"require-dev": {
