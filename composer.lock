@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66537d0799978e7d33825a0fb4bf9293",
+    "content-hash": "52a2c6d8e1d8984356addf55f89fce4b",
     "packages": [
         {
             "name": "justinrainbow/json-schema",
@@ -254,16 +254,16 @@
         },
         {
             "name": "wikimedia/timestamp",
-            "version": "v5.0.0",
+            "version": "v5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/mediawiki-libs-Timestamp.git",
-                "reference": "b5d6de92c8d966b07e31e5382b573aafc09b3fb9"
+                "reference": "cce1f48b6b4d390869ed5e8b0e7c054c7ec33bfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/mediawiki-libs-Timestamp/zipball/b5d6de92c8d966b07e31e5382b573aafc09b3fb9",
-                "reference": "b5d6de92c8d966b07e31e5382b573aafc09b3fb9",
+                "url": "https://api.github.com/repos/wikimedia/mediawiki-libs-Timestamp/zipball/cce1f48b6b4d390869ed5e8b0e7c054c7ec33bfe",
+                "reference": "cce1f48b6b4d390869ed5e8b0e7c054c7ec33bfe",
                 "shasum": ""
             },
             "require": {
@@ -277,10 +277,11 @@
                 "mediawiki/mediawiki-codesniffer": "48.0.0",
                 "mediawiki/mediawiki-phan-config": "0.17.0",
                 "mediawiki/minus-x": "1.1.3",
-                "ockcyp/covers-validator": "1.6.0",
+                "ockcyp/covers-validator": "1.7.0",
                 "php-parallel-lint/php-console-highlighter": "1.0.0",
                 "php-parallel-lint/php-parallel-lint": "1.4.0",
-                "phpunit/phpunit": "9.6.21"
+                "phpunit/phpunit": "10.5.58",
+                "wikimedia/update-history": "1.0.1"
             },
             "type": "library",
             "autoload": {
@@ -304,9 +305,9 @@
             "description": "Creation, parsing, and conversion of timestamps",
             "homepage": "https://www.mediawiki.org/wiki/Timestamp",
             "support": {
-                "source": "https://github.com/wikimedia/mediawiki-libs-Timestamp/tree/v5.0.0"
+                "source": "https://github.com/wikimedia/mediawiki-libs-Timestamp/tree/v5.1.0"
             },
-            "time": "2025-09-19T23:25:51+00:00"
+            "time": "2025-12-05T18:14:34+00:00"
         }
     ],
     "packages-dev": [
@@ -1180,16 +1181,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.6.2",
+            "version": "v5.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "3a454ca033b9e06b63282ce19562e892747449bb"
+                "reference": "dca41cd15c2ac9d055ad70dbfd011130757d1f82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/3a454ca033b9e06b63282ce19562e892747449bb",
-                "reference": "3a454ca033b9e06b63282ce19562e892747449bb",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/dca41cd15c2ac9d055ad70dbfd011130757d1f82",
+                "reference": "dca41cd15c2ac9d055ad70dbfd011130757d1f82",
                 "shasum": ""
             },
             "require": {
@@ -1232,9 +1233,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.6.2"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.7.0"
             },
-            "time": "2025-10-21T19:32:17+00:00"
+            "time": "2025-12-06T11:56:16+00:00"
         },
         {
             "name": "ockcyp/covers-validator",
@@ -3636,16 +3637,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v6.4.27",
+            "version": "v6.4.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "13d3176cf8ad8ced24202844e9f95af11e2959fc"
+                "reference": "1b2813049506b39eb3d7e64aff033fd5ca26c97e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/13d3176cf8ad8ced24202844e9f95af11e2959fc",
-                "reference": "13d3176cf8ad8ced24202844e9f95af11e2959fc",
+                "url": "https://api.github.com/repos/symfony/console/zipball/1b2813049506b39eb3d7e64aff033fd5ca26c97e",
+                "reference": "1b2813049506b39eb3d7e64aff033fd5ca26c97e",
                 "shasum": ""
             },
             "require": {
@@ -3710,7 +3711,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v6.4.27"
+                "source": "https://github.com/symfony/console/tree/v6.4.30"
             },
             "funding": [
                 {
@@ -3730,7 +3731,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-10-06T10:25:16+00:00"
+            "time": "2025-12-05T13:47:41+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
