@@ -334,10 +334,17 @@ MetricsClient.prototype.processSubmitCall = function ( timestamp, streamName, ev
 
 	const streamConfig = getStreamConfigInternal( this.streamConfigs, streamName );
 
-	if (
-		!streamConfig ||
-		!this.samplingController.isStreamInSample( streamConfig )
-	) {
+	if ( !streamConfig ) {
+		this.logger.logWarning(
+			'The stream ' + streamName + ' is not configured. No event will be sent'
+		);
+		return;
+	}
+
+	if ( !this.samplingController.isStreamInSample( streamConfig ) ) {
+		this.logger.logWarning(
+			'The stream ' + streamName + ' is out of sample. No event will be sent'
+		);
 		return;
 	}
 
