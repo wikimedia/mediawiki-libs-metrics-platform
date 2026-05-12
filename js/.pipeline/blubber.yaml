@@ -1,9 +1,9 @@
 # syntax=docker-registry.wikimedia.org/repos/releng/blubber/buildkit:v1.5.0
 version: v4
-base: docker-registry.wikimedia.org/nodejs18-devel:0.0.1
+base: docker-registry.wikimedia.org/nodejs22-slim:latest
 variants:
   test:
-    base: docker-registry.wikimedia.org/nodejs18-devel:0.0.1
+    base: docker-registry.wikimedia.org/nodejs22-slim:latest
     runs:
       insecurely: true
     copies: [local]
