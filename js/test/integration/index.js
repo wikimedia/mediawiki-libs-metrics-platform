@@ -7,32 +7,38 @@ const Integration = require( './NodeIntegration' );
 const Logger = require( './NodeLogger' );
 const NodeEventSubmitter = require( '../../src/NodeEventSubmitter' );
 
-// eslint-disable-next-line no-unused-vars
-const Instrument = require( '../../src/Instrument' );
-
-const integration = new Integration( 'http://host.docker.internal:8080' );
+const integration = new Integration( 'http://localhost:8080' );
 const logger = new Logger();
-const eventSubmitter = new NodeEventSubmitter( 'http://host.docker.internal:8192' );
+const eventSubmitter = new NodeEventSubmitter( 'http://localhost:8192' );
 
 const metricsClient = new MetricsClient( integration, logger, eventSubmitter );
 
 setTimeout(
 	() => {
-		/** @type {Instrument} */
-		const i = metricsClient.newInstrument(
+		metricsClient.submitInteraction(
 			'test.metrics_platform.interactions',
-			'/analytics/product_metrics/web/base/1.3.0'
+			'/analytics/product_metrics/web/base/2.0.0',
+			'init'
 		);
 
-		i.submitInteraction( 'init' );
-		i.submitClick( {
-			element_id: 'ca-edit',
-			element_friendly_name: 'edit'
-		} );
-		i.submitClick( {
-			element_id: 'ca-talk',
-			element_friendly_name: 'talk'
-		} );
+		metricsClient.submitInteraction(
+			'test.metrics_platform.interactions',
+			'/analytics/product_metrics/web/base/2.0.0',
+			'click',
+			{
+				element_id: 'ca-edit',
+				element_friendly_name: 'edit'
+			}
+		);
+		metricsClient.submitInteraction(
+			'test.metrics_platform.interactions',
+			'/analytics/product_metrics/web/base/2.0.0',
+			'click',
+			{
+				element_id: 'ca-talk',
+				element_friendly_name: 'edit'
+			}
+		);
 	},
 	1000
 );
