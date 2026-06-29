@@ -24,7 +24,6 @@ function DefaultIntegration( streamConfigsOrigin ) {
 }
 
 /**
- *
  * @param {string} origin
  * @return {string}
  */
