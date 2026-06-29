@@ -192,22 +192,6 @@
         "eventlogging_HelpPanel"
       ]
     },
-    "eventlogging_HomepageModule": {
-      "schema_title": "analytics/legacy/homepagemodule",
-      "topic_prefixes": null,
-      "destination_event_service": "eventgate-analytics-external",
-      "consumers": {
-        "analytics_hadoop_ingestion": {
-          "job_name": "eventlogging_legacy",
-          "enabled": true
-        }
-      },
-      "canary_events_enabled": true,
-      "stream": "eventlogging_HomepageModule",
-      "topics": [
-        "eventlogging_HomepageModule"
-      ]
-    },
     "eventlogging_HomepageVisit": {
       "schema_title": "analytics/legacy/homepagevisit",
       "topic_prefixes": null,
