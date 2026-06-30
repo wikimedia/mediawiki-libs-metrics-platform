@@ -1,9 +1,0 @@
-# syntax = docker-registry.wikimedia.org/repos/releng/blubber/buildkit:v1.5.1
-version: v4
-variants:
-  test:
-    base: docker-registry.wikimedia.org/openjdk-11-jdk
-    copies: [local]
-    runs:
-      insecurely: true
-    entrypoint: [./mvnw, --file, ./java/pom.xml, verify]
