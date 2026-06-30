@@ -1765,46 +1765,6 @@
         "codfw.mediawiki.visual_editor_feature_use"
       ]
     },
-    "mediawiki.wikistories_consumption_event": {
-      "schema_title": "analytics/mediawiki/wikistories_consumption_event",
-      "destination_event_service": "eventgate-analytics-external",
-      "topic_prefixes": [
-        "eqiad.",
-        "codfw."
-      ],
-      "canary_events_enabled": true,
-      "consumers": {
-        "analytics_hadoop_ingestion": {
-          "job_name": "event_default",
-          "enabled": true
-        }
-      },
-      "stream": "mediawiki.wikistories_consumption_event",
-      "topics": [
-        "eqiad.mediawiki.wikistories_consumption_event",
-        "codfw.mediawiki.wikistories_consumption_event"
-      ]
-    },
-    "mediawiki.wikistories_contribution_event": {
-      "schema_title": "analytics/mediawiki/wikistories_contribution_event",
-      "destination_event_service": "eventgate-analytics-external",
-      "topic_prefixes": [
-        "eqiad.",
-        "codfw."
-      ],
-      "canary_events_enabled": true,
-      "consumers": {
-        "analytics_hadoop_ingestion": {
-          "job_name": "event_default",
-          "enabled": true
-        }
-      },
-      "stream": "mediawiki.wikistories_contribution_event",
-      "topics": [
-        "eqiad.mediawiki.wikistories_contribution_event",
-        "codfw.mediawiki.wikistories_contribution_event"
-      ]
-    },
     "rc0.mediawiki.page_change": {
       "schema_title": "development/mediawiki/page/change",
       "message_key_fields": {
