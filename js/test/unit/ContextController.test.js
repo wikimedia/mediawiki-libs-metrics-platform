@@ -37,7 +37,6 @@ const streamConfig = {
 				'performer_id',
 				'performer_name',
 				'performer_session_id',
-				'performer_active_browsing_session_token',
 				'performer_pageview_id',
 				'performer_groups',
 				'performer_is_bot',
@@ -112,8 +111,6 @@ QUnit.test( 'addRequestedValues()', ( assert ) => {
 			id: 1,
 			name: 'TestUser',
 			session_id: integration.getContextAttributes().performer.session_id,
-			active_browsing_session_token:
-				integration.getContextAttributes().performer.active_browsing_session_token,
 			pageview_id: integration.getContextAttributes().performer.pageview_id,
 			groups: [ '*' ],
 			is_bot: false,
