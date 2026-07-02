@@ -6,7 +6,6 @@
 function TestMetricsClientIntegration() {
 	this.pageviewId = this.generateRandomId();
 	this.sessionId = this.generateRandomId();
-	this.activeBrowsingSessionToken = this.generateRandomId();
 }
 
 TestMetricsClientIntegration.prototype.generateRandomId = function () {
@@ -75,7 +74,6 @@ TestMetricsClientIntegration.prototype.getContextAttributes = function () {
 			id: 1,
 			name: 'TestUser',
 			session_id: this.sessionId,
-			active_browsing_session_token: this.activeBrowsingSessionToken,
 			pageview_id: this.pageviewId,
 			groups: [ '*' ],
 			is_bot: false,
