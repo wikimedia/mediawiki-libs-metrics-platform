@@ -10,6 +10,12 @@ use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigException;
 use Wikimedia\MetricsPlatform\StreamConfig\StreamConfigFactory;
 use Wikimedia\Timestamp\ConvertibleTimestamp;
 
+/**
+ * Legacy PHP client for Metrics Platform event submission.
+ *
+ * @deprecated Use the Test Kitchen PHP SDK for MediaWiki instrumentation.
+ * @see https://wikitech.wikimedia.org/wiki/Test_Kitchen/SDK/PHP_SDK
+ */
 class MetricsClient implements LoggerAwareInterface {
 	use LoggerAwareTrait;
 

@@ -46,6 +46,9 @@ class MetricsClientTest extends TestCase {
 		$this->eventSubmitter = new TestEventSubmitter();
 		$this->integration = new TestIntegration();
 		$this->config = new StreamConfigFactory( $this->streamConfigs );
+
+		// Intentionally instantiate the deprecated client to test its behavior.
+		// @phan-suppress-next-line PhanDeprecatedClass
 		$this->client = new MetricsClient(
 			$this->eventSubmitter,
 			$this->integration,
